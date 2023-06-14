@@ -1,0 +1,82 @@
+Current:
+Move around color tex buffers
+Make night time look like vanilla
+Take FXAA from Comp Reimagined
+Add noise to shadow sampling
+Blocklight flickering
+Custom sky color
+Switch to Contrast Adaptive Sharpening
+Get permission from EminGT
+Dither final output?
+Disable unneded shader files?
+Test glsl optimizer (https://github.com/aras-p/glsl-optimizer)
+Add support for fogStart, fogEnd, and fogMode?
+Find a way to stop sugar cane base from waving?
+Test waving stuff for pre-1.13?
+Find ways to render things at lower resolutions?
+Replace manual skylight mults with dot products?
+Determine performance costs
+Potion effects?
+Show Light Levels option
+Colorblind aids?
+SSAO?
+Custom sun / moon?
+Better shadow filtering?
+Realistic water?
+
+
+
+Ongoing / continuous:
+OPTIMIZE (see shader assembly? https://gamedev.stackexchange.com/questions/65695/aquire-disassembly-of-shader-code)
+Keep the shader simple!
+Update documentation
+Make it work in different dimensions
+Cut down on the number of options
+Add more values to options
+Add more comments to options
+Match the vanilla look
+
+
+
+Finished:
+Make sunray light position smarter
+Look into better AA
+Handheld light
+Add support for the vanilla AO
+Add support for the vanilla brightness slider
+Re-allow ACES tonemapping
+Pre-calculate values with prepare pass
+Test underwater effects for lava and powdered snow
+Make waving more intense in weather
+Add waving stuff settings
+Stop grass base from waving
+Waving stuff
+Add fog settings
+Simplify hand lighting
+Add noise to vignette
+Add underwater effects
+Fix cloud fog
+Add setting to disable shadows
+Add settings for horizon mult
+Make horizon mult go away with ambient brightness
+Add horizon multiplier
+Add noise to bloom angle
+Seperate incl into common stuff and lib
+Use texelFetch()?
+Vignette
+Fog
+Combine composites
+Add noise to bloom sampling
+Improve sunray sampling (add noise?)
+Entity color thing
+Sunray saturation
+Seperate bloom levels more
+Sunrays settings and documentation
+Rework sunray sampling
+Decrease brightness during rain
+Settings per time of day
+Sun rays
+Sharpening
+Bloom
+Seperate shaded.glsl and have shared code instead
+Rename torch light to block light

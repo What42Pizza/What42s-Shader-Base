@@ -1,0 +1,257 @@
+screen.SKY_SETTINGS = Sky
+
+option.DARKEN_SKY_UNDERGROUND = Darken Sky Underground
+option.DARKEN_SKY_UNDERGROUND.comment = Darken the sky when underground
+
+
+
+screen.FOG_SETTINGS = Fog
+
+option.FOG_HEIGHT_SCALE = Fog Height Scale
+option.FOG_HEIGHT_SCALE.comment = How much further you can see upwards vs forwards
+option.FOG_EXTRA_CLOUDS_DISTANCE = Extra Clouds Distance
+option.FOG_EXTRA_CLOUDS_DISTANCE.comment = How much further you can see clouds
+option.FOG_START = Fog Start
+option.FOG_WATER_DISTANCE = Fog Water Distance
+option.FOG_WATER_DISTANCE.comment = How far you can see underwater (doesn't change based on render distance)
+option.FOG_CURVE = Fog Curve
+option.FOG_WATER_CURVE = Fog Water Curve
+
+
+
+
+
+screen.COLOR_SETTINGS = Colors
+
+
+
+screen.BLOCK_COLOR_SETTINGS = Block Color Settings
+
+option.BLOCK_BRIGHTNESS = Block Brightness
+option.BLOCK_RED = Block Red
+option.BLOCK_GREEN = Block Green
+option.BLOCK_BLUE = Block Blue
+
+
+
+screen.DAY_COLOR_SETTINGS = Day Color Settings
+
+option.SKYLIGHT_DAY_BRIGHTNESS = Skylight Day Brightness
+option.SKYLIGHT_DAY_RED = Skylight Day Red
+option.SKYLIGHT_DAY_GREEN = Skylight Day Green
+option.SKYLIGHT_DAY_BLUE = Skylight Day Blue
+option.AMBIENT_DAY_BRIGHTNESS = Ambient Day Brightness
+option.AMBIENT_DAY_RED = Ambient Day Red
+option.AMBIENT_DAY_GREEN = Ambient Day Green
+option.AMBIENT_DAY_BLUE = Ambient Day Blue
+
+
+
+screen.NIGHT_COLOR_SETTINGS = Night Color Settings
+
+option.SKYLIGHT_NIGHT_BRIGHTNESS = Skylight Night Brightness
+option.SKYLIGHT_NIGHT_RED = Skylight Night Red
+option.SKYLIGHT_NIGHT_GREEN = Skylight Night Green
+option.SKYLIGHT_NIGHT_BLUE = Skylight Night Blue
+option.AMBIENT_NIGHT_BRIGHTNESS = Ambient Night Brightness
+option.AMBIENT_NIGHT_RED = Ambient Night Red
+option.AMBIENT_NIGHT_GREEN = Ambient Night Green
+option.AMBIENT_NIGHT_BLUE = Ambient Night Blue
+
+
+
+screen.SUNRISE_COLOR_SETTINGS = Sunrise Color Settings
+
+option.SKYLIGHT_SUNRISE_BRIGHTNESS = Skylight Sunrise Brightness
+option.SKYLIGHT_SUNRISE_RED = Skylight Sunrise Red
+option.SKYLIGHT_SUNRISE_GREEN = Skylight Sunrise Green
+option.SKYLIGHT_SUNRISE_BLUE = Skylight Sunrise Blue
+option.AMBIENT_SUNRISE_BRIGHTNESS = Ambient Sunrise Brightness
+option.AMBIENT_SUNRISE_RED = Ambient Sunrise Red
+option.AMBIENT_SUNRISE_GREEN = Ambient Sunrise Green
+option.AMBIENT_SUNRISE_BLUE = Ambient Sunrise Blue
+
+
+
+screen.SUNSET_COLOR_SETTINGS = Sunset Color Settings
+
+option.SKYLIGHT_SUNSET_BRIGHTNESS = Skylight Sunset Brightness
+option.SKYLIGHT_SUNSET_RED = Skylight Sunset Red
+option.SKYLIGHT_SUNSET_GREEN = Skylight Sunset Green
+option.SKYLIGHT_SUNSET_BLUE = Skylight Sunset Blue
+option.AMBIENT_SUNSET_BRIGHTNESS = Ambient Sunset Brightness
+option.AMBIENT_SUNSET_RED = Ambient Sunset Red
+option.AMBIENT_SUNSET_GREEN = Ambient Sunset Green
+option.AMBIENT_SUNSET_BLUE = Ambient Sunset Blue
+
+
+
+
+
+screen.SHADING_SETTINGS = Shading
+
+option.SHADOWS_ENABLED = Shadows Enabled
+option.shadowMapResolution = Shadow Map Resolution
+option.shadowMapResolution.comment = Resolution of the shadow map. Higher is more accurate, lower is more performance\n\n(Performance cost: HIGH)
+option.shadowDistance = Shadow Distance
+option.shadowDistance.comment = Maximum distance that shadows are rendered\n\n(Performance cost: Unknown)
+option.SHADOW_FILTERING = Shadow Filtering
+option.SHADOW_FILTERING.comment = Shoothens shadow edges\n\n(Performance cost: Medium)
+option.EXCLUDE_FOLIAGE = Exlude Foliage
+option.EXCLUDE_FOLIAGE.comment = If true, foliage will not cast shadows\n\n(Performance cost: Low)
+option.sunPathRotation = Sun Path Rotation
+option.sunPathRotation.comment = How tilted the sun's rotation is. 0 is vanilla
+option.ambientOcclusionLevel = Vanilla AO
+option.ambientOcclusionLevel.comment = How much vanilla Ambient Occlusion should be used
+option.SIDE_SHADING = Side Shading
+option.SIDE_SHADING.comment = How much to increase / decrease the sides of blocks (lower is more accurate, higher is more vanilla-like)\n\n(Performance cost: None)
+option.RAIN_LIGHT_MULT = Rain Light Multiplier
+option.USE_VANILLA_BRIGHTNESS = Use Vanilla Brightness
+option.USE_VANILLA_BRIGHTNESS.comment = Whether or not the vanilla brightness slider should be used
+
+
+
+screen.HANDHELD_LIGHT_SETTINGS = Handheld Light
+
+option.HANDHELD_LIGHT_ENABLED = Handheld Light Enabled
+option.HANDHELD_LIGHT_DISTANCE = Handheld Light Distance
+option.HANDHELD_LIGHT_BRIGHTNESS = Handheld Light Brightness
+
+
+
+
+
+screen.POST_PROCESSING_SETTINGS = Post Processing
+
+
+
+screen.BLOOM_SETTINGS = Bloom
+
+option.BLOOM_ENABLED = Bloom Enabled
+option.SHOW_BLOOM_FILTERED_TEXTURE = Show Filtered Texture
+option.SHOW_BLOOM_FILTERED_TEXTURE.comment = Show the texture that bloom samples from
+option.SHOW_BLOOM_ADDITION = Show Bloom Addition
+option.SHOW_BLOOM_ADDITION.comment = Show the colors that bloom is adding to the screen
+option.BLOOM_AMOUNT = Bloom Amount
+option.BLOOM_SIZE = Bloom Size
+option.BLOOM_QUALITY = Bloom Quality
+option.BLOOM_QUALITY.comment = Controls the number of samples for bloom level
+option.BLOOM_LEVELS = Bloom Levels
+option.BLOOM_LEVELS.comment = Controls the number of layers of bloom
+option.BLOOM_LOW_CUTOFF = Bloom Low Cutoff
+option.BLOOM_LOW_CUTOFF.comment = The value at which all colors are treated as equally dark
+option.BLOOM_HIGH_CUTOFF = Bloom High Cutoff
+option.BLOOM_HIGH_CUTOFF.comment = The value at which all colors are treated as equally light
+option.BLOOM_CURVE = Bloom Curve
+option.BLOOM_CURVE.comment = How quickly darker colors are ignored
+option.BLOOM_SKY_BRIGHTNESS = Bloom Sky Brightness
+option.BLOOM_ENTITY_BRIGHTNESS = Bloom Entity Brightness
+option.BLOOM_CLOUD_BRIGHTNESS = Bloom Cloud Brightness
+option.BLOOM_HAND_BRIGHTNESS = Bloom Hand Brightness
+
+
+
+screen.SUNRAYS_SETTINGS = Sunrays
+
+option.SUNRAYS_ENABLED = Sunrays Enabled
+option.SUNRAYS_SATURATION = Sunrays Sauration
+option.SUNRAYS_SATURATION.comment = The color of sun rays are the same as the sky color, saturated by this amount
+option.SUNRAYS_QUALITY = Sunrays Quality
+option.SUNRAYS_QUALITY.comment = Controls the number of samples for each pixel
+option.SUNRAYS_COMPUTE_COUNT = Sunrays Compute Count
+option.SUNRAYS_COMPUTE_COUNT.comment = The number of times the sunray amount is computed. Lower values give more performance, higher values give less noise
+option.SUNRAYS_FLICKERING_FIX = Sunrays Flickering Fix
+option.SUNRAYS_FLICKERING_FIX.comment = Fixes a subtle bug where sunrays flicker when the sun is off-screen
+option.SUNRAYS_AMOUNT_DAY = Sunrays Amount Day
+option.SUNRAYS_AMOUNT_NIGHT = Sunrays Amount Night
+option.SUNRAYS_AMOUNT_SUNRISE = Sunrays Amount Sunrise
+option.SUNRAYS_AMOUNT_SUNSET = Sunrays Amount Sunset
+
+
+
+screen.ANTI_ALIASING_SETTINGS = Anti-Aliasing
+
+option.TAA_ENABLED = TAA
+
+
+
+screen.SHARPENING_SETTINGS = Sharpening
+
+option.SHARPENING_ENABLED = Sharpening Enabled
+option.SHARPEN_AMOUNT = Sharpening Amount
+
+option.SHARPEN_VEL_ADDITION = Velocity Addition
+option.SHARPEN_VEL_ADDITION.comment = How much more to sharpen when moving
+
+option.SHARPENING_DETECT_SIZE = Sharpening Detect Size
+option.SHARPENING_DETECT_SIZE.comment = The number of samples used for determining how to sharpen
+value.SHARPENING_DETECT_SIZE.3 = 3x3
+value.SHARPENING_DETECT_SIZE.5 = 5x5
+value.SHARPENING_DETECT_SIZE.7 = 7x7
+
+
+
+screen.COLOR_CORRECTION_SETTINGS = Color Correction
+
+option.GAMMA = Gamma
+option.GAMMA.comment = Gamma applied to the final image, roughly equivalent to the inverse of saturation
+option.BRIGHTNESS = Brightness
+option.BRIGHTNESS.comment = Brightness applied to the final image
+
+option.SATURATION = Saturation
+option.SATURATION.comment = Saturation applied to the final image
+option.SATURATION_DARK = Saturation Dark
+option.SATURATION_DARK.comment = How much to saturation dark areas
+option.SATURATION_LIGHT = Saturation Light
+option.SATURATION_LIGHT.comment = How much to saturation light areas
+
+option.VIBRANCE = Vibrance
+option.VIBRANCE.comment = Vibrance applied to the final image. This saturates the less saturated colors more than the already saturated colors
+
+option.CONTRAST = Contrast
+option.CONTRAST.comment = Contrast applied to the final image, making colors stick out more
+option.CONTRAST_DETECT_RED = Contrast Detect Red
+option.CONTRAST_DETECT_RED.comment = Contrast Detect is the color that Contrast moves away from
+option.CONTRAST_DETECT_GREEN = Contrast Detect Green
+option.CONTRAST_DETECT_GREEN.comment = Contrast Detect is the color that Contrast moves away from
+option.CONTRAST_DETECT_BLUE = Contrast Detect Blue
+option.CONTRAST_DETECT_BLUE.comment = Contrast Detect is the color that Contrast moves away from
+
+option.TONEMAPPER = Tonemapper
+option.TONEMAPPER.comment = This defines how light data is interpreted.\n\nNone: clamps the value into 0-1\nExtra simple: uses smoothMin and smoothMax to clamp into 0-1\nSimple: Custom simple tonemapper\nACES: Industry standard for good, realistic graphics
+value.TONEMAPPER.0 = None
+value.TONEMAPPER.1 = Extra Simple
+value.TONEMAPPER.2 = Simple
+value.TONEMAPPER.3 = ACES
+
+
+
+screen.VIGNETTE_SETTINGS = Vignette
+
+option.VIGNETTE_ENABLED = Vignette Enabled
+option.VIGNETTE_AMOUNT_SURFACE = Vignette Amount Surface
+option.VIGNETTE_AMOUNT_SURFACE.comment = The amount of vignette when exposed to sunlight
+option.VIGNETTE_AMOUNT_UNDERGROUND = Vignette Amount Underground
+option.VIGNETTE_AMOUNT_UNDERGROUND.comment = The amount of vignette when not exposed to sunlight
+option.VIGNETTE_SCALE = Vignette Scale
+option.VIGNETTE_CURVE = Vignette Curve
+option.VIGNETTE_NOISE_ENABLED = Vignette Noise Enabled
+option.VIGNETTE_NOISE_ENABLED.comment = Adds a slight amount of noise to the Vignette to prevent banding
+
+
+
+
+
+screen.WAVING_SETTINGS = Waving
+
+option.WAVING_ENABLED = Waving Enabled
+option.WAVING_SPEED = Waving Speed
+option.WAVING_WORLD_SCALE = Waving World Scale
+option.WAVING_AMOUNT_1 = Waving Amount 1
+option.WAVING_AMOUNT_1.comment = How much waving there is for things like cobwebs, dead bushes, sugar cane, etc
+option.WAVING_AMOUNT_2 = Waving Amount 2
+option.WAVING_AMOUNT_2.comment = How much waving there is for things like saplings, flowers, crops, etc
+option.WAVING_AMOUNT_3 = Waving Amount 3
+option.WAVING_AMOUNT_3.comment = How much waving there is for things like grass, wheat, etc
+option.WAVING_AMOUNT_RAIN_MULT = Amount Rain Multiplier
+option.WAVING_AMOUNT_RAIN_MULT.comment = How much to increase the waving amount when it is raining
