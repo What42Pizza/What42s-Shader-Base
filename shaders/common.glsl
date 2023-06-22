@@ -64,6 +64,8 @@ uniform float betterRainStrength;
 	attribute vec2 mc_midTexCoord;
 #endif
 
+#define HAND_DEPTH 0.175
+
 
 
 // DON'T DELETE:
@@ -165,7 +167,13 @@ float cubeLength(vec2 v) {
 }
 
 float getDistortFactor(vec2 v) {
-	return cubeLength(v) + SHADOW_DISTORT_FACTOR;
+	#if SHADOW_DISTORT_EXP == 2
+		return length(v) + SHADOW_DISTORT_ADDITION;
+	#elif SHADOW_DISTORT_EXP == 3
+		return cubeLength(v) + SHADOW_DISTORT_ADDITION;
+	#else
+		return pow(pow(abs(v.x), SHADOW_DISTORT_EXP) + pow(abs(v.y), SHADOW_DISTORT_EXP), 1.0 / SHADOW_DISTORT_EXP) + SHADOW_DISTORT_ADDITION;
+	#endif
 }
 
 vec3 distort(vec3 v, float factor) {
@@ -251,6 +259,49 @@ bool depthIsSky(float depth) {
 	return depth > 0.99;
 }
 
+
+
+///*
+// taken from: https://briansharpe.wordpress.com/2011/11/15/a-fast-and-simple-32bit-floating-point-hash-function/
+vec4 FAST_32_hash(vec2 gridcell) {
+	// gridcell is assumed to be an integer coordinate
+	const vec2 OFFSET = vec2(26.0, 161.0);
+	const float DOMAIN = 71.0;
+	const float SOMELARGEFLOAT = 951.135664;
+	vec4 P = vec4(gridcell.xy, gridcell.xy + 1.0);
+	P = P - floor(P * ( 1.0 / DOMAIN )) * DOMAIN;  // truncate the domain
+	P += OFFSET.xyxy;                              // offset to interesting part of the noise
+	P *= P;                                        // calculate and return the hash
+	return fract(P.xzxz * P.yyww * (1.0 / SOMELARGEFLOAT));
+}
+
+
+
+float noise(int offset) {
+	vec4 hash = FAST_32_hash(vec2(offset));
+	float average = (hash.x + hash.y + hash.z + hash.w) / 4.0;
+	return average * 2.0 - 1.0;
+}
+
+float noise(vec2 texcoord, int offset) {
+	vec4 hash = FAST_32_hash(texcoord * offset * 10000);
+	return hash.x;
+}
+
+vec2 noiseVec2D(vec2 texcoord, int offset) {
+	vec4 hash = FAST_32_hash(texcoord * offset * 10000);
+	return hash.xy * 2.0 - 1.0;
+}
+
+vec3 noiseVec3D(int offset) {
+	vec4 hash = FAST_32_hash(vec2(offset));
+	return hash.xyz * 2.0 - 1.0;
+}
+//*/
+
+
+
+/*
 float noise(int pos) {
 	int x = pos % noiseTextureResolution;
 	int y = (pos / noiseTextureResolution) % noiseTextureResolution;
@@ -258,7 +309,7 @@ float noise(int pos) {
 }
 
 float noise(vec2 texcoord, int offset) {
-	ivec2 coords = ivec2(texcoord * (frameCounter + offset) * noiseTextureResolution) % noiseTextureResolution;
+	ivec2 coords = ivec2(texcoord * offset * noiseTextureResolution) % noiseTextureResolution;
 	return texelFetch(noisetex, coords, 0).x * 2.0 - 1.0;
 }
 
@@ -274,6 +325,7 @@ vec3 noiseVec3D(int offset) {
 	float z = noise(offset + 2000);
 	return vec3(x, y, z);
 }
+*/
 
 
 

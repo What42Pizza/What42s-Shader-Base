@@ -1,7 +1,7 @@
-varying vec3 shadowPos;
-varying float sideShading;
 varying vec4 viewPos;
 varying float lightDot;
+varying float offsetMult;
+varying float sideShading;
 
 #if SHADOW_FILTERING == 1
 	#define SHADOW_OFFSET_COUNT 8
@@ -37,10 +37,6 @@ varying float lightDot;
 		vec3(-0.69, 0.29, 0.55),
 		vec3(-0.29, 0.69, 0.55)
 	);
-#endif
-
-#if SHADOW_FILTERING > 0
-	varying float offsetMult;
 #endif
 
 
@@ -87,12 +83,15 @@ vec3 getLightColor(float blockBrightness, float skyBrightness, float ambientBrig
 		if (lightDot > 0.0) {
 			// surface is facing towards shadowLightPosition
 			
+			vec4 currPos = viewPos;
+			currPos.xy += noiseVec2D(texcoord, frameCounter) * offsetMult * 0.4;
+			vec3 shadowPos = getShadowPos(currPos, lightDot);
 			if (texture2D(shadowtex0, shadowPos.xy).r >= shadowPos.z) {
 				skyBrightness += 1;
 			}
 			#if SHADOW_FILTERING > 0
 				for (int i = 0; i < SHADOW_OFFSET_COUNT; i++) {
-					vec4 offsetViewPos = viewPos;
+					vec4 offsetViewPos = currPos;
 					offsetViewPos.xy += SHADOW_OFFSETS[i].xy * offsetMult;
 					vec3 currentShadowPos = getShadowPos(offsetViewPos, lightDot);
 					float currentShadowWeight = SHADOW_OFFSETS[i].z;
@@ -153,13 +152,7 @@ void doPreLighting() {
 	#ifdef SHADOWS_ENABLED
 		if (lightDot > 0.0) {
 			// vertex is facing towards the sky
-			shadowPos = getShadowPos(viewPos, lightDot);
-			#if SHADOW_FILTERING > 0
-				offsetMult = pow(maxAbs(gl_Vertex.rgb), 0.75) * SHADOW_OFFSET_INCREASE + SHADOW_OFFSET_MIN;
-			#endif
-		} else {
-			// vertex is facing away from the sky
-			shadowPos = vec3(0.0); // mark that this vertex does not need to check the shadow map.
+			offsetMult = pow(maxAbs(gl_Vertex.rgb), 0.75) * SHADOW_OFFSET_INCREASE + SHADOW_OFFSET_MIN;
 		}
 	#endif
 	

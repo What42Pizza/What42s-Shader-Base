@@ -30,7 +30,7 @@ void main() {
 		
 		vec3 bloomAddition = vec3(0.0);
 		for (int i = 0; i < BLOOM_COMPUTE_COUNT; i++) {
-			bloomAddition += getBloomAddition(sizeMult, i);
+			bloomAddition += getBloomAddition(sizeMult, frameCounter + i);
 		}
 		bloomAddition = bloomAddition / BLOOM_COMPUTE_COUNT * BLOOM_AMOUNT * 0.3;
 		#ifdef NETHER
@@ -59,7 +59,7 @@ void main() {
 		
 		float sunraysAddition = 0.0;
 		for (int i = 0; i < SUNRAYS_COMPUTE_COUNT; i ++) {
-			sunraysAddition += getSunraysAddition(i);
+			sunraysAddition += getSunraysAddition(frameCounter + i);
 		};
 		sunraysAddition /= SUNRAYS_COMPUTE_COUNT;
 		sunraysAddition *= max(1.0 - length(lightCoord - 0.5) * 1.5, 0.0);

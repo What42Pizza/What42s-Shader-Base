@@ -1,18 +1,16 @@
 Current:
-Move around color tex buffers
-Make night time look like vanilla
-Take FXAA from Comp Reimagined
-Add noise to shadow sampling
-Blocklight flickering
-Custom sky color
-Switch to Contrast Adaptive Sharpening
 Get permission from EminGT
+Add more ways to get to options (e.g. access to light brightnesses from the 'shading' menu)
+Move around color tex buffers
+Take FXAA from Comp Reimagined?
+Custom sky color?
+Switch to Contrast Adaptive Sharpening?
 Dither final output?
 Disable unneded shader files?
 Test glsl optimizer (https://github.com/aras-p/glsl-optimizer)
 Add support for fogStart, fogEnd, and fogMode?
 Find a way to stop sugar cane base from waving?
-Test waving stuff for pre-1.13?
+Test waving stuff for pre-1.13
 Find ways to render things at lower resolutions?
 Replace manual skylight mults with dot products?
 Determine performance costs
@@ -27,7 +25,7 @@ Realistic water?
 
 
 Ongoing / continuous:
-OPTIMIZE (see shader assembly? https://gamedev.stackexchange.com/questions/65695/aquire-disassembly-of-shader-code)
+OPTIMIZE (see shader assembly?)
 Keep the shader simple!
 Update documentation
 Make it work in different dimensions
@@ -39,6 +37,7 @@ Match the vanilla look
 
 
 Finished:
+Add noise to shadow sampling
 Make sunray light position smarter
 Look into better AA
 Handheld light

@@ -66,7 +66,7 @@ void doTAA(inout vec3 color, inout vec3 newPrev) {
 	
 	float depth;
 	if (texelFetch(colortex7, ivec2(gl_FragCoord.xy), 0).r > 0.5) {
-		depth = fromLinearDepth(0.175); // idk what should actually be here
+		depth = fromLinearDepth(HAND_DEPTH);
 	} else {
 		depth = texelFetch(depthtex1, texelcoord, 0).r;
 	}

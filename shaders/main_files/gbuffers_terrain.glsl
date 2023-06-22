@@ -44,6 +44,7 @@ void main() {
 	#ifdef OVERWORLD
 		float blockLight = brightnesses.x;
 		float skyLight = brightnesses.y;
+		colorForBloom.rgb = mix(vec3(getColorLum(colorForBloom.rgb)), colorForBloom.rgb, 0.5);
 		colorForBloom.rgb *= max(blockLight * blockLight * 1.05, skyLight * 0.75);
 	#endif
 	
