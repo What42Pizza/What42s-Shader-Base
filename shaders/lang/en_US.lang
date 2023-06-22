@@ -95,8 +95,10 @@ option.shadowMapResolution = Shadow Map Resolution
 option.shadowMapResolution.comment = Resolution of the shadow map. Higher is more accurate, lower is more performance\n\n(Performance cost: HIGH)
 option.shadowDistance = Shadow Distance
 option.shadowDistance.comment = Maximum distance that shadows are rendered\n\n(Performance cost: Unknown)
+option.SHADOW_DISTORT_EXP = Shadow Distort Exponent
+option.SHADOW_DISTORT_EXP.comment = How much more to render closer objects. Higher values increase the resolution of closer objects, lower values increase the resolution of of further objects.\n\n(Performance cost: None)
 option.SHADOW_FILTERING = Shadow Filtering
-option.SHADOW_FILTERING.comment = Shoothens shadow edges\n\n(Performance cost: Medium)
+option.SHADOW_FILTERING.comment = Shoothens shadow edges\n\n(Performance cost: Medium-Low)
 option.EXCLUDE_FOLIAGE = Exlude Foliage
 option.EXCLUDE_FOLIAGE.comment = If true, foliage will not cast shadows\n\n(Performance cost: Low)
 option.sunPathRotation = Sun Path Rotation
@@ -169,14 +171,9 @@ option.SUNRAYS_AMOUNT_SUNSET = Sunrays Amount Sunset
 
 
 
-screen.AA_SETTINGS = Anti Aliasing
+screen.ANTI_ALIASING_SETTINGS = Anti-Aliasing
 
-option.AA_ENABLED = Anti Aliasing
-
-option.AA_TYPE = Anti Aliasing Type
-option.AA_TYPE.comment = The type of anti-aliasing used. Only TAA is supported right now.\n\n4-Frame TAA:  Reacts quickly but flickers more\n8-Frame TAA:  Less flickering but reacts slower
-value.AA_TYPE.1 = 4-Frame TAA
-value.AA_TYPE.2 = 8-Frame TAA
+option.TAA_ENABLED = TAA
 
 
 
@@ -222,8 +219,12 @@ option.CONTRAST_DETECT_GREEN.comment = Contrast Detect is the color that Contras
 option.CONTRAST_DETECT_BLUE = Contrast Detect Blue
 option.CONTRAST_DETECT_BLUE.comment = Contrast Detect is the color that Contrast moves away from
 
-option.ACES_ENABLED = Aces Enabled
-option.ACES_ENABLED.comment = Use the ACES tonemapper
+option.TONEMAPPER = Tonemapper
+option.TONEMAPPER.comment = This defines how light data is interpreted.\n\nNone: clamps the value into 0-1\nExtra simple: uses smoothMin and smoothMax to clamp into 0-1\nSimple: Custom simple tonemapper\nACES: Industry standard for good, realistic graphics
+value.TONEMAPPER.0 = None
+value.TONEMAPPER.1 = Extra Simple
+value.TONEMAPPER.2 = Simple
+value.TONEMAPPER.3 = ACES
 
 
 

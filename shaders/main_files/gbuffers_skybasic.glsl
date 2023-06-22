@@ -58,10 +58,12 @@ void main() {
 
 #ifdef VSH
 
+#include "/lib/taa_jitter.glsl"
+
 void main() {
 	gl_Position = ftransform();
-	#ifdef AA_ENABLED
-		gl_Position.xy += taaOffset * gl_Position.w;
+	#ifdef TAA_ENABLED
+		gl_Position.xy = TAAJitter(gl_Position.xy, gl_Position.w);
 	#endif
 	starData = vec4(gl_Color.rgb, float(gl_Color.r == gl_Color.g && gl_Color.g == gl_Color.b && gl_Color.r > 0.0));
 	upVec = normalize(gbufferModelView[1].xyz);

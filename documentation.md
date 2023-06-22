@@ -49,7 +49,8 @@
 - **colortex3:  Clouds (used to extend fog distance for clouds)**
 - **colortex4:  Sky Color (used for fog)**
 - **colortex5:  Sky Color for Bloom (used for fog)**
-- **colortex6:  Per-frame calculations**
+- **colortex6:  Per-frame Calculations**
+- **colortex7:  Hand Mask (used for fixing hand depth)**
 
 <br>
 

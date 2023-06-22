@@ -16,9 +16,7 @@ void main() {
 	vec3 color = texture2D(texture, texcoord).rgb;
 	vec3 prev = vec3(0.0);
 	
-	float depth;
-	
-	DoTAA(color, prev, depth);
+	doTAA(color, prev);
 	
 	/* DRAWBUFFERS:01 */
 	gl_FragData[0] = vec4(color, 1.0);

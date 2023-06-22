@@ -12,6 +12,16 @@ varying vec2 texcoord;
 
 
 
+// custom tonemapper, probably trash according to color theory
+vec3 simpleTonemap(vec3 color) {
+	color = max(color, 0.0);
+	vec3 lowCurve = color * color;
+	vec3 highCurve = 1.0 - 1.0 / (color * 10.0 + 1.0);
+	return mix(lowCurve, highCurve, color);
+}
+
+
+
 #ifdef FSH
 
 #include "/lib/aces.glsl"
@@ -117,16 +127,21 @@ void main() {
 	
 	// ======== COLOR CORRECTION & TONE MAPPING ========
 	
-	#ifdef ACES_ENABLED
-		color = acesFitted(color);
-	#else
+	// brightness
+	color *= (BRIGHTNESS - 1.0) / 5.0 + 1.0;
+	
+	// tonemapper
+	#if TONEMAPPER == 0
+		color = clamp(color, vec3(0.0), vec3(1.0));
+	#elif TONEMAPPER == 1
 		color = smoothClamp(color, vec3(0.0), vec3(1.0), 0.001);
+	#elif TONEMAPPER == 2
+		color = simpleTonemap(color);
+	#elif TONEMAPPER == 3
+		color = acesFitted(color);
 	#endif
 	
 	color = pow(color, vec3(1.0/2.2));
-	
-	// brightness
-	color *= (BRIGHTNESS - 1.0) / 5.0 + 1.0;
 	
 	// contrast
 	color = mix(CONTRAST_DETECT_COLOR, color, CONTRAST / 5.0 + 1.0);

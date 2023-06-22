@@ -64,6 +64,8 @@ void main() {
 
 #ifdef VSH
 
+#include "/lib/taa_jitter.glsl"
+
 void main() {
 	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
 	lmcoord  = (gl_TextureMatrix[1] * gl_MultiTexCoord1).xy;
@@ -72,8 +74,8 @@ void main() {
 	doPreLighting();
 	
 	gl_Position = gl_ProjectionMatrix * (gl_ModelViewMatrix * gl_Vertex);
-	#ifdef AA_ENABLED
-		gl_Position.xy += taaOffset * gl_Position.w;
+	#ifdef TAA_ENABLED
+		gl_Position.xy = TAAJitter(gl_Position.xy, gl_Position.w);
 	#endif
 }
 
