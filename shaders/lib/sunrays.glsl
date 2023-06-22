@@ -1,6 +1,6 @@
 float getSunraysAddition(int noiseOffset) {
 	
-	const float NOISE_MULT = 1.0;
+	const float NOISE_MULT = 2.0;
 	
 	vec2 noiseVec = noiseVec2D(texcoord, noiseOffset);
 	vec2 startPos = texcoord;

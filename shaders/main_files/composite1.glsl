@@ -30,7 +30,7 @@ void main() {
 		
 		vec3 bloomAddition = vec3(0.0);
 		for (int i = 0; i < BLOOM_COMPUTE_COUNT; i++) {
-			bloomAddition += getBloomAddition(sizeMult, frameCounter + i);
+			bloomAddition += getBloomAddition(sizeMult, i);
 		}
 		bloomAddition = bloomAddition / BLOOM_COMPUTE_COUNT * BLOOM_AMOUNT * 0.3;
 		#ifdef NETHER
@@ -52,24 +52,21 @@ void main() {
 	// ======== SUNRAYS ========
 	
 	#ifdef SUNRAYS_ENABLED
-		
-		vec4 sunraysData = getCachedSunraysData();
-		vec3 sunraysColor = sunraysData.xyz;
-		float sunraysAmount = sunraysData.w;
-		
-		float sunraysAddition = 0.0;
-		for (int i = 0; i < SUNRAYS_COMPUTE_COUNT; i ++) {
-			sunraysAddition += getSunraysAddition(frameCounter + i);
-		};
-		sunraysAddition /= SUNRAYS_COMPUTE_COUNT;
-		sunraysAddition *= max(1.0 - length(lightCoord - 0.5) * 1.5, 0.0);
-		
-		if (shadowLightPosition.b > 0.0) {
-			vec4 sunlightPercents = getCachedSkylightPercents();
-			sunraysAddition *= max(sunlightPercents.z, sunlightPercents.w) * 0.8;
+		if (shadowLightPosition.b < 0.0) {
+			
+			vec4 sunraysData = getCachedSunraysData();
+			vec3 sunraysColor = sunraysData.xyz;
+			float sunraysAmount = sunraysData.w;
+			
+			float sunraysAdditionTotal = 0.0;
+			for (int i = 0; i < SUNRAYS_COMPUTE_COUNT; i ++) {
+				sunraysAdditionTotal += getSunraysAddition(i);
+			};
+			sunraysAdditionTotal /= SUNRAYS_COMPUTE_COUNT;
+			sunraysAdditionTotal *= max(1.0 - length(lightCoord - 0.5) * 1.5, 0.0);
+			color += sunraysAdditionTotal * sunraysColor * sunraysAmount * 0.3;
+			
 		}
-		color += sunraysAddition * sunraysAmount * 0.3 * sunraysColor;
-		
 	#endif
 	
 	

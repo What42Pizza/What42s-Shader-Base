@@ -21,12 +21,10 @@ void main() {
 
 #ifdef VSH
 
-#include "/lib/taa_jitter.glsl"
-
 void main() {
 	gl_Position = ftransform();
-	#ifdef TAA_ENABLED
-		gl_Position.xy = TAAJitter(gl_Position.xy, gl_Position.w);
+	#ifdef AA_ENABLED
+		gl_Position.xy += taaOffset * gl_Position.w;
 	#endif
 	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
 	lmcoord  = (gl_TextureMatrix[1] * gl_MultiTexCoord1).xy;

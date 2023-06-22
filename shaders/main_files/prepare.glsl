@@ -6,7 +6,7 @@
 
 #ifdef FSH
 
-#include "/lib/per_frame.glsl"
+#include "/lib/perFrame.glsl"
 
 /* DRAWBUFFERS:6 */
 void main() {

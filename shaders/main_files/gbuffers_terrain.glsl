@@ -44,7 +44,6 @@ void main() {
 	#ifdef OVERWORLD
 		float blockLight = brightnesses.x;
 		float skyLight = brightnesses.y;
-		colorForBloom.rgb = mix(vec3(getColorLum(colorForBloom.rgb)), colorForBloom.rgb, 0.5);
 		colorForBloom.rgb *= max(blockLight * blockLight * 1.05, skyLight * 0.75);
 	#endif
 	
@@ -64,7 +63,6 @@ void main() {
 #ifdef VSH
 
 #include "/lib/waving.glsl"
-#include "/lib/taa_jitter.glsl"
 
 void main() {
 	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
@@ -81,8 +79,8 @@ void main() {
 		gl_Position = gl_ProjectionMatrix * (gl_ModelViewMatrix * gl_Vertex);
 	#endif
 	
-	#ifdef TAA_ENABLED
-		gl_Position.xy = TAAJitter(gl_Position.xy, gl_Position.w);
+	#ifdef AA_ENABLED
+		gl_Position.xy += taaOffset * gl_Position.w;
 	#endif
 	
 }
