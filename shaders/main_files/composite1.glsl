@@ -1,6 +1,6 @@
-//---------------------------------//
-//        Post-Processing 2        //
-//---------------------------------//
+//--------------------------------------------------//
+//        Post-Processing 2 (anything noisy)        //
+//--------------------------------------------------//
 
 
 
@@ -15,36 +15,27 @@ varying vec2 lightCoord;
 #include "/lib/sunrays.glsl"
 
 void main() {
-	vec3 color = texelFetch(texture, ivec2(gl_FragCoord.xy), 0).rgb;
+	vec3 noisyAdditions = vec3(0.0);
 	
-	vec3 screenPos = vec3(texcoord, texture2D(depthtex0, texcoord).r);
-	vec3 viewPos = screenToView(screenPos);
-	vec3 playerPos = viewToPlayer(viewPos);
+	vec3 playerPos = texelFetch(colortex10, texelcoord, 0).rgb;
 	
 	
 	
-	// ======== BLOOM ========
+	// ======== BLOOM CALCULATIONS ========
 	
 	#ifdef BLOOM_ENABLED
-		float sizeMult = 1.0 / sqrt(length(playerPos));
+		float sizeMult = inversesqrt(length(playerPos));
 		
 		vec3 bloomAddition = vec3(0.0);
 		for (int i = 0; i < BLOOM_COMPUTE_COUNT; i++) {
 			bloomAddition += getBloomAddition(sizeMult, frameCounter + i);
 		}
-		bloomAddition = bloomAddition / BLOOM_COMPUTE_COUNT * BLOOM_AMOUNT * 0.3;
+		bloomAddition *= (1.0 / BLOOM_COMPUTE_COUNT) * BLOOM_AMOUNT * 0.3;
 		#ifdef NETHER
 			bloomAddition *= BLOOM_NETHER_MULT;
 		#endif
-		color += bloomAddition;
+		noisyAdditions += bloomAddition;
 		
-		#ifdef SHOW_BLOOM_ADDITION
-			color = bloomAddition;
-		#endif
-		
-		#ifdef SHOW_BLOOM_FILTERED_TEXTURE
-			color = texture2D(colortex2, texcoord).rgb;
-		#endif
 	#endif
 	
 	
@@ -68,14 +59,14 @@ void main() {
 			vec4 sunlightPercents = getCachedSkylightPercents();
 			sunraysAddition *= max(sunlightPercents.z, sunlightPercents.w) * 0.8;
 		}
-		color += sunraysAddition * sunraysAmount * 0.3 * sunraysColor;
+		noisyAdditions += sunraysAddition * sunraysAmount * 0.3 * sunraysColor;
 		
 	#endif
 	
 	
 	
-	/* DRAWBUFFERS:0 */
-	gl_FragData[0] = vec4(color, 1.0);
+	/* DRAWBUFFERS:8 */
+	gl_FragData[0] = vec4(noisyAdditions, 1.0);
 }
 
 #endif

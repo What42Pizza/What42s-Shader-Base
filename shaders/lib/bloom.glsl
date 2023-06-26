@@ -2,10 +2,12 @@ vec3 getBloomAddition(float sizeMult, int noiseOffset) {
 	vec3 bloomAddition = vec3(0.0);
 	for (int layer = 0; layer < BLOOM_LEVELS; layer++) {
 		float size = float(layer + 1) / BLOOM_LEVELS;
-		float layerLen = size * sizeMult * BLOOM_SIZE * 0.2;
+		size = pow(size, 1.25);
+		float layerLen = size * sizeMult * BLOOM_SIZE * 0.1;
 		
-		vec2 noiseVec = noiseVec2D(texcoord, noiseOffset * BLOOM_LEVELS * 2 + layer);
-		vec2 coord = texcoord + noiseVec * size * sizeMult * 0.1;
+		vec2 noiseVec = noiseVec2D(texcoord, noiseOffset) * 0.06;
+		noiseOffset ++;
+		vec2 coord = texcoord + noiseVec * size * sizeMult;
 		
 		vec3 brightest = vec3(0.0);
 		float brightestLum = 0.0;
@@ -13,8 +15,7 @@ vec3 getBloomAddition(float sizeMult, int noiseOffset) {
 		for (int i = 0; i <= BLOOM_SAMPLE_COUNT; i ++) {
 			
 			float len = sqrt(float(i) / BLOOM_SAMPLE_COUNT + 0.1) * layerLen;
-			float angle = float(i) + noiseVec.x * 10.0;
-			vec2 offset = vec2(cos(angle) * len / aspectRatio, sin(angle) * len);
+			vec2 offset = vec2(cos(i + noiseVec.x) * len / aspectRatio, sin(i + noiseVec.x) * len);
 			vec2 sampleCoord = coord + offset;
 			
 			vec3 sample = texelFetch(colortex2, ivec2(sampleCoord / pixelSize), 0).rgb;

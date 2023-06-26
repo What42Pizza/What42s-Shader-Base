@@ -1,4 +1,10 @@
 Current:
+Remove as many divisions as possible
+Re-add SHOW_BLOOM_ADDITION
+Add other debug settings?
+Create defines for colortex names
+Replace pre-calculated values (in prepare) with uniforms?
+Set sunrays color to either sun color or moon color
 Get permission from EminGT
 Add more ways to get to options (e.g. access to light brightnesses from the 'shading' menu)
 Move around color tex buffers
@@ -32,7 +38,12 @@ Make it work in different dimensions
 Cut down on the number of options
 Add more values to options
 Add more comments to options
-Match the vanilla look
+Match the vanilla look, especially in:
+	night
+	underwater
+	nether
+	end
+	caves
 
 
 

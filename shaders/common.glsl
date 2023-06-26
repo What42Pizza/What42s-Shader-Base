@@ -44,6 +44,9 @@ uniform sampler2D colortex4;
 uniform sampler2D colortex5;
 uniform sampler2D colortex6;
 uniform sampler2D colortex7;
+uniform sampler2D colortex8;
+uniform sampler2D colortex9;
+uniform sampler2D colortex10;
 uniform sampler2D depthtex0;
 uniform sampler2D depthtex1;
 uniform sampler2D shadowtex0;
@@ -71,11 +74,16 @@ uniform float betterRainStrength;
 // DON'T DELETE:
 /*
 const bool colortex1Clear = false;
-const int colortex6Format = R32F;
+const int colortex6Format = R16F;
+const int colortex7Format = R8;
+const int colortex9Format = RGB16F;
+const int colortex10Format = RGB16F;
+const bool colortex0MipmapEnabled = true;
+const bool colortex8MipmapEnabled = true;
 const float wetnessHalflife = 50.0f;
 const float drynessHalflife = 50.0f;
-*/
 const int noiseTextureResolution = 256;
+*/
 
 
 
@@ -264,7 +272,7 @@ vec4 FAST_32_hash(vec2 gridcell) {
 	const float DOMAIN = 71.0;
 	const float SOMELARGEFLOAT = 951.135664;
 	vec4 P = vec4(gridcell.xy, gridcell.xy + 1.0);
-	P = P - floor(P * ( 1.0 / DOMAIN )) * DOMAIN;  // truncate the domain
+	P = P - floor(P * (1.0 / DOMAIN)) * DOMAIN;  // truncate the domain
 	P += OFFSET.xyxy;                              // offset to interesting part of the noise
 	P *= P;                                        // calculate and return the hash
 	return fract(P.xzxz * P.yyww * (1.0 / SOMELARGEFLOAT));
@@ -276,11 +284,6 @@ float noise(int offset) {
 	vec4 hash = FAST_32_hash(vec2(offset));
 	float average = (hash.x + hash.y + hash.z + hash.w) / 4.0;
 	return average * 2.0 - 1.0;
-}
-
-float noise(vec2 texcoord, int offset) {
-	vec4 hash = FAST_32_hash(texcoord * offset * 10000);
-	return hash.x;
 }
 
 vec2 noiseVec2D(vec2 texcoord, int offset) {

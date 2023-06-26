@@ -7,6 +7,8 @@ option.DARKEN_SKY_UNDERGROUND.comment = Darken the sky when underground
 
 screen.FOG_SETTINGS = Fog
 
+option.FOG_ENABLED = Fog
+option.FOG_ENABLED.comment = (Performance cost: Low-None)
 option.FOG_HEIGHT_SCALE = Fog Height Scale
 option.FOG_HEIGHT_SCALE.comment = How much further you can see upwards vs forwards
 option.FOG_EXTRA_CLOUDS_DISTANCE = Extra Clouds Distance
@@ -130,6 +132,7 @@ screen.POST_PROCESSING_SETTINGS = Post Processing
 screen.BLOOM_SETTINGS = Bloom
 
 option.BLOOM_ENABLED = Bloom Enabled
+option.BLOOM_EMABLED.comment = Makes bright colors bleed into the surroundings\n\n(Performance cost: Low-Medium, depending on settings)
 option.SHOW_BLOOM_FILTERED_TEXTURE = Show Filtered Texture
 option.SHOW_BLOOM_FILTERED_TEXTURE.comment = Show the texture that bloom samples from
 option.SHOW_BLOOM_ADDITION = Show Bloom Addition
@@ -156,6 +159,7 @@ option.BLOOM_HAND_BRIGHTNESS = Bloom Hand Brightness
 screen.SUNRAYS_SETTINGS = Sunrays
 
 option.SUNRAYS_ENABLED = Sunrays Enabled
+option.SUNRAYS_ENABLED.comment = (Performance cost: Low-Medium, depending on settings)
 option.SUNRAYS_SATURATION = Sunrays Sauration
 option.SUNRAYS_SATURATION.comment = The color of sun rays are the same as the sky color, saturated by this amount
 option.SUNRAYS_QUALITY = Sunrays Quality
@@ -174,12 +178,14 @@ option.SUNRAYS_AMOUNT_SUNSET = Sunrays Amount Sunset
 screen.ANTI_ALIASING_SETTINGS = Anti-Aliasing
 
 option.TAA_ENABLED = TAA
+option.TAA_ENABLED.comment = Smoothens edges and makes them less pixelated while also removing flickering. (Performance cost: Low)
 
 
 
 screen.SHARPENING_SETTINGS = Sharpening
 
 option.SHARPENING_ENABLED = Sharpening Enabled
+option.SHARPENING_ENABLED.comment = Accentuates edges (hopefully without making them pixelated). (Performance cost: Low)
 option.SHARPEN_AMOUNT = Sharpening Amount
 
 option.SHARPEN_VEL_ADDITION = Velocity Addition
@@ -231,6 +237,7 @@ value.TONEMAPPER.3 = ACES
 screen.VIGNETTE_SETTINGS = Vignette
 
 option.VIGNETTE_ENABLED = Vignette Enabled
+option.VIGNETTE_ENABLED.comment = Darkens the edges of the screen. (Performance cost: Low-None)
 option.VIGNETTE_AMOUNT_SURFACE = Vignette Amount Surface
 option.VIGNETTE_AMOUNT_SURFACE.comment = The amount of vignette when exposed to sunlight
 option.VIGNETTE_AMOUNT_UNDERGROUND = Vignette Amount Underground
@@ -247,6 +254,7 @@ option.VIGNETTE_NOISE_ENABLED.comment = Adds a slight amount of noise to the Vig
 screen.WAVING_SETTINGS = Waving
 
 option.WAVING_ENABLED = Waving Enabled
+option.WAVING_ENABLED.comment = (Performance cost: Low-None)
 option.WAVING_SPEED = Waving Speed
 option.WAVING_WORLD_SCALE = Waving World Scale
 option.WAVING_AMOUNT_1 = Waving Amount 1

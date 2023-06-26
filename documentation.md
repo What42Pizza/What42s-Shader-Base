@@ -51,6 +51,9 @@
 - **colortex5:  Sky Color for Bloom (used for fog)**
 - **colortex6:  Per-frame Calculations**
 - **colortex7:  Hand Mask (used for fixing hand depth)**
+- **colortex8:  Noisy Additions (things like bloom, sunrays, etc (anything that gives noisy results) are rendered to this buffer then LOD-sampled when added to the image)**
+- **colortex9:  Normals**
+- **colortex10:  PlayerPos Values (difference between player pos and world pos)**
 
 <br>
 
@@ -70,3 +73,11 @@ NOTE: I haven't seen any noticable performance increase from doing this, so it m
 - **2: Try something different (whether or not it seems like a good idea)**
 - **3: Probably go back to step 1**
 - **4: Mess around with the formulas to simplify and optimize without compromising quality**
+
+<br>
+<br>
+<br>
+
+## Extra:
+
+- **[Noise Functions](https://gist.github.com/patriciogonzalezvivo/670c22f3966e662d2f83)**
