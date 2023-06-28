@@ -47,10 +47,13 @@ uniform sampler2D colortex7;
 uniform sampler2D colortex8;
 uniform sampler2D colortex9;
 uniform sampler2D colortex10;
+uniform sampler2D colortex11;
 uniform sampler2D depthtex0;
 uniform sampler2D depthtex1;
 uniform sampler2D shadowtex0;
 uniform sampler2D noisetex;
+
+
 
 uniform vec2 viewSize;
 uniform vec2 pixelSize;
@@ -71,20 +74,20 @@ uniform float betterRainStrength;
 
 
 
-// DON'T DELETE:
-/*
-const bool colortex1Clear = false;
-const int colortex6Format = R16F;
-const int colortex7Format = R8;
-const int colortex9Format = RGB16F;
-const int colortex10Format = RGB16F;
-const bool colortex0MipmapEnabled = true;
-const bool colortex8MipmapEnabled = true;
-const float wetnessHalflife = 50.0f;
-const float drynessHalflife = 50.0f;
-const int noiseTextureResolution = 256;
-*/
+// buffer values:
 
+#define MAIN_BUFFER              texture
+#define TAA_PREV_BUFFER          colortex1
+#define BLOOM_BUFFER             colortex2
+#define CLOUD_MASK_BUFFER        colortex3
+#define SKY_COLOR_BUFFER         colortex4
+#define SKY_BLOOM_COLOR_BUFFER   colortex5
+#define PER_FRAME_VALUES_BUFFER  colortex6
+#define HAND_MASK_BUFFER         colortex7
+#define NOISY_ADDITIONS_BUFFER   colortex8
+#define NORMALS_BUFFER           colortex9
+#define PLAYER_POS_BUFFER        colortex10
+#define DEBUG_BUFFER             colortex11
 
 
 // cached value indicies:
@@ -202,6 +205,14 @@ float maxAbs(vec3 v) {
 	float g = abs(v.g);
 	float b = abs(v.b);
 	return max(max(r, g), b);
+}
+
+float inverseLength(vec3 v) {
+	return inversesqrt(v.x * v.x + v.y * v.y + v.z * v.z);
+}
+
+float powDot(vec3 a, vec3 b, float e) {
+	return pow(a.x * b.x, e) + pow(a.y * b.y, e) + pow(a.z * b.z, e);
 }
 
 vec3 smoothMin(vec3 v1, vec3 v2, float a) {
@@ -328,7 +339,7 @@ vec3 noiseVec3D(int offset) {
 
 
 float getCachedValue(int index) {
-	return texelFetch(colortex6, ivec2(index, 0), 0).r;
+	return texelFetch(PER_FRAME_VALUES_BUFFER, ivec2(index, 0), 0).r;
 }
 
 vec4 getCachedSkylightPercents() {

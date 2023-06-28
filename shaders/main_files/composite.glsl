@@ -13,8 +13,8 @@ varying vec2 texcoord;
 #include "/lib/fog.glsl"
 
 void main() {
-	vec3 color = texelFetch(texture, texelcoord, 0).rgb;
-	vec3 bloomColor = texture2D(colortex2, texcoord).rgb;
+	vec3 color = texelFetch(MAIN_BUFFER, texelcoord, 0).rgb;
+	vec3 bloomColor = texture2D(BLOOM_BUFFER, texcoord).rgb;
 	
 	vec3 screenPos = vec3(texcoord, texture2D(depthtex0, texcoord).r);
 	vec3 viewPos = screenToView(screenPos);

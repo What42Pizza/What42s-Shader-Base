@@ -11,7 +11,6 @@ varying vec3 normal;
 
 // custom tonemapper, probably trash according to color theory
 vec3 simpleTonemap(vec3 color) {
-	color = max(color, 0.0);
 	vec3 lowCurve = color * color;
 	vec3 highCurve = 1.0 - 1.0 / (color * 10.0 + 1.0);
 	return mix(lowCurve, highCurve, color);
@@ -24,7 +23,7 @@ vec3 simpleTonemap(vec3 color) {
 #include "/lib/aces.glsl"
 
 void main() {
-	vec3 color = texelFetch(texture, texelcoord, 0).rgb;
+	vec3 color = texelFetch(MAIN_BUFFER, texelcoord, 0).rgb;
 	
 	
 	
@@ -35,80 +34,80 @@ void main() {
 		#if SHARPENING_DETECT_SIZE == 3
 			
 			vec3 colorTotal = color;
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2(-1, -1), 0).rgb / length(vec2(-1, -1));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2( 0, -1), 0).rgb / length(vec2( 0, -1));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2( 1, -1), 0).rgb / length(vec2( 1, -1));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2(-1,  0), 0).rgb / length(vec2(-1,  0));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2( 1,  0), 0).rgb / length(vec2( 1,  0));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2(-1,  1), 0).rgb / length(vec2(-1,  1));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2( 0,  1), 0).rgb / length(vec2( 0,  1));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2( 1,  1), 0).rgb / length(vec2( 1,  1));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2(-1, -1), 0).rgb / length(vec2(-1, -1));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2( 0, -1), 0).rgb / length(vec2( 0, -1));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2( 1, -1), 0).rgb / length(vec2( 1, -1));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2(-1,  0), 0).rgb / length(vec2(-1,  0));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2( 1,  0), 0).rgb / length(vec2( 1,  0));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2(-1,  1), 0).rgb / length(vec2(-1,  1));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2( 0,  1), 0).rgb / length(vec2( 0,  1));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2( 1,  1), 0).rgb / length(vec2( 1,  1));
 			vec3 blur = colorTotal / 7.82842712474619; // value is pre-calculated total of weights + 1
 			
 		#elif SHARPENING_DETECT_SIZE == 5
 			
 			vec3 colorTotal = color;
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2(-1, -2), 0).rgb / length(vec2(-1, -2));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2( 0, -2), 0).rgb / length(vec2( 0, -2));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2( 1, -2), 0).rgb / length(vec2( 1, -2));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2(-2, -1), 0).rgb / length(vec2(-2, -1));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2(-1, -1), 0).rgb / length(vec2(-1, -1));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2( 0, -1), 0).rgb / length(vec2( 0, -1));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2( 1, -1), 0).rgb / length(vec2( 1, -1));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2( 2, -1), 0).rgb / length(vec2( 2, -1));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2(-2,  0), 0).rgb / length(vec2(-2,  0));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2(-1,  0), 0).rgb / length(vec2(-1,  0));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2( 1,  0), 0).rgb / length(vec2( 1,  0));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2( 2,  0), 0).rgb / length(vec2( 2,  0));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2(-2,  1), 0).rgb / length(vec2(-2,  1));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2(-1,  1), 0).rgb / length(vec2(-1,  1));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2( 0,  1), 0).rgb / length(vec2( 0,  1));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2( 1,  1), 0).rgb / length(vec2( 1,  1));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2( 2,  1), 0).rgb / length(vec2( 2,  1));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2(-1,  2), 0).rgb / length(vec2(-1,  2));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2( 0,  2), 0).rgb / length(vec2( 0,  2));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2( 1,  2), 0).rgb / length(vec2( 1,  2));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2(-1, -2), 0).rgb / length(vec2(-1, -2));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2( 0, -2), 0).rgb / length(vec2( 0, -2));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2( 1, -2), 0).rgb / length(vec2( 1, -2));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2(-2, -1), 0).rgb / length(vec2(-2, -1));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2(-1, -1), 0).rgb / length(vec2(-1, -1));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2( 0, -1), 0).rgb / length(vec2( 0, -1));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2( 1, -1), 0).rgb / length(vec2( 1, -1));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2( 2, -1), 0).rgb / length(vec2( 2, -1));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2(-2,  0), 0).rgb / length(vec2(-2,  0));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2(-1,  0), 0).rgb / length(vec2(-1,  0));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2( 1,  0), 0).rgb / length(vec2( 1,  0));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2( 2,  0), 0).rgb / length(vec2( 2,  0));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2(-2,  1), 0).rgb / length(vec2(-2,  1));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2(-1,  1), 0).rgb / length(vec2(-1,  1));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2( 0,  1), 0).rgb / length(vec2( 0,  1));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2( 1,  1), 0).rgb / length(vec2( 1,  1));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2( 2,  1), 0).rgb / length(vec2( 2,  1));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2(-1,  2), 0).rgb / length(vec2(-1,  2));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2( 0,  2), 0).rgb / length(vec2( 0,  2));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2( 1,  2), 0).rgb / length(vec2( 1,  2));
 			vec3 blur = colorTotal / 13.406135888745856; // value is pre-calculated total of weights + 1
 			
 		#elif SHARPENING_DETECT_SIZE == 7
 			
 			vec3 colorTotal = color;
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2(-1, -3), 0).rgb / length(vec2(-1, -3));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2( 0, -3), 0).rgb / length(vec2( 0, -3));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2( 1, -3), 0).rgb / length(vec2( 1, -3));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2(-2, -2), 0).rgb / length(vec2(-2, -2));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2(-1, -2), 0).rgb / length(vec2(-1, -2));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2( 0, -2), 0).rgb / length(vec2( 0, -2));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2( 1, -2), 0).rgb / length(vec2( 1, -2));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2( 2, -2), 0).rgb / length(vec2( 2, -2));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2(-3, -1), 0).rgb / length(vec2(-3, -1));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2(-2, -1), 0).rgb / length(vec2(-2, -1));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2(-1, -1), 0).rgb / length(vec2(-1, -1));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2( 0, -1), 0).rgb / length(vec2( 0, -1));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2( 1, -1), 0).rgb / length(vec2( 1, -1));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2( 2, -1), 0).rgb / length(vec2( 2, -1));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2( 3, -1), 0).rgb / length(vec2( 3, -1));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2(-3,  0), 0).rgb / length(vec2(-3,  0));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2(-2,  0), 0).rgb / length(vec2(-2,  0));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2(-1,  0), 0).rgb / length(vec2(-1,  0));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2( 1,  0), 0).rgb / length(vec2( 1,  0));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2( 2,  0), 0).rgb / length(vec2( 2,  0));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2( 3,  0), 0).rgb / length(vec2( 3,  0));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2(-3,  1), 0).rgb / length(vec2(-3,  1));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2(-2,  1), 0).rgb / length(vec2(-2,  1));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2(-1,  1), 0).rgb / length(vec2(-1,  1));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2( 0,  1), 0).rgb / length(vec2( 0,  1));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2( 1,  1), 0).rgb / length(vec2( 1,  1));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2( 2,  1), 0).rgb / length(vec2( 2,  1));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2( 3,  1), 0).rgb / length(vec2( 3,  1));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2(-2,  2), 0).rgb / length(vec2(-2,  2));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2(-1,  2), 0).rgb / length(vec2(-1,  2));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2( 0,  2), 0).rgb / length(vec2( 0,  2));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2( 1,  2), 0).rgb / length(vec2( 1,  2));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2( 2,  2), 0).rgb / length(vec2( 2,  2));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2(-1,  3), 0).rgb / length(vec2(-1,  3));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2( 0,  3), 0).rgb / length(vec2( 0,  3));
-			colorTotal += texelFetch(texture, ivec2(gl_FragCoord.xy) + ivec2( 1,  3), 0).rgb / length(vec2( 1,  3));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2(-1, -3), 0).rgb / length(vec2(-1, -3));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2( 0, -3), 0).rgb / length(vec2( 0, -3));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2( 1, -3), 0).rgb / length(vec2( 1, -3));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2(-2, -2), 0).rgb / length(vec2(-2, -2));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2(-1, -2), 0).rgb / length(vec2(-1, -2));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2( 0, -2), 0).rgb / length(vec2( 0, -2));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2( 1, -2), 0).rgb / length(vec2( 1, -2));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2( 2, -2), 0).rgb / length(vec2( 2, -2));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2(-3, -1), 0).rgb / length(vec2(-3, -1));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2(-2, -1), 0).rgb / length(vec2(-2, -1));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2(-1, -1), 0).rgb / length(vec2(-1, -1));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2( 0, -1), 0).rgb / length(vec2( 0, -1));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2( 1, -1), 0).rgb / length(vec2( 1, -1));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2( 2, -1), 0).rgb / length(vec2( 2, -1));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2( 3, -1), 0).rgb / length(vec2( 3, -1));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2(-3,  0), 0).rgb / length(vec2(-3,  0));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2(-2,  0), 0).rgb / length(vec2(-2,  0));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2(-1,  0), 0).rgb / length(vec2(-1,  0));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2( 1,  0), 0).rgb / length(vec2( 1,  0));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2( 2,  0), 0).rgb / length(vec2( 2,  0));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2( 3,  0), 0).rgb / length(vec2( 3,  0));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2(-3,  1), 0).rgb / length(vec2(-3,  1));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2(-2,  1), 0).rgb / length(vec2(-2,  1));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2(-1,  1), 0).rgb / length(vec2(-1,  1));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2( 0,  1), 0).rgb / length(vec2( 0,  1));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2( 1,  1), 0).rgb / length(vec2( 1,  1));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2( 2,  1), 0).rgb / length(vec2( 2,  1));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2( 3,  1), 0).rgb / length(vec2( 3,  1));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2(-2,  2), 0).rgb / length(vec2(-2,  2));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2(-1,  2), 0).rgb / length(vec2(-1,  2));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2( 0,  2), 0).rgb / length(vec2( 0,  2));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2( 1,  2), 0).rgb / length(vec2( 1,  2));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2( 2,  2), 0).rgb / length(vec2( 2,  2));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2(-1,  3), 0).rgb / length(vec2(-1,  3));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2( 0,  3), 0).rgb / length(vec2( 0,  3));
+			colorTotal += texelFetch(MAIN_BUFFER, ivec2(gl_FragCoord.xy) + ivec2( 1,  3), 0).rgb / length(vec2( 1,  3));
 			vec3 blur = colorTotal / 18.683504912586983; // value is pre-calculated total of weights + 1
 			
 		#endif
@@ -128,10 +127,11 @@ void main() {
 	color *= (BRIGHTNESS - 1.0) / 5.0 + 1.0;
 	
 	// tonemapper
+	color = max(color, 0.0);
 	#if TONEMAPPER == 0
-		color = clamp(color, vec3(0.0), vec3(1.0));
+		color = min(color, vec3(1.0));
 	#elif TONEMAPPER == 1
-		color = smoothClamp(color, vec3(0.0), vec3(1.0), 0.001);
+		color = smoothMin(color, vec3(1.0), 0.01);
 	#elif TONEMAPPER == 2
 		color = simpleTonemap(color);
 	#elif TONEMAPPER == 3
@@ -171,15 +171,14 @@ void main() {
 	
 	
 	
-	// ======= DEBUG ========
+	// ======= DEBUG OUTPUT ========
 	
-	#ifdef SHOW_BLOOM_FILTERED_TEXTURE
-		color = texwelFetch(colortex2, texelcoord, 0).rgb;
+
+	#if defined BLOOM_SHOW_ADDITION || defined BLOOM_SHOW_FILTERED_TEXTURE
+		color = texelFetch(DEBUG_BUFFER, texelcoord, 0).rgb;
 	#endif
 	
 	
-	
-	//color = texelFetch(colortex9, texelcoord, 0).rgb / 2 + 0.5;
 	
 	/* DRAWBUFFERS:0 */
 	gl_FragData[0] = vec4(color, 1.0);

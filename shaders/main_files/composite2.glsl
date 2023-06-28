@@ -13,9 +13,9 @@ varying vec2 texcoord;
 #include "/lib/ssao.glsl"
 
 void main() {
-	vec3 color = texelFetch(texture, texelcoord, 0).rgb;
+	vec3 color = texelFetch(MAIN_BUFFER, texelcoord, 0).rgb;
 	
-	vec3 playerPos = texelFetch(colortex10, texelcoord, 0).rgb;
+	vec3 playerPos = texelFetch(PLAYER_POS_BUFFER, texelcoord, 0).rgb;
 	
 	
 	
@@ -30,8 +30,9 @@ void main() {
 	
 	// ======== NOISY ADDITIONS ========
 	
-	vec3 noisyAdditions = textureLod(colortex8, texcoord, BLOOM_MIP_MAP).rgb;
-	//color += noisyAdditions;
+	const int noiseMipMap = 2;
+	vec3 noisyAdditions = textureLod(NOISY_ADDITIONS_BUFFER, texcoord, noiseMipMap).rgb;
+	color += noisyAdditions;
 	
 	
 	

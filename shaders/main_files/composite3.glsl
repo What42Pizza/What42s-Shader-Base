@@ -13,7 +13,7 @@ varying vec2 texcoord;
 #include "/lib/taa.glsl"
 
 void main() {
-	vec3 color = texelFetch(texture, texelcoord, 0).rgb;
+	vec3 color = texelFetch(MAIN_BUFFER, texelcoord, 0).rgb;
 	vec3 prev = vec3(0.0);
 	
 	doTAA(color, prev);

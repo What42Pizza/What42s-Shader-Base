@@ -12,11 +12,14 @@ varying vec3 glnormal;
 #ifdef FSH
 
 void main() {
-	vec4 color = texture2D(texture, texcoord) * glcolor;
+	vec4 color = texture2D(MAIN_BUFFER, texcoord) * glcolor;
 	
-	vec3 screenPos = vec3(gl_FragCoord.xy / viewSize, gl_FragCoord.z);
-	vec3 viewPos = screenToView(screenPos);
-	vec3 playerPos = viewToPlayer(viewPos);
+	
+	#ifdef HANDHELD_LIGHT_ENABLED
+		vec3 screenPos = vec3(gl_FragCoord.xy / viewSize, gl_FragCoord.z);
+		vec3 viewPos = screenToView(screenPos);
+		vec3 playerPos = viewToPlayer(viewPos);
+	#endif
 	
 	
 	
@@ -46,6 +49,16 @@ void main() {
 		float blockLight = brightnesses.x;
 		float skyLight = brightnesses.y;
 		colorForBloom.rgb *= max(blockLight * blockLight * 1.05, skyLight * 0.75);
+	#endif
+	
+	
+	
+	// show dangerous light
+	
+	#ifdef SHOW_DANGEROUS_LIGHT
+		if (lmcoord.x < 0.5) {
+			color.rgb = mix(color.rgb, vec3(1.0, 0.0, 0.0), 0.6);
+		}
 	#endif
 	
 	

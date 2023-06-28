@@ -133,10 +133,10 @@ screen.BLOOM_SETTINGS = Bloom
 
 option.BLOOM_ENABLED = Bloom Enabled
 option.BLOOM_EMABLED.comment = Makes bright colors bleed into the surroundings\n\n(Performance cost: Low-Medium, depending on settings)
-option.SHOW_BLOOM_FILTERED_TEXTURE = Show Filtered Texture
-option.SHOW_BLOOM_FILTERED_TEXTURE.comment = Show the texture that bloom samples from
-option.SHOW_BLOOM_ADDITION = Show Bloom Addition
-option.SHOW_BLOOM_ADDITION.comment = Show the colors that bloom is adding to the screen
+option.BLOOM_SHOW_FILTERED_TEXTURE = Show Filtered Texture
+option.BLOOM_SHOW_FILTERED_TEXTURE.comment = Show the texture that bloom samples from
+option.BLOOM_SHOW_ADDITION = Show Bloom Addition
+option.BLOOM_SHOW_ADDITION.comment = Show the colors that bloom is adding to the screen
 option.BLOOM_AMOUNT = Bloom Amount
 option.BLOOM_SIZE = Bloom Size
 option.BLOOM_QUALITY = Bloom Quality

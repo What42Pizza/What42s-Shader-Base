@@ -8,8 +8,8 @@ vec3 projectPointToPlane(vec3 v, vec3 planePoint, vec3 planeNormal) {
 
 float getOffsetAoInfluence (vec3 centerNormal, vec3 centerPos, vec2 offset) {
 	
-	vec3 offsetNormal = texture2D(colortex9, texcoord + offset).rgb;
-	vec3 offsetPos = texture2D(colortex10, texcoord + offset).rgb;
+	vec3 offsetNormal = texture2D(NORMALS_BUFFER, texcoord + offset).rgb;
+	vec3 offsetPos = texture2D(PLAYER_POS_BUFFER, texcoord + offset).rgb;
 	
 	// exclude if occluder is too far
 	float posDiff = length(centerPos - offsetPos);
@@ -34,8 +34,8 @@ float getAoFactor() {
 	vec2 noiseVec = noiseVec2D(texcoord, frameCounter) * 0.1;
 	//vec2 coord = texcoord + noiseVec;
 	
-	vec3 centerNormal = texelFetch(colortex9, texelcoord, 0).rgb;
-	vec3 centerPos = texelFetch(colortex10, texelcoord, 0).rgb;
+	vec3 centerNormal = texelFetch(NORMALS_BUFFER, texelcoord, 0).rgb;
+	vec3 centerPos = texelFetch(PLAYER_POS_BUFFER, texelcoord, 0).rgb;
 	float centerPosLen = length(centerPos);
 	if (centerPosLen > 1000.0) {return 0.0;}
 	float scale = inversesqrt(centerPosLen);

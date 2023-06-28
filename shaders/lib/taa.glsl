@@ -52,7 +52,7 @@ void neighbourhoodClamping(vec3 color, inout vec3 prevColor, float rawDepth, ino
 			edge = regularEdge;
 		}
 		
-		vec3 offsetColor = texelFetch(texture, offsetCoord, 0).rgb;
+		vec3 offsetColor = texelFetch(MAIN_BUFFER, offsetCoord, 0).rgb;
 		minColor = min(minColor, offsetColor);
 		maxColor = max(maxColor, offsetColor);
 	}
@@ -65,7 +65,7 @@ void neighbourhoodClamping(vec3 color, inout vec3 prevColor, float rawDepth, ino
 void doTAA(inout vec3 color, inout vec3 newPrev) {
 	
 	float depth;
-	if (texelFetch(colortex7, ivec2(gl_FragCoord.xy), 0).r > 0.5) {
+	if (texelFetch(HAND_MASK_BUFFER, texelcoord, 0).r > 0.5) {
 		depth = fromLinearDepth(HAND_DEPTH);
 	} else {
 		depth = texelFetch(depthtex1, texelcoord, 0).r;
@@ -75,29 +75,45 @@ void doTAA(inout vec3 color, inout vec3 newPrev) {
 	vec3 cameraOffset = cameraPosition - previousCameraPosition;
 	vec2 prevCoord = reprojection(coord, cameraOffset);
 	
-	vec3 prevColor = texture2D(colortex1, prevCoord).rgb;
-	if (prevColor == vec3(0.0)) { // Fixes the first frame
-		newPrev = color;
-		return;
-	}
+	vec3 prevColor = texture2D(TAA_PREV_BUFFER, prevCoord).rgb;
+	//if (prevColor == vec3(0.0)) { // Fixes the first frame
+	//	newPrev = color;
+	//	return;
+	//}
 	
 	float edge = 0.0;
 	neighbourhoodClamping(color, prevColor, depth, edge);
 	edge = 0.0;
 	
+	const float blendMin = 0.3;
+	const float blendMax = 0.98;
+	const float blendVariable = 0.2;
+	const float blendConstant = 0.65;
+	const float depthFactor = 0.125 * 1;
+	const float normalFactor = 0.1 * 1;
+	
+	vec3 normal = texelFetch(NORMALS_BUFFER, texelcoord, 0).rgb;
+	vec3 playerPos = texelFetch(PLAYER_POS_BUFFER, texelcoord, 0).rgb;
+	vec3 alteredPlayerPos = exp(abs(playerPos) * pow(length(playerPos), -0.8) * (-1.0 / 1.5));
+	float normalAmount = powDot(alteredPlayerPos, abs(normal), 5);
+	
 	vec2 velocity = (texcoord - prevCoord.xy) * viewSize;
-	float blendFactor = float(
+	float velocityAmount = dot(velocity, velocity) * 10.0;
+	
+	float blendAmount = blendConstant
+		+ exp(-velocityAmount) * blendVariable
+		//- length(cameraOffset) * edge
+		+ sqrt(toLinearDepth(depth)) * depthFactor
+		+ normalAmount * normalFactor;
+	blendAmount = clamp(blendAmount, blendMin, blendMax);
+	blendAmount *= float(
 		prevCoord.x > 0.0 && prevCoord.x < 1.0 &&
 		prevCoord.y > 0.0 && prevCoord.y < 1.0
 	);
-	float blendMinimum = 0.3;
-	float blendVariable = 0.25;
-	float blendConstant = 0.65;
-	float velocityFactor = dot(velocity, velocity) * 10.0;
-	blendFactor *= max(exp(-velocityFactor) * blendVariable + blendConstant - length(cameraOffset) * edge, blendMinimum);
 	
-	color = mix(color, prevColor, blendFactor);
-	//color = texelFetch(texture, ivec2(prevCoord * viewSize), 0).rgb;
+	color = mix(color, prevColor, blendAmount);
+	//color = texelFetch(MAIN_BUFFER, ivec2(prevCoord * viewSize), 0).rgb;
+	//color = vec3(blendAmount);
 	newPrev = color;
 	
 }

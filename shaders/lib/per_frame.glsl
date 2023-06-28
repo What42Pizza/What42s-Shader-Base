@@ -64,7 +64,7 @@ vec3 getAmbientColor(vec4 skylightPercents) {
 vec4 getSunraysData() {
 	vec4 skylightPercents = getSkylightPercents();
 	vec3 skyColor = getSkyColor(skylightPercents);
-	vec3 sunraysColor = mix(skyColor, vec3(getColorLum(skyColor)), -SUNRAYS_SATURATION);
+	vec3 sunraysColor = mix(vec3(getColorLum(skyColor)), skyColor, SUNRAYS_SATURATION);
 	float sunraysAmount =
 		skylightPercents.x * SUNRAYS_AMOUNT_DAY +
 		skylightPercents.y * SUNRAYS_AMOUNT_NIGHT +

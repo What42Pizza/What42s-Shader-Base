@@ -9,7 +9,7 @@ varying vec3 glnormal;
 #ifdef FSH
 
 void main() {
-	vec4 color = texture2D(texture, texcoord) * glcolor;
+	vec4 color = texture2D(MAIN_BUFFER, texcoord) * glcolor;
 	
 	/* DRAWBUFFERS:029 */
 	gl_FragData[0] = color;

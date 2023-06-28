@@ -8,7 +8,7 @@ varying vec3 glnormal;
 #ifdef FSH
 
 void main() {
-	vec4 color = texture2D(texture, texcoord) * glcolor;
+	vec4 color = texture2D(MAIN_BUFFER, texcoord) * glcolor;
 	color *= texture2D(lightmap, lmcoord);
 	
 	/* DRAWBUFFERS:029 */

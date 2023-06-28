@@ -1,13 +1,15 @@
 Current:
+Prevent TAA on entities?
+Exclude sun, moon, and sunrays based on horison multiplier
+Move around color tex buffers
+Do a round of general optimizations
+Move fog to deffered?
 Remove as many divisions as possible
-Re-add SHOW_BLOOM_ADDITION
 Add other debug settings?
-Create defines for colortex names
 Replace pre-calculated values (in prepare) with uniforms?
 Set sunrays color to either sun color or moon color
 Get permission from EminGT
 Add more ways to get to options (e.g. access to light brightnesses from the 'shading' menu)
-Move around color tex buffers
 Take FXAA from Comp Reimagined?
 Custom sky color?
 Switch to Contrast Adaptive Sharpening?
@@ -44,10 +46,13 @@ Match the vanilla look, especially in:
 	nether
 	end
 	caves
+	rain
 
 
 
 Finished:
+Re-add SHOW_BLOOM_ADDITION
+Create name defines for colortex buffers
 Add noise to shadow sampling
 Make sunray light position smarter
 Look into better AA

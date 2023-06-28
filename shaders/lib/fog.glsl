@@ -13,7 +13,7 @@ void applyFog(inout vec3 color, inout vec3 bloomColor) {
 	vec3 playerPosForFog = playerPos;
 	playerPosForFog.y /= FOG_HEIGHT_SCALE;
 	float fog = length(playerPosForFog);
-	if (texture2D(colortex3, texcoord).r > 0.5) {
+	if (texture2D(CLOUD_MASK_BUFFER, texcoord).r > 0.5) {
 		fog /= FOG_EXTRA_CLOUDS_DISTANCE;
 	}
 	
@@ -25,12 +25,12 @@ void applyFog(inout vec3 color, inout vec3 bloomColor) {
 		fog = (fog - 1.0) / (1.0 - mix(FOG_START, FOG_RAIN_START, betterRainStrength)) + 1.0;
 		fog = clamp(fog, 0.0, 1.0);
 		fog = pow(fog, mix(FOG_CURVE, FOG_RAIN_CURVE, betterRainStrength));
-		skyColor = texture2D(colortex4, texcoord).rgb;
-		bloomSkyColor = texture2D(colortex5, texcoord).rgb;
+		skyColor = texture2D(SKY_COLOR_BUFFER, texcoord).rgb;
+		bloomSkyColor = texture2D(SKY_BLOOM_COLOR_BUFFER, texcoord).rgb;
 	} else if (isEyeInWater == 1) {
 		// in water
 		fog /= FOG_WATER_DISTANCE;
-		fog = clamp(fog, 0.0, 1.0);
+		fog = clamp(fog, 0.1, 1.0);
 		fog = pow(fog, FOG_WATER_CURVE);
 		skyColor = vec3(0.0, 0.2, 1.0);
 		bloomSkyColor = skyColor;
