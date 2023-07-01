@@ -1,6 +1,6 @@
 void applyFog(inout vec3 color, inout vec3 bloomColor) {
 	
-	// NOTE: it's kinda more realistic if you only depthtex0 is sampled, the reason depthTex1 is sampled is because it looks more vanilla
+	// NOTE: it's kinda more realistic if only depthtex0 is sampled, the reason depthTex1 is sampled is because it looks more vanilla
 	vec3 screenPos;
 	if (isEyeInWater == 0) {
 		screenPos = vec3(texcoord, texture2D(depthtex0, texcoord).r);

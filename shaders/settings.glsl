@@ -9,7 +9,7 @@ const bool colortex1Clear = false;
 const int colortex6Format = R16F;
 const int colortex7Format = R8;
 const int colortex9Format = RGB16F;
-const int colortex10Format = RGB16F;
+const int colortex10Format = RGB32F;
 const bool colortex0MipmapEnabled = true;
 const bool colortex2MipmapEnabled = true;
 const bool colortex8MipmapEnabled = true;
@@ -132,9 +132,10 @@ const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8
 
 
 
-//#define SSAO
-#define AO_AMOUNT 0.9 // [0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.6 0.7 0.8 0.9 1.0]
+#define SSAO_ENABLED
+#define AO_AMOUNT 1.0 // [0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.6 0.7 0.8 0.9 1.0]
 #define AO_SIZE 1.0 // [0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0 2.25 2.5 2.75 3.0]
+#define AO_QUALITY 4 // [3 4 5 6 7 8 9 10]
 
 
 
@@ -158,7 +159,7 @@ const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8
 
 
 #define SUNRAYS_ENABLED
-#define SUNRAYS_QUALITY 5 // [3 4 5 6 7 8 9 10]
+#define SUNRAYS_QUALITY 4 // [3 4 5 6 7 8 9 10]
 #define SUNRAYS_COMPUTE_COUNT 1 // [1 2 3 5 7 10]
 //#define SUNRAYS_FLICKERING_FIX
 #define SUNRAYS_SATURATION 1.5 // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0 2.2 2.4 2.6 2.7 2.8 3.0]
@@ -175,7 +176,7 @@ const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8
 
 #define SHARPENING_ENABLED
 #define SHARPEN_AMOUNT 0.35 // [0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
-#define SHARPEN_VEL_ADDITION 0.25 // [0.0 0.25 0.5 0.75 1.0 1.25 1.5 1.75 2.0 2.5 3.0 4.0 5.0]
+#define SHARPEN_VEL_ADDITION 0.4 // [0.0 0.2 0.4 0.6 0.8 1.0 1.2 1.4 1.6 1.8 2.0 2.5 3.0 3.5 4.0]
 #define SHARPENING_DETECT_SIZE 5 // [3 5 7]
 
 

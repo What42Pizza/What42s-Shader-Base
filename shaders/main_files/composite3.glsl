@@ -1,6 +1,6 @@
-//-----------------------------//
-//        Anti-Aliasing        //
-//-----------------------------//
+//--------------------------------------------------------//
+//        Post-Processing 3 (adding noisy results)        //
+//--------------------------------------------------------//
 
 
 
@@ -10,17 +10,23 @@ varying vec2 texcoord;
 
 #ifdef FSH
 
-#include "/lib/taa.glsl"
+#include "/lib/ssao.glsl"
 
 void main() {
 	vec3 color = texelFetch(MAIN_BUFFER, texelcoord, 0).rgb;
-	vec3 prev = vec3(0.0);
 	
-	doTAA(color, prev);
 	
-	/* DRAWBUFFERS:01 */
+	
+	// ======== NOISY ADDITIONS ========
+	
+	const int noiseMipMap = 1;
+	vec3 noisyAdditions = texture2DLod(NOISY_ADDITIONS_BUFFER, texcoord, noiseMipMap).rgb;
+	color += noisyAdditions;
+	
+	
+	
+	/* DRAWBUFFERS:0 */
 	gl_FragData[0] = vec4(color, 1.0);
-	gl_FragData[1] = vec4(prev, 1.0);
 }
 
 #endif

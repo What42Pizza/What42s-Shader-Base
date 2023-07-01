@@ -5,9 +5,10 @@ vec3 getBloomAddition(float sizeMult, int noiseOffset) {
 		size = pow(size, 1.25);
 		float layerLen = size * sizeMult * BLOOM_SIZE * 0.1;
 		
-		vec2 noiseVec = noiseVec2D(texcoord, noiseOffset) * 0.05;
+		vec2 noiseVec = noiseVec2D(texcoord, noiseOffset) * 0.03;
 		noiseOffset ++;
 		vec2 coord = texcoord + noiseVec * size * sizeMult;
+		noiseVec *= 100.0;
 		
 		vec3 brightest = vec3(0.0);
 		float brightestLum = 0.0;
@@ -18,9 +19,7 @@ vec3 getBloomAddition(float sizeMult, int noiseOffset) {
 			vec2 offset = vec2(cos(i + noiseVec.x) * len / aspectRatio, sin(i + noiseVec.x) * len);
 			vec2 sampleCoord = coord + offset;
 			
-			const int BLOOM_MIP_MAP = 3;
-			//vec3 sample = texelFetch(BLOOM_BUFFER, ivec2(sampleCoord / pixelSize / pow(2, BLOOM_MIP_MAP)), BLOOM_MIP_MAP).rgb;
-			vec3 sample = texture2DLod(BLOOM_BUFFER, sampleCoord, BLOOM_MIP_MAP).rgb;
+			vec3 sample = texelFetch(BLOOM_BUFFER, ivec2(sampleCoord / pixelSize), 0).rgb;
 			float sampleLum = getColorLum(sample); // for some reason, having this value pre-calculated and stored in its own buffer is slower (but pre-calculating the bloom sky color and putting it in its own buffer is slightly faster??? maybe I need to re-try doing this?)
 			if (sampleLum > brightestLum) {
 				brightest = sample;

@@ -1,4 +1,7 @@
 Current:
+Render transparants to a different texture to apply fog seperately?
+Add SSAO to noise additions?
+Switch to xorShiftHash?
 Prevent TAA on entities?
 Exclude sun, moon, and sunrays based on horison multiplier
 Move around color tex buffers
@@ -25,7 +28,6 @@ Determine performance costs
 Potion effects?
 Show Light Levels option
 Colorblind aids?
-SSAO?
 Custom sun / moon?
 Better shadow filtering?
 Realistic water?
@@ -51,6 +53,8 @@ Match the vanilla look, especially in:
 
 
 Finished:
+Make PlayerPos rotate with player and mult normals by matrix
+SSAO?
 Re-add SHOW_BLOOM_ADDITION
 Create name defines for colortex buffers
 Add noise to shadow sampling

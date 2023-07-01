@@ -1,11 +1,9 @@
 float getSunraysAddition(int noiseOffset) {
 	
-	const float NOISE_MULT = 1.0;
-	
-	vec2 noiseVec = noiseVec2D(texcoord, noiseOffset);
+	vec2 noiseVec = noiseVec2D(texcoord, noiseOffset) * 0.6;
 	vec2 startPos = texcoord;
 	vec2 coordStep = (lightCoord - startPos) / SUNRAY_STEP_COUNT;
-	startPos += coordStep * noiseVec * NOISE_MULT;
+	startPos += coordStep * noiseVec;
 	
 	float total = 0.0;
 	for (int i = 1; i < SUNRAY_STEP_COUNT; i ++) {
@@ -22,5 +20,5 @@ float getSunraysAddition(int noiseOffset) {
 		}
 	}
 	
-	return sqrt(total / SUNRAY_STEP_COUNT);
+	return sqrt(total / SUNRAY_STEP_COUNT) * 0.3;
 }

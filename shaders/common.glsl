@@ -27,6 +27,7 @@ uniform mat4 gbufferProjection;
 uniform mat4 gbufferProjectionInverse;
 uniform mat4 gbufferPreviousProjection;
 uniform mat4 gbufferPreviousModelView;
+uniform mat3 normalMatrix;
 uniform vec3 cameraPosition;
 uniform vec3 previousCameraPosition;
 uniform mat4 shadowModelView;
@@ -50,6 +51,7 @@ uniform sampler2D colortex10;
 uniform sampler2D colortex11;
 uniform sampler2D depthtex0;
 uniform sampler2D depthtex1;
+uniform sampler2D depthtex2;
 uniform sampler2D shadowtex0;
 uniform sampler2D noisetex;
 
@@ -86,8 +88,9 @@ uniform float betterRainStrength;
 #define HAND_MASK_BUFFER         colortex7
 #define NOISY_ADDITIONS_BUFFER   colortex8
 #define NORMALS_BUFFER           colortex9
-#define PLAYER_POS_BUFFER        colortex10
+#define VIEW_POS_BUFFER        colortex10
 #define DEBUG_BUFFER             colortex11
+
 
 
 // cached value indicies:
@@ -140,13 +143,13 @@ vec3 viewToPlayer(vec3 pos) {
 
 
 //vec3 calculateShadowPos(vec3 playerPos) {
-//    vec3 shadowPos = playerToShadow(playerPos);
+//	vec3 shadowPos = playerToShadow(playerPos);
 //	return shadowPos;
-//    float distb = sqrt(shadowPos.x * shadowPos.x + shadowPos.y * shadowPos.y);
-//    float distortFactor = distb * shadowMapBias + (1.0 - shadowMapBias);
-//    shadowPos.xy /= distortFactor;
-//    shadowPos.z *= 0.2;
-//    return shadowPos * 0.5 + 0.5;
+//	float distb = sqrt(shadowPos.x * shadowPos.x + shadowPos.y * shadowPos.y);
+//	float distortFactor = distb * shadowMapBias + (1.0 - shadowMapBias);
+//	shadowPos.xy /= distortFactor;
+//	shadowPos.z *= 0.2;
+//	return shadowPos * 0.5 + 0.5;
 //}
 
 
@@ -155,7 +158,7 @@ vec3 viewToPlayer(vec3 pos) {
 //	vec3 viewPos = screenToView(screenPos);
 //	vec3 playerPos = viewToPlayer(viewPos);
 //	vec3 shadowPos = calculateShadowPos(playerPos);
-//    float shadow0 = texture2D(shadowtex0, shadowPos.st).x;
+//	float shadow0 = texture2D(shadowtex0, shadowPos.st).x;
 //	return shadow0;
 //}
 
@@ -213,6 +216,10 @@ float inverseLength(vec3 v) {
 
 float powDot(vec3 a, vec3 b, float e) {
 	return pow(a.x * b.x, e) + pow(a.y * b.y, e) + pow(a.z * b.z, e);
+}
+
+float powDot(vec2 a, vec2 b, float e) {
+	return pow(a.x * b.x, e) + pow(a.y * b.y, e);
 }
 
 vec3 smoothMin(vec3 v1, vec3 v2, float a) {
@@ -287,6 +294,25 @@ vec4 FAST_32_hash(vec2 gridcell) {
 	P += OFFSET.xyxy;                              // offset to interesting part of the noise
 	P *= P;                                        // calculate and return the hash
 	return fract(P.xzxz * P.yyww * (1.0 / SOMELARGEFLOAT));
+}
+
+
+
+uint rotateRight(uint value, uint shift) {
+    return (value >> shift) | (value << (32u - shift));
+}
+
+float xorShiftHash (float x, float y) {
+	uint v = uint(x * 1000000);
+	v ^= rotateRight(v, 21u);
+	v ^= rotateRight(v, 4u);
+	v ^= rotateRight(v, 10u);
+	v += uint(y * 10000000);
+	v ^= rotateRight(v, 21u);
+	v ^= rotateRight(v, 4u);
+	v ^= rotateRight(v, 10u);
+	v %= 10000;
+	return v / 20000.0 + 0.5;
 }
 
 

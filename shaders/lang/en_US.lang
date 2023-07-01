@@ -7,7 +7,7 @@ option.DARKEN_SKY_UNDERGROUND.comment = Darken the sky when underground
 
 screen.FOG_SETTINGS = Fog
 
-option.FOG_ENABLED = Fog
+option.FOG_ENABLED = Fog Enabled
 option.FOG_ENABLED.comment = (Performance cost: Low-None)
 option.FOG_HEIGHT_SCALE = Fog Height Scale
 option.FOG_HEIGHT_SCALE.comment = How much further you can see upwards vs forwards
@@ -126,6 +126,19 @@ option.HANDHELD_LIGHT_BRIGHTNESS = Handheld Light Brightness
 
 
 screen.POST_PROCESSING_SETTINGS = Post Processing
+
+
+
+screen.SSAO_SETTINGS = SSAO
+
+option.SSAO_ENABLED = SSAO Enabled
+option.SSAO_ENABLED.comment = Darkens corners / crevasses
+option.AO_AMOUNT = AO Amount
+option.AO_AMOUNT.comment = How much to darken corners / crevasses
+option.AO_SIZE = AO Size
+option.AO_SIZE.comment = How much the AO should spread
+option.AO_QUALITY = AO Quality
+option.AO_QUALITY.comment = Controls the number of samples
 
 
 
@@ -265,3 +278,12 @@ option.WAVING_AMOUNT_3 = Waving Amount 3
 option.WAVING_AMOUNT_3.comment = How much waving there is for things like grass, wheat, etc
 option.WAVING_AMOUNT_RAIN_MULT = Amount Rain Multiplier
 option.WAVING_AMOUNT_RAIN_MULT.comment = How much to increase the waving amount when it is raining
+
+
+
+
+
+screen.DEBUG_SETTINGS = Debug
+
+option.SHOW_DANGEROUS_LIGHT = Show Dangerous Light
+option.SHOW_DANGEROUS_LIGHT.comment = Show areas where hostile mobs can spawn

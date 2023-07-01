@@ -2,7 +2,7 @@
 //        TAA        //
 //-------------------//
 
-// All of this code is taken from Complementary Reimagined
+// This code was taken from Complementary Reimagined
 // Link: https://modrinth.com/shader/complementary-reimagined
 
 
@@ -83,19 +83,19 @@ void doTAA(inout vec3 color, inout vec3 newPrev) {
 	
 	float edge = 0.0;
 	neighbourhoodClamping(color, prevColor, depth, edge);
-	edge = 0.0;
 	
 	const float blendMin = 0.3;
 	const float blendMax = 0.98;
 	const float blendVariable = 0.2;
 	const float blendConstant = 0.65;
-	const float depthFactor = 0.125 * 1;
-	const float normalFactor = 0.1 * 1;
+	const float depthFactor = 0.125;
+	const float normalFactor = 0.1;
 	
 	vec3 normal = texelFetch(NORMALS_BUFFER, texelcoord, 0).rgb;
-	vec3 playerPos = texelFetch(PLAYER_POS_BUFFER, texelcoord, 0).rgb;
-	vec3 alteredPlayerPos = exp(abs(playerPos) * pow(length(playerPos), -0.8) * (-1.0 / 1.5));
-	float normalAmount = powDot(alteredPlayerPos, abs(normal), 5);
+	vec3 viewPos = texelFetch(VIEW_POS_BUFFER, texelcoord, 0).rgb;
+	float normalAmount = abs(1.0 - dot(normalize(viewPos * -1.0), normal));
+	normalAmount = pow(normalAmount, 3);
+	normalAmount *= length(normal); // don't increase blend for sky
 	
 	vec2 velocity = (texcoord - prevCoord.xy) * viewSize;
 	float velocityAmount = dot(velocity, velocity) * 10.0;
@@ -113,7 +113,6 @@ void doTAA(inout vec3 color, inout vec3 newPrev) {
 	
 	color = mix(color, prevColor, blendAmount);
 	//color = texelFetch(MAIN_BUFFER, ivec2(prevCoord * viewSize), 0).rgb;
-	//color = vec3(blendAmount);
 	newPrev = color;
 	
 }

@@ -1,81 +1,61 @@
-//--------------------------------------------------//
-//        Post-Processing 2 (anything noisy)        //
-//--------------------------------------------------//
+//---------------------------------//
+//        Post-Processing 1        //
+//---------------------------------//
 
 
 
 varying vec2 texcoord;
-varying vec2 lightCoord;
 
 
 
 #ifdef FSH
 
-#include "/lib/bloom.glsl"
-#include "/lib/sunrays.glsl"
+#include "/lib/ssao.glsl"
+#include "/lib/fog.glsl"
 
 void main() {
-	vec3 noisyAdditions = vec3(0.0);
-	
-	vec3 playerPos = texelFetch(PLAYER_POS_BUFFER, texelcoord, 0).rgb;
-	
+	vec3 color = texelFetch(MAIN_BUFFER, texelcoord, 0).rgb;
+	vec3 bloomColor = texture2D(BLOOM_BUFFER, texcoord).rgb;
 	
 	
-	// ======== BLOOM CALCULATIONS ========
+	
+	// ======== SSAO ========
+	
+	#ifdef SSAO_ENABLED
+		float aoFactor = getAoFactor();
+		color *= 1.0 - aoFactor * AO_AMOUNT;
+	#endif
+	
+	
+	
+	// ======== FOG ========
+	
+	#ifdef FOG_ENABLED
+		if (!depthIsSky(getDepth(texcoord))) {
+			applyFog(color, bloomColor);
+		}
+	#endif
+	
+	
+	
+	// ======== BLOOM FILTERING ========
 	
 	#ifdef BLOOM_ENABLED
-		float sizeMult = inversesqrt(length(playerPos));
-		
-		vec3 bloomAddition = vec3(0.0);
-		for (int i = 0; i < BLOOM_COMPUTE_COUNT; i++) {
-			bloomAddition += getBloomAddition(sizeMult, frameCounter + i);
-		}
-		bloomAddition *= (1.0 / BLOOM_COMPUTE_COUNT) * BLOOM_AMOUNT * 0.08;
-		#ifdef NETHER
-			bloomAddition *= BLOOM_NETHER_MULT;
-		#endif
-		noisyAdditions += bloomAddition;
-		
+		float lum = getColorLum(bloomColor);
+		float alpha = (lum - BLOOM_LOW_CUTOFF) / (BLOOM_HIGH_CUTOFF - BLOOM_LOW_CUTOFF);
+		alpha = pow(clamp(alpha, 0.0, 1.0), BLOOM_CURVE);
+		bloomColor *= alpha;
 	#endif
 	
 	
 	
-	// ======== SUNRAYS ========
-	
-	#ifdef SUNRAYS_ENABLED
-		
-		vec4 sunraysData = getCachedSunraysData();
-		vec3 sunraysColor = sunraysData.xyz;
-		float sunraysAmount = sunraysData.w;
-		
-		float sunraysAddition = 0.0;
-		for (int i = 0; i < SUNRAYS_COMPUTE_COUNT; i ++) {
-			sunraysAddition += getSunraysAddition(frameCounter + i);
-		};
-		sunraysAddition /= SUNRAYS_COMPUTE_COUNT;
-		sunraysAddition *= max(1.0 - length(lightCoord - 0.5) * 1.5, 0.0);
-		
-		if (shadowLightPosition.b > 0.0) {
-			vec4 sunlightPercents = getCachedSkylightPercents();
-			sunraysAddition *= max(sunlightPercents.z, sunlightPercents.w) * 0.8;
-		}
-		noisyAdditions += sunraysAddition * sunraysAmount * 0.3 * sunraysColor;
-		
-	#endif
-	
-	
-	
-	/* DRAWBUFFERS:8 */
-	gl_FragData[0] = vec4(noisyAdditions, 1.0);
-	
-	#ifdef BLOOM_SHOW_ADDITION
-		/* RENDERTARGETS:8,11 */
-		gl_FragData[1] = vec4(bloomAddition, 1.0);
-		
-	#elif defined BLOOM_SHOW_FILTERED_TEXTURE
-		/* RENDERTARGETS:8,11 */
-		gl_FragData[1] = vec4(texelFetch(BLOOM_BUFFER, texelcoord, 0).rgb, 1.0);
-		
+	#ifdef BLOOM_ENABLED
+		/* RENDERTARGETS: 0,2 */
+		gl_FragData[0] = vec4(color, 1.0);
+		gl_FragData[1] = vec4(bloomColor, 1.0);
+	#else
+		/* RENDERTARGETS: 0 */
+		gl_FragData[0] = vec4(color, 1.0);
 	#endif
 }
 
@@ -88,11 +68,6 @@ void main() {
 void main() {
 	gl_Position = ftransform();
 	texcoord = gl_MultiTexCoord0.xy;
-	
-	vec3 lightPos = shadowLightPosition * mat3(gbufferProjection);
-	lightPos /= lightPos.z;
-	lightCoord = lightPos.xy * 0.5 + 0.5;
-	
 }
 
 #endif

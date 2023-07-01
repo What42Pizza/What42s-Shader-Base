@@ -32,7 +32,7 @@ void main() {
 	#endif
 	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
 	glcolor = gl_Color;
-	glnormal = gl_Normal;
+	glnormal = gl_NormalMatrix * gl_Normal;
 }
 
 #endif

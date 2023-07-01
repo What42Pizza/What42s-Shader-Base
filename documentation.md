@@ -53,7 +53,7 @@
 - **colortex7:  Hand Mask (used for fixing hand depth)**
 - **colortex8:  Noisy Additions (things like bloom, sunrays, etc (anything that gives noisy results) are rendered to this buffer then LOD-sampled when added to the image)**
 - **colortex9:  Normals**
-- **colortex10:  PlayerPos Values (difference between player pos and world pos)**
+- **colortex10:  ViewPos Values (the position of each pixel in relation to the camera)**
 - **colortex11:  Debug Output**
 
 <br>

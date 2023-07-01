@@ -57,7 +57,7 @@ void main() {
 	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
 	lmcoord  = (gl_TextureMatrix[1] * gl_MultiTexCoord1).xy;
 	glcolor = gl_Color;
-	glnormal = gl_Normal;
+	glnormal = gl_NormalMatrix * gl_Normal;
 	
 	doPreLighting();
 	
