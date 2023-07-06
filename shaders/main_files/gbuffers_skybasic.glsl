@@ -43,7 +43,7 @@ void main() {
 	colorForBloom *= sqrt(BLOOM_SKY_BRIGHTNESS);
 	
 	/* DRAWBUFFERS:0245 */
-	// write to the buffers: main MAIN_BUFFER, bloom, sky color, and bloom sky color
+	// write to the buffers: main, bloom, sky color, and bloom sky color
 	gl_FragData[0] = vec4(color, 1.0);
 	gl_FragData[1] = vec4(colorForBloom, 1.0);
 	gl_FragData[2] = vec4(color, 1.0);

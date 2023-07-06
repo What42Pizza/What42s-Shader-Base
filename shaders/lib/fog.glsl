@@ -1,54 +1,64 @@
-void applyFog(inout vec3 color, inout vec3 bloomColor) {
-	
-	// NOTE: it's kinda more realistic if only depthtex0 is sampled, the reason depthTex1 is sampled is because it looks more vanilla
-	vec3 screenPos;
+#ifdef FSH
+
+void applyFog(inout vec3 color, inout vec3 colorForBloom, float fogAmount, vec3 fogSkyColor, vec3 fogBoomSkyColor) {
+	vec3 colorMix;
+	vec3 bloomColorMix;
 	if (isEyeInWater == 0) {
-		screenPos = vec3(texcoord, texture2D(depthtex0, texcoord).r);
+		colorMix = texelFetch(SKY_COLOR_BUFFER, texelcoord, 0).rgb;
+		bloomColorMix = texelFetch(SKY_BLOOM_COLOR_BUFFER, texelcoord, 0).rgb;
 	} else {
-		screenPos = vec3(texcoord, texture2D(depthtex1, texcoord).r);
+		colorMix = fogSkyColor;
+		bloomColorMix = fogBloomSkyColor;
 	}
-	vec3 viewPos = screenToView(screenPos);
-	vec3 playerPos = viewToPlayer(viewPos);
+	color.rgb = mix(color.rgb, colorMix, fogAmount);
+	colorForBloom.rgb = mix(colorForBloom.rgb, bloomColorMix, fogAmount);
+}
+
+#endif
+
+
+
+#ifdef VSH
+
+void getFogData(vec3 playerPos, inout float fogAmount, inout vec3 fogSkyColor, inout vec3 fogBloomSkyColor) {
 	
-	vec3 playerPosForFog = playerPos;
-	playerPosForFog.y /= FOG_HEIGHT_SCALE;
-	float fog = length(playerPosForFog);
-	if (texture2D(CLOUD_MASK_BUFFER, texcoord).r > 0.5) {
-		fog /= FOG_EXTRA_CLOUDS_DISTANCE;
-	}
+	playerPos.y /= FOG_HEIGHT_SCALE;
+	fogAmount = length(playerPos);
+	#ifdef SHADER_CLOUDS
+		fogAmount /= FOG_EXTRA_CLOUDS_DISTANCE;
+	#endif
 	
-	vec3 skyColor;
-	vec3 bloomSkyColor;
 	if (isEyeInWater == 0) {
 		// not in liquid
-		fog /= far;
-		fog = (fog - 1.0) / (1.0 - mix(FOG_START, FOG_RAIN_START, betterRainStrength)) + 1.0;
-		fog = clamp(fog, 0.0, 1.0);
-		fog = pow(fog, mix(FOG_CURVE, FOG_RAIN_CURVE, betterRainStrength));
-		skyColor = texture2D(SKY_COLOR_BUFFER, texcoord).rgb;
-		bloomSkyColor = texture2D(SKY_BLOOM_COLOR_BUFFER, texcoord).rgb;
+		fogAmount /= far;
+		fogAmount = (fogAmount - 1.0) / (1.0 - mix(FOG_START, FOG_RAIN_START, betterRainStrength)) + 1.0;
+		fogAmount = clamp(fogAmount, 0.0, 1.0);
+		fogAmount = pow(fogAmount, mix(FOG_CURVE, FOG_RAIN_CURVE, betterRainStrength));
+		
 	} else if (isEyeInWater == 1) {
 		// in water
-		fog /= FOG_WATER_DISTANCE;
-		fog = clamp(fog, 0.1, 1.0);
-		fog = pow(fog, FOG_WATER_CURVE);
-		skyColor = vec3(0.0, 0.2, 1.0);
-		bloomSkyColor = skyColor;
+		fogAmount /= FOG_WATER_DISTANCE;
+		fogAmount = clamp(fogAmount, 0.1, 1.0);
+		fogAmount = pow(fogAmount, FOG_WATER_CURVE);
+		fogSkyColor = vec3(0.0, 0.2, 1.0);
+		fogBloomSkyColor = fogSkyColor;
+		
 	} else if (isEyeInWater == 2) {
 		// in lava
-		fog = 1.0;
-		skyColor = vec3(0.8, 0.2, 0.1);
-		bloomSkyColor = skyColor;
+		fogAmount = 1.0;
+		fogSkyColor = vec3(0.8, 0.2, 0.1);
+		fogBloomSkyColor = fogSkyColor;
+		
 	} else if (isEyeInWater == 3) {
 		// in powdered snow
-		fog /= FOG_WATER_DISTANCE * 0.025;
-		fog = clamp(fog, 0.0, 1.0);
-		fog = pow(fog, FOG_WATER_CURVE);
-		skyColor = vec3(0.7, 0.85, 1.0);
-		bloomSkyColor = skyColor;
+		fogAmount /= FOG_WATER_DISTANCE * 0.025;
+		fogAmount = clamp(fogAmount, 0.0, 1.0);
+		fogAmount = pow(fogAmount, FOG_WATER_CURVE);
+		fogSkyColor = vec3(0.7, 0.85, 1.0);
+		fogBloomSkyColor = fogSkyColor;
+		
 	}
 	
-	color = mix(color, skyColor, fog);
-	bloomColor = mix(bloomColor, bloomSkyColor, fog);
-	
 }
+
+#endif

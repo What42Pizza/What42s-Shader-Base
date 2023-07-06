@@ -18,7 +18,7 @@ void main() {
 	if (texelFetch(HAND_MASK_BUFFER, texelcoord, 0).r > 0.5) {
 		depth = fromLinearDepth(1);
 	} else {
-		depth = texelFetch(depthtex0, texelcoord, 0).r;
+		depth = texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r;
 	}
 	vec3 screenPos = vec3(texcoord, depth);
 	vec3 viewPos = screenToView(screenPos);

@@ -1,26 +1,31 @@
-vec3 getBloomAddition(float sizeMult, int noiseOffset) {
+vec3 getBloomAddition(float sizeMult, inout uint rng) {
 	vec3 bloomAddition = vec3(0.0);
 	for (int layer = 0; layer < BLOOM_LEVELS; layer++) {
-		float size = float(layer + 1) / BLOOM_LEVELS;
+		float size = float(layer + 1) * (1.0 / BLOOM_LEVELS);
 		size = pow(size, 1.25);
-		float layerLen = size * sizeMult * BLOOM_SIZE * 0.1;
+		size *= sizeMult;
 		
-		vec2 noiseVec = noiseVec2D(texcoord, noiseOffset) * 0.03;
-		noiseOffset ++;
-		vec2 coord = texcoord + noiseVec * size * sizeMult;
-		noiseVec *= 100.0;
+		vec2 noiseVec = randomVec2(rng) * 0.02;
+		vec2 coord = texcoord + noiseVec * size;
+		float noise = noiseVec.x * 100000.0;
+		
+		size *= BLOOM_SIZE * 0.1;
 		
 		vec3 brightest = vec3(0.0);
 		float brightestLum = 0.0;
 		const int BLOOM_SAMPLE_COUNT = BLOOM_QUALITY * BLOOM_QUALITY;
 		for (int i = 0; i <= BLOOM_SAMPLE_COUNT; i ++) {
 			
-			float len = sqrt(float(i) / BLOOM_SAMPLE_COUNT + 0.1) * layerLen;
-			vec2 offset = vec2(cos(i + noiseVec.x) * len / aspectRatio, sin(i + noiseVec.x) * len);
+			float len = sqrt(float(i) / BLOOM_SAMPLE_COUNT + 0.1) * size;
+			vec2 offset = vec2(cos(i + noise) * len * (1.0 / aspectRatio), sin(i + noise) * len);
 			vec2 sampleCoord = coord + offset;
 			
-			vec3 sample = texelFetch(BLOOM_BUFFER, ivec2(sampleCoord / pixelSize), 0).rgb;
+			vec3 sample = texelFetch(BLOOM_BUFFER, ivec2(sampleCoord * (1.0 / pixelSize)), 0).rgb;
 			float sampleLum = getColorLum(sample); // for some reason, having this value pre-calculated and stored in its own buffer is slower (but pre-calculating the bloom sky color and putting it in its own buffer is slightly faster??? maybe I need to re-try doing this?)
+			
+			//float interpValue = float(sampleLum > getColorLum(brightest)); // doesn't seem any faster?
+			//brightest = brightest * (1.0 - interpValue) + sample * interpValue;
+			
 			if (sampleLum > brightestLum) {
 				brightest = sample;
 				brightestLum = sampleLum;
@@ -31,5 +36,7 @@ vec3 getBloomAddition(float sizeMult, int noiseOffset) {
 		bloomAddition += brightest;
 		
 	}
-	return bloomAddition / BLOOM_LEVELS;
+	bloomAddition *= 1.0 / BLOOM_LEVELS;
+	
+	return bloomAddition * 0.08;
 }

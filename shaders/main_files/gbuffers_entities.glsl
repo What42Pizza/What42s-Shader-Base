@@ -48,7 +48,7 @@ void main() {
 	
 	
 	
-	// bloom value
+	// bloom
 	
 	vec4 colorForBloom = color;
 	colorForBloom.rgb *= sqrt(BLOOM_ENTITY_BRIGHTNESS);

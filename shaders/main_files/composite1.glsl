@@ -11,7 +11,6 @@ varying vec2 texcoord;
 #ifdef FSH
 
 #include "/lib/ssao.glsl"
-#include "/lib/fog.glsl"
 
 void main() {
 	vec3 color = texelFetch(MAIN_BUFFER, texelcoord, 0).rgb;
@@ -24,16 +23,6 @@ void main() {
 	#ifdef SSAO_ENABLED
 		float aoFactor = getAoFactor();
 		color *= 1.0 - aoFactor * AO_AMOUNT;
-	#endif
-	
-	
-	
-	// ======== FOG ========
-	
-	#ifdef FOG_ENABLED
-		if (!depthIsSky(getDepth(texcoord))) {
-			applyFog(color, bloomColor);
-		}
 	#endif
 	
 	

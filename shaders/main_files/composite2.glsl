@@ -18,19 +18,21 @@ void main() {
 	vec3 noisyAdditions = vec3(0.0);
 	
 	vec3 viewPos = texelFetch(VIEW_POS_BUFFER, texelcoord, 0).rgb;
+	vec3 playerPos = viewToPlayer(viewPos);
+	uint rng = rngStart;
 	
 	
 	
 	// ======== BLOOM CALCULATIONS ========
 	
 	#ifdef BLOOM_ENABLED
-		float sizeMult = inversesqrt(length(viewPos));
+		float sizeMult = inversesqrt(length(playerPos));
 		
 		vec3 bloomAddition = vec3(0.0);
 		for (int i = 0; i < BLOOM_COMPUTE_COUNT; i++) {
-			bloomAddition += getBloomAddition(sizeMult, frameCounter + i);
+			bloomAddition += getBloomAddition(sizeMult, rng);
 		}
-		bloomAddition *= (1.0 / BLOOM_COMPUTE_COUNT) * BLOOM_AMOUNT * 0.08;
+		bloomAddition *= (1.0 / BLOOM_COMPUTE_COUNT) * BLOOM_AMOUNT;
 		#ifdef NETHER
 			bloomAddition *= BLOOM_NETHER_MULT;
 		#endif
@@ -50,7 +52,7 @@ void main() {
 		
 		float sunraysAddition = 0.0;
 		for (int i = 0; i < SUNRAYS_COMPUTE_COUNT; i ++) {
-			sunraysAddition += getSunraysAddition(frameCounter + i);
+			sunraysAddition += getSunraysAddition(rng);
 		};
 		sunraysAddition /= SUNRAYS_COMPUTE_COUNT;
 		sunraysAddition *= max(1.0 - length(lightCoord - 0.5) * 1.5, 0.0);

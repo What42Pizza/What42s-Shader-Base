@@ -173,6 +173,8 @@ screen.SUNRAYS_SETTINGS = Sunrays
 
 option.SUNRAYS_ENABLED = Sunrays Enabled
 option.SUNRAYS_ENABLED.comment = (Performance cost: Low-Medium, depending on settings)
+option.SUNRAYS_STYLE = Sunrays Style
+option.SUNRAYS_STYLE.comment = Alters how the sunrays are calculated. Option 1 is more natural, option 2 is more impressive looking.
 option.SUNRAYS_SATURATION = Sunrays Sauration
 option.SUNRAYS_SATURATION.comment = The color of sun rays are the same as the sky color, saturated by this amount
 option.SUNRAYS_QUALITY = Sunrays Quality
@@ -285,5 +287,7 @@ option.WAVING_AMOUNT_RAIN_MULT.comment = How much to increase the waving amount 
 
 screen.DEBUG_SETTINGS = Debug
 
+option.USE_FAST_RAND = Use Fast Random
+option.USE_FAST_RAND.comment = The faster random function is technically worse, but the performance boost more than makes up for the supposedly worse visual quality
 option.SHOW_DANGEROUS_LIGHT = Show Dangerous Light
 option.SHOW_DANGEROUS_LIGHT.comment = Show areas where hostile mobs can spawn

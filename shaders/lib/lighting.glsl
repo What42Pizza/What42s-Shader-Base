@@ -84,7 +84,7 @@ vec3 getLightColor(float blockBrightness, float skyBrightness, float ambientBrig
 			// surface is facing towards shadowLightPosition
 			
 			vec4 currPos = viewPos;
-			currPos.xy += noiseVec2D(texcoord, frameCounter) * offsetMult * 0.4;
+			currPos.xy += randomVec2(rngStart) * offsetMult * 0.4;
 			vec3 shadowPos = getShadowPos(currPos, lightDot);
 			if (texture2D(shadowtex0, shadowPos.xy).r >= shadowPos.z) {
 				skyBrightness += 1;

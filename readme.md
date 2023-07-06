@@ -15,10 +15,13 @@
 
 - **Shadows**
 - **Anti-Aliasing**
+- **SSAO**
+- **Sunrays**
 - **Bloom**
 - **Sharpening**
-- **Sunrays**
-- **Tonemapping**
+- **Waving grass, leaves, etc**
+- **Fog**
+- **Tonemapping and Color Correction**
 - - Brightness
 - - Gamma
 - - Saturation

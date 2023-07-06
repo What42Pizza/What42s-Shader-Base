@@ -16,8 +16,6 @@ uniform ivec2 eyeBrightnessSmooth;
 uniform float eyeAltitude;
 uniform int isEyeInWater;
 uniform int heldBlockLightValue;
-uniform vec3 cameraPoition;
-uniform vec3 previousCameraPoition;
 uniform float rainStrength;
 uniform float wetness;
 uniform float screenBrightness;
@@ -88,8 +86,12 @@ uniform float betterRainStrength;
 #define HAND_MASK_BUFFER         colortex7
 #define NOISY_ADDITIONS_BUFFER   colortex8
 #define NORMALS_BUFFER           colortex9
-#define VIEW_POS_BUFFER        colortex10
+#define VIEW_POS_BUFFER          colortex10
 #define DEBUG_BUFFER             colortex11
+
+#define DEPTH_BUFFER_ALL                   depthtex0
+#define DEPTH_BUFFER_WO_TRANS              depthtex1
+#define DEPTH_BUFFER_WO_TRANS_OR_HANDHELD  depthtex2
 
 
 
@@ -283,6 +285,50 @@ bool depthIsSky(float depth) {
 
 
 ///*
+#ifdef FSH
+	uint rngStart = uint(gl_FragCoord.x) + uint(gl_FragCoord.y) * uint(viewWidth) + uint(frameCounter) * uint(viewWidth) * uint(viewHeight);
+#endif
+
+uint rotateRight(uint value, uint shift) {
+    return (value >> shift) | (value << (32u - shift));
+}
+
+#ifdef USE_FAST_RAND
+	float randomFloat(inout uint rng) {
+		rng ^= rotateRight(rng, 11u);
+		rng ^= rotateRight(rng, 18u);
+		rng ^= rotateRight(rng, 25u);
+		float f = float(rng % 100000u);
+		return f / 50000.0 - 1.0;
+	}
+#else
+	// taken from: https://www.reedbeta.com/blog/hash-functions-for-gpu-rendering/
+	float randomFloat(inout uint rng) {
+		rng = rng * 747796405u + 2891336453u;
+		uint v = ((rng >> ((rng >> 28u) + 4u)) ^ rng) * 277803737u;
+		v = (v >> 22u) ^ v;
+		float f = float(v % 1000000u);
+		return f / 500000.0 - 1.0;
+	}
+#endif
+
+vec2 randomVec2(inout uint rng) {
+	float x = randomFloat(rng);
+	float y = randomFloat(rng);
+	return vec2(x, y);
+}
+
+vec3 randomVec3(inout uint rng) {
+	float x = randomFloat(rng);
+	float y = randomFloat(rng);
+	float z = randomFloat(rng);
+	return vec3(x, y, z);
+}
+//*/
+
+
+
+/*
 // taken from: https://briansharpe.wordpress.com/2011/11/15/a-fast-and-simple-32bit-floating-point-hash-function/
 vec4 FAST_32_hash(vec2 gridcell) {
 	// gridcell is assumed to be an integer coordinate
@@ -294,25 +340,6 @@ vec4 FAST_32_hash(vec2 gridcell) {
 	P += OFFSET.xyxy;                              // offset to interesting part of the noise
 	P *= P;                                        // calculate and return the hash
 	return fract(P.xzxz * P.yyww * (1.0 / SOMELARGEFLOAT));
-}
-
-
-
-uint rotateRight(uint value, uint shift) {
-    return (value >> shift) | (value << (32u - shift));
-}
-
-float xorShiftHash (float x, float y) {
-	uint v = uint(x * 1000000);
-	v ^= rotateRight(v, 21u);
-	v ^= rotateRight(v, 4u);
-	v ^= rotateRight(v, 10u);
-	v += uint(y * 10000000);
-	v ^= rotateRight(v, 21u);
-	v ^= rotateRight(v, 4u);
-	v ^= rotateRight(v, 10u);
-	v %= 10000;
-	return v / 20000.0 + 0.5;
 }
 
 
@@ -332,7 +359,7 @@ vec3 noiseVec3D(int offset) {
 	vec4 hash = FAST_32_hash(vec2(offset));
 	return hash.xyz * 2.0 - 1.0;
 }
-//*/
+*/
 
 
 

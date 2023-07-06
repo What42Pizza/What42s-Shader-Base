@@ -2,15 +2,35 @@ varying vec2 texcoord;
 varying vec4 glcolor;
 varying vec3 glnormal;
 
+#ifdef FOG_ENABLED
+	varying float fogAmount;
+	varying vec3 fogSkyColor;
+	varying vec3 fogBloomSkyColor;
+#endif
+
+
 
 
 #ifdef FSH
 
+#include "/lib/fog.glsl"
+
 void main() {
 	vec4 color = texture2D(MAIN_BUFFER, texcoord) * glcolor;
 	
+	
+	// bloom
+	
 	vec4 colorForBloom = color;
 	colorForBloom.rgb *= sqrt(BLOOM_CLOUD_BRIGHTNESS);
+	
+	
+	// fog
+	
+	#ifdef FOG_ENABLED
+		applyFog(color.rgb, colorForBloom.rgb, fogAmount, fogSkyColor, fogBloomSkyColor);
+	#endif
+	
 	
 	/* DRAWBUFFERS:0239 */
 	gl_FragData[0] = color;
@@ -26,6 +46,7 @@ void main() {
 #ifdef VSH
 
 #include "/lib/taa_jitter.glsl"
+#include "/lib/fog.glsl"
 
 void main() {
 	gl_Position = ftransform();
@@ -35,6 +56,10 @@ void main() {
 	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
 	glcolor = gl_Color;
 	glnormal = gl_NormalMatrix * gl_Normal;
+	#ifdef FOG_ENABLED
+		vec3 playerPos = gl_Vertex.xyz;
+		getFogData(playerPos, fogAmount, fogSkyColor, fogBloomSkyColor);
+	#endif
 }
 
 #endif

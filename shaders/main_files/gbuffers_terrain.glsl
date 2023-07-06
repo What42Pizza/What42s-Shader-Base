@@ -3,6 +3,12 @@ varying vec2 lmcoord;
 varying vec4 glcolor;
 varying vec3 glnormal;
 
+#ifdef FOG_ENABLED
+	varying float fogAmount;
+	varying vec3 fogSkyColor;
+	varying vec3 fogBloomSkyColor;
+#endif
+
 #include "../lib/lighting.glsl"
 
 
@@ -10,6 +16,8 @@ varying vec3 glnormal;
 
 
 #ifdef FSH
+
+#include "/lib/fog.glsl"
 
 void main() {
 	vec4 color = texture2D(MAIN_BUFFER, texcoord) * glcolor;
@@ -53,6 +61,14 @@ void main() {
 	
 	
 	
+	// fog
+	
+	#ifdef FOG_ENABLED
+		applyFog(color.rgb, colorForBloom.rgb, fogAmount, fogSkyColor, fogBloomSkyColor);
+	#endif
+	
+	
+	
 	// show dangerous light
 	
 	#ifdef SHOW_DANGEROUS_LIGHT
@@ -79,6 +95,7 @@ void main() {
 
 #include "/lib/waving.glsl"
 #include "/lib/taa_jitter.glsl"
+#include "/lib/fog.glsl"
 
 void main() {
 	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
@@ -98,6 +115,11 @@ void main() {
 	
 	#ifdef TAA_ENABLED
 		gl_Position.xy = TAAJitter(gl_Position.xy, gl_Position.w);
+	#endif
+	
+	#ifdef FOG_ENABLED
+		vec3 playerPos = gl_Vertex.xyz;
+		getFogData(playerPos, fogAmount, fogSkyColor, fogBloomSkyColor);
 	#endif
 	
 }
