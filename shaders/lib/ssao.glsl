@@ -25,7 +25,7 @@ float getAoFactor() {
 	vec3 centerNormal = texelFetch(NORMALS_BUFFER, texelcoord, 0).rgb;
 	vec3 centerPos = texelFetch(VIEW_POS_BUFFER, texelcoord, 0).rgb;
 	float centerPosLen = length(centerPos);
-	if (centerPosLen > 1000.0) {return 0.0;}
+	if (centerPosLen > 80) {return 0.0;}
 	float scale = inversesqrt(centerPosLen) * AO_SIZE * 0.04;
 	
 	float total = 0.0;

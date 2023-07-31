@@ -44,11 +44,10 @@ void main() {
 	
 	
 	
-	/* DRAWBUFFERS:0279 */
+	/* DRAWBUFFERS:029 */
 	gl_FragData[0] = color;
 	gl_FragData[1] = colorForBloom;
-	gl_FragData[2] = vec4(1.0);
-	gl_FragData[3] = vec4(glnormal, 1.0);
+	gl_FragData[2] = vec4(glnormal, 1.0);
 }
 
 #endif

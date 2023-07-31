@@ -1,6 +1,10 @@
 Current:
+Reduce number of buffers used to increase performance (also test if less buffers is better)
+	Replace normal-based ssao w/ depth-based ssao
+	Remove need for ViewPos buffer
+	Store bloom mult instead of bloom color
+	think of more
 Move advanced options to 'advanced options' menus
-Add fog to ssao
 Add smoothening to the sharpening velocity factor
 Fix beacon beam (add ssao mask?)
 Decrease SSAO sample contribution based on normal dot?
@@ -13,7 +17,6 @@ Add profiles
 Remove as many divisions as possible
 Add other debug settings?
 Replace pre-calculated values (in prepare) with uniforms?
-Set sunrays color to either sun color or moon color
 Get permission from EminGT
 Add more ways to get to options (e.g. access to light brightnesses from the 'shading' menu)
 Custom sky color?
@@ -53,6 +56,8 @@ Match the vanilla look, especially in:
 
 
 Finished:
+Set sunrays color to either sun color or moon color
+Add fog to ssao
 Calculate fog in vsh?
 Switch to xorShiftHash?
 Show Light Levels option

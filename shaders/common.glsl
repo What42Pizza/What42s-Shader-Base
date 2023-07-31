@@ -79,11 +79,9 @@ uniform float betterRainStrength;
 #define MAIN_BUFFER              texture
 #define TAA_PREV_BUFFER          colortex1
 #define BLOOM_BUFFER             colortex2
-#define CLOUD_MASK_BUFFER        colortex3
 #define SKY_COLOR_BUFFER         colortex4
 #define SKY_BLOOM_COLOR_BUFFER   colortex5
 #define PER_FRAME_VALUES_BUFFER  colortex6
-#define HAND_MASK_BUFFER         colortex7
 #define NOISY_ADDITIONS_BUFFER   colortex8
 #define NORMALS_BUFFER           colortex9
 #define VIEW_POS_BUFFER          colortex10
@@ -278,15 +276,23 @@ float fromLinearDepth(float depth) {
 	return (2.0 * near / depth - far - near) / (near - far);
 }
 
+float toBlockDepth(float depth) {
+	depth = toLinearDepth(depth);
+	depth = depth * (far - near) + near;
+	return depth;
+}
+
 bool depthIsSky(float depth) {
 	return depth > 0.99;
 }
 
 
 
-///*
 #ifdef FSH
-	uint rngStart = uint(gl_FragCoord.x) + uint(gl_FragCoord.y) * uint(viewWidth) + uint(frameCounter) * uint(viewWidth) * uint(viewHeight);
+	uint rngStart =
+		uint(gl_FragCoord.x) +
+		uint(gl_FragCoord.y) * uint(viewWidth) +
+		uint(frameCounter  ) * uint(viewWidth) * uint(viewHeight);
 #endif
 
 uint rotateRight(uint value, uint shift) {
@@ -295,11 +301,12 @@ uint rotateRight(uint value, uint shift) {
 
 #ifdef USE_FAST_RAND
 	float randomFloat(inout uint rng) {
+		rng = rng * 747796405u + 2891336453u;
 		rng ^= rotateRight(rng, 11u);
-		rng ^= rotateRight(rng, 18u);
-		rng ^= rotateRight(rng, 25u);
-		float f = float(rng % 100000u);
-		return f / 50000.0 - 1.0;
+		rng ^= rotateRight(rng, 17u);
+		rng ^= rotateRight(rng, 23u);
+		float f = float(rng % 1000000u);
+		return f / 500000.0 - 1.0;
 	}
 #else
 	// taken from: https://www.reedbeta.com/blog/hash-functions-for-gpu-rendering/
@@ -310,6 +317,18 @@ uint rotateRight(uint value, uint shift) {
 		float f = float(v % 1000000u);
 		return f / 500000.0 - 1.0;
 	}
+	/*
+	// maybe switch to this:
+	// taken from: https://www.pcg-random.org/download.html
+	uint32_t pcg32_random_r(pcg32_random_t* rng)
+	{
+		uint64_t oldstate = rng->state;
+		rng->state = oldstate * 6364136223846793005ULL + rng->inc;
+		uint32_t xorshifted = ((oldstate >> 18u) ^ oldstate) >> 27u;
+		uint32_t rot = oldstate >> 59u;
+		return (xorshifted >> rot) | (xorshifted << ((-rot) & 31));
+	}
+	*/
 #endif
 
 vec2 randomVec2(inout uint rng) {
@@ -324,70 +343,6 @@ vec3 randomVec3(inout uint rng) {
 	float z = randomFloat(rng);
 	return vec3(x, y, z);
 }
-//*/
-
-
-
-/*
-// taken from: https://briansharpe.wordpress.com/2011/11/15/a-fast-and-simple-32bit-floating-point-hash-function/
-vec4 FAST_32_hash(vec2 gridcell) {
-	// gridcell is assumed to be an integer coordinate
-	const vec2 OFFSET = vec2(26.0, 161.0);
-	const float DOMAIN = 71.0;
-	const float SOMELARGEFLOAT = 951.135664;
-	vec4 P = vec4(gridcell.xy, gridcell.xy + 1.0);
-	P = P - floor(P * (1.0 / DOMAIN)) * DOMAIN;  // truncate the domain
-	P += OFFSET.xyxy;                              // offset to interesting part of the noise
-	P *= P;                                        // calculate and return the hash
-	return fract(P.xzxz * P.yyww * (1.0 / SOMELARGEFLOAT));
-}
-
-
-
-float noise(int offset) {
-	vec4 hash = FAST_32_hash(vec2(offset));
-	float average = (hash.x + hash.y + hash.z + hash.w) / 4.0;
-	return average * 2.0 - 1.0;
-}
-
-vec2 noiseVec2D(vec2 texcoord, int offset) {
-	vec4 hash = FAST_32_hash(texcoord * offset * 10000);
-	return hash.xy * 2.0 - 1.0;
-}
-
-vec3 noiseVec3D(int offset) {
-	vec4 hash = FAST_32_hash(vec2(offset));
-	return hash.xyz * 2.0 - 1.0;
-}
-*/
-
-
-
-/*
-float noise(int pos) {
-	int x = pos % noiseTextureResolution;
-	int y = (pos / noiseTextureResolution) % noiseTextureResolution;
-	return texelFetch(noisetex, ivec2(x, y), 0).x * 2.0 - 1.0;
-}
-
-float noise(vec2 texcoord, int offset) {
-	ivec2 coords = ivec2(texcoord * offset * noiseTextureResolution) % noiseTextureResolution;
-	return texelFetch(noisetex, coords, 0).x * 2.0 - 1.0;
-}
-
-vec2 noiseVec2D(vec2 texcoord, int offset) {
-	float x = noise(texcoord, offset);
-	float y = noise(texcoord, offset + 1);
-	return vec2(x, y);
-}
-
-vec3 noiseVec3D(int offset) {
-	float x = noise(offset);
-	float y = noise(offset + 1000);
-	float z = noise(offset + 2000);
-	return vec3(x, y, z);
-}
-*/
 
 
 

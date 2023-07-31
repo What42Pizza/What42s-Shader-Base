@@ -1,10 +1,11 @@
 What42's Shader License 1.0
+Effective Date: 2023-07-30
 
 By using What42's Shader Base in any way, you agree to the terms and conditions listed in this file.
 
 
 
-Overview:
+Overview: (very informal)
 
 You can:
 - Use this for Minecraft gameplay
@@ -50,9 +51,9 @@ My online name is "What42" / "What42Pizza", and you can contact me on Discord at
 
 1.5. "Code" refers to any data that is intended to be interpreted by computers and/or the ideas behind said data.
 
-1.6. "Substantial Portions", in the context of a Shaderpack, refers to more than around one third of the contents or ideas that originated in said Shaderpack.
+1.6. "Substantial Portions", in the context of a Shaderpack, refers to more than one third of the contents or ideas that originated in said Shaderpack.
 
-1.7. "Small Portions", in the context of a Shaderpack, refers to less than around one third of the contents or ideas that originated in said Shaderpack.
+1.7. "Small Portions", in the context of a Shaderpack, refers to less than one third of the contents or ideas that originated in said Shaderpack.
 
 
 
@@ -83,7 +84,7 @@ My online name is "What42" / "What42Pizza", and you can contact me on Discord at
 	2.5.4. The Shaderpack has an apparent, substantial amount of effect put into it by the creator(s) of said Shaderpacks.
 	2.5.5. The Shaderpack is not monetized in any way, unless permission to do so is granted by every person whose Code is packaged with the Shaderpack.
 
-2.6. (Concercing code reuse) You are allowed to use Small Portions of This Shaderpack in the creation, modification, and/or updating of non-Shaderpack projects and distribute said projects if and only if the following conditions are met for each of said projects:
+2.6. (Concerning code reuse) You are allowed to use Small Portions of This Shaderpack in the creation, modification, and/or updating of non-Shaderpack projects and distribute said projects if and only if the following conditions are met for each of said projects:
 	2.6.1. This Shaderpack is clearly credited everywhere that the project is distributed.
 	2.6.2. The project is not monetized in any way, unless permission to do so is granted by every person whose Code is packaged with the project.
 
@@ -99,7 +100,7 @@ My online name is "What42" / "What42Pizza", and you can contact me on Discord at
 
 3.3. You are not allowed to redistribute any of the contents of This Shaderpack unless said action is allowed by section 2.4, section 2.5, or section 2.6.
 
-3.4. You are not allowed to create URL links that indirectly lead to a distributor of This Shaderpack.
+3.4. You are not allowed to create links that indirectly lead to a distributor of This Shaderpack.
 
 
 
@@ -110,6 +111,8 @@ My online name is "What42" / "What42Pizza", and you can contact me on Discord at
 4.2. This Shaderpack includes Code from multiple people, and no one person has the copyright for the entirety of This Shaderpack.
 
 4.3. This License only applies to This Shaderpack.
+
+4.4. All other laws (including Copyright laws) still need to be considered when using This Shaderpack in any way.
 
 
 

@@ -63,12 +63,27 @@ vec3 getAmbientColor(vec4 skylightPercents) {
 
 vec4 getSunraysData() {
 	vec4 skylightPercents = getSkylightPercents();
-	vec3 skyColor = getSkyColor(skylightPercents);
-	vec3 sunraysColor = mix(vec3(getColorLum(skyColor)), skyColor, SUNRAYS_SATURATION);
+	
+	int sunriseTime = (worldTime > 18000) ? (worldTime - 24000) : worldTime;
+	bool isDay = sunriseTime >= SUNRISE_START && sunriseTime <= SUNSET_END;
+	bool isOtherSource = shadowLightPosition.b > 0.0;
+	bool isSun = isDay ^^ isOtherSource;
+	
+	vec3 sunraysColor = isSun ? SUNRAYS_SUN_COLOR : SUNRAYS_MOON_COLOR;
+	
 	float sunraysAmount =
 		skylightPercents.x * SUNRAYS_AMOUNT_DAY +
 		skylightPercents.y * SUNRAYS_AMOUNT_NIGHT +
 		skylightPercents.z * SUNRAYS_AMOUNT_SUNRISE +
 		skylightPercents.w * SUNRAYS_AMOUNT_SUNSET;
+	
+	if (isOtherSource) {
+		if (isSun) {
+			sunraysAmount *= sqrt(skylightPercents.x + skylightPercents.z + skylightPercents.w);
+		} else {
+			sunraysAmount *= sqrt(skylightPercents.y);
+		}
+	}
+	
 	return vec4(sunraysColor, sunraysAmount);
 }

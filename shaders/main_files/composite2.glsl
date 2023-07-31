@@ -57,10 +57,6 @@ void main() {
 		sunraysAddition /= SUNRAYS_COMPUTE_COUNT;
 		sunraysAddition *= max(1.0 - length(lightCoord - 0.5) * 1.5, 0.0);
 		
-		if (shadowLightPosition.b > 0.0) {
-			vec4 sunlightPercents = getCachedSkylightPercents();
-			sunraysAddition *= max(sunlightPercents.z, sunlightPercents.w) * 0.8;
-		}
 		noisyAdditions += sunraysAddition * sunraysAmount * sunraysColor;
 		
 	#endif

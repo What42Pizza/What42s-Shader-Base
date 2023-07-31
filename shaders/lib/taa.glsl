@@ -65,11 +65,11 @@ void neighbourhoodClamping(vec3 color, inout vec3 prevColor, float rawDepth, ino
 void doTAA(inout vec3 color, inout vec3 newPrev) {
 	
 	float depth;
-	if (texelFetch(HAND_MASK_BUFFER, texelcoord, 0).r > 0.5) {
-		depth = fromLinearDepth(HAND_DEPTH);
-	} else {
+	//if (texelFetch(HAND_MASK_BUFFER, texelcoord, 0).r > 0.5) {
+	//	depth = fromLinearDepth(HAND_DEPTH);
+	//} else {
 		depth = texelFetch(depthtex1, texelcoord, 0).r;
-	}
+	//}
 	
 	vec3 coord = vec3(texcoord, depth);
 	vec3 cameraOffset = cameraPosition - previousCameraPosition;

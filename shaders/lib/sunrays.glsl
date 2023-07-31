@@ -3,7 +3,7 @@ float getSunraysAddition(inout uint rng) {
 	
 	#if SUNRAYS_STYLE == 1
 		vec2 pos = texcoord;
-		float noise = (randomFloat(rng) - 1.0) * 0.3 + 1.0;
+		float noise = (randomFloat(rng) - 1.0) * 0.2 + 1.0;
 		vec2 coordStep = (lightCoord - pos) / SUNRAY_STEP_COUNT * noise;
 		
 	#elif SUNRAYS_STYLE == 2
@@ -13,7 +13,6 @@ float getSunraysAddition(inout uint rng) {
 		pos += coordStep * noise;
 		
 	#endif
-	
 	
 	float total = 0.0;
 	for (int i = 1; i < SUNRAY_STEP_COUNT; i ++) {
