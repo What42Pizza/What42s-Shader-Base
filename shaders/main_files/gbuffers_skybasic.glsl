@@ -25,14 +25,12 @@ float getHorizonMultiplier() {
 
 
 void main() {
+	
 	vec3 color;
 	if (starData.a > 0.5) {
 		color = starData.rgb;
-	}
-	else {
-		vec4 pos = vec4(gl_FragCoord.xy / vec2(viewWidth, viewHeight) * 2.0 - 1.0, 1.0, 1.0);
-		pos = gbufferProjectionInverse * pos;
-		color = calcSkyColor(normalize(pos.xyz));
+	} else {
+		color = getSkyColor();
 	}
 	
 	#ifdef DARKEN_SKY_UNDERGROUND
@@ -42,12 +40,10 @@ void main() {
 	vec3 colorForBloom = color;
 	colorForBloom *= sqrt(BLOOM_SKY_BRIGHTNESS);
 	
-	/* DRAWBUFFERS:0245 */
-	// write to the buffers: main, bloom, sky color, and bloom sky color
+	/* DRAWBUFFERS:02 */
+	// write to the buffers: main, bloom
 	gl_FragData[0] = vec4(color, 1.0);
 	gl_FragData[1] = vec4(colorForBloom, 1.0);
-	gl_FragData[2] = vec4(color, 1.0);
-	gl_FragData[3] = vec4(colorForBloom, 1.0);
 }
 
 #endif
@@ -61,12 +57,15 @@ void main() {
 #include "/lib/taa_jitter.glsl"
 
 void main() {
+	
 	gl_Position = ftransform();
 	#ifdef TAA_ENABLED
 		gl_Position.xy = TAAJitter(gl_Position.xy, gl_Position.w);
 	#endif
+	
 	starData = vec4(gl_Color.rgb, float(gl_Color.r == gl_Color.g && gl_Color.g == gl_Color.b && gl_Color.r > 0.0));
 	upVec = normalize(gbufferModelView[1].xyz);
+	
 }
 
 #endif

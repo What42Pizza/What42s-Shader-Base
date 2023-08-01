@@ -36,6 +36,7 @@ uniform vec3 shadowLightPosition;
 
 uniform sampler2D texture;
 uniform sampler2D lightmap;
+uniform sampler2D colortex0;
 uniform sampler2D colortex1;
 uniform sampler2D colortex2;
 uniform sampler2D colortex3;
@@ -70,47 +71,36 @@ uniform float betterRainStrength;
 	attribute vec2 mc_midTexCoord;
 #endif
 
-#define HAND_DEPTH 0.175 // idk what should actually be here
+varying vec3 testValue;
+
+#define HAND_DEPTH 0.19 // idk what should actually be here
 
 
 
 // buffer values:
 
-#define MAIN_BUFFER              texture
+#define MAIN_BUFFER              colortex0
 #define TAA_PREV_BUFFER          colortex1
 #define BLOOM_BUFFER             colortex2
-#define SKY_COLOR_BUFFER         colortex4
-#define SKY_BLOOM_COLOR_BUFFER   colortex5
-#define PER_FRAME_VALUES_BUFFER  colortex6
-#define NOISY_ADDITIONS_BUFFER   colortex8
-#define NORMALS_BUFFER           colortex9
-#define VIEW_POS_BUFFER          colortex10
+#define NOISY_ADDITIONS_BUFFER   colortex5
+#define NORMALS_BUFFER           colortex6
 #define DEBUG_BUFFER             colortex11
 
 #define DEPTH_BUFFER_ALL                   depthtex0
 #define DEPTH_BUFFER_WO_TRANS              depthtex1
 #define DEPTH_BUFFER_WO_TRANS_OR_HANDHELD  depthtex2
 
-
-
-// cached value indicies:
-
-const int CACHED_SUNLIGHT_PERCENT = 0;
-const int CACHED_MOONLIGHT_PERCENT = 1;
-const int CACHED_SUNRISE_PERCENT = 2;
-const int CACHED_SUNSET_PERCENT = 3;
-
-const int CACHED_SKY_RED = 4;
-const int CACHED_SKY_GREEN = 5;
-const int CACHED_SKY_BLUE = 6;
-const int CACHED_AMBIENT_RED = 7;
-const int CACHED_AMBIENT_GREEN = 8;
-const int CACHED_AMBIENT_BLUE = 9;
-
-const int CACHED_SUNRAYS_RED = 10;
-const int CACHED_SUNRAYS_GREEN = 11;
-const int CACHED_SUNRAYS_BLUE = 12;
-const int CACHED_SUNRAYS_AMOUNT = 13;
+// DON'T DELETE:
+/*
+const bool colortex1Clear = false;
+const int colortex6Format = RGB16F;
+const bool colortex0MipmapEnabled = true;
+const bool colortex2MipmapEnabled = true;
+const bool colortex5MipmapEnabled = true;
+const float wetnessHalflife = 50.0f;
+const float drynessHalflife = 50.0f;
+const int noiseTextureResolution = 256;
+*/
 
 
 
@@ -134,43 +124,15 @@ vec3 viewToPlayer(vec3 pos) {
 	return mat3(gbufferModelViewInverse) * pos + gbufferModelViewInverse[3].xyz;
 }
 
-//vec3 playerToShadow(vec3 pos) {
-//	vec3 shadowpos = mat3(shadowModelView) * pos + shadowModelView[3].xyz;
-//	return vec3(shadowProjection[0].x, shadowProjection[1].y, shadowProjection[2].z) * shadowpos + shadowProjection[3].xyz;
-//	//return projMAD(shadowProjection, shadowpos);
-//}
-
-
-
-//vec3 calculateShadowPos(vec3 playerPos) {
-//	vec3 shadowPos = playerToShadow(playerPos);
-//	return shadowPos;
-//	float distb = sqrt(shadowPos.x * shadowPos.x + shadowPos.y * shadowPos.y);
-//	float distortFactor = distb * shadowMapBias + (1.0 - shadowMapBias);
-//	shadowPos.xy /= distortFactor;
-//	shadowPos.z *= 0.2;
-//	return shadowPos * 0.5 + 0.5;
-//}
-
-
-
-//float SampleShadow(vec3 screenPos) {
-//	vec3 viewPos = screenToView(screenPos);
-//	vec3 playerPos = viewToPlayer(viewPos);
-//	vec3 shadowPos = calculateShadowPos(playerPos);
-//	float shadow0 = texture2D(shadowtex0, shadowPos.st).x;
-//	return shadow0;
-//}
-
 // END OF COMPLEMENTARY REIMAGINED'S CODE
 
 
 
 
 
-//euclidian distance is defined as sqrt(a^2 + b^2 + ...)
-//this length function instead does cbrt(a^3 + b^3 + ...)
-//this results in smaller distances along the diagonal axes.
+// euclidian distance is defined as sqrt(a^2 + b^2 + ...)
+// this length function instead does cbrt(a^3 + b^3 + ...)
+// this results in smaller distances along the diagonal axes.
 float cubeLength(vec2 v) {
 	return pow(abs(v.x * v.x * v.x) + abs(v.y * v.y * v.y), 1.0 / 3.0);
 }
@@ -285,6 +247,19 @@ float toBlockDepth(float depth) {
 bool depthIsSky(float depth) {
 	return depth > 0.99;
 }
+bool depthIsHand(float depth) {
+	return depth < 0.003;
+}
+
+vec3 getViewPos(vec2 coords) {
+	float depth = texture2D(DEPTH_BUFFER_ALL, coords).r;
+	float linearDepth = toLinearDepth(depth);
+	if (depthIsSky(linearDepth) || depthIsHand(linearDepth)) {
+		return vec3(0.0);
+	}
+	vec3 screenPos = vec3(coords, depth);
+	return screenToView(screenPos);
+}
 
 
 
@@ -299,16 +274,7 @@ uint rotateRight(uint value, uint shift) {
     return (value >> shift) | (value << (32u - shift));
 }
 
-#ifdef USE_FAST_RAND
-	float randomFloat(inout uint rng) {
-		rng = rng * 747796405u + 2891336453u;
-		rng ^= rotateRight(rng, 11u);
-		rng ^= rotateRight(rng, 17u);
-		rng ^= rotateRight(rng, 23u);
-		float f = float(rng % 1000000u);
-		return f / 500000.0 - 1.0;
-	}
-#else
+#ifdef USE_BETTER_RAND
 	// taken from: https://www.reedbeta.com/blog/hash-functions-for-gpu-rendering/
 	float randomFloat(inout uint rng) {
 		rng = rng * 747796405u + 2891336453u;
@@ -329,6 +295,15 @@ uint rotateRight(uint value, uint shift) {
 		return (xorshifted >> rot) | (xorshifted << ((-rot) & 31));
 	}
 	*/
+#else
+	float randomFloat(inout uint rng) {
+		rng = rng * 747796405u + 2891336453u;
+		rng ^= rotateRight(rng, 11u);
+		rng ^= rotateRight(rng, 17u);
+		rng ^= rotateRight(rng, 23u);
+		float f = float(rng % 1000000u);
+		return f / 500000.0 - 1.0;
+	}
 #endif
 
 vec2 randomVec2(inout uint rng) {
@@ -346,52 +321,22 @@ vec3 randomVec3(inout uint rng) {
 
 
 
-float getCachedValue(int index) {
-	return texelFetch(PER_FRAME_VALUES_BUFFER, ivec2(index, 0), 0).r;
-}
-
-vec4 getCachedSkylightPercents() {
-	float sunlightPercent = getCachedValue(CACHED_SUNLIGHT_PERCENT);
-	float moonlightPercent = getCachedValue(CACHED_MOONLIGHT_PERCENT);
-	float sunrisePercent = getCachedValue(CACHED_SUNRISE_PERCENT);
-	float sunsetPercent = getCachedValue(CACHED_SUNSET_PERCENT);
-	return vec4(sunlightPercent, moonlightPercent, sunrisePercent, sunsetPercent);
-}
-
-vec3 getCachedSkyColor() {
-	float skyRed = getCachedValue(CACHED_SKY_RED);
-	float skyGreen = getCachedValue(CACHED_SKY_GREEN);
-	float skyBlue = getCachedValue(CACHED_SKY_BLUE);
-	return vec3(skyRed, skyGreen, skyBlue);
-}
-
-vec3 getCachedAmbientColor() {
-	float ambientRed = getCachedValue(CACHED_AMBIENT_RED);
-	float ambientGreen = getCachedValue(CACHED_AMBIENT_GREEN);
-	float ambientBlue = getCachedValue(CACHED_AMBIENT_BLUE);
-	return vec3(ambientRed, ambientGreen, ambientBlue);
-}
-
-vec4 getCachedSunraysData() {
-	float sunraysRed = getCachedValue(CACHED_SUNRAYS_RED);
-	float sunraysGreen = getCachedValue(CACHED_SUNRAYS_GREEN);
-	float sunraysBlue = getCachedValue(CACHED_SUNRAYS_BLUE);
-	float sunraysAmount = getCachedValue(CACHED_SUNRAYS_AMOUNT);
-	return vec4(sunraysRed, sunraysGreen, sunraysBlue, sunraysAmount);
-}
 
 
-
-
+#ifdef FSH
 
 float fogify(float x, float w) {
 	return w / (x * x + w);
 }
 
-vec3 calcSkyColor(vec3 pos) {
-	float upDot = dot(pos, gbufferModelView[1].xyz);
+vec3 getSkyColor() {
+	vec4 pos = vec4(gl_FragCoord.xy / vec2(viewWidth, viewHeight) * 2.0 - 1.0, 1.0, 1.0);
+	pos = gbufferProjectionInverse * pos;
+	float upDot = dot(normalize(pos.xyz), gbufferModelView[1].xyz);
 	return mix(skyColor, fogColor, fogify(max(upDot, 0.0), 0.25));
 }
+
+#endif
 
 
 
@@ -404,3 +349,98 @@ vec3 getShadowPos(vec4 viewPos, float lightDot) {
 	shadowPos.z -= SHADOW_BIAS * (distortFactor * distortFactor) / abs(lightDot); //apply shadow bias
 	return shadowPos;
 }
+
+
+
+
+
+float getSunlightPercent_Sunrise() {
+	int time = (worldTime > 12000) ? (worldTime - 24000) : worldTime;
+	return clamp(percentThrough(time, SUNRISE_START - 24000, SUNRISE_END), 0.0, 1.0);
+}
+
+float getSunlightPercent_Sunset() {
+	int time = worldTime;
+	return clamp(1 - percentThrough(time, SUNSET_START, SUNSET_END), 0.0, 1.0);
+}
+
+// return value channels: (sun, moon, sunrise, sunset)
+vec4 getRawSkylightPercents() {
+	int sunriseTime = (worldTime > 18000) ? (worldTime - 24000) : worldTime;
+	if (sunriseTime >= SUNRISE_START && sunriseTime < SUNRISE_SWITCH) {
+		float sunrisePercent = percentThrough(sunriseTime, SUNRISE_START, SUNRISE_SWITCH);
+		return vec4(0.0, 1.0 - sunrisePercent, sunrisePercent, 0.0);
+	}
+	if (sunriseTime >= SUNRISE_SWITCH && sunriseTime < SUNRISE_END) {
+		float sunPercent = percentThrough(sunriseTime, SUNRISE_SWITCH, SUNRISE_END);
+		return vec4(sunPercent, 0.0, 1.0 - sunPercent, 0.0);
+	}
+	if (sunriseTime >= SUNRISE_END && worldTime < SUNSET_START) {
+		return vec4(1.0, 0.0, 0.0, 0.0);
+	}
+	if (worldTime >= SUNSET_START && worldTime < SUNSET_SWITCH) {
+		float sunsetPercent = percentThrough(worldTime, SUNSET_START, SUNSET_SWITCH);
+		return vec4(1.0 - sunsetPercent, 0.0, 0.0, sunsetPercent);
+	}
+	if (worldTime >= SUNSET_SWITCH && worldTime < SUNSET_END) {
+		float moonPercent = percentThrough(worldTime, SUNSET_SWITCH, SUNSET_END);
+		return vec4(0.0, moonPercent, 0.0, 1.0 - moonPercent);
+	}
+	return vec4(0.0, 1.0, 0.0, 0.0);
+}
+
+vec4 getSkylightPercents() {
+	vec4 skylightPercents = getRawSkylightPercents();
+	skylightPercents.xzw *= 1.0 - rainStrength * (1.0 - RAIN_LIGHT_MULT);
+	return skylightPercents;
+}
+
+
+
+vec3 getSkyColor(vec4 skylightPercents) {
+	return
+		skylightPercents.x * SKYLIGHT_DAY_COLOR +
+		skylightPercents.y * SKYLIGHT_NIGHT_COLOR +
+		skylightPercents.z * SKYLIGHT_SUNRISE_COLOR +
+		skylightPercents.w * SKYLIGHT_SUNSET_COLOR;
+}
+
+vec3 getAmbientColor(vec4 skylightPercents) {
+	return
+		skylightPercents.x * AMBIENT_DAY_COLOR +
+		skylightPercents.y * AMBIENT_NIGHT_COLOR +
+		skylightPercents.z * AMBIENT_SUNRISE_COLOR +
+		skylightPercents.w * AMBIENT_SUNSET_COLOR;
+}
+
+
+
+
+
+vec4 getSunraysData() {
+	vec4 skylightPercents = getSkylightPercents();
+	
+	int sunriseTime = (worldTime > 18000) ? (worldTime - 24000) : worldTime;
+	bool isDay = sunriseTime >= SUNRISE_START && sunriseTime <= SUNSET_END;
+	bool isOtherSource = shadowLightPosition.b > 0.0;
+	bool isSun = isDay ^^ isOtherSource;
+	
+	vec3 sunraysColor = isSun ? SUNRAYS_SUN_COLOR : SUNRAYS_MOON_COLOR;
+	
+	float sunraysAmount =
+		skylightPercents.x * SUNRAYS_AMOUNT_DAY +
+		skylightPercents.y * SUNRAYS_AMOUNT_NIGHT +
+		skylightPercents.z * SUNRAYS_AMOUNT_SUNRISE +
+		skylightPercents.w * SUNRAYS_AMOUNT_SUNSET;
+	
+	if (isOtherSource) {
+		if (isSun) {
+			sunraysAmount *= sqrt(skylightPercents.x + skylightPercents.z + skylightPercents.w);
+		} else {
+			sunraysAmount *= sqrt(skylightPercents.y);
+		}
+	}
+	
+	return vec4(sunraysColor, sunraysAmount);
+}
+

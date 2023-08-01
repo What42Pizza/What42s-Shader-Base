@@ -16,9 +16,6 @@ varying vec2 lightCoord;
 
 void main() {
 	vec3 noisyAdditions = vec3(0.0);
-	
-	vec3 viewPos = texelFetch(VIEW_POS_BUFFER, texelcoord, 0).rgb;
-	vec3 playerPos = viewToPlayer(viewPos);
 	uint rng = rngStart;
 	
 	
@@ -26,7 +23,8 @@ void main() {
 	// ======== BLOOM CALCULATIONS ========
 	
 	#ifdef BLOOM_ENABLED
-		float sizeMult = inversesqrt(length(playerPos));
+		float depth = toLinearDepth(texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r);
+		float sizeMult = inversesqrt(depth * far);
 		
 		vec3 bloomAddition = vec3(0.0);
 		for (int i = 0; i < BLOOM_COMPUTE_COUNT; i++) {
@@ -46,7 +44,7 @@ void main() {
 	
 	#ifdef SUNRAYS_ENABLED
 		
-		vec4 sunraysData = getCachedSunraysData();
+		vec4 sunraysData = getSunraysData();
 		vec3 sunraysColor = sunraysData.xyz;
 		float sunraysAmount = sunraysData.w;
 		
@@ -63,15 +61,15 @@ void main() {
 	
 	
 	
-	/* DRAWBUFFERS:8 */
+	/* DRAWBUFFERS:5 */
 	gl_FragData[0] = vec4(noisyAdditions, 1.0);
 	
 	#ifdef BLOOM_SHOW_ADDITION
-		/* RENDERTARGETS:8,11 */
+		/* RENDERTARGETS:5,11 */
 		gl_FragData[1] = vec4(bloomAddition, 1.0);
 		
 	#elif defined BLOOM_SHOW_FILTERED_TEXTURE
-		/* RENDERTARGETS:8,11 */
+		/* RENDERTARGETS:5,11 */
 		gl_FragData[1] = vec4(texelFetch(BLOOM_BUFFER, texelcoord, 0).rgb, 1.0);
 		
 	#endif

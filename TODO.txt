@@ -1,22 +1,25 @@
 Current:
+Fix ssao?
+UPDATE DOCUMENTATION
+Make sunrays noise adjust based on quality?
 Reduce number of buffers used to increase performance (also test if less buffers is better)
-	Replace normal-based ssao w/ depth-based ssao
-	Remove need for ViewPos buffer
-	Store bloom mult instead of bloom color
+	Replace normal-based ssao w/ depth-based ssao?
+	Store bloom mult instead of bloom color?
 	think of more
+Tune sunrays colors
 Move advanced options to 'advanced options' menus
 Add smoothening to the sharpening velocity factor
 Fix beacon beam (add ssao mask?)
 Decrease SSAO sample contribution based on normal dot?
 Do a round of general optimizations
 Take FXAA from Comp Reimagined?
+Decrease waving at night?
 Prevent TAA on entities?
 Exclude sun, moon, and sunrays based on horison multiplier
-Move around color tex buffers
+Move around color tex buffers?
 Add profiles
-Remove as many divisions as possible
 Add other debug settings?
-Replace pre-calculated values (in prepare) with uniforms?
+Convert more calculations to 'shader.properites' uniforms
 Get permission from EminGT
 Add more ways to get to options (e.g. access to light brightnesses from the 'shading' menu)
 Custom sky color?
@@ -26,7 +29,6 @@ Disable unneded shader files?
 Test glsl optimizer (https://github.com/aras-p/glsl-optimizer)
 Add support for fogStart, fogEnd, and fogMode?
 Find a way to stop sugar cane base from waving?
-Test waving stuff for pre-1.13
 Find ways to render things at lower resolutions?
 Replace manual skylight mults with dot products?
 Determine performance costs
@@ -56,6 +58,11 @@ Match the vanilla look, especially in:
 
 
 Finished:
+fix lang file on 1.12
+fix fog on 1.12
+fix waving on 1.12
+Add settings for sunrays colors
+Remove need for ViewPos buffer
 Set sunrays color to either sun color or moon color
 Add fog to ssao
 Calculate fog in vsh?

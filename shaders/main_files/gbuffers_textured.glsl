@@ -37,7 +37,7 @@ void main() {
 	
 	
 	
-	/* DRAWBUFFERS:029 */
+	/* DRAWBUFFERS:026 */
 	gl_FragData[0] = color;
 	gl_FragData[1] = color;
 	gl_FragData[3] = vec4(glnormal, 1.0);
@@ -56,15 +56,17 @@ void main() {
 void main() {
 	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
 	lmcoord  = (gl_TextureMatrix[1] * gl_MultiTexCoord1).xy;
-	glcolor = gl_Color;
-	glnormal = gl_NormalMatrix * gl_Normal;
-	
-	doPreLighting();
 	
 	gl_Position = ftransform();
 	#ifdef TAA_ENABLED
 		gl_Position.xy = TAAJitter(gl_Position.xy, gl_Position.w);
 	#endif
+	
+	glcolor = gl_Color;
+	glnormal = gl_NormalMatrix * gl_Normal;
+	
+	doPreLighting();
+	
 }
 
 #endif

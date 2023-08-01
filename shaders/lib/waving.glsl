@@ -20,7 +20,7 @@ vec3 getWavingAddition(vec3 worldPos) {
 
 void applyWaving(inout vec3 position) {
 	vec3 worldPos = position + cameraPosition;
-	int wavingData = int(mc_Entity.x) % 1000;
+	int wavingData = int(mc_Entity.x + 0.1) % 1000;
 	if (wavingData < 2 || wavingData > 7) {return;}
 	float wavingScale = wavingScales[wavingData / 2];
 	if (wavingData % 2 == 0 && gl_MultiTexCoord0.t > mc_midTexCoord.t) {return;} // don't apply waving to base

@@ -45,11 +45,10 @@ varying float sideShading;
 
 #ifdef FSH
 
-
-
 vec3 getLightColor(float blockBrightness, float skyBrightness, float ambientBrightness) {
-	vec3 skyColor = getCachedSkyColor();
-	vec3 ambientColor = getCachedAmbientColor();
+	vec4 skylightPercents = getSkylightPercents();
+	vec3 skyColor = getSkyColor(skylightPercents);
+	vec3 ambientColor = getAmbientColor(skylightPercents);
 	
 	#ifdef OVERWORLD
 		float ambientMin = 0.1;
@@ -145,7 +144,7 @@ void doPreLighting() {
 	#ifdef EXCLUDE_FOLIAGE
 		// when EXCLUDE_FOLIAGE is enabled, act as if foliage is always facing towards the sky.
 		// in other words, don't darken the back side of it unless something else is casting a shadow on it.
-		if (mc_Entity.x >= 1000.0 && mc_Entity.x <= 1999.0) lightDot = 1.0;
+		if (mc_Entity.x >= 2000.0 && mc_Entity.x <= 2999.0) lightDot = 1.0;
 	#endif
 	
 	viewPos = gl_ModelViewMatrix * gl_Vertex;

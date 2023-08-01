@@ -64,12 +64,13 @@ void neighbourhoodClamping(vec3 color, inout vec3 prevColor, float rawDepth, ino
 
 void doTAA(inout vec3 color, inout vec3 newPrev) {
 	
-	float depth;
-	//if (texelFetch(HAND_MASK_BUFFER, texelcoord, 0).r > 0.5) {
-	//	depth = fromLinearDepth(HAND_DEPTH);
-	//} else {
-		depth = texelFetch(depthtex1, texelcoord, 0).r;
-	//}
+	float depth = texelFetch(depthtex1, texelcoord, 0).r;
+	float linearDepth = toLinearDepth(depth);
+	float handFactor = 0.0;
+	if (depthIsHand(linearDepth)) {
+		depth = fromLinearDepth(HAND_DEPTH);
+		handFactor = -0.4;
+	}
 	
 	vec3 coord = vec3(texcoord, depth);
 	vec3 cameraOffset = cameraPosition - previousCameraPosition;
@@ -92,7 +93,7 @@ void doTAA(inout vec3 color, inout vec3 newPrev) {
 	const float normalFactor = 0.1;
 	
 	vec3 normal = texelFetch(NORMALS_BUFFER, texelcoord, 0).rgb;
-	vec3 viewPos = texelFetch(VIEW_POS_BUFFER, texelcoord, 0).rgb;
+	vec3 viewPos = getViewPos(texcoord);
 	float normalAmount = abs(1.0 - dot(normalize(viewPos * -1.0), normal));
 	normalAmount = pow(normalAmount, 3);
 	normalAmount *= length(normal); // don't increase blend for sky
@@ -103,8 +104,9 @@ void doTAA(inout vec3 color, inout vec3 newPrev) {
 	float blendAmount = blendConstant
 		+ exp(-velocityAmount) * blendVariable
 		//- length(cameraOffset) * edge
-		+ sqrt(toLinearDepth(depth)) * depthFactor
-		+ normalAmount * normalFactor;
+		+ sqrt(linearDepth) * depthFactor
+		+ normalAmount * normalFactor
+		+ handFactor;
 	blendAmount = clamp(blendAmount, blendMin, blendMax);
 	blendAmount *= float(
 		prevCoord.x > 0.0 && prevCoord.x < 1.0 &&
@@ -112,7 +114,7 @@ void doTAA(inout vec3 color, inout vec3 newPrev) {
 	);
 	
 	color = mix(color, prevColor, blendAmount);
-	//color = texelFetch(MAIN_BUFFER, ivec2(prevCoord * viewSize), 0).rgb;
+	//color = texelFetch(MAIN_BUFFER, texelcoord, 0).rgb;
 	newPrev = color;
 	
 }

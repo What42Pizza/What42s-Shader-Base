@@ -14,7 +14,7 @@ varying vec2 texcoord;
 
 void main() {
 	vec3 color = texelFetch(MAIN_BUFFER, texelcoord, 0).rgb;
-	vec3 bloomColor = texture2D(BLOOM_BUFFER, texcoord).rgb;
+	vec3 bloomColor = texelFetch(BLOOM_BUFFER, texelcoord, 0).rgb;
 	
 	
 	
@@ -39,11 +39,11 @@ void main() {
 	
 	
 	#ifdef BLOOM_ENABLED
-		/* RENDERTARGETS: 0,2 */
+		/* DRAWBUFFERS: 02 */
 		gl_FragData[0] = vec4(color, 1.0);
 		gl_FragData[1] = vec4(bloomColor, 1.0);
 	#else
-		/* RENDERTARGETS: 0 */
+		/* DRAWBUFFERS: 0 */
 		gl_FragData[0] = vec4(color, 1.0);
 	#endif
 }

@@ -1,11 +1,17 @@
+varying float fogAmount;
+varying vec3 fogSkyColor;
+varying vec3 fogBloomSkyColor;
+
+
+
 #ifdef FSH
 
-void applyFog(inout vec3 color, inout vec3 colorForBloom, float fogAmount, vec3 fogSkyColor, vec3 fogBoomSkyColor) {
+void applyFog(inout vec3 color, inout vec3 colorForBloom) {
 	vec3 colorMix;
 	vec3 bloomColorMix;
 	if (isEyeInWater == 0) {
-		colorMix = texelFetch(SKY_COLOR_BUFFER, texelcoord, 0).rgb;
-		bloomColorMix = texelFetch(SKY_BLOOM_COLOR_BUFFER, texelcoord, 0).rgb;
+		colorMix = getSkyColor();
+		bloomColorMix = colorMix * sqrt(BLOOM_SKY_BRIGHTNESS);
 	} else {
 		colorMix = fogSkyColor;
 		bloomColorMix = fogBloomSkyColor;
@@ -20,7 +26,7 @@ void applyFog(inout vec3 color, inout vec3 colorForBloom, float fogAmount, vec3 
 
 #ifdef VSH
 
-void getFogData(vec3 playerPos, inout float fogAmount, inout vec3 fogSkyColor, inout vec3 fogBloomSkyColor) {
+void getFogData(vec3 playerPos) {
 	
 	playerPos.y /= FOG_HEIGHT_SCALE;
 	fogAmount = length(playerPos);
@@ -30,7 +36,7 @@ void getFogData(vec3 playerPos, inout float fogAmount, inout vec3 fogSkyColor, i
 	
 	if (isEyeInWater == 0) {
 		// not in liquid
-		fogAmount /= far;
+		fogAmount /= far * 0.9;
 		fogAmount = (fogAmount - 1.0) / (1.0 - mix(FOG_START, FOG_RAIN_START, betterRainStrength)) + 1.0;
 		fogAmount = clamp(fogAmount, 0.0, 1.0);
 		fogAmount = pow(fogAmount, mix(FOG_CURVE, FOG_RAIN_CURVE, betterRainStrength));

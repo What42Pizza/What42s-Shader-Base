@@ -4,6 +4,7 @@ varying vec4 glcolor;
 varying vec3 glnormal;
 
 #include "../lib/lighting.glsl"
+#include "/lib/fog.glsl"
 
 
 
@@ -22,15 +23,11 @@ void main() {
 	#endif
 	
 	
-	
 	// hurt flash, creeper flash, etc
-	
 	color.rgb = mix(color.rgb, entityColor.rgb, entityColor.a);
 	
 	
-	
 	// main lighting
-	
 	#ifdef SHADOWS_ENABLED
 		vec3 brightnesses = getLightingBrightnesses(lmcoord);
 	#else
@@ -47,15 +44,18 @@ void main() {
 	color.rgb *= getLightColor(brightnesses.x, brightnesses.y, brightnesses.z);
 	
 	
-	
 	// bloom
-	
 	vec4 colorForBloom = color;
 	colorForBloom.rgb *= sqrt(BLOOM_ENTITY_BRIGHTNESS);
 	
 	
+	// fog
+	#ifdef ENTITY_FOG_ENABLED
+		applyFog(color.rgb, colorForBloom.rgb);
+	#endif
 	
-	/* DRAWBUFFERS:029 */
+	
+	/* DRAWBUFFERS:026 */
 	gl_FragData[0] = color;
 	gl_FragData[1] = colorForBloom;
 	gl_FragData[2] = vec4(glnormal, 1.0);
@@ -74,15 +74,21 @@ void main() {
 void main() {
 	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
 	lmcoord  = (gl_TextureMatrix[1] * gl_MultiTexCoord1).xy;
-	glcolor = gl_Color;
-	glnormal = gl_NormalMatrix * gl_Normal;
-	
-	doPreLighting();
 	
 	gl_Position = gl_ProjectionMatrix * (gl_ModelViewMatrix * gl_Vertex);
 	#ifdef TAA_ENABLED
 		gl_Position.xy = TAAJitter(gl_Position.xy, gl_Position.w);
 	#endif
+	#ifdef ENTITY_FOG_ENABLED
+		vec4 position = gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex);
+		getFogData(position.xyz);
+	#endif
+	
+	glcolor = gl_Color;
+	glnormal = gl_NormalMatrix * gl_Normal;
+	
+	doPreLighting();
+	
 }
 
 #endif

@@ -1,8 +1,6 @@
 float getOffsetAoInfluence (vec3 centerNormal, vec3 centerPos, vec2 offset) {
 	
-	vec3 offsetNormal = texture2D(NORMALS_BUFFER, texcoord + offset).rgb;
-	vec3 offsetPos = texture2D(VIEW_POS_BUFFER, texcoord + offset).rgb;
-	
+	vec3 offsetPos = getViewPos(texcoord + offset);
 	vec3 centerToOffset = offsetPos - centerPos;
 	
 	// exclude if occluder is behind normal plane
@@ -20,25 +18,27 @@ float getOffsetAoInfluence (vec3 centerNormal, vec3 centerPos, vec2 offset) {
 
 float getAoFactor() {
 	
-	vec2 noiseVec = randomVec2(rngStart) * 10.0;
 	
+	vec3 viewPos = getViewPos(texcoord);
+	float viewPosLen = length(viewPos);
+	if (viewPosLen == 0.0) {return 0.0;}
+	
+	float noise = randomFloat(rngStart) * 10.0;
+	float scale = inversesqrt(viewPosLen) * AO_SIZE * 0.04;
 	vec3 centerNormal = texelFetch(NORMALS_BUFFER, texelcoord, 0).rgb;
-	vec3 centerPos = texelFetch(VIEW_POS_BUFFER, texelcoord, 0).rgb;
-	float centerPosLen = length(centerPos);
-	if (centerPosLen > 80) {return 0.0;}
-	float scale = inversesqrt(centerPosLen) * AO_SIZE * 0.04;
 	
 	float total = 0.0;
 	const int AO_SAMPLE_COUNT = AO_QUALITY * AO_QUALITY;
 	for (int i = 0; i <= AO_SAMPLE_COUNT; i ++) {
 		
 		float len = (float(i) / AO_SAMPLE_COUNT + 0.1) * scale;
-		vec2 offset = vec2(cos(i * noiseVec.x) * len / aspectRatio, sin(i * noiseVec.x) * len);
+		vec2 offset = vec2(cos(i * noise) * len / aspectRatio, sin(i * noise) * len);
 		
-		total += getOffsetAoInfluence(centerNormal, centerPos, offset);
+		total += getOffsetAoInfluence(centerNormal, viewPos, offset);
 		
 	}
 	total *= 1.0 / AO_SAMPLE_COUNT;
+	//total *= smoothstep();
 	
 	return total * 0.6;
 }

@@ -87,22 +87,16 @@ vec3 calculateNormal2() {
 
 
 void main() {
-	
-	vec3 viewPos = vec3(0.0);
-	float depth = texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r;
-	if (toLinearDepth(depth) > 0.003) {
-		vec3 screenPos = vec3(texcoord, depth);
-		viewPos = screenToView(screenPos);
-	}
+	vec3 color = texelFetch(MAIN_BUFFER, texelcoord, 0).rgb;
 	
 	vec3 normal = calculateNormal2();
 	if (texcoord.x < 0.5 || true) {
 		normal = texelFetch(NORMALS_BUFFER, texelcoord, 0).rgb;
 	}
 	
-	/* RENDERTARGETS: 9,10 */
-	gl_FragData[0] = vec4(normal, 1.0);
-	gl_FragData[1] = vec4(viewPos, 1.0);
+	/* DRAWBUFFERS: 06 */
+	gl_FragData[0] = vec4(color, 1.0);
+	gl_FragData[1] = vec4(normal, 1.0);
 }
 
 #endif

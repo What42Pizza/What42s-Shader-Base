@@ -4,22 +4,6 @@
 
 
 
-/*
-const bool colortex1Clear = false;
-const int colortex6Format = R16F;
-const int colortex7Format = R8;
-const int colortex9Format = RGB16F;
-const int colortex10Format = RGB32F;
-const bool colortex0MipmapEnabled = true;
-const bool colortex2MipmapEnabled = true;
-const bool colortex8MipmapEnabled = true;
-const float wetnessHalflife = 50.0f;
-const float drynessHalflife = 50.0f;
-const int noiseTextureResolution = 256;
-*/
-
-
-
 
 
 #define DARKEN_SKY_UNDERGROUND
@@ -27,6 +11,7 @@ const int noiseTextureResolution = 256;
 
 
 #define FOG_ENABLED
+//#define ENTITY_FOG_ENABLED
 #define FOG_HEIGHT_SCALE 3.0 // [0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0 2.1 2.2 2.3 2.4 2.5 2.6 2.7 2.8 2.9 3.0 3.1 3.2 3.3 3.4 3.5 3.6 3.7 3.8 3.9 4.0 4.1 4.2 4.3 4.4 4.5 4.6 4.7 4.8 4.9 5.0 5.5 6.0 6.5 7.0 7.5 8.0 8.5 9.0 9.5 10.0]
 #define FOG_EXTRA_CLOUDS_DISTANCE 2.5 // [0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0 2.1 2.2 2.3 2.4 2.5 2.6 2.7 2.8 2.9 3.0 3.1 3.2 3.3 3.4 3.5 3.6 3.7 3.8 3.9 4.0 4.1 4.2 4.3 4.4 4.5 4.6 4.7 4.8 4.9 5.0 5.5 6.0 6.5 7.0 7.5 8.0 8.5 9.0 9.5 10.0]
 #define FOG_START 0.75 // [0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
@@ -231,7 +216,7 @@ const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8
 
 
 
-#define USE_FAST_RAND
+//#define USE_BETTER_RAND
 //#define SHOW_DANGEROUS_LIGHT
 
 

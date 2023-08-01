@@ -1,5 +1,7 @@
 # Shader Base Documentation
 
+# WARNING: THIS IS VERY OUT OF DATE
+
 <br>
 
 ## File Structure:
@@ -82,3 +84,4 @@ NOTE: I haven't seen any noticable performance increase from doing this, so it m
 ## Extra:
 
 - **[Noise Functions](https://gist.github.com/patriciogonzalezvivo/670c22f3966e662d2f83)**
+- **[Permission to use Complementary's code](https://discord.com/channels/744189556768636941/744189557913681972/1135737539412643880) (TAA and transform functions)**

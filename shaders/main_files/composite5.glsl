@@ -179,10 +179,6 @@ void main() {
 	
 	
 	
-	//color = texelFetch(VIEW_POS_BUFFER, texelcoord, 0).rgb;
-	
-	
-	
 	/* DRAWBUFFERS:0 */
 	gl_FragData[0] = vec4(color, 1.0);
 }
