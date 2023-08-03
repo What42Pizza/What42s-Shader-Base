@@ -10,7 +10,7 @@
 - **incl:  Basic code used by multiple files**
 - - incl/settings.glsl:  Holds every value that can easily change the look of the shader, and holds the values that each option can be set to in the options menu
 - - incl/common.glsl:  Holds every commonly used code and every uniform that is used
-- **world_x:  The files that are actaully loaded by OptiFine / Iris**
+- **world_*:  The files that are actaully loaded by OptiFine / Iris**
 - **lang:  Shown names of setting options and setting values**
 - **shaders.properties:  Defines the settings menu and other details about the shader internals**
 - **blocks.properties:  Defines what different blocks are mapped to. The shaders retrieve the value from \`mc_Entity.x\`**
@@ -34,6 +34,8 @@
 - - Main Processing:  /main_files/composite1.glsl
 - - Pre-Processing:  /main_files/composite.glsl
 - - Application:  /main_files/composite2.glsl (calculations are written to a mip-mapped buffer that is sampled with blur so that the noise is reduced)
+- **Depth of Field**
+- - Main Processing:  /main_files/composite3.glsl
 - **Motion Blur**
 - - Main Processing:  /main_files/composite4.glsl
 - **Sharpening:**

@@ -18,6 +18,7 @@
 - **SSAO**
 - **Sunrays**
 - **Bloom**
+- **Depth of Field**
 - **Motion Blur**
 - **Sharpening**
 - **Waving blocks**
