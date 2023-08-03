@@ -56,11 +56,25 @@ uniform sampler2D noisetex;
 
 
 
+uniform float sunriseStart;
+uniform float sunriseSwitch;
+uniform float sunriseEnd;
+uniform float sunsetStart;
+uniform float sunsetSwitch;
+uniform float sunsetEnd;
+
 uniform vec2 viewSize;
 uniform vec2 pixelSize;
 uniform int frameMod8;
 uniform float velocity;
 uniform float betterRainStrength;
+uniform bool isDay;
+uniform float invAspectRatio;
+uniform float invFar;
+uniform vec2 invViewSize;
+uniform vec2 invPixelSize;
+uniform float sunriseTime;
+uniform vec4 rawSkylightPercents;
 
 #ifdef FSH
 	ivec2 texelcoord = ivec2(gl_FragCoord.xy);
@@ -82,9 +96,9 @@ varying vec3 testValue;
 #define MAIN_BUFFER              colortex0
 #define TAA_PREV_BUFFER          colortex1
 #define BLOOM_BUFFER             colortex2
-#define NOISY_ADDITIONS_BUFFER   colortex5
-#define NORMALS_BUFFER           colortex6
-#define DEBUG_BUFFER             colortex11
+#define NOISY_ADDITIONS_BUFFER   colortex3
+#define NORMALS_BUFFER           colortex4
+#define DEBUG_BUFFER             colortex7
 
 #define DEPTH_BUFFER_ALL                   depthtex0
 #define DEPTH_BUFFER_WO_TRANS              depthtex1
@@ -161,27 +175,15 @@ float getColorLum(vec3 color) {
 	return dot(color, vec3(0.2125, 0.7154, 0.0721));
 }
 
-float percentThrough(float v, float minv, float maxv) {
-	return (v - minv) / (maxv - minv);
-}
+//float percentThrough(float v, float minv, float maxv) {
+//	return (v - minv) / (maxv - minv);
+//}
 
 float maxAbs(vec3 v) {
 	float r = abs(v.r);
 	float g = abs(v.g);
 	float b = abs(v.b);
 	return max(max(r, g), b);
-}
-
-float inverseLength(vec3 v) {
-	return inversesqrt(v.x * v.x + v.y * v.y + v.z * v.z);
-}
-
-float powDot(vec3 a, vec3 b, float e) {
-	return pow(a.x * b.x, e) + pow(a.y * b.y, e) + pow(a.z * b.z, e);
-}
-
-float powDot(vec2 a, vec2 b, float e) {
-	return pow(a.x * b.x, e) + pow(a.y * b.y, e);
 }
 
 vec3 smoothMin(vec3 v1, vec3 v2, float a) {
@@ -221,27 +223,12 @@ vec3 cubicInterpolate(vec3 edge0, vec3 edge1, vec3 edge2, vec3 edge3, float valu
 	return vec3(x, y, z);
 }
 
-vec2 setVecMaxLen(vec2 vec, float maxLen) {
-	float len = length(vec);
-	return vec / len * min(len, maxLen);
-}
-
-float getDepth(vec2 coords) {
-	return 2.0 * near / (far + near - (2.0 * texture2D(depthtex0, coords).x - 1.0) * (far - near));
-}
-
 float toLinearDepth(float depth) {
     return 2.0 * near / (far + near - depth * (far - near));
 }
 
 float fromLinearDepth(float depth) {
 	return (2.0 * near / depth - far - near) / (near - far);
-}
-
-float toBlockDepth(float depth) {
-	depth = toLinearDepth(depth);
-	depth = depth * (far - near) + near;
-	return depth;
 }
 
 bool depthIsSky(float depth) {
@@ -251,8 +238,7 @@ bool depthIsHand(float depth) {
 	return depth < 0.003;
 }
 
-vec3 getViewPos(vec2 coords) {
-	float depth = texture2D(DEPTH_BUFFER_ALL, coords).r;
+vec3 getViewPos(vec2 coords, float depth) {
 	float linearDepth = toLinearDepth(depth);
 	if (depthIsSky(linearDepth) || depthIsHand(linearDepth)) {
 		return vec3(0.0);
@@ -330,7 +316,7 @@ float fogify(float x, float w) {
 }
 
 vec3 getSkyColor() {
-	vec4 pos = vec4(gl_FragCoord.xy / vec2(viewWidth, viewHeight) * 2.0 - 1.0, 1.0, 1.0);
+	vec4 pos = vec4(gl_FragCoord.xy * invViewSize * 2.0 - 1.0, 1.0, 1.0);
 	pos = gbufferProjectionInverse * pos;
 	float upDot = dot(normalize(pos.xyz), gbufferModelView[1].xyz);
 	return mix(skyColor, fogColor, fogify(max(upDot, 0.0), 0.25));
@@ -354,43 +340,8 @@ vec3 getShadowPos(vec4 viewPos, float lightDot) {
 
 
 
-float getSunlightPercent_Sunrise() {
-	int time = (worldTime > 12000) ? (worldTime - 24000) : worldTime;
-	return clamp(percentThrough(time, SUNRISE_START - 24000, SUNRISE_END), 0.0, 1.0);
-}
-
-float getSunlightPercent_Sunset() {
-	int time = worldTime;
-	return clamp(1 - percentThrough(time, SUNSET_START, SUNSET_END), 0.0, 1.0);
-}
-
-// return value channels: (sun, moon, sunrise, sunset)
-vec4 getRawSkylightPercents() {
-	int sunriseTime = (worldTime > 18000) ? (worldTime - 24000) : worldTime;
-	if (sunriseTime >= SUNRISE_START && sunriseTime < SUNRISE_SWITCH) {
-		float sunrisePercent = percentThrough(sunriseTime, SUNRISE_START, SUNRISE_SWITCH);
-		return vec4(0.0, 1.0 - sunrisePercent, sunrisePercent, 0.0);
-	}
-	if (sunriseTime >= SUNRISE_SWITCH && sunriseTime < SUNRISE_END) {
-		float sunPercent = percentThrough(sunriseTime, SUNRISE_SWITCH, SUNRISE_END);
-		return vec4(sunPercent, 0.0, 1.0 - sunPercent, 0.0);
-	}
-	if (sunriseTime >= SUNRISE_END && worldTime < SUNSET_START) {
-		return vec4(1.0, 0.0, 0.0, 0.0);
-	}
-	if (worldTime >= SUNSET_START && worldTime < SUNSET_SWITCH) {
-		float sunsetPercent = percentThrough(worldTime, SUNSET_START, SUNSET_SWITCH);
-		return vec4(1.0 - sunsetPercent, 0.0, 0.0, sunsetPercent);
-	}
-	if (worldTime >= SUNSET_SWITCH && worldTime < SUNSET_END) {
-		float moonPercent = percentThrough(worldTime, SUNSET_SWITCH, SUNSET_END);
-		return vec4(0.0, moonPercent, 0.0, 1.0 - moonPercent);
-	}
-	return vec4(0.0, 1.0, 0.0, 0.0);
-}
-
 vec4 getSkylightPercents() {
-	vec4 skylightPercents = getRawSkylightPercents();
+	vec4 skylightPercents = rawSkylightPercents;
 	skylightPercents.xzw *= 1.0 - rainStrength * (1.0 - RAIN_LIGHT_MULT);
 	return skylightPercents;
 }
@@ -420,8 +371,6 @@ vec3 getAmbientColor(vec4 skylightPercents) {
 vec4 getSunraysData() {
 	vec4 skylightPercents = getSkylightPercents();
 	
-	int sunriseTime = (worldTime > 18000) ? (worldTime - 24000) : worldTime;
-	bool isDay = sunriseTime >= SUNRISE_START && sunriseTime <= SUNSET_END;
 	bool isOtherSource = shadowLightPosition.b > 0.0;
 	bool isSun = isDay ^^ isOtherSource;
 	
@@ -435,9 +384,9 @@ vec4 getSunraysData() {
 	
 	if (isOtherSource) {
 		if (isSun) {
-			sunraysAmount *= sqrt(skylightPercents.x + skylightPercents.z + skylightPercents.w);
+			sunraysAmount *= skylightPercents.x + skylightPercents.z + skylightPercents.w;
 		} else {
-			sunraysAmount *= sqrt(skylightPercents.y);
+			sunraysAmount *= skylightPercents.y;
 		}
 	}
 	

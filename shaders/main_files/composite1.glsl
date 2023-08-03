@@ -14,7 +14,9 @@ varying vec2 texcoord;
 
 void main() {
 	vec3 color = texelFetch(MAIN_BUFFER, texelcoord, 0).rgb;
-	vec3 bloomColor = texelFetch(BLOOM_BUFFER, texelcoord, 0).rgb;
+	#ifdef BLOOM_ENABLED
+		vec3 bloomColor = texelFetch(BLOOM_BUFFER, texelcoord, 0).rgb;
+	#endif
 	
 	
 	

@@ -22,13 +22,13 @@ float getSunraysAddition(inout uint rng) {
 				break;
 			}
 		#endif
-		float depth = getDepth(pos);
-		if (depthIsSky(depth)) {
+		float depth = texelFetch(DEPTH_BUFFER_ALL, ivec2(pos * viewSize), 0).r;
+		if (depthIsSky(toLinearDepth(depth))) {
 			total += 1.0 + float(i) / SUNRAY_STEP_COUNT;
 		}
 		pos += coordStep;
 	}
-	total *= 1.0 / SUNRAY_STEP_COUNT;
+	total /= SUNRAY_STEP_COUNT;
 	
 	if (total > 0.0) total = max(total, 0.2);
 	

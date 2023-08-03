@@ -9,7 +9,7 @@ varying vec3 upVec;
 
 float getHorizonMultiplier() {
 	#ifdef OVERWORLD
-		vec4 screenPos = vec4(gl_FragCoord.xy / vec2(viewWidth, viewHeight), gl_FragCoord.z, 1.0);
+		vec4 screenPos = vec4(gl_FragCoord.xy * invViewSize, gl_FragCoord.z, 1.0);
 		vec4 viewPos = gbufferProjectionInverse * (screenPos * 2.0 - 1.0);
 		float viewDot = dot(normalize(viewPos.xyz), upVec);
 		float altitudeAddend = atan(75.0 / (eyeAltitude - 58.0));
@@ -41,7 +41,6 @@ void main() {
 	colorForBloom *= sqrt(BLOOM_SKY_BRIGHTNESS);
 	
 	/* DRAWBUFFERS:02 */
-	// write to the buffers: main, bloom
 	gl_FragData[0] = vec4(color, 1.0);
 	gl_FragData[1] = vec4(colorForBloom, 1.0);
 }

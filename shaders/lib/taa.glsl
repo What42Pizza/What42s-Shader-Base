@@ -93,7 +93,7 @@ void doTAA(inout vec3 color, inout vec3 newPrev) {
 	const float normalFactor = 0.1;
 	
 	vec3 normal = texelFetch(NORMALS_BUFFER, texelcoord, 0).rgb;
-	vec3 viewPos = getViewPos(texcoord);
+	vec3 viewPos = getViewPos(texcoord, depth);
 	float normalAmount = abs(1.0 - dot(normalize(viewPos * -1.0), normal));
 	normalAmount = pow(normalAmount, 3);
 	normalAmount *= length(normal); // don't increase blend for sky

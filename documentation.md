@@ -1,18 +1,17 @@
 # Shader Base Documentation
 
-# WARNING: THIS IS VERY OUT OF DATE
-
 <br>
 
 ## File Structure:
 
-- **/main_files:  Main code for VSH and FSH files**
+- **/main_files:  Main VSH and FSH code**
 - **incl:  Basic code used by multiple files**
 - - incl/settings.glsl:  Holds every value that can easily change the look of the shader, and holds the values that each option can be set to in the options menu
 - - incl/common.glsl:  Holds every commonly used code and every uniform that is used
-- **world_:  Basically glue code that pulls in incl/settings.glsl, incl/common.glsl, and the associated /main_files/___.glsl**
+- **world_x:  The files that are actaully loaded by OptiFine / Iris**
 - **lang:  Shown names of setting options and setting values**
 - **shaders.properties:  Defines the settings menu and other details about the shader internals**
+- **blocks.properties:  Defines what different blocks are mapped to. The shaders retrieve the value from \`mc_Entity.x\`**
 
 <br>
 
@@ -23,23 +22,27 @@
 - - Usage:  incl/lighting.glsl
 - **Anti-Aliasing:**
 - - Main Processing:  /main_files/composite4.glsl
-- - TAA Jitter:  (almost) every VSH section ('taaOffset' is added to 'gl_Position')
-- **Sharpening:**
-- - Main Processing:  /main_files/composite5.glsl
-- **Lighting:**
-- - Main Processing:  incl/lighting.glsl
-- - Usage:  /main_files/gbuffers_entities.glsl, /main_files/gbuffers_hand.glsl, /main_files/gbuffers_terrain.glsl
-- - Per-Frame Calculations:  shaders.properties (for uniform.float.sunlightPercent)
-- **Tonemapping:**
-- - Main Processing:  /main_files/composite.glsl
+- - TAA Jitter:  /lib/taa_jitter.glsl,  (almost) every VSH section ('taaOffset' is added to 'gl_Position')
+- **SSAO**
+- - Main Processing: /main_files/composite1.glsl
+- **Sunrays:**
+- - Main processing:  /main_files/composite2.glsl
+- - Application:  /main_files/composite3.glsl (works the same as bloom application)
 - **Bloom:**
 - - Main Processing:  /main_files/composite2.glsl
 - - Pre-Processing:  /main_files/composite1.glsl
-- **Sunrays:**
-- - Main processing:  /main_files/composite3.glsl
+- - Application:  /main_files/composite3.glsl (calculations are written to a mip-mapped buffer that is sampled with blur so that the noise is reduced)
+- **Sharpening:**
+- - Main Processing:  /main_files/composite5.glsl
+- **Waving Blocks**
+- - Main Processing:  /main_files/terrain.glsl,  /main_files.shadow.glsl
 - **Fog:**
-- - Main Processing:  /main_files/composite.glsl
-- - Exlusions:  /main_files/gbuffers_clouds.glsl
+- - Main Processing:  /main_files/terrain.glsl,  /main_files/entities.glsl,  /main_files/clouds.glsl
+- **Tonemapping:**
+- - Main Processing:  /main_files/composite5.glsl
+- **Lighting:**
+- - Main Processing:  incl/lighting.glsl
+- - Usage:  /main_files/terrain.glsl,  /main_files/textured.glsl,  /main_files/entities.glsl,  /main_files/hand.glsl
 
 <br>
 
@@ -48,23 +51,9 @@
 - **texture / colortex0:  Main Image** 
 - **colortex1:  TAA Texture**
 - **colortex2:  Bloom Texture**
-- **colortex3:  Clouds (used to extend fog distance for clouds)**
-- **colortex4:  Sky Color (used for fog)**
-- **colortex5:  Sky Color for Bloom (used for fog)**
-- **colortex6:  Per-frame Calculations**
-- **colortex7:  Hand Mask (used for fixing hand depth)**
-- **colortex8:  Noisy Additions (things like bloom, sunrays, etc (anything that gives noisy results) are rendered to this buffer then LOD-sampled when added to the image)**
-- **colortex9:  Normals**
-- **colortex10:  ViewPos Values (the position of each pixel in relation to the camera)**
-- **colortex11:  Debug Output**
-
-<br>
-
-## ColorTex6:
-
-This is the buffer where things like sunlight percents are calculated. The prepare.glsl file calculates the values once and saves them to colortex6 so that the can be retrived with little performance cost (at least, in theory). This is an alternative to computing values per-frame using uniform definitions in shaders.properties, and doing it this way allows you to use already existing functions you've made. If you wanted to, you could add `const bool colortex6Clear = false;`, which would allow you to also use this buffer to store values across frames. Indicies for each value can be found in common.glsl
-
-NOTE: I haven't seen any noticable performance increase from doing this, so it might all just be a waste of time
+- **colortex3:  Noisy Additions (things like bloom, sunrays, etc (anything that gives noisy results) are rendered to this buffer then LOD-sampled when added to the image)**
+- **colortex4:  Normals**
+- **colortex7:  Debug Output**
 
 <br>
 <br>
@@ -81,7 +70,7 @@ NOTE: I haven't seen any noticable performance increase from doing this, so it m
 <br>
 <br>
 
-## Extra:
+## Extras:
 
 - **[Noise Functions](https://gist.github.com/patriciogonzalezvivo/670c22f3966e662d2f83)**
 - **[Permission to use Complementary's code](https://discord.com/channels/744189556768636941/744189557913681972/1135737539412643880) (TAA and transform functions)**

@@ -1,12 +1,12 @@
-# Minecraft Shaders Base
+# Minecraft Shaders Base a1.1.0
 
 ### This is a base shaderpack that can be used to easily create shaders.
 
-## WARNING: There are still MANY basic features / fixes that I'm still working on
+## Warning: There are still many basic features / fixes that I'm still working on
 
 <br>
 
-## NOTE: Currently, this is only garunteed to work with Iris 1.19.4, though I do hope to support more in the future
+## Note: This has only been tested with Optifine 1.12.2 and Iris 1.19.4. I hope to support both Optifine and Iris for all versions >= 1.12, but I need more time to test and bugfix
 
 <br>
 <br>
@@ -45,4 +45,4 @@
 - **[ShaderLabs](https://wiki.shaderlabs.org/wiki/Getting_Started):** Initial shaders base
 - **[EminGTR](https://modrinth.com/shader/complementary-reimagined):** TAA, coordinate transformation code, and code structure inspiration
 - **[Acerola](https://github.com/GarrettGunnell/Minecraft-Shaders/blob/c1a6f5060dfd91ccac31e04fa529f2be4304a21a/shaders/final.fsh):** ACES tonemapping code
-- **[Nathan Reed](https://www.reedbeta.com/blog/hash-functions-for-gpu-rendering/):** Easy float hashing function
+- **[Nathan Reed](https://www.reedbeta.com/blog/hash-functions-for-gpu-rendering/):** Easy hashing function

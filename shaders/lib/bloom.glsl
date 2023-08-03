@@ -1,7 +1,7 @@
 vec3 getBloomAddition(float sizeMult, inout uint rng) {
 	vec3 bloomAddition = vec3(0.0);
 	for (int layer = 0; layer < BLOOM_LEVELS; layer++) {
-		float size = float(layer + 1) * (1.0 / BLOOM_LEVELS);
+		float size = float(layer + 1) / BLOOM_LEVELS;
 		size = pow(size, 1.25);
 		size *= sizeMult;
 		
@@ -17,10 +17,10 @@ vec3 getBloomAddition(float sizeMult, inout uint rng) {
 		for (int i = 0; i <= BLOOM_SAMPLE_COUNT; i ++) {
 			
 			float len = sqrt(float(i) / BLOOM_SAMPLE_COUNT + 0.1) * size;
-			vec2 offset = vec2(cos(i + noise) * len * (1.0 / aspectRatio), sin(i + noise) * len);
+			vec2 offset = vec2(cos(i + noise) * len * invAspectRatio, sin(i + noise) * len);
 			vec2 sampleCoord = coord + offset;
 			
-			vec3 sample = texelFetch(BLOOM_BUFFER, ivec2(sampleCoord * (1.0 / pixelSize)), 0).rgb;
+			vec3 sample = texture2D(BLOOM_BUFFER, sampleCoord).rgb;
 			float sampleLum = getColorLum(sample); // for some reason, having this value pre-calculated and stored in its own buffer is slower (but pre-calculating the bloom sky color and putting it in its own buffer is slightly faster??? maybe I need to re-try doing this?)
 			
 			//float interpValue = float(sampleLum > getColorLum(brightest)); // doesn't seem any faster?
@@ -36,7 +36,7 @@ vec3 getBloomAddition(float sizeMult, inout uint rng) {
 		bloomAddition += brightest;
 		
 	}
-	bloomAddition *= 1.0 / BLOOM_LEVELS;
+	bloomAddition /= BLOOM_LEVELS;
 	
 	return bloomAddition * 0.08;
 }

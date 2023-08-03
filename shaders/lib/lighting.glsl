@@ -103,7 +103,8 @@ vec3 getLightColor(float blockBrightness, float skyBrightness, float ambientBrig
 			
 		}
 		
-		skyBrightness *= lightDot * 1.1;
+		skyBrightness = max(skyBrightness, ambientBrightness * 0.8);
+		skyBrightness *= lightDot;
 		skyBrightness *= ambientBrightness;
 		
 		return vec3(blockBrightness, skyBrightness, ambientBrightness);
@@ -120,7 +121,8 @@ vec3 getBasicLightingBrightnesses(vec2 lmcoord) {
 	float skyBrightness = 1.0;
 	float ambientBrightness = pow(lmcoord.y, LIGHT_DROPOFF) * sideShading;
 	
-	skyBrightness *= lightDot * 1.1;
+	skyBrightness = max(skyBrightness, ambientBrightness * 0.8);
+	skyBrightness *= lightDot;
 	skyBrightness *= ambientBrightness;
 	
 	return vec3(blockBrightness, skyBrightness, ambientBrightness);
@@ -151,12 +153,12 @@ void doPreLighting() {
 	#ifdef SHADOWS_ENABLED
 		if (lightDot > 0.0) {
 			// vertex is facing towards the sky
-			offsetMult = pow(maxAbs(gl_Vertex.rgb), 0.75) * SHADOW_OFFSET_INCREASE + SHADOW_OFFSET_MIN;
+			offsetMult = pow(maxAbs(gl_Vertex.xyz), 0.75) * SHADOW_OFFSET_INCREASE + SHADOW_OFFSET_MIN;
 		}
 	#endif
 	
-	vec3 shadingNormals = vec3(abs(gl_Normal.r), gl_Normal.g, abs(gl_Normal.b));
-	sideShading = shadingNormals.r * -0.3 + shadingNormals.g * 0.5 + shadingNormals.b * 0.3;
+	vec3 shadingNormals = vec3(abs(gl_Normal.x), gl_Normal.y, abs(gl_Normal.z));
+	sideShading = shadingNormals.x * -0.3 + shadingNormals.y * 0.5 + shadingNormals.z * 0.3;
 	sideShading = (sideShading * SIDE_SHADING / 2.0) + 1.0;
 	
 }

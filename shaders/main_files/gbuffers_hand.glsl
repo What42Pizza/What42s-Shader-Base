@@ -15,7 +15,7 @@ void main() {
 	vec4 color = texture2D(MAIN_BUFFER, texcoord) * glcolor;
 	
 	#ifdef HANDHELD_LIGHT_ENABLED
-		vec3 screenPos = vec3(gl_FragCoord.xy / viewSize, gl_FragCoord.z);
+		vec3 screenPos = vec3(gl_FragCoord.xy * invViewSize, gl_FragCoord.z);
 		vec3 viewPos = screenToView(screenPos);
 		vec3 playerPos = viewToPlayer(viewPos);
 	#endif
@@ -44,7 +44,7 @@ void main() {
 	
 	
 	
-	/* DRAWBUFFERS:026 */
+	/* DRAWBUFFERS:024 */
 	gl_FragData[0] = color;
 	gl_FragData[1] = colorForBloom;
 	gl_FragData[2] = vec4(glnormal, 1.0);

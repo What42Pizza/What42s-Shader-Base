@@ -1,5 +1,8 @@
 Current:
-Fix ssao?
+Test if SSAO needs to be applied to bloom
+Fix sunray factor at sunrise / sunset
+Replace smoothstep in `getOffsetAoInfluence` with flat line?
+Try moving the `* 0.08` in `getWavingAddition` to after the interp
 UPDATE DOCUMENTATION
 Make sunrays noise adjust based on quality?
 Reduce number of buffers used to increase performance (also test if less buffers is better)
@@ -12,16 +15,17 @@ Add smoothening to the sharpening velocity factor
 Fix beacon beam (add ssao mask?)
 Decrease SSAO sample contribution based on normal dot?
 Do a round of general optimizations
+Fix ssao?
 Take FXAA from Comp Reimagined?
 Decrease waving at night?
 Prevent TAA on entities?
 Exclude sun, moon, and sunrays based on horison multiplier
 Move around color tex buffers?
 Add profiles
-Add other debug settings?
+Do a round of adding debug settings
 Convert more calculations to 'shader.properites' uniforms
 Get permission from EminGT
-Add more ways to get to options (e.g. access to light brightnesses from the 'shading' menu)
+Do a round of adding more ways to get to options (e.g. access to light brightnesses from the 'shading' menu)
 Custom sky color?
 Switch to Contrast Adaptive Sharpening?
 Dither final output?
@@ -64,7 +68,6 @@ fix waving on 1.12
 Add settings for sunrays colors
 Remove need for ViewPos buffer
 Set sunrays color to either sun color or moon color
-Add fog to ssao
 Calculate fog in vsh?
 Switch to xorShiftHash?
 Show Light Levels option

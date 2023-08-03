@@ -173,7 +173,7 @@ void main() {
 	
 	// ======= DEBUG OUTPUT ========
 	
-	#if defined BLOOM_SHOW_ADDITION || defined BLOOM_SHOW_FILTERED_TEXTURE
+	#ifdef DEBUG_OUTPUT_ENABLED
 		color = texelFetch(DEBUG_BUFFER, texelcoord, 0).rgb;
 	#endif
 	

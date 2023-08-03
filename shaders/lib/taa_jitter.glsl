@@ -20,6 +20,6 @@ vec2 jitterOffsets[8] = vec2[8] (
 );
 
 vec2 TAAJitter(vec2 coord, float w) {
-	vec2 offset = jitterOffsets[frameMod8] * (w / viewSize);
+	vec2 offset = jitterOffsets[frameMod8] * w * invViewSize;
 	return coord + offset;
 }

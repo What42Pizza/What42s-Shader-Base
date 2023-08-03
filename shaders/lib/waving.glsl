@@ -2,7 +2,8 @@ const float[4] wavingScales = float[4] (0.0, WAVING_AMOUNT_1, WAVING_AMOUNT_2, W
 
 
 
-vec3 getWavingAddition(vec3 worldPos) {
+vec3 getWavingAddition(vec3 position) {
+	vec3 worldPos = position + cameraPosition;
 	float timePos = frameTimeCounter + dot(worldPos, vec3(1.0, 0.1, 0.3)) * WAVING_WORLD_SCALE;
 	timePos *= WAVING_SPEED * 1.75;
 	uint timePos1 = uint(floor(timePos));
@@ -19,12 +20,13 @@ vec3 getWavingAddition(vec3 worldPos) {
 
 
 void applyWaving(inout vec3 position) {
-	vec3 worldPos = position + cameraPosition;
-	int wavingData = int(mc_Entity.x + 0.1) % 1000;
+	int rawWavingData = int(mc_Entity.x);
+	if (rawWavingData < 1000) {return;}
+	int wavingData = rawWavingData % 1000;
 	if (wavingData < 2 || wavingData > 7) {return;}
 	float wavingScale = wavingScales[wavingData / 2];
 	if (wavingData % 2 == 0 && gl_MultiTexCoord0.t > mc_midTexCoord.t) {return;} // don't apply waving to base
 	wavingScale *= lmcoord.y * lmcoord.y;
 	wavingScale *= 1.0 + betterRainStrength * (WAVING_AMOUNT_RAIN_MULT - 1.0);
-	position += getWavingAddition(worldPos) * wavingScale;
+	position += getWavingAddition(position) * wavingScale;
 }

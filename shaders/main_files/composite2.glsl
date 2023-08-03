@@ -61,15 +61,15 @@ void main() {
 	
 	
 	
-	/* DRAWBUFFERS:5 */
+	/* DRAWBUFFERS:3 */
 	gl_FragData[0] = vec4(noisyAdditions, 1.0);
 	
 	#ifdef BLOOM_SHOW_ADDITION
-		/* RENDERTARGETS:5,11 */
+		/* RENDERTARGETS:3,7 */
 		gl_FragData[1] = vec4(bloomAddition, 1.0);
 		
 	#elif defined BLOOM_SHOW_FILTERED_TEXTURE
-		/* RENDERTARGETS:5,11 */
+		/* RENDERTARGETS:3,7 */
 		gl_FragData[1] = vec4(texelFetch(BLOOM_BUFFER, texelcoord, 0).rgb, 1.0);
 		
 	#endif
