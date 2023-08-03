@@ -83,18 +83,16 @@ vec3 getLightColor(float blockBrightness, float skyBrightness, float ambientBrig
 			// surface is facing towards shadowLightPosition
 			
 			vec4 currPos = viewPos;
-			currPos.xy += randomVec2(rngStart) * offsetMult * 0.4;
+			currPos.xy += randomVec2(rngStart) * offsetMult * 15;
 			vec3 shadowPos = getShadowPos(currPos, lightDot);
 			if (texture2D(shadowtex0, shadowPos.xy).r >= shadowPos.z) {
 				skyBrightness += 1;
 			}
 			#if SHADOW_FILTERING > 0
+				
 				for (int i = 0; i < SHADOW_OFFSET_COUNT; i++) {
-					vec4 offsetViewPos = currPos;
-					offsetViewPos.xy += SHADOW_OFFSETS[i].xy * offsetMult;
-					vec3 currentShadowPos = getShadowPos(offsetViewPos, lightDot);
-					float currentShadowWeight = SHADOW_OFFSETS[i].z;
-					if (texture2D(shadowtex0, currentShadowPos.xy).r >= currentShadowPos.z) {
+					if (texture2D(shadowtex0, shadowPos.xy + SHADOW_OFFSETS[i].xy * offsetMult).r >= shadowPos.z) {
+						float currentShadowWeight = SHADOW_OFFSETS[i].z;
 						skyBrightness += currentShadowWeight;
 					}
 				}
@@ -154,6 +152,7 @@ void doPreLighting() {
 		if (lightDot > 0.0) {
 			// vertex is facing towards the sky
 			offsetMult = pow(maxAbs(gl_Vertex.xyz), 0.75) * SHADOW_OFFSET_INCREASE + SHADOW_OFFSET_MIN;
+			offsetMult *= 0.01;
 		}
 	#endif
 	

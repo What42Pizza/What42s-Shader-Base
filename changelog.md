@@ -1,3 +1,6 @@
+#### a1.1.2: 23/08/02
+- Improved shadow sampling (better and faster!)
+
 #### a1.1.1: 23/08/02
 - More optimizations
 
