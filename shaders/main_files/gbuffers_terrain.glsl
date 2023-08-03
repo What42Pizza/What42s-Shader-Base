@@ -15,12 +15,6 @@ varying vec3 glnormal;
 void main() {
 	vec4 color = texture2D(MAIN_BUFFER, texcoord) * glcolor;
 	
-	#ifdef HANDHELD_LIGHT_ENABLED
-		vec3 screenPos = vec3(gl_FragCoord.xy * invViewSize, gl_FragCoord.z);
-		vec3 viewPos = screenToView(screenPos);
-		vec3 playerPos = viewToPlayer(viewPos);
-	#endif
-	
 	
 	// main lighting
 	#ifdef SHADOWS_ENABLED
@@ -30,9 +24,10 @@ void main() {
 	#endif
 	
 	#ifdef HANDHELD_LIGHT_ENABLED
-		float handheldLight = max(1.0 - length(playerPos) / HANDHELD_LIGHT_DISTANCE, 0.0);
+		float depth = toLinearDepth(gl_FragCoord.z);
+		float handheldLight = max(1.0 - (depth * far) / HANDHELD_LIGHT_DISTANCE, 0.0);
 		handheldLight = pow(handheldLight, LIGHT_DROPOFF);
-		handheldLight *= heldBlockLightValue / 15.0 * HANDHELD_LIGHT_BRIGHTNESS;
+		handheldLight *= heldBlockLightValue / 15.0 * HANDHELD_LIGHT_BRIGHTNESS * 1.2;
 		brightnesses.x = max(brightnesses.x, handheldLight);
 	#endif
 	

@@ -69,7 +69,7 @@ void doTAA(inout vec3 color, inout vec3 newPrev) {
 	float handFactor = 0.0;
 	if (depthIsHand(linearDepth)) {
 		depth = fromLinearDepth(HAND_DEPTH);
-		handFactor = -0.4;
+		handFactor = -0.25;
 	}
 	
 	vec3 coord = vec3(texcoord, depth);

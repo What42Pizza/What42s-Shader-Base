@@ -1,20 +1,18 @@
 const float[4] wavingScales = float[4] (0.0, WAVING_AMOUNT_1, WAVING_AMOUNT_2, WAVING_AMOUNT_3);
+const vec3 windDirection = vec3(1.0, 0.1, 0.3); // another way to think of it: weights for timePos influence
 
 
 
 vec3 getWavingAddition(vec3 position) {
 	vec3 worldPos = position + cameraPosition;
-	float timePos = frameTimeCounter + dot(worldPos, vec3(1.0, 0.1, 0.3)) * WAVING_WORLD_SCALE;
+	float timePos = frameTimeCounter + dot(worldPos, windDirection) * WAVING_WORLD_SCALE;
 	timePos *= WAVING_SPEED * 1.75;
-	uint timePos1 = uint(floor(timePos));
-	uint timePos2 = timePos1 + 1u;
-	uint timePos3 = timePos1 + 2u;
-	uint timePos4 = timePos1 + 3u;
-	vec3 pos1 = randomVec3(timePos1) * 0.08;
-	vec3 pos2 = randomVec3(timePos2) * 0.08;
-	vec3 pos3 = randomVec3(timePos3) * 0.08;
-	vec3 pos4 = randomVec3(timePos4) * 0.08;
-	return cubicInterpolate(pos1, pos2, pos3, pos4, mod(timePos, 1.0)) * vec3(1.0, 0.2, 1.0);
+	uint timePosFloor = uint(floor(timePos));
+	vec3 pos1 = randomVec3FromRValue(timePosFloor);
+	vec3 pos2 = randomVec3FromRValue(timePosFloor + 1u);
+	vec3 pos3 = randomVec3FromRValue(timePosFloor + 2u);
+	vec3 pos4 = randomVec3FromRValue(timePosFloor + 3u);
+	return cubicInterpolate(pos1, pos2, pos3, pos4, mod(timePos, 1.0)) * vec3(1.0, 0.2, 1.0) * 0.08;
 }
 
 

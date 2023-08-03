@@ -143,7 +143,7 @@ vec3 getBasicLightingBrightnesses(vec2 lmcoord) {
 void doPreLighting() {
 	
 	lightDot = dot(normalize(shadowLightPosition), normalize(gl_NormalMatrix * gl_Normal));
-	#ifdef EXCLUDE_FOLIAGE
+	#if defined SHADER_TERRAIN && defined EXCLUDE_FOLIAGE
 		// when EXCLUDE_FOLIAGE is enabled, act as if foliage is always facing towards the sky.
 		// in other words, don't darken the back side of it unless something else is casting a shadow on it.
 		if (mc_Entity.x >= 2000.0 && mc_Entity.x <= 2999.0) lightDot = 1.0;

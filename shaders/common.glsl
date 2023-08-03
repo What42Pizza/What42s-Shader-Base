@@ -56,12 +56,7 @@ uniform sampler2D noisetex;
 
 
 
-uniform float sunriseStart;
-uniform float sunriseSwitch;
-uniform float sunriseEnd;
-uniform float sunsetStart;
-uniform float sunsetSwitch;
-uniform float sunsetEnd;
+// custom uniforms
 
 uniform vec2 viewSize;
 uniform vec2 pixelSize;
@@ -69,12 +64,20 @@ uniform int frameMod8;
 uniform float velocity;
 uniform float betterRainStrength;
 uniform bool isDay;
+uniform bool isOtherLightSource;
+uniform bool isSun;
+
+uniform float sunriseTime;
+uniform vec4 rawSkylightPercents;
+
 uniform float invAspectRatio;
 uniform float invFar;
 uniform vec2 invViewSize;
 uniform vec2 invPixelSize;
-uniform float sunriseTime;
-uniform vec4 rawSkylightPercents;
+
+
+
+// misc data
 
 #ifdef FSH
 	ivec2 texelcoord = ivec2(gl_FragCoord.xy);
@@ -93,12 +96,12 @@ varying vec3 testValue;
 
 // buffer values:
 
-#define MAIN_BUFFER              colortex0
-#define TAA_PREV_BUFFER          colortex1
-#define BLOOM_BUFFER             colortex2
-#define NOISY_ADDITIONS_BUFFER   colortex3
-#define NORMALS_BUFFER           colortex4
-#define DEBUG_BUFFER             colortex7
+#define MAIN_BUFFER             colortex0
+#define TAA_PREV_BUFFER         colortex1
+#define BLOOM_BUFFER            colortex2
+#define NOISY_ADDITIONS_BUFFER  colortex3
+#define NORMALS_BUFFER          colortex4
+#define DEBUG_BUFFER            colortex7
 
 #define DEPTH_BUFFER_ALL                   depthtex0
 #define DEPTH_BUFFER_WO_TRANS              depthtex1
@@ -107,10 +110,8 @@ varying vec3 testValue;
 // DON'T DELETE:
 /*
 const bool colortex1Clear = false;
-const int colortex6Format = RGB16F;
 const bool colortex0MipmapEnabled = true;
 const bool colortex2MipmapEnabled = true;
-const bool colortex5MipmapEnabled = true;
 const float wetnessHalflife = 50.0f;
 const float drynessHalflife = 50.0f;
 const int noiseTextureResolution = 256;
@@ -134,9 +135,9 @@ vec3 screenToView(vec3 pos) {
     return viewPos.xyz / viewPos.w;
 }
 
-vec3 viewToPlayer(vec3 pos) {
-	return mat3(gbufferModelViewInverse) * pos + gbufferModelViewInverse[3].xyz;
-}
+//vec3 viewToPlayer(vec3 pos) {
+//	return mat3(gbufferModelViewInverse) * pos + gbufferModelViewInverse[3].xyz;
+//}
 
 // END OF COMPLEMENTARY REIMAGINED'S CODE
 
@@ -174,10 +175,6 @@ vec3 distort(vec3 v) {
 float getColorLum(vec3 color) {
 	return dot(color, vec3(0.2125, 0.7154, 0.0721));
 }
-
-//float percentThrough(float v, float minv, float maxv) {
-//	return (v - minv) / (maxv - minv);
-//}
 
 float maxAbs(vec3 v) {
 	float r = abs(v.r);
@@ -305,6 +302,10 @@ vec3 randomVec3(inout uint rng) {
 	return vec3(x, y, z);
 }
 
+vec3 randomVec3FromRValue(uint rng) {
+	return randomVec3(rng);
+}
+
 
 
 
@@ -368,11 +369,9 @@ vec3 getAmbientColor(vec4 skylightPercents) {
 
 
 
+// this entire function SHOULD be computed on the cpu, but it has to be glsl code because it uses settings that are ONLY defined in glsl
 vec4 getSunraysData() {
 	vec4 skylightPercents = getSkylightPercents();
-	
-	bool isOtherSource = shadowLightPosition.b > 0.0;
-	bool isSun = isDay ^^ isOtherSource;
 	
 	vec3 sunraysColor = isSun ? SUNRAYS_SUN_COLOR : SUNRAYS_MOON_COLOR;
 	
@@ -382,7 +381,7 @@ vec4 getSunraysData() {
 		skylightPercents.z * SUNRAYS_AMOUNT_SUNRISE +
 		skylightPercents.w * SUNRAYS_AMOUNT_SUNSET;
 	
-	if (isOtherSource) {
+	if (isOtherLightSource) {
 		if (isSun) {
 			sunraysAmount *= skylightPercents.x + skylightPercents.z + skylightPercents.w;
 		} else {
@@ -392,4 +391,3 @@ vec4 getSunraysData() {
 	
 	return vec4(sunraysColor, sunraysAmount);
 }
-

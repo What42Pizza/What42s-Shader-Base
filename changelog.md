@@ -1,3 +1,6 @@
+#### a1.1.1: 23/08/02
+- More optimizations
+
 #### a1.1.0: 23/08/02
 - Fixed performance regressions (mostly)
 - Fixed ssao appearing over fog

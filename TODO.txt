@@ -1,29 +1,27 @@
 Current:
-Test if SSAO needs to be applied to bloom
-Fix sunray factor at sunrise / sunset
+Fix block outline flickering
+Make sure the moon light doesn't just pop in after sunset
+Fix sunrays factor at sunrise / sunset
 Replace smoothstep in `getOffsetAoInfluence` with flat line?
 Try moving the `* 0.08` in `getWavingAddition` to after the interp
-UPDATE DOCUMENTATION
 Make sunrays noise adjust based on quality?
 Reduce number of buffers used to increase performance (also test if less buffers is better)
 	Replace normal-based ssao w/ depth-based ssao?
 	Store bloom mult instead of bloom color?
 	think of more
-Tune sunrays colors
+Tune sunrays colors?
 Move advanced options to 'advanced options' menus
 Add smoothening to the sharpening velocity factor
-Fix beacon beam (add ssao mask?)
+Fix beacon beam
 Decrease SSAO sample contribution based on normal dot?
 Do a round of general optimizations
-Fix ssao?
+Test if SSAO needs to be applied to bloom
 Take FXAA from Comp Reimagined?
 Decrease waving at night?
 Prevent TAA on entities?
 Exclude sun, moon, and sunrays based on horison multiplier
-Move around color tex buffers?
 Add profiles
 Do a round of adding debug settings
-Convert more calculations to 'shader.properites' uniforms
 Get permission from EminGT
 Do a round of adding more ways to get to options (e.g. access to light brightnesses from the 'shading' menu)
 Custom sky color?
@@ -62,6 +60,9 @@ Match the vanilla look, especially in:
 
 
 Finished:
+Do a round of converting calculations to 'shader.properites' uniforms
+UPDATE DOCUMENTATION
+Fix ssao
 fix lang file on 1.12
 fix fog on 1.12
 fix waving on 1.12
