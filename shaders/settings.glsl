@@ -163,7 +163,25 @@ const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8
 
 
 
+//#define DOF_ENABLED
+#define DOF_NEAR_BLUR_START 0.05 // [0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.6 0.7 0.8 0.9]
+#define DOF_NEAR_BLUR_SLOPE 0.1 // [0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.5 0.6 0.7 0.8 0.9]
+#define DOF_NEAR_BLUR_STRENGTH 0.8 // [0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0 1.05 1.1 1.15 1.2 1.25 1.3 1.35 1.4 1.45 1.5 1.6 1.7 1.8 1.9 2.0]
+#define DOF_NEAR_BLUR_SIZE 1.2 // [0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0]
+#define DOF_FAR_BLUR_START 0.15 // [0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.5 0.6 0.7 0.8 0.9]
+#define DOF_FAR_BLUR_SLOPE 0.2 // [0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.5 0.6 0.7 0.8 0.9]
+#define DOF_FAR_BLUR_STRENGTH 0.7 // [0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0 1.05 1.1 1.15 1.2 1.25 1.3 1.35 1.4 1.45 1.5 1.6 1.7 1.8 1.9 2.0]
+#define DOF_FAR_BLUR_SIZE 1.3 // [0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0]
+
+
+
 #define TAA_ENABLED
+
+
+
+//#define MOTION_BLUR_ENABLED
+#define MOTION_BLUR_AMOUNT 0.5 // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0]
+#define MOTION_BLUR_QUALITY 3 // [2 3 4 5 6 7 8 9 10]
 
 
 
@@ -242,12 +260,14 @@ const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8
 
 
 
-const float SHADOW_OFFSET_INCREASE = 15.0 / shadowMapResolution;
-const float SHADOW_OFFSET_MIN = 0.0 / shadowMapResolution;
+const float SHADOW_OFFSET_INCREASE = 10.0 / shadowMapResolution;
+const float SHADOW_OFFSET_MIN = 3.0 / shadowMapResolution;
 
 const float shadowMapBias = 1.0 - 25.6 / shadowDistance;
 
-const int SUNRAY_STEP_COUNT = int(SUNRAYS_QUALITY * SUNRAYS_QUALITY / 2);
+const int BLOOM_SAMPLE_COUNT = BLOOM_QUALITY * BLOOM_QUALITY;
+const int SUNRAY_SAMPLE_COUNT = int(SUNRAYS_QUALITY * SUNRAYS_QUALITY / 2);
+const int MOTION_BLUR_SAMPLE_COUNT = MOTION_BLUR_QUALITY * MOTION_BLUR_QUALITY;
 
 
 

@@ -1,52 +1,73 @@
-//---------------------------------//
-//        Post-Processing 1        //
-//---------------------------------//
+//--------------------------------------------------//
+//        Post-Processing 2 (anything noisy)        //
+//--------------------------------------------------//
 
 
 
 varying vec2 texcoord;
+varying vec2 lightCoord;
 
 
 
 #ifdef FSH
 
-#include "/lib/ssao.glsl"
+#include "/lib/bloom.glsl"
+#include "/lib/sunrays.glsl"
 
 void main() {
-	vec3 color = texelFetch(MAIN_BUFFER, texelcoord, 0).rgb;
+	vec3 noisyAdditions = vec3(0.0);
+	vec3 debugOutput;
+	uint rng = rngStart;
+	
+	
+	
+	// ======== BLOOM CALCULATIONS ========
+	
 	#ifdef BLOOM_ENABLED
-		vec3 bloomColor = texelFetch(BLOOM_BUFFER, texelcoord, 0).rgb;
+		
+		vec3 bloomAddition = getBloomAddition(rng);
+		noisyAdditions += bloomAddition;
+		
+		#ifdef BLOOM_SHOW_ADDITION
+			#define HAS_DEBUG_OUT
+			debugOutput = bloomAddition;
+		#endif
+		
+		#ifdef BLOOM_SHOW_FILTERED_TEXTURE
+			#define HAS_DEBUG_OUT
+			debugOutput = texelFetch(BLOOM_BUFFER, texelcoord, 0).rgb;
+		#endif
+		
 	#endif
 	
 	
 	
-	// ======== SSAO ========
+	// ======== SUNRAYS ========
 	
-	#ifdef SSAO_ENABLED
-		float aoFactor = getAoFactor();
-		color *= 1.0 - aoFactor * AO_AMOUNT;
+	#ifdef SUNRAYS_ENABLED
+		
+		vec4 sunraysData = getSunraysData();
+		vec3 sunraysColor = sunraysData.xyz;
+		float sunraysAmount = sunraysData.w;
+		
+		float sunraysAddition = 0.0;
+		for (int i = 0; i < SUNRAYS_COMPUTE_COUNT; i ++) {
+			sunraysAddition += getSunraysAddition(rng);
+		};
+		sunraysAddition /= SUNRAYS_COMPUTE_COUNT;
+		sunraysAddition *= max(1.0 - length(lightCoord - 0.5) * 1.5, 0.0);
+		
+		noisyAdditions += sunraysAddition * sunraysAmount * sunraysColor;
+		
 	#endif
 	
 	
 	
-	// ======== BLOOM FILTERING ========
-	
-	#ifdef BLOOM_ENABLED
-		float lum = getColorLum(bloomColor);
-		float alpha = (lum - BLOOM_LOW_CUTOFF) / (BLOOM_HIGH_CUTOFF - BLOOM_LOW_CUTOFF);
-		alpha = pow(clamp(alpha, 0.0, 1.0), BLOOM_CURVE);
-		bloomColor *= alpha;
-	#endif
-	
-	
-	
-	#ifdef BLOOM_ENABLED
-		/* DRAWBUFFERS: 02 */
-		gl_FragData[0] = vec4(color, 1.0);
-		gl_FragData[1] = vec4(bloomColor, 1.0);
-	#else
-		/* DRAWBUFFERS: 0 */
-		gl_FragData[0] = vec4(color, 1.0);
+	/* DRAWBUFFERS:3 */
+	gl_FragData[0] = vec4(noisyAdditions, 1.0);
+	#ifdef HAS_DEBUG_OUT
+		/* DRAWBUFFERS:37 */
+		gl_FragData[1] = vec4(debugOutput, 1.0);
 	#endif
 }
 
@@ -59,6 +80,11 @@ void main() {
 void main() {
 	gl_Position = ftransform();
 	texcoord = gl_MultiTexCoord0.xy;
+	
+	vec3 lightPos = shadowLightPosition * mat3(gbufferProjection);
+	lightPos /= lightPos.z;
+	lightCoord = lightPos.xy * 0.5 + 0.5;
+	
 }
 
 #endif

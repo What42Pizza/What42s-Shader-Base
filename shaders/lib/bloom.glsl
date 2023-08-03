@@ -1,4 +1,4 @@
-vec3 getBloomAddition(float sizeMult, inout uint rng) {
+vec3 sampleBloom(float sizeMult, inout uint rng) {
 	vec3 bloomAddition = vec3(0.0);
 	for (int layer = 0; layer < BLOOM_LEVELS; layer++) {
 		float size = float(layer + 1) / BLOOM_LEVELS;
@@ -13,7 +13,6 @@ vec3 getBloomAddition(float sizeMult, inout uint rng) {
 		
 		vec3 brightest = vec3(0.0);
 		float brightestLum = 0.0;
-		const int BLOOM_SAMPLE_COUNT = BLOOM_QUALITY * BLOOM_QUALITY;
 		for (int i = 0; i <= BLOOM_SAMPLE_COUNT; i ++) {
 			
 			float len = sqrt(float(i) / BLOOM_SAMPLE_COUNT + 0.1) * size;
@@ -39,4 +38,24 @@ vec3 getBloomAddition(float sizeMult, inout uint rng) {
 	bloomAddition /= BLOOM_LEVELS;
 	
 	return bloomAddition * 0.08;
+}
+
+
+
+vec3 getBloomAddition(inout uint rng) {
+	
+	float depth = toLinearDepth(texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r);
+	float sizeMult = inversesqrt(depth * far);
+	
+	vec3 bloomAddition = vec3(0.0);
+	for (int i = 0; i < BLOOM_COMPUTE_COUNT; i++) {
+		bloomAddition += sampleBloom(sizeMult, rng);
+	}
+	bloomAddition *= (1.0 / BLOOM_COMPUTE_COUNT) * BLOOM_AMOUNT;
+	
+	#ifdef NETHER
+		bloomAddition *= BLOOM_NETHER_MULT;
+	#endif
+	
+	return bloomAddition;
 }

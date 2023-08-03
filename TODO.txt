@@ -1,4 +1,5 @@
 Current:
+Add more TAA settings
 Fix block outline flickering
 Make sure the moon light doesn't just pop in after sunset
 Fix sunrays factor at sunrise / sunset

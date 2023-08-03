@@ -1,6 +1,6 @@
-//--------------------------------------------------------//
-//        Post-Processing 3 (adding noisy results)        //
-//--------------------------------------------------------//
+//---------------------------------//
+//        Post-Processing 4        //
+//---------------------------------//
 
 
 
@@ -10,18 +10,17 @@ varying vec2 texcoord;
 
 #ifdef FSH
 
-#include "/lib/ssao.glsl"
+#include "/lib/depth_of_field.glsl"
 
 void main() {
 	vec3 color = texelFetch(MAIN_BUFFER, texelcoord, 0).rgb;
 	
 	
 	
-	// ======== NOISY ADDITIONS ========
-	
-	const int noiseMipMap = 1;
-	vec3 noisyAdditions = texture2DLod(NOISY_ADDITIONS_BUFFER, texcoord, noiseMipMap).rgb;
-	color += noisyAdditions;
+	// ======== DEPTH OF FIELD ========
+	#ifdef DOF_ENABLED
+		doDOF(color);
+	#endif
 	
 	
 	

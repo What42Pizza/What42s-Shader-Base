@@ -62,19 +62,7 @@ void neighbourhoodClamping(vec3 color, inout vec3 prevColor, float rawDepth, ino
 
 
 
-void doTAA(inout vec3 color, inout vec3 newPrev) {
-	
-	float depth = texelFetch(depthtex1, texelcoord, 0).r;
-	float linearDepth = toLinearDepth(depth);
-	float handFactor = 0.0;
-	if (depthIsHand(linearDepth)) {
-		depth = fromLinearDepth(HAND_DEPTH);
-		handFactor = -0.25;
-	}
-	
-	vec3 coord = vec3(texcoord, depth);
-	vec3 cameraOffset = cameraPosition - previousCameraPosition;
-	vec2 prevCoord = reprojection(coord, cameraOffset);
+void doTAA(inout vec3 color, inout vec3 newPrev, float depth, float linearDepth, vec2 prevCoord, float handFactor) {
 	
 	vec3 prevColor = texture2D(TAA_PREV_BUFFER, prevCoord).rgb;
 	//if (prevColor == vec3(0.0)) { // Fixes the first frame

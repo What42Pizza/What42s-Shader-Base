@@ -1,5 +1,7 @@
 # Shader Base Documentation
 
+## Warning: Documentaion might be out of date!
+
 <br>
 
 ## File Structure:
@@ -24,20 +26,24 @@
 - - Main Processing:  /main_files/composite4.glsl
 - - TAA Jitter:  /lib/taa_jitter.glsl,  (almost) every VSH section ('taaOffset' is added to 'gl_Position')
 - **SSAO**
-- - Main Processing: /main_files/composite1.glsl
+- - Main Processing: /main_files/composite.glsl
 - **Sunrays:**
-- - Main processing:  /main_files/composite2.glsl
-- - Application:  /main_files/composite3.glsl (works the same as bloom application)
+- - Main processing:  /main_files/composite1.glsl
+- - Application:  /main_files/composite2.glsl (works the same as bloom application)
 - **Bloom:**
-- - Main Processing:  /main_files/composite2.glsl
-- - Pre-Processing:  /main_files/composite1.glsl
-- - Application:  /main_files/composite3.glsl (calculations are written to a mip-mapped buffer that is sampled with blur so that the noise is reduced)
+- - Main Processing:  /main_files/composite1.glsl
+- - Pre-Processing:  /main_files/composite.glsl
+- - Application:  /main_files/composite2.glsl (calculations are written to a mip-mapped buffer that is sampled with blur so that the noise is reduced)
+- **Motion Blur**
+- - Main Processing:  /main_files/composite4.glsl
 - **Sharpening:**
 - - Main Processing:  /main_files/composite5.glsl
 - **Waving Blocks**
 - - Main Processing:  /main_files/terrain.glsl,  /main_files.shadow.glsl
 - **Fog:**
 - - Main Processing:  /main_files/terrain.glsl,  /main_files/entities.glsl,  /main_files/clouds.glsl
+- **Vignette:**
+- - Main Processing:  /main_files/composite5.glsl
 - **Tonemapping:**
 - - Main Processing:  /main_files/composite5.glsl
 - **Lighting:**

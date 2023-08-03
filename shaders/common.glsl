@@ -66,6 +66,8 @@ uniform float betterRainStrength;
 uniform bool isDay;
 uniform bool isOtherLightSource;
 uniform bool isSun;
+uniform float centerLinearDepthSmooth;
+uniform float centerDepthSmooth; // needed for `centerLinearDepthSmooth` to work?
 
 uniform float sunriseTime;
 uniform vec4 rawSkylightPercents;
@@ -114,6 +116,7 @@ const bool colortex0MipmapEnabled = true;
 const bool colortex2MipmapEnabled = true;
 const float wetnessHalflife = 50.0f;
 const float drynessHalflife = 50.0f;
+const float centerDepthHalflife = 3.0f;
 const int noiseTextureResolution = 256;
 */
 

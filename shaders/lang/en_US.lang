@@ -190,10 +190,32 @@ option.SUNRAYS_AMOUNT_SUNSET=Sunrays Amount Sunset
 
 
 
+screen.DOF_SETTINGS=Depth Of Field
+
+option.DOF_ENABLED=Depth Of Field Enabled
+option.DOF_NEAR_BLUR_START=DOF Near Blur Start
+option.DOF_NEAR_BLUR_SLOPE=DOF Near Blur Slope
+option.DOF_NEAR_BLUR_STRENGTH=DOF Near Blur Strength
+option.DOF_NEAR_BLUR_SIZE=DOF Near Blur Size
+option.DOF_FAR_BLUR_START=DOF far Blur Start
+option.DOF_FAR_BLUR_SLOPE=DOF far Blur Slope
+option.DOF_FAR_BLUR_STRENGTH=DOF far Blur Strength
+option.DOF_FAR_BLUR_SIZE=DOF far Blur Size
+
+
+
 screen.ANTI_ALIASING_SETTINGS=Anti-Aliasing
 
 option.TAA_ENABLED=TAA
 option.TAA_ENABLED.comment=Smoothens edges and makes them less pixelated while also removing flickering. (Performance cost: Low)
+
+
+
+screen.MOTION_BLUR_SETTINGS=Motion Blur
+
+option.MOTION_BLUR_ENABLED=Motion Blur Enabled
+option.MOTION_BLUR_AMOUNT=Motion Blur Amount
+option.MOTION_BLUR_QUALITY=Motion Blur Quality
 
 
 

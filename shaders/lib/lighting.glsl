@@ -101,8 +101,8 @@ vec3 getLightColor(float blockBrightness, float skyBrightness, float ambientBrig
 			
 		}
 		
+		skyBrightness *= sin((lightDot + 1.0) * PI / 4.0);
 		skyBrightness = max(skyBrightness, ambientBrightness * 0.8);
-		skyBrightness *= lightDot;
 		skyBrightness *= ambientBrightness;
 		
 		return vec3(blockBrightness, skyBrightness, ambientBrightness);
@@ -119,8 +119,8 @@ vec3 getBasicLightingBrightnesses(vec2 lmcoord) {
 	float skyBrightness = 1.0;
 	float ambientBrightness = pow(lmcoord.y, LIGHT_DROPOFF) * sideShading;
 	
+	skyBrightness *= sin((lightDot + 1.0) * PI / 4.0);
 	skyBrightness = max(skyBrightness, ambientBrightness * 0.8);
-	skyBrightness *= lightDot;
 	skyBrightness *= ambientBrightness;
 	
 	return vec3(blockBrightness, skyBrightness, ambientBrightness);

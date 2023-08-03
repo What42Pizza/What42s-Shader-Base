@@ -1,4 +1,4 @@
-# Minecraft Shaders Base a1.1.0
+# Minecraft Shaders Base a1.2.0
 
 ### This is a base shaderpack that can be used to easily create shaders.
 
@@ -18,9 +18,11 @@
 - **SSAO**
 - **Sunrays**
 - **Bloom**
+- **Motion Blur**
 - **Sharpening**
 - **Waving blocks**
 - **Fog**
+- **Vignette**
 - **Tonemapping and Color Correction**
 - - Brightness
 - - Gamma
