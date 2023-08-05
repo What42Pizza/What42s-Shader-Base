@@ -9,6 +9,7 @@ uniform vec4 entityColor;
 uniform float viewHeight;
 uniform float viewWidth;
 uniform float aspectRatio;
+uniform float frameTime;
 uniform float near;
 uniform float far;
 uniform int worldTime;
@@ -76,6 +77,7 @@ uniform float invAspectRatio;
 uniform float invFar;
 uniform vec2 invViewSize;
 uniform vec2 invPixelSize;
+uniform float invFrameTime;
 
 
 
@@ -146,37 +148,14 @@ vec3 screenToView(vec3 pos) {
 
 
 
-
-
-// euclidian distance is defined as sqrt(a^2 + b^2 + ...)
-// this length function instead does cbrt(a^3 + b^3 + ...)
-// this results in smaller distances along the diagonal axes.
-float cubeLength(vec2 v) {
-	return pow(abs(v.x * v.x * v.x) + abs(v.y * v.y * v.y), 1.0 / 3.0);
-}
-
-float getDistortFactor(vec2 v) {
-	#if SHADOW_DISTORT_EXP == 2
-		return length(v) + SHADOW_DISTORT_ADDITION;
-	#elif SHADOW_DISTORT_EXP == 3
-		return cubeLength(v) + SHADOW_DISTORT_ADDITION;
-	#else
-		return pow(pow(abs(v.x), SHADOW_DISTORT_EXP) + pow(abs(v.y), SHADOW_DISTORT_EXP), 1.0 / SHADOW_DISTORT_EXP) + SHADOW_DISTORT_ADDITION;
-	#endif
-}
-
-vec3 distort(vec3 v, float factor) {
-	return vec3(v.xy / factor, v.z * 0.5);
-}
-
-vec3 distort(vec3 v) {
-	return distort(v, getDistortFactor(v.xy));
-}
-
-
-
 float getColorLum(vec3 color) {
 	return dot(color, vec3(0.2125, 0.7154, 0.0721));
+}
+
+float maxAbs(vec2 v) {
+	float r = abs(v.r);
+	float g = abs(v.g);
+	return max(r, g);
 }
 
 float maxAbs(vec3 v) {
@@ -330,13 +309,46 @@ vec3 getSkyColor() {
 
 
 
+
+
+float cubeLength(vec2 v) {
+	return pow(abs(v.x * v.x * v.x) + abs(v.y * v.y * v.y), 1.0 / 3.0);
+}
+
+float getDistortFactor(vec3 v) {
+	return cubeLength(v.xy) + SHADOW_DISTORT_ADDITION;
+}
+
+vec3 distort(vec3 v, float distortFactor) {
+	return vec3(v.xy / distortFactor, v.z * 0.5);
+}
+
+vec3 distort(vec3 v) {
+	return distort(v, getDistortFactor(v));
+}
+
+
+
 vec3 getShadowPos(vec4 viewPos, float lightDot) {
 	vec4 playerPos = gbufferModelViewInverse * viewPos;
-	vec3 shadowPos = (shadowProjection * (shadowModelView * playerPos)).xyz; //convert to shadow screen space
-	float distortFactor = getDistortFactor(shadowPos.xy);
-	shadowPos = distort(shadowPos, distortFactor); //apply shadow distortion
+	vec3 shadowPos = (shadowProjection * (shadowModelView * playerPos)).xyz; // convert to shadow screen space
+	float distortFactor = getDistortFactor(shadowPos);
+	float bias = 0.05
+		+ 0.01 / (lightDot + 0.03)
+		+ distortFactor * distortFactor * 0.5;
+	shadowPos = distort(shadowPos, distortFactor); // apply shadow distortion
 	shadowPos = shadowPos * 0.5 + 0.5;
-	shadowPos.z -= SHADOW_BIAS * (distortFactor * distortFactor) / abs(lightDot); //apply shadow bias
+	shadowPos.z -= bias * 0.02; // apply shadow bias
+	return shadowPos;
+}
+
+vec3 getLessBiasedShadowPos(vec4 viewPos, float lightDot) {
+	vec4 playerPos = gbufferModelViewInverse * viewPos;
+	vec3 shadowPos = (shadowProjection * (shadowModelView * playerPos)).xyz; // convert to shadow screen space
+	float distortFactor = getDistortFactor(shadowPos);
+	shadowPos = distort(shadowPos, distortFactor); // apply shadow distortion
+	shadowPos = shadowPos * 0.5 + 0.5;
+	shadowPos.z -= 0.005 * distortFactor; // apply shadow bias
 	return shadowPos;
 }
 

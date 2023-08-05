@@ -1,4 +1,10 @@
-#### a1.2.0:  23/08/03
+#### a1.3.0:  23/08/04
+- Imroved shadow filtering (maybe worse performance)
+- Fixed block outline and leash
+- Made motion blur framerate-independant
+- Slightly improved performance (in other areas)
+
+### a1.2.0:  23/08/03
 - Added Motion Blur (disabled by default)
 - Added Depth of Field (disabled by default)
 - Improved lighting calculations

@@ -24,7 +24,7 @@
 - - Usage:  incl/lighting.glsl
 - **Anti-Aliasing:**
 - - Main Processing:  /main_files/composite4.glsl
-- - TAA Jitter:  /lib/taa_jitter.glsl,  (almost) every VSH section ('taaOffset' is added to 'gl_Position')
+- - TAA Jitter:  /lib/taa_jitter.glsl,  (almost) every VSH shader ('taaOffset' is added to 'gl_Position.xy')
 - **SSAO**
 - - Main Processing: /main_files/composite.glsl
 - **Sunrays:**

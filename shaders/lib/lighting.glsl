@@ -1,45 +1,55 @@
-varying vec4 viewPos;
-varying float lightDot;
+varying vec3 shadowPos;
+varying float lightDotMult;
 varying float offsetMult;
 varying float sideShading;
 
-#if SHADOW_FILTERING == 1
-	#define SHADOW_OFFSET_COUNT 8
-	const float SHADOW_OFFSET_WEIGHTS_TOTAL = 0.45 * 8;
+#ifdef SHADOW_FILTERING
+	#define SHADOW_OFFSET_COUNT 33
+	const float SHADOW_OFFSET_WEIGHTS_TOTAL = 1.0 + 0.94 * 8 + 0.78 * 8 + 0.57 * 8 + 0.37 * 8;
 	const vec3[SHADOW_OFFSET_COUNT] SHADOW_OFFSETS = vec3[SHADOW_OFFSET_COUNT] (
-		vec3(1, 0, 0.45),
-		vec3(-1, 0, 0.45),
-		vec3(0, 1, 0.45),
-		vec3(0, -1, 0.45),
-		vec3(0.71, 0.71, 0.45),
-		vec3(-0.71, 0.71, 0.45),
-		vec3(0.71, -0.71, 0.45),
-		vec3(-0.71, -0.71, 0.45)
-	);
-#elif SHADOW_FILTERING == 2
-	#define SHADOW_OFFSET_COUNT 16
-	const float SHADOW_OFFSET_WEIGHTS_TOTAL = 0.4 * 8 + 0.55 * 8;
-	const vec3[SHADOW_OFFSET_COUNT] SHADOW_OFFSETS = vec3[SHADOW_OFFSET_COUNT] (
-		vec3(1.5, 0, 0.4),
-		vec3(-1.5, 0, 0.4),
-		vec3(0, 1.5, 0.4),
-		vec3(0, -1.5, 0.4),
-		vec3(1.1, 1.1, 0.4),
-		vec3(-1.1, 1.1, 0.4),
-		vec3(1.1, -1.1, 0.4),
-		vec3(-1.1, -1.1, 0.4),
-		vec3(0.29, 0.69, 0.55),
-		vec3(0.69, 0.29, 0.55),
-		vec3(0.69, -0.29, 0.55),
-		vec3(0.29, -0.69, 0.55),
-		vec3(-0.29, -0.69, 0.55),
-		vec3(-0.69, -0.29, 0.55),
-		vec3(-0.69, 0.29, 0.55),
-		vec3(-0.29, 0.69, 0.55)
+		vec3( 0.0 ,  0.0 , 1.0 ),
+		vec3( 0.5 ,  0.0 , 0.94),
+		vec3( 0.0 ,  0.5 , 0.94),
+		vec3(-0.5 ,  0.0 , 0.94),
+		vec3( 0.0 , -0.5 , 0.94),
+		vec3( 0.35,  0.35, 0.94),
+		vec3(-0.35,  0.35, 0.94),
+		vec3( 0.35, -0.35, 0.94),
+		vec3(-0.35, -0.35, 0.94),
+		vec3( 0.38,  0.92, 0.78),
+		vec3( 0.92,  0.38, 0.78),
+		vec3( 0.92, -0.38, 0.78),
+		vec3( 0.38, -0.92, 0.78),
+		vec3(-0.38, -0.92, 0.78),
+		vec3(-0.92, -0.38, 0.78),
+		vec3(-0.92,  0.38, 0.78),
+		vec3(-0.38,  0.92, 0.78),
+		vec3( 1.5 ,  0.0 , 0.57),
+		vec3( 0.0 ,  1.5 , 0.57),
+		vec3(-1.5 ,  0.0 , 0.57),
+		vec3( 0.0 , -1.5 , 0.57),
+		vec3( 1.06,  1.06, 0.57),
+		vec3(-1.06,  1.06, 0.57),
+		vec3( 1.06, -1.06, 0.57),
+		vec3(-1.06, -1.06, 0.57),
+		vec3( 0.76,  1.84, 0.37),
+		vec3( 1.84,  0.76, 0.37),
+		vec3( 1.84, -0.76, 0.37),
+		vec3( 0.76, -1.84, 0.37),
+		vec3(-0.76, -1.84, 0.37),
+		vec3(-1.84, -0.76, 0.37),
+		vec3(-1.84,  0.76, 0.37),
+		vec3(-0.76,  1.84, 0.37)
 	);
 #endif
 
 
+
+
+
+float alterLightDot(float lightDot) {
+	return sin((lightDot + 1.0) * PI / 4.0);
+}
 
 
 
@@ -79,29 +89,41 @@ vec3 getLightColor(float blockBrightness, float skyBrightness, float ambientBrig
 		float skyBrightness = 0;
 		float ambientBrightness = pow(lmcoord.y, LIGHT_DROPOFF) * sideShading;
 		
-		if (lightDot > 0.0) {
+		if (lightDotMult > alterLightDot(0.0)) {
 			// surface is facing towards shadowLightPosition
 			
-			vec4 currPos = viewPos;
-			currPos.xy += randomVec2(rngStart) * offsetMult * 15;
-			vec3 shadowPos = getShadowPos(currPos, lightDot);
-			if (texture2D(shadowtex0, shadowPos.xy).r >= shadowPos.z) {
-				skyBrightness += 1;
-			}
-			#if SHADOW_FILTERING > 0
+			#ifndef SHADOW_FILTERING
 				
-				for (int i = 0; i < SHADOW_OFFSET_COUNT; i++) {
-					if (texture2D(shadowtex0, shadowPos.xy + SHADOW_OFFSETS[i].xy * offsetMult).r >= shadowPos.z) {
-						float currentShadowWeight = SHADOW_OFFSETS[i].z;
-						skyBrightness += currentShadowWeight;
-					}
+				// no filtering
+				vec3 offsetShadowPos = shadowPos;
+				offsetShadowPos.xy += randomVec2(rngStart) * offsetMult * 0.2;
+				if (texture2D(shadowtex0, offsetShadowPos.xy).r >= offsetShadowPos.z) {
+					skyBrightness += 1;
 				}
-				skyBrightness /= SHADOW_OFFSET_WEIGHTS_TOTAL + 1;
+				
+			#else
+				
+				// filtered
+				//if (texture2D(shadowtex0, shadowPos.xy).r >= shadowPos.z - 0.05) {
+					vec3 offsetShadowPos = shadowPos;
+					offsetShadowPos.xy += randomVec2(rngStart) * offsetMult * 0.3;
+					for (int i = 0; i < SHADOW_OFFSET_COUNT; i++) {
+						if (texture2D(shadowtex0, offsetShadowPos.xy + SHADOW_OFFSETS[i].xy * offsetMult).r >= offsetShadowPos.z) {
+							float currentShadowWeight = SHADOW_OFFSETS[i].z;
+							skyBrightness += currentShadowWeight;
+						}
+					}
+					skyBrightness /= SHADOW_OFFSET_WEIGHTS_TOTAL;
+					skyBrightness = min(skyBrightness * 2.3, 1.0);
+				//} else {
+				//	skyBrightness = 0.5;
+				//}
+				
 			#endif
 			
 		}
 		
-		skyBrightness *= sin((lightDot + 1.0) * PI / 4.0);
+		skyBrightness *= lightDotMult;
 		skyBrightness = max(skyBrightness, ambientBrightness * 0.8);
 		skyBrightness *= ambientBrightness;
 		
@@ -119,7 +141,7 @@ vec3 getBasicLightingBrightnesses(vec2 lmcoord) {
 	float skyBrightness = 1.0;
 	float ambientBrightness = pow(lmcoord.y, LIGHT_DROPOFF) * sideShading;
 	
-	skyBrightness *= sin((lightDot + 1.0) * PI / 4.0);
+	skyBrightness *= lightDotMult;
 	skyBrightness = max(skyBrightness, ambientBrightness * 0.8);
 	skyBrightness *= ambientBrightness;
 	
@@ -140,19 +162,24 @@ vec3 getBasicLightingBrightnesses(vec2 lmcoord) {
 
 void doPreLighting() {
 	
-	lightDot = dot(normalize(shadowLightPosition), normalize(gl_NormalMatrix * gl_Normal));
+	float lightDot = dot(normalize(shadowLightPosition), normalize(gl_NormalMatrix * gl_Normal));
+	lightDotMult = alterLightDot(lightDot);
 	#if defined SHADER_TERRAIN && defined EXCLUDE_FOLIAGE
 		// when EXCLUDE_FOLIAGE is enabled, act as if foliage is always facing towards the sky.
 		// in other words, don't darken the back side of it unless something else is casting a shadow on it.
 		if (mc_Entity.x >= 2000.0 && mc_Entity.x <= 2999.0) lightDot = 1.0;
 	#endif
 	
-	viewPos = gl_ModelViewMatrix * gl_Vertex;
 	#ifdef SHADOWS_ENABLED
-		if (lightDot > 0.0) {
-			// vertex is facing towards the sky
-			offsetMult = pow(maxAbs(gl_Vertex.xyz), 0.75) * SHADOW_OFFSET_INCREASE + SHADOW_OFFSET_MIN;
-			offsetMult *= 0.01;
+		if (lightDot > 0.0) { // vertex is facing towards the sky
+			vec4 viewPos = gl_ModelViewMatrix * gl_Vertex;
+			#ifndef SHADOW_FILTERING
+				shadowPos = getShadowPos(viewPos, lightDot);
+			#else
+				shadowPos = getLessBiasedShadowPos(viewPos, lightDot);
+			#endif
+			offsetMult = maxAbs(gl_Vertex.xyz) * SHADOW_OFFSET_INCREASE + SHADOW_OFFSET_MIN;
+			offsetMult *= 0.007;
 		}
 	#endif
 	

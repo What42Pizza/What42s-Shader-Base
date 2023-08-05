@@ -56,6 +56,8 @@ void main() {
 		}
 	#endif
 	
+	//color.rgb = vec3(brightnesses.y);
+	
 	
 	/* DRAWBUFFERS:024 */
 	gl_FragData[0] = color;
@@ -86,6 +88,8 @@ void main() {
 	#else
 		gl_Position = gl_ProjectionMatrix * (gl_ModelViewMatrix * gl_Vertex);
 	#endif
+	
+	if (gl_Position.z < -1.0) return; // simple but effective optimization
 	
 	#ifdef TAA_ENABLED
 		gl_Position.xy = TAAJitter(gl_Position.xy, gl_Position.w);

@@ -63,6 +63,8 @@ void main() {
 		color = texelFetch(DEBUG_BUFFER, texelcoord, 0).rgb;
 	#endif
 	
+	//color = texture2D(shadowtex0, texcoord).rgb;
+	
 	
 	
 	/* DRAWBUFFERS:0 */

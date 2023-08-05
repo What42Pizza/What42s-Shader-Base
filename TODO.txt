@@ -1,19 +1,20 @@
 Current:
+Add `program.enable`-s to shader.properties
+Calculate constants (light data and sunrays data) in vertex shaders?
 Add more TAA settings
-Fix block outline flickering
 Make sure the moon light doesn't just pop in after sunset
 Fix sunrays factor at sunrise / sunset
-Replace smoothstep in `getOffsetAoInfluence` with flat line?
-Try moving the `* 0.08` in `getWavingAddition` to after the interp
-Make sunrays noise adjust based on quality?
-Reduce number of buffers used to increase performance (also test if less buffers is better)
-	Replace normal-based ssao w/ depth-based ssao?
-	Store bloom mult instead of bloom color?
-	think of more
-Tune sunrays colors?
+Add profiles
 Move advanced options to 'advanced options' menus
+Replace smoothstep in `getOffsetAoInfluence` with flat line?
+Make sunrays noise adjust based on quality?
+Replace normal-based ssao w/ depth-based ssao?
+Store bloom mult instead of bloom color?
+Tune sunrays colors?
+
 Add smoothening to the sharpening velocity factor
-Fix beacon beam
+Add post-processing effects like the super secret settings
+Fix ssao on beacon beam
 Decrease SSAO sample contribution based on normal dot?
 Do a round of general optimizations
 Test if SSAO needs to be applied to bloom
@@ -21,7 +22,6 @@ Take FXAA from Comp Reimagined?
 Decrease waving at night?
 Prevent TAA on entities?
 Exclude sun, moon, and sunrays based on horison multiplier
-Add profiles
 Do a round of adding debug settings
 Get permission from EminGT
 Do a round of adding more ways to get to options (e.g. access to light brightnesses from the 'shading' menu)
@@ -38,7 +38,6 @@ Determine performance costs
 Potion effects?
 Colorblind aids?
 Custom sun / moon?
-Better shadow filtering?
 Realistic water?
 
 
@@ -61,6 +60,10 @@ Match the vanilla look, especially in:
 
 
 Finished:
+Make motion blue framerate independant
+Fix block outline flickering
+Better shadow filtering
+Try moving the `* 0.08` in `getWavingAddition` to after the interp
 Do a round of converting calculations to 'shader.properites' uniforms
 UPDATE DOCUMENTATION
 Fix ssao

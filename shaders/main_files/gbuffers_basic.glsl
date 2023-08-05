@@ -1,5 +1,4 @@
 varying vec2 texcoord;
-varying vec4 glcolor;
 varying vec2 lmcoord;
 varying vec3 glnormal;
 
@@ -7,9 +6,10 @@ varying vec3 glnormal;
 
 #ifdef FSH
 
+flat in vec4 glcolor;
+
 void main() {
-	vec4 color = texture2D(MAIN_BUFFER, texcoord) * glcolor;
-	color *= texture2D(lightmap, lmcoord);
+	vec4 color = glcolor;
 	
 	/* DRAWBUFFERS:024 */
 	gl_FragData[0] = color;
@@ -24,6 +24,8 @@ void main() {
 #ifdef VSH
 
 #include "/lib/taa_jitter.glsl"
+
+flat out vec4 glcolor;
 
 void main() {
 	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;

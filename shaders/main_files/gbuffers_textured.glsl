@@ -53,6 +53,8 @@ void main() {
 	lmcoord  = (gl_TextureMatrix[1] * gl_MultiTexCoord1).xy;
 	
 	gl_Position = ftransform();
+	if (gl_Position.z < -1.0) return; // simple but effective optimization
+	
 	#ifdef TAA_ENABLED
 		gl_Position.xy = TAAJitter(gl_Position.xy, gl_Position.w);
 	#endif

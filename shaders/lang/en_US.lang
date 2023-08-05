@@ -8,7 +8,9 @@ option.DARKEN_SKY_UNDERGROUND.comment=Darken the sky when underground
 screen.FOG_SETTINGS=Fog
 
 option.FOG_ENABLED=Fog Enabled
-option.FOG_ENABLED.comment=(Performance cost: Low-None)
+option.FOG_ENABLED.comment=(Performance cost: Low)
+option.ENTITY_FOG_ENABLED=Entity Fog Enabled
+option.ENTITY_FOG_ENABLE.comment=Enabled fog on entities. This usually isn't required because entities stop rendering before fog can effect them
 option.FOG_HEIGHT_SCALE=Fog Height Scale
 option.FOG_HEIGHT_SCALE.comment=How much further you can see upwards vs forwards
 option.FOG_EXTRA_CLOUDS_DISTANCE=Extra Clouds Distance
