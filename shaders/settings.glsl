@@ -259,8 +259,8 @@ const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8
 
 
 
-const float SHADOW_OFFSET_INCREASE = 12.0 / shadowMapResolution;
-const float SHADOW_OFFSET_MIN = 3.0 / shadowMapResolution;
+const float SHADOW_OFFSET_INCREASE = 1.5 / shadowMapResolution;
+const float SHADOW_OFFSET_MIN = 1.0 / shadowMapResolution;
 
 const float shadowMapBias = 1.0 - 25.6 / shadowDistance;
 

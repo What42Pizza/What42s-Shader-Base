@@ -169,8 +169,9 @@ void doPreLighting() {
 			#else
 				shadowPos = getLessBiasedShadowPos(viewPos, lightDot);
 			#endif
-			offsetMult = length(worldPos.xyz) * SHADOW_OFFSET_INCREASE + SHADOW_OFFSET_MIN;
-			offsetMult *= 0.03;
+			offsetMult = length(shadowPos.xy * 2.0 - 1.0);
+			offsetMult *= offsetMult;
+			offsetMult = offsetMult * SHADOW_OFFSET_INCREASE + SHADOW_OFFSET_MIN;
 		}
 		
 	#endif
