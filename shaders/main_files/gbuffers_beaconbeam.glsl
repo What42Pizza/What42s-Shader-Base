@@ -5,6 +5,10 @@ varying vec3 glnormal;
 
 #include "../lib/lighting.glsl"
 
+#ifdef SHADOWS_ENABLED
+	#undef SHADOWS_ENABLED
+#endif
+
 // this file is included to remove the vertex depth optimization
 
 
@@ -20,7 +24,7 @@ void main() {
 	
 	// main lighting
 	
-	vec3 brightnesses = getBasicLightingBrightnesses(lmcoord);
+	vec3 brightnesses = getLightingBrightnesses(lmcoord);
 	
 	#ifdef HANDHELD_LIGHT_ENABLED
 		float depth = toLinearDepth(gl_FragCoord.z);

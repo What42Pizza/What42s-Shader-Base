@@ -9,7 +9,6 @@ varying vec3 glnormal;
 
 
 
-
 #ifdef FSH
 
 void main() {
@@ -21,11 +20,7 @@ void main() {
 	
 	
 	// main lighting
-	#ifdef SHADOWS_ENABLED
-		vec3 brightnesses = getLightingBrightnesses(lmcoord);
-	#else
-		vec3 brightnesses = getBasicLightingBrightnesses(lmcoord);
-	#endif
+	vec3 brightnesses = getLightingBrightnesses(lmcoord);
 	
 	#ifdef HANDHELD_LIGHT_ENABLED
 		float depth = toLinearDepth(gl_FragCoord.z);

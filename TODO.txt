@@ -1,17 +1,16 @@
 Current:
+Add setting to fade fog into sky buffer (to make the sun and moon appear in fog) (would also need sunray depth fix)
 Add `program.enable`-s to shader.properties
 Calculate constants (light data and sunrays data) in vertex shaders?
 Add more TAA settings
 Make sure the moon light doesn't just pop in after sunset
-Fix sunrays factor at sunrise / sunset
+Make sure sunrays work well at sunrise & sunset
 Add profiles
 Move advanced options to 'advanced options' menus
 Replace smoothstep in `getOffsetAoInfluence` with flat line?
 Make sunrays noise adjust based on quality?
 Replace normal-based ssao w/ depth-based ssao?
 Store bloom mult instead of bloom color?
-Tune sunrays colors?
-
 Add smoothening to the sharpening velocity factor
 Add post-processing effects like the super secret settings
 Fix ssao on beacon beam

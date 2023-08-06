@@ -1,4 +1,10 @@
-#### a1.3.0:  23/08/04
+#### a1.3.1:  23/08/05
+- Fixed for Iris 1.19.4
+- Fixed and tuned sunrays color
+- Fixed some option names
+- Reworked lighting code
+
+### a1.3.0:  23/08/04
 - Imroved shadow filtering (maybe worse performance)
 - Fixed block outline and leash
 - Made motion blur framerate-independant

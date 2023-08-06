@@ -1,46 +1,50 @@
-varying vec3 shadowPos;
-varying float lightDotMult;
-varying float offsetMult;
 varying float sideShading;
 
-#ifdef SHADOW_FILTERING
-	#define SHADOW_OFFSET_COUNT 33
-	const float SHADOW_OFFSET_WEIGHTS_TOTAL = 1.0 + 0.94 * 8 + 0.78 * 8 + 0.57 * 8 + 0.37 * 8;
-	const vec3[SHADOW_OFFSET_COUNT] SHADOW_OFFSETS = vec3[SHADOW_OFFSET_COUNT] (
-		vec3( 0.0 ,  0.0 , 1.0 ),
-		vec3( 0.5 ,  0.0 , 0.94),
-		vec3( 0.0 ,  0.5 , 0.94),
-		vec3(-0.5 ,  0.0 , 0.94),
-		vec3( 0.0 , -0.5 , 0.94),
-		vec3( 0.35,  0.35, 0.94),
-		vec3(-0.35,  0.35, 0.94),
-		vec3( 0.35, -0.35, 0.94),
-		vec3(-0.35, -0.35, 0.94),
-		vec3( 0.38,  0.92, 0.78),
-		vec3( 0.92,  0.38, 0.78),
-		vec3( 0.92, -0.38, 0.78),
-		vec3( 0.38, -0.92, 0.78),
-		vec3(-0.38, -0.92, 0.78),
-		vec3(-0.92, -0.38, 0.78),
-		vec3(-0.92,  0.38, 0.78),
-		vec3(-0.38,  0.92, 0.78),
-		vec3( 1.5 ,  0.0 , 0.57),
-		vec3( 0.0 ,  1.5 , 0.57),
-		vec3(-1.5 ,  0.0 , 0.57),
-		vec3( 0.0 , -1.5 , 0.57),
-		vec3( 1.06,  1.06, 0.57),
-		vec3(-1.06,  1.06, 0.57),
-		vec3( 1.06, -1.06, 0.57),
-		vec3(-1.06, -1.06, 0.57),
-		vec3( 0.76,  1.84, 0.37),
-		vec3( 1.84,  0.76, 0.37),
-		vec3( 1.84, -0.76, 0.37),
-		vec3( 0.76, -1.84, 0.37),
-		vec3(-0.76, -1.84, 0.37),
-		vec3(-1.84, -0.76, 0.37),
-		vec3(-1.84,  0.76, 0.37),
-		vec3(-0.76,  1.84, 0.37)
-	);
+#ifdef SHADOWS_ENABLED
+	varying vec3 shadowPos;
+	varying float lightDotMult;
+	varying float offsetMult;
+	
+	#ifdef SHADOW_FILTERING
+		#define SHADOW_OFFSET_COUNT 33
+		const float SHADOW_OFFSET_WEIGHTS_TOTAL = 1.0 + 0.94 * 8 + 0.78 * 8 + 0.57 * 8 + 0.37 * 8;
+		const vec3[SHADOW_OFFSET_COUNT] SHADOW_OFFSETS = vec3[SHADOW_OFFSET_COUNT] (
+			vec3( 0.0 ,  0.0 , 1.0 ),
+			vec3( 0.5 ,  0.0 , 0.94),
+			vec3( 0.0 ,  0.5 , 0.94),
+			vec3(-0.5 ,  0.0 , 0.94),
+			vec3( 0.0 , -0.5 , 0.94),
+			vec3( 0.35,  0.35, 0.94),
+			vec3(-0.35,  0.35, 0.94),
+			vec3( 0.35, -0.35, 0.94),
+			vec3(-0.35, -0.35, 0.94),
+			vec3( 0.38,  0.92, 0.78),
+			vec3( 0.92,  0.38, 0.78),
+			vec3( 0.92, -0.38, 0.78),
+			vec3( 0.38, -0.92, 0.78),
+			vec3(-0.38, -0.92, 0.78),
+			vec3(-0.92, -0.38, 0.78),
+			vec3(-0.92,  0.38, 0.78),
+			vec3(-0.38,  0.92, 0.78),
+			vec3( 1.5 ,  0.0 , 0.57),
+			vec3( 0.0 ,  1.5 , 0.57),
+			vec3(-1.5 ,  0.0 , 0.57),
+			vec3( 0.0 , -1.5 , 0.57),
+			vec3( 1.06,  1.06, 0.57),
+			vec3(-1.06,  1.06, 0.57),
+			vec3( 1.06, -1.06, 0.57),
+			vec3(-1.06, -1.06, 0.57),
+			vec3( 0.76,  1.84, 0.37),
+			vec3( 1.84,  0.76, 0.37),
+			vec3( 1.84, -0.76, 0.37),
+			vec3( 0.76, -1.84, 0.37),
+			vec3(-0.76, -1.84, 0.37),
+			vec3(-1.84, -0.76, 0.37),
+			vec3(-1.84,  0.76, 0.37),
+			vec3(-0.76,  1.84, 0.37)
+		);
+	#endif
+	
 #endif
 
 
@@ -79,16 +83,15 @@ vec3 getLightColor(float blockBrightness, float skyBrightness, float ambientBrig
 }
 
 
-
-#ifdef SHADOWS_ENABLED
 	
-	// return value channels: (blockBrightness, skyBrightness, ambientBrightness)
-	vec3 getLightingBrightnesses(vec2 lmcoord) {
-		
-		float blockBrightness = pow(lmcoord.x, LIGHT_DROPOFF) * sideShading;
-		float skyBrightness = 0;
-		float ambientBrightness = pow(lmcoord.y, LIGHT_DROPOFF) * sideShading;
-		
+// return value channels: (blockBrightness, skyBrightness, ambientBrightness)
+vec3 getLightingBrightnesses(vec2 lmcoord) {
+	
+	float blockBrightness = pow(lmcoord.x, LIGHT_DROPOFF) * sideShading;
+	float skyBrightness = 0;
+	float ambientBrightness = pow(lmcoord.y, LIGHT_DROPOFF) * sideShading;
+	
+	#ifdef SHADOWS_ENABLED
 		if (lightDotMult > alterLightDot(0.0)) {
 			// surface is facing towards shadowLightPosition
 			
@@ -122,24 +125,9 @@ vec3 getLightColor(float blockBrightness, float skyBrightness, float ambientBrig
 			#endif
 			
 		}
-		
-		skyBrightness *= lightDotMult;
-		skyBrightness = max(skyBrightness, ambientBrightness * 0.8);
-		skyBrightness *= ambientBrightness;
-		
-		return vec3(blockBrightness, skyBrightness, ambientBrightness);
-	}
-	
-#endif
-
-
-
-// return value channels: (blockBrightness, skyBrightness, ambientBrightness)
-vec3 getBasicLightingBrightnesses(vec2 lmcoord) {
-	
-	float blockBrightness = pow(lmcoord.x, LIGHT_DROPOFF) * sideShading;
-	float skyBrightness = 1.0;
-	float ambientBrightness = pow(lmcoord.y, LIGHT_DROPOFF) * sideShading;
+	#else
+		skyBrightness = 1.0;
+	#endif
 	
 	skyBrightness *= lightDotMult;
 	skyBrightness = max(skyBrightness, ambientBrightness * 0.8);
@@ -162,25 +150,29 @@ vec3 getBasicLightingBrightnesses(vec2 lmcoord) {
 
 void doPreLighting() {
 	
-	float lightDot = dot(normalize(shadowLightPosition), normalize(gl_NormalMatrix * gl_Normal));
-	lightDotMult = alterLightDot(lightDot);
-	#if defined SHADER_TERRAIN && defined EXCLUDE_FOLIAGE
-		// when EXCLUDE_FOLIAGE is enabled, act as if foliage is always facing towards the sky.
-		// in other words, don't darken the back side of it unless something else is casting a shadow on it.
-		if (mc_Entity.x >= 2000.0 && mc_Entity.x <= 2999.0) lightDot = 1.0;
-	#endif
-	
 	#ifdef SHADOWS_ENABLED
+		
+		float lightDot = dot(normalize(shadowLightPosition), normalize(gl_NormalMatrix * gl_Normal));
+		lightDotMult = alterLightDot(lightDot);
+		
+		#if defined SHADER_TERRAIN && defined EXCLUDE_FOLIAGE
+			// when EXCLUDE_FOLIAGE is enabled, act as if foliage is always facing towards the sky.
+			// in other words, don't darken the back side of it unless something else is casting a shadow on it.
+			if (mc_Entity.x >= 2000.0 && mc_Entity.x <= 2999.0) lightDot = 1.0;
+		#endif
+		
 		if (lightDot > 0.0) { // vertex is facing towards the sky
 			vec4 viewPos = gl_ModelViewMatrix * gl_Vertex;
+			vec4 worldPos = gbufferModelViewInverse * viewPos;
 			#ifndef SHADOW_FILTERING
 				shadowPos = getShadowPos(viewPos, lightDot);
 			#else
 				shadowPos = getLessBiasedShadowPos(viewPos, lightDot);
 			#endif
-			offsetMult = maxAbs(gl_Vertex.xyz) * SHADOW_OFFSET_INCREASE + SHADOW_OFFSET_MIN;
-			offsetMult *= 0.007;
+			offsetMult = length(worldPos.xyz) * SHADOW_OFFSET_INCREASE + SHADOW_OFFSET_MIN;
+			offsetMult *= 0.03;
 		}
+		
 	#endif
 	
 	vec3 shadingNormals = vec3(abs(gl_Normal.x), gl_Normal.y, abs(gl_Normal.z));

@@ -189,6 +189,12 @@ option.SUNRAYS_AMOUNT_DAY=Sunrays Amount Day
 option.SUNRAYS_AMOUNT_NIGHT=Sunrays Amount Night
 option.SUNRAYS_AMOUNT_SUNRISE=Sunrays Amount Sunrise
 option.SUNRAYS_AMOUNT_SUNSET=Sunrays Amount Sunset
+option.SUNRAYS_SUN_RED=Sunrays Sun Red
+option.SUNRAYS_SUN_GREEN=Sunrays Sun Green
+option.SUNRAYS_SUN_BLUE=Sunrays Sun Blue
+option.SUNRAYS_MOON_RED=Sunrays Moon Red
+option.SUNRAYS_MOON_GREEN=Sunrays Moon Green
+option.SUNRAYS_MOON_BLUE=Sunrays Moon Blue
 
 
 
