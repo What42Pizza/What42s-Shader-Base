@@ -1,4 +1,4 @@
-float getSunraysAddition(inout uint rng) {
+float getSunraysAmount(inout uint rng) {
 	
 	
 	#if SUNRAYS_STYLE == 1

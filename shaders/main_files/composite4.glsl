@@ -16,6 +16,9 @@ varying vec2 texcoord;
 void main() {
 	vec3 color = texelFetch(MAIN_BUFFER, texelcoord, 0).rgb;
 	vec3 prev = vec3(0.0);
+	#ifdef DEBUG_OUTPUT_ENABLED
+		vec3 debugOutput = texelFetch(DEBUG_BUFFER, texelcoord, 0).rgb;
+	#endif
 	
 	
 	
@@ -52,6 +55,9 @@ void main() {
 	
 	
 	/* DRAWBUFFERS:01 */
+	#ifdef DEBUG_OUTPUT_ENABLED
+		color = debugOutput;
+	#endif
 	gl_FragData[0] = vec4(color, 1.0);
 	gl_FragData[1] = vec4(prev, 1.0);
 }

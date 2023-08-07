@@ -25,6 +25,9 @@ vec3 simpleTonemap(vec3 color) {
 
 void main() {
 	vec3 color = texelFetch(MAIN_BUFFER, texelcoord, 0).rgb;
+	#ifdef DEBUG_OUTPUT_ENABLED
+		vec3 debugOutput = texelFetch(DEBUG_BUFFER, texelcoord, 0).rgb;
+	#endif
 	
 	
 	
@@ -68,6 +71,9 @@ void main() {
 	
 	
 	/* DRAWBUFFERS:0 */
+	#ifdef DEBUG_OUTPUT_ENABLED
+		color = debugOutput;
+	#endif
 	gl_FragData[0] = vec4(color, 1.0);
 }
 

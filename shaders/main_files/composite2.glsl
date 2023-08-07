@@ -14,6 +14,9 @@ varying vec2 texcoord;
 
 void main() {
 	vec3 color = texelFetch(MAIN_BUFFER, texelcoord, 0).rgb;
+	#ifdef DEBUG_OUTPUT_ENABLED
+		vec3 debugOutput = texelFetch(DEBUG_BUFFER, texelcoord, 0).rgb;
+	#endif
 	
 	
 	

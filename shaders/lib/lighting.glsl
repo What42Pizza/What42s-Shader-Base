@@ -6,7 +6,7 @@ varying float sideShading;
 	varying float offsetMult;
 	
 	#ifdef SHADOW_FILTERING
-		#define SHADOW_OFFSET_COUNT 33
+		const int SHADOW_OFFSET_COUNT = 33;
 		const float SHADOW_OFFSET_WEIGHTS_TOTAL = 1.0 + 0.94 * 8 + 0.78 * 8 + 0.57 * 8 + 0.37 * 8;
 		const vec3[SHADOW_OFFSET_COUNT] SHADOW_OFFSETS = vec3[SHADOW_OFFSET_COUNT] (
 			vec3( 0.0 ,  0.0 , 1.0 ),
@@ -156,8 +156,6 @@ void doPreLighting() {
 		lightDotMult = alterLightDot(lightDot);
 		
 		#if defined SHADER_TERRAIN && defined EXCLUDE_FOLIAGE
-			// when EXCLUDE_FOLIAGE is enabled, act as if foliage is always facing towards the sky.
-			// in other words, don't darken the back side of it unless something else is casting a shadow on it.
 			if (mc_Entity.x >= 2000.0 && mc_Entity.x <= 2999.0) lightDot = 1.0;
 		#endif
 		

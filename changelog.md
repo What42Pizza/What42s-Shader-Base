@@ -1,43 +1,71 @@
-#### b1.3.2:  23/08/06
-- Improved shadow filtering amount
-- Renamed all versions from alpha to beta (retroactively)
+<br>
 
-#### b1.3.1:  23/08/05
-- Fixed for Iris 1.19.4
-- Fixed and tuned sunrays color
-- Fixed some option names
-- Reworked lighting code
-
-### b1.3.0:  23/08/04
-- Imroved shadow filtering (maybe worse performance)
-- Fixed block outline and leash
-- Made motion blur framerate-independant
-- Slightly improved performance (in other areas)
-
-### b1.2.0:  23/08/03
-- Added Motion Blur (disabled by default)
-- Added Depth of Field (disabled by default)
-- Improved lighting calculations
-- Fixed debug outputs
-
-#### b1.1.2:  23/08/02
-- Improved shadow sampling (better and faster!)
-
-#### b1.1.1:  23/08/02
-- More optimizations
-
-#### b1.1.0:  23/08/02
-- Fixed performance regressions (mostly)
-- Fixed ssao appearing over fog
-- Fixed ssao being applied on flat surfaces
-- Improved angled lighting
-- Updated documentation
-
-### b1.0.0:  23/08/01
-- Added 1.12 support
-- Improved sunrays
-- Decreased buffers used, hopefully better performance now
+- b1.3.3 (23/08/07)
+  - Added more DOF options
+  - Added more debug settings
+  - Kinda actually fixed debug outputs
+  - More more small improvements
 
 <br>
 
-#### Development started:  23/05/19
+- b1.3.2 (23/08/06)
+  - Improved shadow filtering amount
+  - Renamed all versions from alpha to beta (retroactively)
+
+<br>
+
+- b1.3.1 (23/08/05)
+  - Fixed for Iris 1.19.4
+  - Fixed and tuned sunrays color
+  - Fixed some option names
+  - Reworked lighting code
+
+<br>
+
+- **b1.3.0** (23/08/04)
+  - Imroved shadow filtering (maybe worse performance)
+  - Fixed block outline and leash
+  - Made motion blur framerate-independant
+  - Slightly improved performance (in other areas)
+
+<br>
+<br>
+
+- **b1.2.0** (23/08/03)
+  - Added Motion Blur (disabled by default)
+  - Added Depth of Field (disabled by default)
+  - Improved lighting calculations
+  - Fixed debug outputs
+
+<br>
+<br>
+
+- b1.1.2 (23/08/02)
+  - Improved shadow sampling (better and faster!)
+
+<br>
+
+- b1.1.1 (23/08/02)
+  - More optimizations
+
+<br>
+
+- **b1.1.0** (23/08/02)
+  - Fixed performance regressions (mostly)
+  - Fixed ssao appearing over fog
+  - Fixed ssao being applied on flat surfaces
+  - Improved angled lighting
+  - Updated documentation
+
+<br>
+<br>
+
+- **b1.0.0** (23/08/01)
+  - Added 1.12 support
+  - Improved sunrays
+  - Decreased buffers used, hopefully better performance now
+
+<br>
+<br>
+
+- **Development started (23/05/19**

@@ -25,6 +25,9 @@ float getHorizonMultiplier() {
 
 
 void main() {
+	#ifdef DEBUG_OUTPUT_ENABLED
+		vec3 debugOutput = vec3(0.0);
+	#endif
 	
 	vec3 color;
 	if (starData.a > 0.5) {
@@ -41,6 +44,9 @@ void main() {
 	colorForBloom *= sqrt(BLOOM_SKY_BRIGHTNESS);
 	
 	/* DRAWBUFFERS:02 */
+	#ifdef DEBUG_OUTPUT_ENABLED
+		color = debugOutput;
+	#endif
 	gl_FragData[0] = vec4(color, 1.0);
 	gl_FragData[1] = vec4(colorForBloom, 1.0);
 }

@@ -9,8 +9,14 @@ varying vec4 glcolor;
 
 void main() {
 	vec4 color = texture2D(MAIN_BUFFER, texcoord) * glcolor;
+	#ifdef DEBUG_OUTPUT_ENABLED
+		vec3 debugOutput = vec3(0.0);
+	#endif
 	
 	/* DRAWBUFFERS:02 */
+	#ifdef DEBUG_OUTPUT_ENABLED
+		color.rgb = debugOutput;
+	#endif
 	gl_FragData[0] = color;
 	gl_FragData[1] = color;
 }

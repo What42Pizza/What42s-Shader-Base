@@ -17,6 +17,9 @@ void main() {
 	#ifdef BLOOM_ENABLED
 		vec3 bloomColor = texelFetch(BLOOM_BUFFER, texelcoord, 0).rgb;
 	#endif
+	#ifdef DEBUG_OUTPUT_ENABLED
+		vec3 debugOutput = texelFetch(DEBUG_BUFFER, texelcoord, 0).rgb;
+	#endif
 	
 	
 	
@@ -25,6 +28,9 @@ void main() {
 	#ifdef SSAO_ENABLED
 		float aoFactor = getAoFactor();
 		color *= 1.0 - aoFactor * AO_AMOUNT;
+		#ifdef SSAO_SHOW_AMOUNT
+			debugOutput = vec3(1.0 - aoFactor);
+		#endif
 	#endif
 	
 	
@@ -40,13 +46,14 @@ void main() {
 	
 	
 	
+	/* DRAWBUFFERS:0 */
+	#ifdef DEBUG_OUTPUT_ENABLED
+		color = debugOutput;
+	#endif
+	gl_FragData[0] = vec4(color, 1.0);
 	#ifdef BLOOM_ENABLED
-		/* DRAWBUFFERS: 02 */
-		gl_FragData[0] = vec4(color, 1.0);
+		/* DRAWBUFFERS:02 */
 		gl_FragData[1] = vec4(bloomColor, 1.0);
-	#else
-		/* DRAWBUFFERS: 0 */
-		gl_FragData[0] = vec4(color, 1.0);
 	#endif
 }
 

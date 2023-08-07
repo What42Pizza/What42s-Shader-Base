@@ -15,8 +15,11 @@ varying vec2 lightCoord;
 #include "/lib/sunrays.glsl"
 
 void main() {
+	vec3 color = texelFetch(MAIN_BUFFER, texelcoord, 0).rgb;
 	vec3 noisyAdditions = vec3(0.0);
-	vec3 debugOutput;
+	#ifdef DEBUG_OUTPUT_ENABLED
+		vec3 debugOutput = texelFetch(DEBUG_BUFFER, texelcoord, 0).rgb;
+	#endif
 	uint rng = rngStart;
 	
 	
@@ -29,13 +32,10 @@ void main() {
 		noisyAdditions += bloomAddition;
 		
 		#ifdef BLOOM_SHOW_ADDITION
-			#define HAS_DEBUG_OUT
-			debugOutput = bloomAddition;
+			debugOutput += bloomAddition;
 		#endif
-		
 		#ifdef BLOOM_SHOW_FILTERED_TEXTURE
-			#define HAS_DEBUG_OUT
-			debugOutput = texelFetch(BLOOM_BUFFER, texelcoord, 0).rgb;
+			debugOutput += texelFetch(BLOOM_BUFFER, texelcoord, 0).rgb;
 		#endif
 		
 	#endif
@@ -48,27 +48,33 @@ void main() {
 		
 		vec4 sunraysData = getSunraysData();
 		vec3 sunraysColor = sunraysData.xyz;
-		float sunraysAmount = sunraysData.w;
+		float sunraysAmountMult = sunraysData.w;
 		
-		float sunraysAddition = 0.0;
+		float sunraysAmount = 0.0;
 		for (int i = 0; i < SUNRAYS_COMPUTE_COUNT; i ++) {
-			sunraysAddition += getSunraysAddition(rng);
+			sunraysAmount += getSunraysAmount(rng);
 		};
-		sunraysAddition /= SUNRAYS_COMPUTE_COUNT;
-		sunraysAddition *= max(1.0 - length(lightCoord - 0.5) * 1.5, 0.0);
+		sunraysAmount /= SUNRAYS_COMPUTE_COUNT;
+		sunraysAmount *= max(1.0 - length(lightCoord - 0.5) * 1.5, 0.0);
+		sunraysAmount *= sunraysAmountMult;
+		vec3 sunraysAddition = sunraysAmount * sunraysColor;
 		
-		noisyAdditions += sunraysAddition * sunraysAmount * sunraysColor;
+		noisyAdditions += sunraysAddition;
+		
+		#ifdef SUNRAYS_SHOW_ADDITION
+			debugOutput += sunraysAddition;
+		#endif
 		
 	#endif
 	
 	
 	
-	/* DRAWBUFFERS:3 */
-	gl_FragData[0] = vec4(noisyAdditions, 1.0);
-	#ifdef HAS_DEBUG_OUT
-		/* DRAWBUFFERS:37 */
-		gl_FragData[1] = vec4(debugOutput, 1.0);
+	/* DRAWBUFFERS:03 */
+	#ifdef DEBUG_OUTPUT_ENABLED
+		color = debugOutput;
 	#endif
+	gl_FragData[0] = vec4(color, 1.0);
+	gl_FragData[1] = vec4(noisyAdditions, 1.0);
 }
 
 #endif

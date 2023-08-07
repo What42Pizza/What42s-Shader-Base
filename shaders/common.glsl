@@ -105,7 +105,7 @@ varying vec3 testValue;
 #define BLOOM_BUFFER            colortex2
 #define NOISY_ADDITIONS_BUFFER  colortex3
 #define NORMALS_BUFFER          colortex4
-#define DEBUG_BUFFER            colortex7
+#define DEBUG_BUFFER            colortex0
 
 #define DEPTH_BUFFER_ALL                   depthtex0
 #define DEPTH_BUFFER_WO_TRANS              depthtex1
