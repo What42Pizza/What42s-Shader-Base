@@ -22,12 +22,6 @@ void main() {
 	
 	// ======== DEPTH OF FIELD ========
 	
-	#ifdef DEBUG_OUTPUT_ENABLED
-		#define DEBUG_ARG_IN , debugOutput
-	#else
-		#define DEBUG_ARG_IN
-	#endif
-	
 	#ifdef DOF_ENABLED
 		doDOF(color DEBUG_ARG_IN);
 	#endif

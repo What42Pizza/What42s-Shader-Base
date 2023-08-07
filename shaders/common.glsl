@@ -96,6 +96,14 @@ varying vec3 testValue;
 
 #define HAND_DEPTH 0.19 // idk what should actually be here
 
+#ifdef DEBUG_OUTPUT_ENABLED
+	#define DEBUG_ARG_IN , debugOutput
+	#define DEBUG_ARG_OUT , inout vec3 debugOutput
+#else
+	#define DEBUG_ARG_IN
+	#define DEBUG_ARG_OUT
+#endif
+
 
 
 // buffer values:
