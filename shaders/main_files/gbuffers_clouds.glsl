@@ -1,6 +1,6 @@
 varying vec2 texcoord;
-varying vec4 glcolor;
-varying vec3 glnormal;
+flat vec4 glcolor;
+flat vec3 glnormal;
 
 #include "/lib/fog.glsl"
 
@@ -16,16 +16,15 @@ void main() {
 	
 	
 	// bloom
-	
 	vec4 colorForBloom = color;
 	colorForBloom.rgb *= sqrt(BLOOM_CLOUD_BRIGHTNESS);
 	
 	
 	// fog
-	
 	#ifdef FOG_ENABLED
 		applyFog(color.rgb, colorForBloom.rgb);
 	#endif
+	
 	
 	/* DRAWBUFFERS:024 */
 	#ifdef DEBUG_OUTPUT_ENABLED

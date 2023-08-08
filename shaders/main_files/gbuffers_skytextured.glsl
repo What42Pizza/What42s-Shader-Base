@@ -1,5 +1,4 @@
 varying vec2 texcoord;
-varying vec4 glcolor;
 
 // this file is to stop the colormap from being used and calculated
 
@@ -8,7 +7,7 @@ varying vec4 glcolor;
 #ifdef FSH
 
 void main() {
-	vec4 color = texture2D(MAIN_BUFFER, texcoord) * glcolor;
+	vec4 color = texture2D(MAIN_BUFFER, texcoord);
 	#ifdef DEBUG_OUTPUT_ENABLED
 		vec3 debugOutput = vec3(0.0);
 	#endif
@@ -36,8 +35,6 @@ void main() {
 	#ifdef TAA_ENABLED
 		gl_Position.xy = TAAJitter(gl_Position.xy, gl_Position.w);
 	#endif
-	
-	glcolor = gl_Color;
 	
 }
 

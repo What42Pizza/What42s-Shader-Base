@@ -1,8 +1,14 @@
+#if defined SHADER_TEXTURED || defined SHADER_HAND
+	#undef SHADOWS_ENABLED
+#endif
+
+
+
 varying float sideShading;
+varying float lightDotMult;
 
 #ifdef SHADOWS_ENABLED
 	varying vec3 shadowPos;
-	varying float lightDotMult;
 	varying float offsetMult;
 	
 	#ifdef SHADOW_FILTERING
@@ -150,10 +156,10 @@ vec3 getLightingBrightnesses(vec2 lmcoord) {
 
 void doPreLighting() {
 	
+	float lightDot = dot(normalize(shadowLightPosition), normalize(gl_NormalMatrix * gl_Normal));
+	lightDotMult = alterLightDot(lightDot);
+	
 	#ifdef SHADOWS_ENABLED
-		
-		float lightDot = dot(normalize(shadowLightPosition), normalize(gl_NormalMatrix * gl_Normal));
-		lightDotMult = alterLightDot(lightDot);
 		
 		#if defined SHADER_TERRAIN && defined EXCLUDE_FOLIAGE
 			if (mc_Entity.x >= 2000.0 && mc_Entity.x <= 2999.0) lightDot = 1.0;

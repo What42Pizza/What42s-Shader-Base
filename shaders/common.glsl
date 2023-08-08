@@ -96,6 +96,12 @@ varying vec3 testValue;
 
 #define HAND_DEPTH 0.19 // idk what should actually be here
 
+#ifdef FSH
+	#define flat flat in
+#else
+	#define flat flat out
+#endif
+
 #ifdef DEBUG_OUTPUT_ENABLED
 	#define DEBUG_ARG_IN , debugOutput
 	#define DEBUG_ARG_OUT , inout vec3 debugOutput
@@ -393,10 +399,8 @@ vec3 getAmbientColor(vec4 skylightPercents) {
 
 
 // this entire function SHOULD be computed on the cpu, but it has to be glsl code because it uses settings that are ONLY defined in glsl
-vec4 getSunraysData() {
+float getSunraysAmountMult() {
 	vec4 skylightPercents = getSkylightPercents();
-	
-	vec3 sunraysColor = isSun ? SUNRAYS_SUN_COLOR : SUNRAYS_MOON_COLOR;
 	
 	float sunraysAmount =
 		skylightPercents.x * SUNRAYS_AMOUNT_DAY +
@@ -412,5 +416,5 @@ vec4 getSunraysData() {
 		}
 	}
 	
-	return vec4(sunraysColor, sunraysAmount);
+	return sunraysAmount;
 }

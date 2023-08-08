@@ -42,5 +42,5 @@ float getAoFactor() {
 	total /= AO_SAMPLE_COUNT;
 	total *= smoothstep(0.9, 0.8, depth * invFar);
 	
-	return total * 0.6;
+	return total * 0.8;
 }

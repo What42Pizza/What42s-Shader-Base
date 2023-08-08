@@ -5,7 +5,11 @@
 
 
 varying vec2 texcoord;
-varying vec2 lightCoord;
+flat vec2 lightCoord;
+
+#ifdef SUNRAYS_ENABLED
+	flat float sunraysAmountMult;
+#endif
 
 
 
@@ -46,10 +50,6 @@ void main() {
 	
 	#ifdef SUNRAYS_ENABLED
 		
-		vec4 sunraysData = getSunraysData();
-		vec3 sunraysColor = sunraysData.xyz;
-		float sunraysAmountMult = sunraysData.w;
-		
 		float sunraysAmount = 0.0;
 		for (int i = 0; i < SUNRAYS_COMPUTE_COUNT; i ++) {
 			sunraysAmount += getSunraysAmount(rng);
@@ -57,6 +57,8 @@ void main() {
 		sunraysAmount /= SUNRAYS_COMPUTE_COUNT;
 		sunraysAmount *= max(1.0 - length(lightCoord - 0.5) * 1.5, 0.0);
 		sunraysAmount *= sunraysAmountMult;
+		
+		vec3 sunraysColor = isSun ? SUNRAYS_SUN_COLOR : SUNRAYS_MOON_COLOR;
 		vec3 sunraysAddition = sunraysAmount * sunraysColor;
 		
 		noisyAdditions += sunraysAddition;
@@ -90,6 +92,10 @@ void main() {
 	vec3 lightPos = shadowLightPosition * mat3(gbufferProjection);
 	lightPos /= lightPos.z;
 	lightCoord = lightPos.xy * 0.5 + 0.5;
+	
+	#ifdef SUNRAYS_ENABLED
+		sunraysAmountMult = getSunraysAmountMult();
+	#endif
 	
 }
 

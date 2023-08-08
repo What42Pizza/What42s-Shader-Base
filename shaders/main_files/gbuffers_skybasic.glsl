@@ -1,5 +1,5 @@
 varying vec4 starData; //rgb = star color, a = flag for weather or not this pixel is a star.
-varying vec3 upVec;
+flat vec3 upVec;
 
 
 

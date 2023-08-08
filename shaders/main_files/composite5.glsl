@@ -5,7 +5,6 @@
 
 
 varying vec2 texcoord;
-varying vec3 normal;
 
 
 
@@ -66,7 +65,7 @@ void main() {
 		color = texelFetch(DEBUG_BUFFER, texelcoord, 0).rgb;
 	#endif
 	
-	//color = texture2D(shadowtex0, texcoord).rgb;
+	//color = texture2D(NORMALS_BUFFER, texcoord).rgb;
 	
 	
 	

@@ -1,13 +1,8 @@
 varying vec2 texcoord;
 varying vec2 lmcoord;
-varying vec4 glcolor;
-varying vec3 glnormal;
+flat vec3 glnormal;
 
 #include "../lib/lighting.glsl"
-
-#ifdef SHADOWS_ENABLED
-	#undef SHADOWS_ENABLED
-#endif
 
 
 
@@ -16,7 +11,7 @@ varying vec3 glnormal;
 #ifdef FSH
 
 void main() {
-	vec4 color = texture2D(MAIN_BUFFER, texcoord) * glcolor;
+	vec4 color = texture2D(MAIN_BUFFER, texcoord);
 	#ifdef DEBUG_OUTPUT_ENABLED
 		vec3 debugOutput = vec3(0.0);
 	#endif
@@ -30,9 +25,11 @@ void main() {
 	#ifdef HANDHELD_LIGHT_ENABLED
 		float depth = toLinearDepth(gl_FragCoord.z);
 		float handheldLight = max(1.0 - (depth * far) / HANDHELD_LIGHT_DISTANCE, 0.0);
-		handheldLight = pow(handheldLight, LIGHT_DROPOFF);
-		handheldLight *= heldBlockLightValue / 15.0 * HANDHELD_LIGHT_BRIGHTNESS;
-		brightnesses.x = max(brightnesses.x, handheldLight);
+		if (handheldLight > 0.0) {
+			handheldLight = pow(handheldLight, LIGHT_DROPOFF);
+			handheldLight *= heldBlockLightValue / 15.0 * HANDHELD_LIGHT_BRIGHTNESS;
+			brightnesses.x = max(brightnesses.x, handheldLight);
+		}
 	#endif
 	
 	color.rgb *= getLightColor(brightnesses.x, brightnesses.y, brightnesses.z);
@@ -74,7 +71,6 @@ void main() {
 		gl_Position.xy = TAAJitter(gl_Position.xy, gl_Position.w);
 	#endif
 	
-	glcolor = gl_Color;
 	glnormal = gl_NormalMatrix * gl_Normal;
 	
 	doPreLighting();

@@ -109,7 +109,7 @@ const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8
 
 
 #define HANDHELD_LIGHT_ENABLED
-#define HANDHELD_LIGHT_DISTANCE 14 // [5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 35 40 45 50 55 60 70 80 90 100]
+#define HANDHELD_LIGHT_DISTANCE 16 // [5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 35 40 45 50 60 70 80 90 100]
 #define HANDHELD_LIGHT_BRIGHTNESS 0.9 // [0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.75 0.8 0.85 0.9 0.95 1.0 1.05 1.1 1.15 1.2 1.25 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0]
 
 
@@ -117,7 +117,7 @@ const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8
 
 
 #define SSAO_ENABLED
-#define AO_AMOUNT 1.0 // [0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.6 0.7 0.8 0.9 1.0]
+#define AO_AMOUNT 1.0 // [0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0 2.1 2.2 2.3 2.4 2.5 2.6 2.7 2.8 2.9 3.0]
 #define AO_SIZE 1.0 // [0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0 2.25 2.5 2.75 3.0]
 #define AO_QUALITY 4 // [3 4 5 6 7 8 9 10]
 
@@ -235,6 +235,7 @@ const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8
 
 //#define USE_BETTER_RAND
 //#define SHOW_DANGEROUS_LIGHT
+//#define USE_SIMPLE_LIGHT
 //#define SSAO_SHOW_AMOUNT
 //#define BLOOM_SHOW_ADDITION
 //#define BLOOM_SHOW_FILTERED_TEXTURE

@@ -1,11 +1,15 @@
 <br>
 
-- b1.3.3 (23/08/07)
-  - Added more DOF options
+- **b1.4.0** (23/08/07)
+  - Improved sharpening
+  - Added more DOF settings
+  - Added 'Use Simple Light' setting
   - Added more debug settings
+  - Optimized slightly more
   - Kinda actually fixed debug outputs
-  - More more small improvements
+  - Reformatted changelog
 
+<br>
 <br>
 
 - b1.3.2 (23/08/06)

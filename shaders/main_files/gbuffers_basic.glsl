@@ -1,12 +1,9 @@
-varying vec2 texcoord;
-varying vec2 lmcoord;
-varying vec3 glnormal;
+flat vec4 glcolor;
+flat vec3 glnormal;
 
 
 
 #ifdef FSH
-
-flat in vec4 glcolor;
 
 void main() {
 	vec4 color = glcolor;
@@ -31,11 +28,7 @@ void main() {
 
 #include "/lib/taa_jitter.glsl"
 
-flat out vec4 glcolor;
-
 void main() {
-	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
-	lmcoord  = (gl_TextureMatrix[1] * gl_MultiTexCoord1).xy;
 	
 	gl_Position = ftransform();
 	#ifdef TAA_ENABLED

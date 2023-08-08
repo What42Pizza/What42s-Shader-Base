@@ -1,6 +1,4 @@
 varying vec2 texcoord;
-varying vec4 glcolor;
-varying vec3 glnormal;
 
 // this file is to stop block breaking from having shadows
 
@@ -9,18 +7,17 @@ varying vec3 glnormal;
 #ifdef FSH
 
 void main() {
-	vec4 color = texture2D(MAIN_BUFFER, texcoord) * glcolor;
+	vec4 color = texture2D(MAIN_BUFFER, texcoord);
 	#ifdef DEBUG_OUTPUT_ENABLED
 		vec3 debugOutput = vec3(0.0);
 	#endif
 	
-	/* DRAWBUFFERS:024 */
+	/* DRAWBUFFERS:02 */
 	#ifdef DEBUG_OUTPUT_ENABLED
 		color = vec4(debugOutput, 1.0);
 	#endif
 	gl_FragData[0] = color;
 	gl_FragData[1] = color;
-	gl_FragData[2] = vec4(glnormal, 1.0);
 }
 
 #endif
@@ -38,9 +35,6 @@ void main() {
 	#ifdef TAA_ENABLED
 		gl_Position.xy = TAAJitter(gl_Position.xy, gl_Position.w);
 	#endif
-	
-	glcolor = gl_Color;
-	glnormal = gl_NormalMatrix * gl_Normal;
 	
 }
 

@@ -1,6 +1,6 @@
 varying vec2 texcoord;
 varying vec4 glcolor;
-varying vec3 glnormal;
+flat vec3 glnormal;
 
 // this file is to stop the colormap from being used and calculated
 

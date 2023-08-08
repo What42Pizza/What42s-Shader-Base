@@ -1,7 +1,7 @@
 varying vec2 texcoord;
 varying vec2 lmcoord;
 varying vec4 glcolor;
-varying vec3 glnormal;
+flat vec3 glnormal;
 
 #include "../lib/lighting.glsl"
 #include "/lib/fog.glsl"
@@ -25,9 +25,11 @@ void main() {
 	#ifdef HANDHELD_LIGHT_ENABLED
 		float depth = toLinearDepth(gl_FragCoord.z);
 		float handheldLight = max(1.0 - (depth * far) / HANDHELD_LIGHT_DISTANCE, 0.0);
-		handheldLight = pow(handheldLight, LIGHT_DROPOFF);
-		handheldLight *= heldBlockLightValue / 15.0 * HANDHELD_LIGHT_BRIGHTNESS * 1.2;
-		brightnesses.x = max(brightnesses.x, handheldLight);
+		if (handheldLight > 0.0) {
+			handheldLight = pow(handheldLight, LIGHT_DROPOFF);
+			handheldLight *= heldBlockLightValue / 15.0 * HANDHELD_LIGHT_BRIGHTNESS;
+			brightnesses.x = max(brightnesses.x, handheldLight);
+		}
 	#endif
 	
 	color.rgb *= getLightColor(brightnesses.x, brightnesses.y, brightnesses.z);
@@ -102,6 +104,11 @@ void main() {
 	#endif
 	
 	glcolor = gl_Color;
+	#ifdef USE_SIMPLE_LIGHT
+		if (glcolor.r == glcolor.b) {
+			glcolor = vec4(1.0);
+		}
+	#endif
 	glnormal = gl_NormalMatrix * gl_Normal;
 	
 	doPreLighting();
