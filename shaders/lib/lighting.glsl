@@ -53,6 +53,10 @@ varying float lightDotMult;
 	
 #endif
 
+#ifdef HANDHELD_LIGHT_ENABLED
+	varying float handLightBrightness;
+#endif
+
 
 
 
@@ -97,6 +101,10 @@ vec3 getLightingBrightnesses(vec2 lmcoord) {
 	float skyBrightness = 0;
 	float ambientBrightness = pow(lmcoord.y, LIGHT_DROPOFF) * sideShading;
 	
+	#ifdef HANDHELD_LIGHT_ENABLED
+		blockBrightness = max(blockBrightness, handLightBrightness);
+	#endif
+	
 	#ifdef SHADOWS_ENABLED
 		if (lightDotMult > alterLightDot(0.0)) {
 			// surface is facing towards shadowLightPosition
@@ -136,7 +144,6 @@ vec3 getLightingBrightnesses(vec2 lmcoord) {
 	#endif
 	
 	skyBrightness *= lightDotMult;
-	skyBrightness = max(skyBrightness, ambientBrightness * 0.8);
 	skyBrightness *= ambientBrightness;
 	
 	return vec3(blockBrightness, skyBrightness, ambientBrightness);
@@ -152,12 +159,37 @@ vec3 getLightingBrightnesses(vec2 lmcoord) {
 
 #ifdef VSH
 
+#if defined HANDHELD_LIGHT_ENABLED && defined SHADER_TERRAIN
+	#define DEPTH_ARG float blockDepth
+#else
+	#define DEPTH_ARG
+#endif
 
 
-void doPreLighting() {
+
+void doPreLighting(DEPTH_ARG) {
+	
+	
+	#if defined HANDHELD_LIGHT_ENABLED && !defined SHADER_TERRAIN
+		#define NO_DEPTH_ARG
+	#endif
+	#if defined HANDHELD_LIGHT_USE_FIXED_DEPTH && !defined SHADER_HAND
+		#define USE_WORLD_POS
+	#endif
+	
+	#ifdef NO_DEPTH_ARG
+		#ifdef USE_WORLD_POS
+			vec4 worldPos = gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex);
+			float blockDepth = length(worldPos.xyz);
+		#else
+			float blockDepth = gl_Position.z;
+		#endif
+	#endif
+	
 	
 	float lightDot = dot(normalize(shadowLightPosition), normalize(gl_NormalMatrix * gl_Normal));
 	lightDotMult = alterLightDot(lightDot);
+	
 	
 	#ifdef SHADOWS_ENABLED
 		
@@ -180,9 +212,21 @@ void doPreLighting() {
 		
 	#endif
 	
+	
+	#ifdef HANDHELD_LIGHT_ENABLED
+		handLightBrightness = 0.0;
+		if (blockDepth <= HANDHELD_LIGHT_DISTANCE) {
+			handLightBrightness = max(1.0 - blockDepth / HANDHELD_LIGHT_DISTANCE, 0.0);
+			handLightBrightness = pow(handLightBrightness, LIGHT_DROPOFF);
+			handLightBrightness *= heldBlockLightValue / 15.0 * HANDHELD_LIGHT_BRIGHTNESS;
+		}
+	#endif
+	
+	
 	vec3 shadingNormals = vec3(abs(gl_Normal.x), gl_Normal.y, abs(gl_Normal.z));
 	sideShading = shadingNormals.x * -0.3 + shadingNormals.y * 0.5 + shadingNormals.z * 0.3;
 	sideShading = (sideShading * SIDE_SHADING / 2.0) + 1.0;
+	
 	
 }
 

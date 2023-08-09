@@ -1,4 +1,4 @@
-# Minecraft Shaders Base b1.4.0
+# Minecraft Shaders Base b1.4.1
 
 ### This is a base shaderpack that can be used to easily create shaders.
 
@@ -23,6 +23,7 @@
 - **Sharpening**
 - **Waving blocks**
 - **Fog**
+- **Handheld light**
 - **Vignette**
 - **Tonemapping and Color Correction**
 - - Brightness

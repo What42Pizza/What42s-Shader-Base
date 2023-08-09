@@ -122,6 +122,8 @@ screen.HANDHELD_LIGHT_SETTINGS=Handheld Light
 option.HANDHELD_LIGHT_ENABLED=Handheld Light Enabled
 option.HANDHELD_LIGHT_DISTANCE=Handheld Light Distance
 option.HANDHELD_LIGHT_BRIGHTNESS=Handheld Light Brightness
+option.HANDHELD_LIGHT_USE_FIXED_DEPTH=Use Fixed Depth
+option.HANDHELD_LIGHT_USE_FIXED_DEPTH.comment=Gives correct lighting to things like entities (by default it uses an already calculated value as an estimation)
 
 
 
@@ -308,8 +310,10 @@ option.WAVING_AMOUNT_2=Waving Amount 2
 option.WAVING_AMOUNT_2.comment=How much waving there is for things like saplings, flowers, crops, etc
 option.WAVING_AMOUNT_3=Waving Amount 3
 option.WAVING_AMOUNT_3.comment=How much waving there is for things like grass, wheat, etc
-option.WAVING_AMOUNT_RAIN_MULT=Amount Rain Multiplier
-option.WAVING_AMOUNT_RAIN_MULT.comment=How much to increase the waving amount when it is raining
+option.WAVING_RAIN_MULT=Waving Rain Multiplier
+option.WAVING_RAIN_MULT.comment=How much to increase / decrease the waving amount when it is raining
+option.WAVING_NIGHT_MULT=Waving Night Multiplier
+option.WAVING_NIGHT_MULT.comment=How much to increase / decrease the waving amount when it is night
 
 
 

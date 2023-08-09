@@ -27,6 +27,7 @@ void applyWaving(inout vec3 position) {
 	#if !defined SHADER_SHADOW
 		wavingScale *= lmcoord.y * lmcoord.y;
 	#endif
-	wavingScale *= 1.0 + betterRainStrength * (WAVING_AMOUNT_RAIN_MULT - 1.0);
+	wavingScale *= 1.0 + betterRainStrength * (WAVING_RAIN_MULT - 1.0);
+	wavingScale *= WAVING_NIGHT_MULT + rawSunTotal * (1.0 - WAVING_NIGHT_MULT);
 	position += getWavingAddition(position) * wavingScale;
 }

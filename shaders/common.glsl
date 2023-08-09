@@ -72,6 +72,7 @@ uniform float centerDepthSmooth; // needed for `centerLinearDepthSmooth` to work
 
 uniform float sunriseTime;
 uniform vec4 rawSkylightPercents;
+uniform float rawSunTotal;
 
 uniform float invAspectRatio;
 uniform float invFar;

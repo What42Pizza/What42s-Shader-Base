@@ -1,19 +1,20 @@
 Current:
-Process handheld light amount in vertex shaders
-Add `program.enable`-s to shader.properties
-Calculate light data in vertex shaders?
+Fix shading when too close to blocks
+Find a way to make shadowLightPosition stop flickering
 Make sure sunrays work well at sunrise & sunset
 Add profiles
+Add post-processing effects like the super secret settings
+Try moving each post-processing effect into a different composite to allow more `program.enable`-s
 Move advanced options to 'advanced options' menus
-Replace smoothstep in `getOffsetAoInfluence` with flat line?
-Make sunrays noise adjust based on quality?
+Do a round of replacing smoothsteps with flat line
+Do a round of changing noise amounts based on quality
 Replace normal-based ssao w/ depth-based ssao?
 Add more TAA settings
 Store bloom mult instead of bloom color?
 Add setting to fade fog into sky buffer (to make the sun and moon appear in fog) (would also need sunray depth fix)
 Add smoothening to the sharpening velocity factor
-Add post-processing effects like the super secret settings
 Fix ssao on beacon beam
+Calculate light data in vertex shaders?
 Decrease SSAO sample contribution based on normal dot?
 Do a round of general optimizations
 Test if SSAO needs to be applied to bloom
@@ -22,7 +23,6 @@ Decrease waving at night?
 Prevent TAA on entities?
 Exclude sun, moon, and sunrays based on horison multiplier
 Do a round of adding debug settings
-Get permission from EminGT
 Do a round of adding more ways to get to options (e.g. access to light brightnesses from the 'shading' menu)
 Custom sky color?
 Switch to Contrast Adaptive Sharpening?
@@ -59,6 +59,7 @@ Match the vanilla look, especially in:
 
 
 Finished:
+Process handheld light amount in vertex shaders
 Calculate sunrays data in vertex shaders
 Make sure the moon light doesn't just pop in after sunset
 Make motion blue framerate independant
@@ -71,6 +72,7 @@ Fix ssao
 fix lang file on 1.12
 fix fog on 1.12
 fix waving on 1.12
+Get permission from EminGT
 Add settings for sunrays colors
 Remove need for ViewPos buffer
 Set sunrays color to either sun color or moon color

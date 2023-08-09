@@ -1,5 +1,15 @@
 <br>
 
+- b1.4.1 (23/08/08)
+  - Added 'Waving Night Mult' setting
+  - Added 'Use Fixed Depth' to reverse new optimization
+  - Added vines to waving blocks
+  - Tweaked many settings
+  - Optimized slightly more
+  - Fixed hand color regression
+
+<br>
+
 - **b1.4.0** (23/08/07)
   - Improved sharpening
   - Added more DOF settings

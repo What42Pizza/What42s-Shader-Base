@@ -6,14 +6,14 @@
 
 ## File Structure:
 
-- **/main_files:  Main VSH and FSH code**
-- **incl:  Basic code used by multiple files**
-- - incl/settings.glsl:  Holds every value that can easily change the look of the shader, and holds the values that each option can be set to in the options menu
-- - incl/common.glsl:  Holds every commonly used code and every uniform that is used
-- **world_*:  The files that are actaully loaded by OptiFine / Iris**
-- **lang:  Shown names of setting options and setting values**
-- **shaders.properties:  Defines the settings menu and other details about the shader internals**
-- **blocks.properties:  Defines what different blocks are mapped to. The shaders retrieve the value from \`mc_Entity.x\`**
+### /main_files: &nbsp; Main shader code
+### /lib: &nbsp; Basic code used by multiple files
+### /world_*: &nbsp; The files that are actaully loaded by OptiFine / Iris. These files just use `#include` to copy-paste other files into them
+### /lang: &nbsp; Shown names of setting options and setting values
+### settings.glsl: &nbsp; Holds every value that can easily change the look of the shader, along with the allowed values for each option**
+### common.glsl: &nbsp; Holds all commonly used code, every uniform that is used, and macros for easier programming
+### shaders.properties: &nbsp; Defines the settings menu and other details about the shader internals
+### blocks.properties: &nbsp; Defines what different blocks are mapped to. The shaders retrieve these value from `mc_Entity.x`
 
 <br>
 
@@ -21,7 +21,7 @@
 
 - **Shadows:**
 - - Rendering:  /main_files/shadow.glsl
-- - Usage:  incl/lighting.glsl
+- - Usage:  lib/lighting.glsl
 - **Anti-Aliasing:**
 - - Main Processing:  /main_files/composite4.glsl
 - - TAA Jitter:  /lib/taa_jitter.glsl,  (almost) every VSH shader ('taaOffset' is added to 'gl_Position.xy')
@@ -44,24 +44,25 @@
 - - Main Processing:  /main_files/terrain.glsl,  /main_files.shadow.glsl
 - **Fog:**
 - - Main Processing:  /main_files/terrain.glsl,  /main_files/entities.glsl,  /main_files/clouds.glsl
+- **Handheld Light**
+- - Main Processing:  /lib/lighting.glsl
 - **Vignette:**
 - - Main Processing:  /main_files/composite5.glsl
 - **Tonemapping:**
 - - Main Processing:  /main_files/composite5.glsl
 - **Lighting:**
-- - Main Processing:  incl/lighting.glsl
+- - Main Processing:  lib/lighting.glsl
 - - Usage:  /main_files/terrain.glsl,  /main_files/textured.glsl,  /main_files/entities.glsl,  /main_files/hand.glsl
 
 <br>
 
 ## Buffers:
 
-- **texture / colortex0:  Main Image** 
+- **texture / colortex0:  Main Image OR Debug Output** 
 - **colortex1:  TAA Texture**
 - **colortex2:  Bloom Texture**
 - **colortex3:  Noisy Additions (things like bloom, sunrays, etc (anything that gives noisy results) are rendered to this buffer then LOD-sampled when added to the image)**
 - **colortex4:  Normals**
-- **colortex7:  Debug Output**
 
 <br>
 <br>
