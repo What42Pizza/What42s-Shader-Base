@@ -59,10 +59,15 @@ uniform sampler2D noisetex;
 
 // custom uniforms
 
+uniform float farPlusNear;
+uniform float farMinusNear;
+uniform float twoTimesNear;
+uniform float twoTimesNearTimesFar;
 uniform vec2 viewSize;
 uniform vec2 pixelSize;
 uniform int frameMod8;
 uniform float velocity;
+uniform float sharpenVelocityFactor;
 uniform float betterRainStrength;
 uniform bool isDay;
 uniform bool isOtherLightSource;
@@ -79,6 +84,7 @@ uniform float invFar;
 uniform vec2 invViewSize;
 uniform vec2 invPixelSize;
 uniform float invFrameTime;
+uniform float invFarMinusNear;
 
 
 
@@ -218,11 +224,15 @@ vec3 cubicInterpolate(vec3 edge0, vec3 edge1, vec3 edge2, vec3 edge3, float valu
 }
 
 float toLinearDepth(float depth) {
-    return 2.0 * near / (far + near - depth * (far - near));
+    return twoTimesNear / (farPlusNear - depth * farMinusNear);
 }
 
 float fromLinearDepth(float depth) {
-	return (2.0 * near / depth - far - near) / (near - far);
+	return (farPlusNear - twoTimesNear / depth) * invFarMinusNear;
+}
+
+float toBlockDepth(float depth) {
+    return twoTimesNearTimesFar / (farPlusNear - depth * farMinusNear);
 }
 
 bool depthIsSky(float depth) {

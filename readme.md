@@ -1,4 +1,4 @@
-# Minecraft Shaders Base b1.4.1
+# Minecraft Shaders Base b1.4.2
 
 ### This is a base shaderpack that can be used to easily create shaders.
 

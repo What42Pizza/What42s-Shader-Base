@@ -20,7 +20,7 @@ vec3 sampleBloom(float sizeMult, inout uint rng) {
 			vec2 sampleCoord = coord + offset;
 			
 			vec3 sample = texture2D(BLOOM_BUFFER, sampleCoord).rgb;
-			float sampleLum = getColorLum(sample); // for some reason, having this value pre-calculated and stored in its own buffer is slower (but pre-calculating the bloom sky color and putting it in its own buffer is slightly faster??? maybe I need to re-try doing this?)
+			float sampleLum = getColorLum(sample);
 			
 			//float interpValue = float(sampleLum > getColorLum(brightest)); // doesn't seem any faster?
 			//brightest = brightest * (1.0 - interpValue) + sample * interpValue;

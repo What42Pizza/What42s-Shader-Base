@@ -1,5 +1,12 @@
 <br>
 
+- b1.4.2 (23/08/09)
+  - Added smoothening to sharpening velocity factor
+  - Improved SSAO (probably)
+  - Slight optimizations (maybe offset by ssao though)
+
+<br>
+
 - b1.4.1 (23/08/08)
   - Added 'Waving Night Mult' setting
   - Added 'Use Fixed Depth' to reverse new optimization

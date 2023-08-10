@@ -67,6 +67,8 @@ void main() {
 	
 	//color = texture2D(NORMALS_BUFFER, texcoord).rgb;
 	
+	//color = vec3(toBlockDepth(texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r));
+	
 	
 	
 	/* DRAWBUFFERS:0 */

@@ -186,8 +186,8 @@ const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8
 
 
 #define SHARPENING_ENABLED
-#define SHARPEN_AMOUNT 0.35 // [0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
-#define SHARPEN_VEL_ADDITION 0.6 // [0.0 0.2 0.4 0.6 0.8 1.0 1.2 1.4 1.6 1.8 2.0 2.5 3.0 3.5 4.0]
+#define SHARPEN_AMOUNT 1.0 // [0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
+#define SHARPEN_VEL_ADDITION 1.0 // [0.0 0.2 0.4 0.6 0.8 1.0 1.2 1.4 1.6 1.8 2.0 2.5 3.0 3.5 4.0]
 #define SHARPENING_DETECT_SIZE 5 // [3 5 7]
 
 
@@ -259,7 +259,6 @@ const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8
 #ifdef DOF_SHOW_AMOUNTS
 	#define DEBUG_OUTPUT_ENABLED
 #endif
-	//#define DEBUG_OUTPUT_ENABLED
 
 
 
@@ -271,7 +270,6 @@ const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8
 
 
 #define SHADOW_DISTORT_ADDITION 0.12
-#define SHADOW_BIAS 0.02
 
 #define LIGHT_SMOOTHING 0.1
 #define LIGHT_DROPOFF 1.0
@@ -283,8 +281,7 @@ const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8
 const float SHADOW_OFFSET_INCREASE = 1.5 / shadowMapResolution;
 const float SHADOW_OFFSET_MIN = 1.0 / shadowMapResolution;
 
-const float shadowMapBias = 1.0 - 25.6 / shadowDistance;
-
+const int AO_SAMPLE_COUNT = AO_QUALITY * AO_QUALITY;
 const int BLOOM_SAMPLE_COUNT = BLOOM_QUALITY * BLOOM_QUALITY;
 const int SUNRAY_SAMPLE_COUNT = int(SUNRAYS_QUALITY * SUNRAYS_QUALITY / 2);
 const int MOTION_BLUR_SAMPLE_COUNT = MOTION_BLUR_QUALITY * MOTION_BLUR_QUALITY;
