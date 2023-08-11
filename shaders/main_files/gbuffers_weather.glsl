@@ -1,6 +1,5 @@
 varying vec2 texcoord;
 varying vec4 glcolor;
-flat vec3 glnormal;
 
 // this file is to stop the colormap from being used and calculated
 
@@ -14,13 +13,15 @@ void main() {
 		vec3 debugOutput = vec3(0.0);
 	#endif
 	
-	/* DRAWBUFFERS:024 */
+	/* DRAWBUFFERS:0 */
 	#ifdef DEBUG_OUTPUT_ENABLED
 		color = vec4(debugOutput, 1.0);
 	#endif
 	gl_FragData[0] = color;
-	gl_FragData[1] = color;
-	gl_FragData[2] = vec4(glnormal, 1.0);
+	#ifdef BLOOM_ENABLED
+		/* DRAWBUFFERS:02 */
+		gl_FragData[1] = color;
+	#endif
 }
 
 #endif
@@ -40,7 +41,6 @@ void main() {
 	#endif
 	
 	glcolor = gl_Color;
-	glnormal = gl_NormalMatrix * gl_Normal;
 	
 }
 

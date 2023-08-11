@@ -1,7 +1,6 @@
 varying vec2 texcoord;
 varying vec2 lmcoord;
 varying vec4 glcolor;
-flat vec3 glnormal;
 
 #include "../lib/lighting.glsl"
 #include "/lib/fog.glsl"
@@ -28,8 +27,10 @@ void main() {
 	
 	
 	// bloom
-	vec4 colorForBloom = color;
-	colorForBloom.rgb *= sqrt(BLOOM_ENTITY_BRIGHTNESS);
+	#ifdef BLOOM_ENABLED
+		vec4 colorForBloom = color;
+		colorForBloom.rgb *= sqrt(BLOOM_ENTITY_BRIGHTNESS);
+	#endif
 	
 	
 	// fog
@@ -38,13 +39,15 @@ void main() {
 	#endif
 	
 	
-	/* DRAWBUFFERS:024 */
+	/* DRAWBUFFERS:0 */
 	#ifdef DEBUG_OUTPUT_ENABLED
 		color = vec4(debugOutput, 1.0);
 	#endif
 	gl_FragData[0] = color;
-	gl_FragData[1] = colorForBloom;
-	gl_FragData[2] = vec4(glnormal, 1.0);
+	#ifdef BLOOM_ENABLED
+		/* DRAWBUFFERS:02 */
+		gl_FragData[1] = colorForBloom;
+	#endif
 }
 
 #endif
@@ -78,7 +81,6 @@ void main() {
 	
 	
 	glcolor = gl_Color;
-	glnormal = gl_NormalMatrix * gl_Normal;
 	
 	
 	doPreLighting();

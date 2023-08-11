@@ -12,12 +12,15 @@ void main() {
 		vec3 debugOutput = vec3(0.0);
 	#endif
 	
-	/* DRAWBUFFERS:02 */
+	/* DRAWBUFFERS:0 */
 	#ifdef DEBUG_OUTPUT_ENABLED
 		color.rgb = debugOutput;
 	#endif
 	gl_FragData[0] = color;
-	gl_FragData[1] = color;
+	#ifdef BLOOM_ENABLED
+		/* DRAWBUFFERS:02 */
+		gl_FragData[1] = color;
+	#endif
 }
 
 #endif

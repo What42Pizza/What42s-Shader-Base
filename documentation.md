@@ -62,7 +62,6 @@
 - **colortex1:  TAA Texture**
 - **colortex2:  Bloom Texture**
 - **colortex3:  Noisy Additions (things like bloom, sunrays, etc (anything that gives noisy results) are rendered to this buffer then LOD-sampled when added to the image)**
-- **colortex4:  Normals**
 
 <br>
 <br>

@@ -40,15 +40,20 @@ void main() {
 		color *= getHorizonMultiplier();
 	#endif
 	
-	vec3 colorForBloom = color;
-	colorForBloom *= sqrt(BLOOM_SKY_BRIGHTNESS);
+	#ifdef BLOOM_ENABLED
+		vec3 colorForBloom = color;
+		colorForBloom *= sqrt(BLOOM_SKY_BRIGHTNESS);
+	#endif
 	
-	/* DRAWBUFFERS:02 */
+	/* DRAWBUFFERS:0 */
 	#ifdef DEBUG_OUTPUT_ENABLED
 		color = debugOutput;
 	#endif
 	gl_FragData[0] = vec4(color, 1.0);
-	gl_FragData[1] = vec4(colorForBloom, 1.0);
+	#ifdef BLOOM_ENABLED
+		/* DRAWBUFFERS:02 */
+		gl_FragData[1] = vec4(colorForBloom, 1.0);
+	#endif
 }
 
 #endif

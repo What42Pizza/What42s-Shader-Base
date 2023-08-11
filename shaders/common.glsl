@@ -125,7 +125,6 @@ varying vec3 testValue;
 #define TAA_PREV_BUFFER         colortex1
 #define BLOOM_BUFFER            colortex2
 #define NOISY_ADDITIONS_BUFFER  colortex3
-#define NORMALS_BUFFER          colortex4
 #define DEBUG_BUFFER            colortex0
 
 #define DEPTH_BUFFER_ALL                   depthtex0
@@ -136,7 +135,7 @@ varying vec3 testValue;
 /*
 const bool colortex1Clear = false;
 const bool colortex0MipmapEnabled = true;
-const bool colortex2MipmapEnabled = true;
+const bool colortex3MipmapEnabled = true;
 const float wetnessHalflife = 50.0f;
 const float drynessHalflife = 50.0f;
 const float centerDepthHalflife = 3.0f;
@@ -149,20 +148,13 @@ const int noiseTextureResolution = 256;
 
 // CODE FROM COMPLEMENTARY REIMAGINED:
 
-//#define diagonal3(m) vec3((m)[0].x, (m)[1].y, (m)[2].z)
-//#define projMAD(m, v) (diagonal3(m) * (v) + (m)[3].xyz)
-
-vec3 screenToView(vec3 pos) {
-	vec4 iProjDiag = vec4(gbufferProjectionInverse[0].x,
-						  gbufferProjectionInverse[1].y,
-						  gbufferProjectionInverse[2].zw);
-    vec3 p3 = pos * 2.0 - 1.0;
-    vec4 viewPos = iProjDiag * p3.xyzz + gbufferProjectionInverse[3];
-    return viewPos.xyz / viewPos.w;
-}
-
-//vec3 viewToPlayer(vec3 pos) {
-//	return mat3(gbufferModelViewInverse) * pos + gbufferModelViewInverse[3].xyz;
+//vec3 screenToView(vec3 pos) {
+//	vec4 iProjDiag = vec4(gbufferProjectionInverse[0].x,
+//						  gbufferProjectionInverse[1].y,
+//						  gbufferProjectionInverse[2].zw);
+//    vec3 p3 = pos * 2.0 - 1.0;
+//    vec4 viewPos = iProjDiag * p3.xyzz + gbufferProjectionInverse[3];
+//    return viewPos.xyz / viewPos.w;
 //}
 
 // END OF COMPLEMENTARY REIMAGINED'S CODE
@@ -240,15 +232,6 @@ bool depthIsSky(float depth) {
 }
 bool depthIsHand(float depth) {
 	return depth < 0.003;
-}
-
-vec3 getViewPos(vec2 coords, float depth) {
-	float linearDepth = toLinearDepth(depth);
-	if (depthIsSky(linearDepth) || depthIsHand(linearDepth)) {
-		return vec3(0.0);
-	}
-	vec3 screenPos = vec3(coords, depth);
-	return screenToView(screenPos);
 }
 
 

@@ -1,6 +1,5 @@
 varying vec2 texcoord;
 flat vec4 glcolor;
-flat vec3 glnormal;
 
 // this file is included to remove the vertex depth optimization
 
@@ -20,13 +19,15 @@ void main() {
 	color.rgb *= 1.3;
 	
 	
-	/* DRAWBUFFERS:026 */
+	/* DRAWBUFFERS:0 */
 	#ifdef DEBUG_OUTPUT_ENABLED
 		color = vec4(debugOutput, 1.0);
 	#endif
 	gl_FragData[0] = color;
-	gl_FragData[1] = color;
-	gl_FragData[3] = vec4(glnormal, 1.0);
+	#ifdef BLOOM_ENABLED
+		/* DRAWBUFFERS:02 */
+		gl_FragData[1] = color;
+	#endif
 }
 
 #endif
@@ -48,7 +49,6 @@ void main() {
 	#endif
 	
 	glcolor = gl_Color;
-	glnormal = gl_NormalMatrix * gl_Normal;
 	
 }
 

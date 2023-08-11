@@ -1,6 +1,5 @@
 varying vec2 texcoord;
 flat vec4 glcolor;
-flat vec3 glnormal;
 
 #include "/lib/fog.glsl"
 
@@ -16,23 +15,31 @@ void main() {
 	
 	
 	// bloom
-	vec4 colorForBloom = color;
-	colorForBloom.rgb *= sqrt(BLOOM_CLOUD_BRIGHTNESS);
+	#ifdef BLOOM_ENABLED
+		vec4 colorForBloom = color;
+		colorForBloom.rgb *= sqrt(BLOOM_CLOUD_BRIGHTNESS);
+	#endif
 	
 	
 	// fog
 	#ifdef FOG_ENABLED
-		applyFog(color.rgb, colorForBloom.rgb);
+		#ifdef BLOOM_ENABLED
+			applyFog(color.rgb, colorForBloom.rgb);
+		#else
+			applyFog(color.rgb);
+		#endif
 	#endif
 	
 	
-	/* DRAWBUFFERS:024 */
+	/* DRAWBUFFERS:0 */
 	#ifdef DEBUG_OUTPUT_ENABLED
 		color.rgb = debugOutput;
 	#endif
 	gl_FragData[0] = color;
-	gl_FragData[1] = colorForBloom;
-	gl_FragData[2] = vec4(glnormal, 1.0);
+	#ifdef BLOOM_ENABLED
+		/* DRAWBUFFERS:02 */
+		gl_FragData[1] = colorForBloom;
+	#endif
 }
 
 #endif
@@ -58,7 +65,6 @@ void main() {
 	#endif
 	
 	glcolor = gl_Color;
-	glnormal = normalize(gl_NormalMatrix * gl_Normal);
 	
 }
 

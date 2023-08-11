@@ -1,5 +1,12 @@
 <br>
 
+- b1.4.3 (23/08/10)
+  - Added profiles
+  - Switched to purely-depth-based SSAO
+  - Improved performance (mostly through new SSAO)
+
+<br>
+
 - b1.4.2 (23/08/09)
   - Added smoothening to sharpening velocity factor
   - Improved SSAO (probably)

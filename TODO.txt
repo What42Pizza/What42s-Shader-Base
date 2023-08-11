@@ -6,17 +6,13 @@ Try moving each post-processing effect into a different composite to allow more 
 Move advanced options to 'advanced options' menus
 Do a round of replacing smoothsteps with flat line?
 Do a round of adding dynamic noise (change noise based on quality level)
-Replace normal-based ssao w/ depth-based ssao?
 Add more TAA settings
 Find a way to make shadowLightPosition stop flickering?
 Make sure sunrays work well at sunrise & sunset
 Store bloom mult instead of bloom color?
 Add setting to fade fog into sky buffer (to make the sun and moon appear in fog) (would also need sunray depth fix)
-Fix ssao on beacon beam
 Calculate light data in vertex shaders?
-Decrease SSAO sample contribution based on normal dot?
 Do a round of general optimizations
-Test if SSAO needs to be applied to bloom
 Take FXAA from Comp Reimagined?
 Prevent TAA on entities?
 Exclude sun, moon, and sunrays based on horison multiplier
@@ -56,6 +52,8 @@ Match the vanilla look, especially in:
 
 
 Finished:
+Fix ssao on beacon beam (fixed w/ new ssao)
+Replace normal-based ssao w/ depth-based ssao?
 Fix shading when too close to blocks
 Add smoothening to the sharpening velocity factor
 Decrease waving at night?

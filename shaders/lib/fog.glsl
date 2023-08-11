@@ -6,19 +6,31 @@ varying vec3 fogBloomSkyColor;
 
 #ifdef FSH
 
-void applyFog(inout vec3 color, inout vec3 colorForBloom) {
-	vec3 colorMix;
-	vec3 bloomColorMix;
-	if (isEyeInWater == 0) {
-		colorMix = getSkyColor();
-		bloomColorMix = colorMix * sqrt(BLOOM_SKY_BRIGHTNESS);
-	} else {
-		colorMix = fogSkyColor;
-		bloomColorMix = fogBloomSkyColor;
+#ifdef BLOOM_ENABLED
+	void applyFog(inout vec3 color, inout vec3 colorForBloom) {
+		vec3 colorMix;
+		vec3 bloomColorMix;
+		if (isEyeInWater == 0) {
+			colorMix = getSkyColor();
+			bloomColorMix = colorMix * sqrt(BLOOM_SKY_BRIGHTNESS);
+		} else {
+			colorMix = fogSkyColor;
+			bloomColorMix = fogBloomSkyColor;
+		}
+		color.rgb = mix(color.rgb, colorMix, fogAmount);
+		colorForBloom.rgb = mix(colorForBloom.rgb, bloomColorMix, fogAmount);
 	}
-	color.rgb = mix(color.rgb, colorMix, fogAmount);
-	colorForBloom.rgb = mix(colorForBloom.rgb, bloomColorMix, fogAmount);
-}
+#else
+	void applyFog(inout vec3 color) {
+		vec3 colorMix;
+		if (isEyeInWater == 0) {
+			colorMix = getSkyColor();
+		} else {
+			colorMix = fogSkyColor;
+		}
+		color.rgb = mix(color.rgb, colorMix, fogAmount);
+	}
+#endif
 
 #endif
 

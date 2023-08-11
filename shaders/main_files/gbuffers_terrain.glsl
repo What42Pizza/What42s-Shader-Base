@@ -1,7 +1,6 @@
 varying vec2 texcoord;
 varying vec2 lmcoord;
 varying vec4 glcolor;
-flat vec3 glnormal;
 
 #include "../lib/lighting.glsl"
 #include "/lib/fog.glsl"
@@ -25,17 +24,23 @@ void main() {
 	
 	
 	// bloom value
-	vec4 colorForBloom = color;
-	#ifdef OVERWORLD
-		float blockLight = brightnesses.x;
-		float skyLight = brightnesses.y;
-		colorForBloom.rgb *= max(blockLight * blockLight * 1.05, skyLight * 0.75);
+	#ifdef BLOOM_ENABLED
+		vec4 colorForBloom = color;
+		#ifdef OVERWORLD
+			float blockLight = brightnesses.x;
+			float skyLight = brightnesses.y;
+			colorForBloom.rgb *= max(blockLight * blockLight * 1.05, skyLight * 0.75);
+		#endif
 	#endif
 	
 	
 	// fog
 	#ifdef FOG_ENABLED
-		applyFog(color.rgb, colorForBloom.rgb);
+		#ifdef BLOOM_ENABLED
+			applyFog(color.rgb, colorForBloom.rgb);
+		#else
+			applyFog(color.rgb);
+		#endif
 	#endif
 	
 	
@@ -47,13 +52,15 @@ void main() {
 	#endif
 	
 	
-	/* DRAWBUFFERS:024 */
+	/* DRAWBUFFERS:0 */
 	#ifdef DEBUG_OUTPUT_ENABLED
 		color = vec4(debugOutput, 1.0);
 	#endif
 	gl_FragData[0] = color;
-	gl_FragData[1] = colorForBloom;
-	gl_FragData[2] = vec4(glnormal, 1.0);
+	#ifdef BLOOM_ENABLED
+		/* DRAWBUFFERS:02 */
+		gl_FragData[1] = colorForBloom;
+	#endif
 }
 
 #endif
@@ -101,9 +108,6 @@ void main() {
 			glcolor = vec4(1.0);
 		}
 	#endif
-	
-	
-	glnormal = gl_NormalMatrix * gl_Normal;
 	
 	
 	#ifdef HANDHELD_LIGHT_ENABLED
