@@ -2,7 +2,6 @@ Current:
 Add profiles
 Re-add levels to shadow filtering
 Add post-processing effects like the super secret settings
-Try moving each post-processing effect into a different composite to allow more `program.enable`-s
 Move advanced options to 'advanced options' menus
 Do a round of replacing smoothsteps with flat line?
 Do a round of adding dynamic noise (change noise based on quality level)
@@ -52,6 +51,7 @@ Match the vanilla look, especially in:
 
 
 Finished:
+Add more 'program.enable'-s
 Fix ssao on beacon beam (fixed w/ new ssao)
 Replace normal-based ssao w/ depth-based ssao?
 Fix shading when too close to blocks

@@ -69,6 +69,8 @@ uniform int frameMod8;
 uniform float velocity;
 uniform float sharpenVelocityFactor;
 uniform float betterRainStrength;
+uniform float horizonAltitudeAddend;
+
 uniform bool isDay;
 uniform bool isOtherLightSource;
 uniform bool isSun;
@@ -138,7 +140,7 @@ const bool colortex0MipmapEnabled = true;
 const bool colortex3MipmapEnabled = true;
 const float wetnessHalflife = 50.0f;
 const float drynessHalflife = 50.0f;
-const float centerDepthHalflife = 3.0f;
+const float centerDepthHalflife = 2.5f;
 const int noiseTextureResolution = 256;
 */
 

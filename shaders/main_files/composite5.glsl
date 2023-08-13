@@ -59,16 +59,6 @@ void main() {
 	
 	
 	
-	// ======= DEBUG OUTPUT ========
-	
-	#ifdef DEBUG_OUTPUT_ENABLED
-		color = texelFetch(DEBUG_BUFFER, texelcoord, 0).rgb;
-	#endif
-	
-	//color = texture2D(NORMALS_BUFFER, texcoord).rgb;
-	
-	
-	
 	/* DRAWBUFFERS:0 */
 	#ifdef DEBUG_OUTPUT_ENABLED
 		color = debugOutput;

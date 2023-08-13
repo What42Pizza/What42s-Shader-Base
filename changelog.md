@@ -1,5 +1,12 @@
 <br>
 
+- b1.4.4 (23/08/12)
+  - Improved DOF
+  - Exposed the 'DOF Show Blur Amounts' setting
+  - Slight optimizations
+
+<br>
+
 - b1.4.3 (23/08/10)
   - Added profiles
   - Switched to purely-depth-based SSAO
