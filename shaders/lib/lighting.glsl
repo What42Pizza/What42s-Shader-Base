@@ -102,7 +102,6 @@ vec3 getLightColor(float blockBrightness, float skyBrightness, float ambientBrig
 // return value channels: (blockBrightness, skyBrightness, ambientBrightness)
 vec3 getLightingBrightnesses(vec2 lmcoord) {
 	
-	
 	float skyBrightness = 0;
 	
 	#ifdef SHADOWS_ENABLED
@@ -211,7 +210,7 @@ void doPreLighting(DEPTH_ARG) {
 			#ifndef SHADOW_FILTERING
 				shadowPos = getShadowPos(viewPos, lightDot);
 			#else
-				shadowPos = getLessBiasedShadowPos(viewPos);
+				shadowPos = getLessBiasedShadowPos(viewPos, lightDot);
 			#endif
 			offsetMult = length(shadowPos.xy * 2.0 - 1.0);
 			offsetMult *= offsetMult;
@@ -228,7 +227,7 @@ void doPreLighting(DEPTH_ARG) {
 		handLightBrightness = 0.0;
 		if (blockDepth <= HANDHELD_LIGHT_DISTANCE) {
 			handLightBrightness = max(1.0 - blockDepth / HANDHELD_LIGHT_DISTANCE, 0.0);
-			handLightBrightness = handLightBrightness;
+			handLightBrightness = pow(handLightBrightness, LIGHT_DROPOFF);
 			handLightBrightness *= heldBlockLightValue / 15.0 * HANDHELD_LIGHT_BRIGHTNESS;
 		}
 	#endif
