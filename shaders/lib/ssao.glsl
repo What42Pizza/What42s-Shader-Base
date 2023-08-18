@@ -24,13 +24,13 @@ float getAoInfluence(float centerDepth, vec2 offset) {
 float getAoFactor() {
 	
 	float depth = toLinearDepth(texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r);
-	float noise = randomFloat(rngStart) * 10.0;
-	float scale = inversesqrt(depth * far) * AO_SIZE * 0.1;
+	float noise = randomFloat(rngStart) * 1000.0;
+	float scale = AO_SIZE * 0.13 / (depth * far);
 	
 	float total = 0.0;
 	for (int i = 1; i <= AO_SAMPLE_COUNT; i ++) {
 		
-		float len = (float(i) / AO_SAMPLE_COUNT + 0.1) * scale;
+		float len = (float(i) / AO_SAMPLE_COUNT + 0.3) * scale;
 		vec2 offset = vec2(cos(i * noise) * len * invAspectRatio, sin(i * noise) * len);
 		
 		total += getAoInfluence(depth, offset);
@@ -39,5 +39,5 @@ float getAoFactor() {
 	total /= AO_SAMPLE_COUNT;
 	total *= smoothstep(0.8, 0.7, estimateDistance(depth));
 	
-	return total * 0.4;
+	return total * 0.35;
 }

@@ -170,13 +170,24 @@ float pow3(float v) {
 	return v * v * v;
 }
 float pow4(float v) {
-	return v * v * v * v;
+	float v2 = v * v;
+	return v2 * v2;
 }
 float pow5(float v) {
-	return v * v * v * v * v;
+	float v2 = v * v;
+	return v2 * v2 * v;
 }
 float pow10(float v) {
-	return v * v * v * v * v * v * v * v * v * v;
+	float v2 = v * v;
+	float v4 = v2 * v2;
+	return v4 * v4 * v2;
+}
+
+vec2 pow2(vec2 v) {
+	return v * v;
+}
+vec2 pow3(vec2 v) {
+	return v * v * v;
 }
 
 vec3 pow2(vec3 v) {
@@ -319,6 +330,23 @@ vec3 randomVec3(inout uint rng) {
 
 vec3 randomVec3FromRValue(uint rng) {
 	return randomVec3(rng);
+}
+
+float normalizeNoiseAround1(float noise, float range) {
+	return noise * range + 1.0;// - range / 2.0;
+}
+
+vec2 normalizeNoiseAround1(vec2 noise, float range) {
+	float x = normalizeNoiseAround1(noise.x, range);
+	float y = normalizeNoiseAround1(noise.y, range);
+	return vec2(x, y);
+}
+
+vec3 normalizeNoiseAround1(vec3 noise, float range) {
+	float x = normalizeNoiseAround1(noise.x, range);
+	float y = normalizeNoiseAround1(noise.y, range);
+	float z = normalizeNoiseAround1(noise.z, range);
+	return vec3(x, y, z);
 }
 
 

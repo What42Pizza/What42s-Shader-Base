@@ -1,5 +1,4 @@
-varying float sideShading;
-varying float lightDotMult;
+varying float skyBrightnessMult;
 
 #ifdef SHADOWS_ENABLED
 	varying vec3 shadowPos;
@@ -55,11 +54,19 @@ varying float lightDotMult;
 
 
 
-float alterLightDot(float lightDot) {
+float getSkyBrightnessMult(float lightDot) {
+	
 	//return sin((lightDot + 1.0) * PI / 4.0);
+	
 	//float temp = lightDot * 0.5 - 0.5;
 	//return temp * temp * temp + 1.0;
-	return pow(max(lightDot, 0.0), 0.12);
+	
+	//return pow(max(lightDot, 0.0), 0.12);
+	
+	const float curve = 3.0;
+	const float finalFactor = 1.0 / (1.0 - 1.0 / (curve * 10.0 + 1.0));
+	return (1.0 - 1.0 / (max(lightDot, 0.0) * curve * 10.0 + 1.0)) * finalFactor;
+	
 }
 
 
@@ -95,21 +102,15 @@ vec3 getLightColor(float blockBrightness, float skyBrightness, float ambientBrig
 // return value channels: (blockBrightness, skyBrightness, ambientBrightness)
 vec3 getLightingBrightnesses(vec2 lmcoord) {
 	
-	float blockBrightness = lmcoord.x * sideShading;
-	float skyBrightness = 0;
-	float ambientBrightness = lmcoord.y * sideShading;
 	
-	#ifdef HANDHELD_LIGHT_ENABLED
-		blockBrightness = max(blockBrightness, handLightBrightness);
-	#endif
+	float skyBrightness = 0;
 	
 	#ifdef SHADOWS_ENABLED
-		if (lightDotMult > alterLightDot(0.0)) {
+		if (skyBrightnessMult > 0.0) {
 			// surface is facing towards shadowLightPosition
 			
 			vec3 offsetShadowPos = shadowPos;
-			const float noiseAmount = 0.6;
-			vec2 noise = randomVec2(rngStart) * noiseAmount + 1.0 - noiseAmount / 2.0;
+			vec2 noise = normalizeNoiseAround1(randomVec2(rngStart), 0.4);
 			offsetShadowPos.xy += noise * offsetMult * 0.4;
 			
 			#ifndef SHADOW_FILTERING
@@ -122,18 +123,16 @@ vec3 getLightingBrightnesses(vec2 lmcoord) {
 			#else
 				
 				// filtered
-				//if (texture2D(shadowtex0, shadowPos.xy).r >= shadowPos.z - 0.05) {
-					for (int i = 0; i < SHADOW_OFFSET_COUNT; i++) {
-						if (texture2D(shadowtex0, offsetShadowPos.xy + SHADOW_OFFSETS[i].xy * offsetMult).r >= offsetShadowPos.z) {
-							float currentShadowWeight = SHADOW_OFFSETS[i].z;
-							skyBrightness += currentShadowWeight;
-						}
+				// tactic: just absorb the shadow acne and average it out, then multiply and clamp to get back to 1.0
+				for (int i = 0; i < SHADOW_OFFSET_COUNT; i++) {
+					if (texture2D(shadowtex0, offsetShadowPos.xy + SHADOW_OFFSETS[i].xy * offsetMult).r >= offsetShadowPos.z) {
+						float currentShadowWeight = SHADOW_OFFSETS[i].z;
+						skyBrightness += currentShadowWeight;
 					}
-					skyBrightness /= SHADOW_OFFSET_WEIGHTS_TOTAL;
-					skyBrightness = min(skyBrightness * 2.3, 1.0);
-				//} else {
-				//	skyBrightness = 0.5;
-				//}
+				}
+				skyBrightness /= SHADOW_OFFSET_WEIGHTS_TOTAL;
+				skyBrightness = min(skyBrightness * (2.4 - skyBrightnessMult), 1.0);
+				//skyBrightness = min(skyBrightness * 2.3, 1.0);
 				
 			#endif
 			
@@ -142,8 +141,18 @@ vec3 getLightingBrightnesses(vec2 lmcoord) {
 		skyBrightness = 1.0;
 	#endif
 	
-	skyBrightness *= lightDotMult;
-	skyBrightness *= sqrt(ambientBrightness);
+	#if !defined SHOW_SUNLIGHT
+		skyBrightness *= skyBrightnessMult;
+	#endif
+	
+	
+	float blockBrightness = lmcoord.x;
+	#ifdef HANDHELD_LIGHT_ENABLED
+		blockBrightness = max(blockBrightness, handLightBrightness);
+	#endif
+	
+	float ambientBrightness = lmcoord.y;
+	
 	
 	return vec3(blockBrightness, skyBrightness, ambientBrightness);
 }
@@ -211,7 +220,8 @@ void doPreLighting(DEPTH_ARG) {
 		
 	#endif
 	
-	lightDotMult = alterLightDot(lightDot);
+	skyBrightnessMult = getSkyBrightnessMult(lightDot);
+	skyBrightnessMult *= sqrt(lmcoord.y);
 	
 	
 	#ifdef HANDHELD_LIGHT_ENABLED
@@ -225,8 +235,9 @@ void doPreLighting(DEPTH_ARG) {
 	
 	
 	vec3 shadingNormals = vec3(abs(gl_Normal.x), gl_Normal.y, abs(gl_Normal.z));
-	sideShading = dot(shadingNormals, vec3(-0.3, 0.5, 0.3));
+	float sideShading = dot(shadingNormals, vec3(-0.3, 0.5, 0.3));
 	sideShading = sideShading * SIDE_SHADING * 0.5 + 1.0;
+	lmcoord *= sideShading;
 	
 	
 }

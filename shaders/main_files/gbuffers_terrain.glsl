@@ -12,20 +12,30 @@ varying vec4 glcolor;
 #ifdef FSH
 
 void main() {
-	vec4 color = texture2D(MAIN_BUFFER, texcoord) * glcolor;
+	vec4 color = texture2D(MAIN_BUFFER, texcoord);
 	#ifdef DEBUG_OUTPUT_ENABLED
 		vec3 debugOutput = vec3(0.0);
 	#endif
 	
 	
-	// main lighting
-	vec3 brightnesses = getLightingBrightnesses(lmcoord);
-	color.rgb *= getLightColor(brightnesses.x, brightnesses.y, brightnesses.z);
-	
-	
 	// bloom value
 	#ifdef BLOOM_ENABLED
 		vec4 colorForBloom = color;
+	#endif
+	
+	
+	// main lighting
+	color *= glcolor;
+	vec3 brightnesses = getLightingBrightnesses(lmcoord);
+	color.rgb *= getLightColor(brightnesses.x, brightnesses.y, brightnesses.z);
+	#ifdef SHOW_SUNLIGHT
+		debugOutput = vec3(brightnesses.y);
+	#endif
+	#ifdef SHOW_BRIGHTNESSES
+		debugOutput = brightnesses;
+	#endif
+	
+	#ifdef BLOOM_ENABLED
 		#ifdef OVERWORLD
 			float blockLight = brightnesses.x;
 			float skyLight = brightnesses.y;
