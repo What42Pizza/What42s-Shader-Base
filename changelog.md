@@ -1,5 +1,11 @@
 <br>
 
+- b1.4.5 (23/08/17)
+  - Improved shadow filtering
+  - Slightly improved lighting model
+
+<br>
+
 - b1.4.4 (23/08/12)
   - Improved DOF
   - Exposed the 'DOF Show Blur Amounts' setting
@@ -103,4 +109,4 @@
 <br>
 <br>
 
-- **Development started (23/05/19**
+- **Development started (23/05/19)**
