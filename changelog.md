@@ -1,5 +1,14 @@
 <br>
 
+- b1.4.5 (23/08/18)
+  - Added 'Use Gamma Correction' setting (no new functionality)
+  - Removed 'Bloom Curve' and 'Vignette Curve' settings (to improve performance)
+  - Improved performance
+  - Improved shadow filtering
+  - Slightly improved lighting model
+
+<br>
+
 - b1.4.4 (23/08/12)
   - Improved DOF
   - Exposed the 'DOF Show Blur Amounts' setting
@@ -103,4 +112,4 @@
 <br>
 <br>
 
-- **Development started (23/05/19**
+- **Development started (23/05/19)**

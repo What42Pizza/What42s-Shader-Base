@@ -56,7 +56,10 @@ varying float lightDotMult;
 
 
 float alterLightDot(float lightDot) {
-	return sin((lightDot + 1.0) * PI / 4.0);
+	//return sin((lightDot + 1.0) * PI / 4.0);
+	//float temp = lightDot * 0.5 - 0.5;
+	//return temp * temp * temp + 1.0;
+	return pow(max(lightDot, 0.0), 0.12);
 }
 
 
@@ -74,26 +77,27 @@ vec3 getLightColor(float blockBrightness, float skyBrightness, float ambientBrig
 		float ambientMin = 0.3;
 	#endif
 	#ifdef USE_VANILLA_BRIGHTNESS
-		ambientMin *= screenBrightness * 0.66 + 0.33;
+		ambientMin *= 0.33 + screenBrightness * 0.66;
 	#endif
 	
 	ambientBrightness = ambientBrightness * (1.0 - ambientMin) + ambientMin;
 	vec3 blockLight   = blockBrightness   * BLOCK_COLOR;
 	vec3 skyLight     = skyBrightness     * skyColor;
 	vec3 ambientLight = ambientBrightness * ambientColor;
+	//return max(max(blockLight, skyLight), ambientLight);
 	vec3 blockMaxSky = smoothMax(blockLight, skyLight, LIGHT_SMOOTHING);
 	vec3 total = smoothMax(blockMaxSky, ambientLight, LIGHT_SMOOTHING);
 	return total;
 }
 
 
-	
+
 // return value channels: (blockBrightness, skyBrightness, ambientBrightness)
 vec3 getLightingBrightnesses(vec2 lmcoord) {
 	
-	float blockBrightness = pow(lmcoord.x, LIGHT_DROPOFF) * sideShading;
+	float blockBrightness = lmcoord.x * sideShading;
 	float skyBrightness = 0;
-	float ambientBrightness = pow(lmcoord.y, LIGHT_DROPOFF) * sideShading;
+	float ambientBrightness = lmcoord.y * sideShading;
 	
 	#ifdef HANDHELD_LIGHT_ENABLED
 		blockBrightness = max(blockBrightness, handLightBrightness);
@@ -103,11 +107,14 @@ vec3 getLightingBrightnesses(vec2 lmcoord) {
 		if (lightDotMult > alterLightDot(0.0)) {
 			// surface is facing towards shadowLightPosition
 			
+			vec3 offsetShadowPos = shadowPos;
+			const float noiseAmount = 0.6;
+			vec2 noise = randomVec2(rngStart) * noiseAmount + 1.0 - noiseAmount / 2.0;
+			offsetShadowPos.xy += noise * offsetMult * 0.4;
+			
 			#ifndef SHADOW_FILTERING
 				
 				// no filtering
-				vec3 offsetShadowPos = shadowPos;
-				offsetShadowPos.xy += randomVec2(rngStart) * offsetMult * 0.2;
 				if (texture2D(shadowtex0, offsetShadowPos.xy).r >= offsetShadowPos.z) {
 					skyBrightness += 1;
 				}
@@ -116,8 +123,6 @@ vec3 getLightingBrightnesses(vec2 lmcoord) {
 				
 				// filtered
 				//if (texture2D(shadowtex0, shadowPos.xy).r >= shadowPos.z - 0.05) {
-					vec3 offsetShadowPos = shadowPos;
-					offsetShadowPos.xy += randomVec2(rngStart) * offsetMult * 0.3;
 					for (int i = 0; i < SHADOW_OFFSET_COUNT; i++) {
 						if (texture2D(shadowtex0, offsetShadowPos.xy + SHADOW_OFFSETS[i].xy * offsetMult).r >= offsetShadowPos.z) {
 							float currentShadowWeight = SHADOW_OFFSETS[i].z;
@@ -138,7 +143,7 @@ vec3 getLightingBrightnesses(vec2 lmcoord) {
 	#endif
 	
 	skyBrightness *= lightDotMult;
-	skyBrightness *= ambientBrightness;
+	skyBrightness *= sqrt(ambientBrightness);
 	
 	return vec3(blockBrightness, skyBrightness, ambientBrightness);
 }
@@ -182,13 +187,13 @@ void doPreLighting(DEPTH_ARG) {
 	
 	
 	float lightDot = dot(normalize(shadowLightPosition), normalize(gl_NormalMatrix * gl_Normal));
-	lightDotMult = alterLightDot(lightDot);
-	
 	
 	#ifdef SHADOWS_ENABLED
 		
 		#if defined SHADER_TERRAIN && defined EXCLUDE_FOLIAGE
-			if (mc_Entity.x >= 2000.0 && mc_Entity.x <= 2999.0) lightDot = 1.0;
+			if (mc_Entity.x >= 2000.0 && mc_Entity.x <= 2999.0) {
+				lightDot = max(lightDot, 0.025);
+			}
 		#endif
 		
 		if (lightDot > 0.0) { // vertex is facing towards the sky
@@ -197,7 +202,7 @@ void doPreLighting(DEPTH_ARG) {
 			#ifndef SHADOW_FILTERING
 				shadowPos = getShadowPos(viewPos, lightDot);
 			#else
-				shadowPos = getLessBiasedShadowPos(viewPos, lightDot);
+				shadowPos = getLessBiasedShadowPos(viewPos);
 			#endif
 			offsetMult = length(shadowPos.xy * 2.0 - 1.0);
 			offsetMult *= offsetMult;
@@ -206,12 +211,14 @@ void doPreLighting(DEPTH_ARG) {
 		
 	#endif
 	
+	lightDotMult = alterLightDot(lightDot);
+	
 	
 	#ifdef HANDHELD_LIGHT_ENABLED
 		handLightBrightness = 0.0;
 		if (blockDepth <= HANDHELD_LIGHT_DISTANCE) {
 			handLightBrightness = max(1.0 - blockDepth / HANDHELD_LIGHT_DISTANCE, 0.0);
-			handLightBrightness = pow(handLightBrightness, LIGHT_DROPOFF);
+			handLightBrightness = handLightBrightness;
 			handLightBrightness *= heldBlockLightValue / 15.0 * HANDHELD_LIGHT_BRIGHTNESS;
 		}
 	#endif

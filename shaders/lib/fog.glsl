@@ -1,6 +1,8 @@
 varying float fogAmount;
 varying vec3 fogSkyColor;
-varying vec3 fogBloomSkyColor;
+#ifdef BLOOM_ENABLED
+	varying vec3 fogBloomSkyColor;
+#endif
 
 
 
@@ -46,34 +48,65 @@ void getFogData(vec3 playerPos) {
 		fogAmount /= FOG_EXTRA_CLOUDS_DISTANCE;
 	#endif
 	
-	if (isEyeInWater == 0) {
-		// not in liquid
+	
+	if (isEyeInWater == 0) { // not in liquid
 		fogAmount /= far * 0.9;
 		fogAmount = (fogAmount - 1.0) / (1.0 - mix(FOG_START, FOG_RAIN_START, betterRainStrength)) + 1.0;
 		fogAmount = clamp(fogAmount, 0.0, 1.0);
-		fogAmount = pow(fogAmount, mix(FOG_CURVE, FOG_RAIN_CURVE, betterRainStrength));
+		#if FOG_CURVE == 2
+			fogAmount = pow2(fogAmount);
+		#elif FOG_CURVE == 3
+			fogAmount = pow3(fogAmount);
+		#elif FOG_CURVE == 4
+			fogAmount = pow4(fogAmount);
+		#elif FOG_CURVE == 5
+			fogAmount = pow5(fogAmount);
+		#endif
 		
-	} else if (isEyeInWater == 1) {
-		// in water
+		
+	} else if (isEyeInWater == 1) { // in water
 		fogAmount /= FOG_WATER_DISTANCE;
 		fogAmount = clamp(fogAmount, 0.1, 1.0);
-		fogAmount = pow(fogAmount, FOG_WATER_CURVE);
+		#if FOG_WATER_CURVE == 2
+			fogAmount = pow2(fogAmount);
+		#elif FOG_WATER_CURVE == 3
+			fogAmount = pow3(fogAmount);
+		#elif FOG_WATER_CURVE == 4
+			fogAmount = pow4(fogAmount);
+		#elif FOG_WATER_CURVE == 5
+			fogAmount = pow5(fogAmount);
+		#endif
 		fogSkyColor = vec3(0.0, 0.2, 1.0);
-		fogBloomSkyColor = fogSkyColor;
+		#ifdef BLOOM_ENABLED
+			fogBloomSkyColor = fogSkyColor;
+		#endif
 		
-	} else if (isEyeInWater == 2) {
-		// in lava
+		
+	} else if (isEyeInWater == 2) { // in lava
 		fogAmount = 1.0;
 		fogSkyColor = vec3(0.8, 0.2, 0.1);
-		fogBloomSkyColor = fogSkyColor;
+		#ifdef BLOOM_ENABLED
+			fogBloomSkyColor = fogSkyColor;
+		#endif
 		
-	} else if (isEyeInWater == 3) {
-		// in powdered snow
+		
+	} else if (isEyeInWater == 3) { // in powdered snow
 		fogAmount /= FOG_WATER_DISTANCE * 0.025;
 		fogAmount = clamp(fogAmount, 0.0, 1.0);
-		fogAmount = pow(fogAmount, FOG_WATER_CURVE);
+		#if FOG_WATER_CURVE == 2
+			fogAmount = pow2(fogAmount);
+		#elif FOG_WATER_CURVE == 3
+			fogAmount = pow3(fogAmount);
+		#elif FOG_WATER_CURVE == 4
+			fogAmount = pow4(fogAmount);
+		#elif FOG_WATER_CURVE == 5
+			fogAmount = pow5(fogAmount);
+		#endif
 		fogSkyColor = vec3(0.7, 0.85, 1.0);
-		fogBloomSkyColor = fogSkyColor;
+		#ifdef BLOOM_ENABLED
+			fogBloomSkyColor = fogSkyColor;
+		#endif
+		
 		
 	}
 	

@@ -37,7 +37,7 @@ void doDOF(inout vec3 color DEBUG_ARG_OUT) {
 	float linearDepth = toLinearDepth(texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r);
 	float depthChange = linearDepth - focusDepth;
 	#if DOF_SLOPE_TYPE == 1
-		depthChange /= 15.0 * pow(focusDepth, 0.9);
+		depthChange /= 15.0 * focusDepth;
 	#endif
 	
 	float nearBlurAmount = depthChange * (-1.0 / DOF_NEAR_BLUR_SLOPE) - (DOF_NEAR_BLUR_START / DOF_NEAR_BLUR_SLOPE);
@@ -54,6 +54,5 @@ void doDOF(inout vec3 color DEBUG_ARG_OUT) {
 	vec3 farBlur = getBlurredColor(texcoord, farBlurAmount * blurSizeMult * DOF_FAR_BLUR_SIZE);
 	color = mix(color, farBlur, min(farBlurAmount, 1.0));
 	color = mix(color, nearBlur, min(nearBlurAmount, 1.0));
-	//color = vec3(blurSizeMult);
 	
 }
