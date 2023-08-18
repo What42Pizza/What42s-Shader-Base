@@ -74,8 +74,8 @@ uniform float horizonAltitudeAddend;
 uniform bool isDay;
 uniform bool isOtherLightSource;
 uniform bool isSun;
-uniform float centerDepthSmooth; // needed for `centerLinearDepthSmooth` to work?
 uniform float centerLinearDepthSmooth;
+uniform float centerDepthSmooth; // needed for `centerLinearDepthSmooth` to work?
 
 uniform float sunriseTime;
 uniform vec4 rawSkylightPercents;
@@ -162,29 +162,6 @@ const int noiseTextureResolution = 256;
 // END OF COMPLEMENTARY REIMAGINED'S CODE
 
 
-
-float pow2(float v) {
-	return v * v;
-}
-float pow3(float v) {
-	return v * v * v;
-}
-float pow4(float v) {
-	return v * v * v * v;
-}
-float pow5(float v) {
-	return v * v * v * v * v;
-}
-float pow10(float v) {
-	return v * v * v * v * v * v * v * v * v * v;
-}
-
-vec3 pow2(vec3 v) {
-	return v * v;
-}
-vec3 pow3(vec3 v) {
-	return v * v * v;
-}
 
 float getColorLum(vec3 color) {
 	return dot(color, vec3(0.2125, 0.7154, 0.0721));
@@ -375,7 +352,7 @@ vec3 getShadowPos(vec4 viewPos, float lightDot) {
 	return shadowPos;
 }
 
-vec3 getLessBiasedShadowPos(vec4 viewPos) {
+vec3 getLessBiasedShadowPos(vec4 viewPos, float lightDot) {
 	vec4 playerPos = gbufferModelViewInverse * viewPos;
 	vec3 shadowPos = (shadowProjection * (shadowModelView * playerPos)).xyz; // convert to shadow screen space
 	float distortFactor = getDistortFactor(shadowPos);

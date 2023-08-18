@@ -1,9 +1,6 @@
 <br>
 
-- b1.4.5 (23/08/18)
-  - Added 'Use Gamma Correction' setting (no new functionality)
-  - Removed 'Bloom Curve' and 'Vignette Curve' settings (to improve performance)
-  - Improved performance
+- b1.4.5 (23/08/17)
   - Improved shadow filtering
   - Slightly improved lighting model
 
