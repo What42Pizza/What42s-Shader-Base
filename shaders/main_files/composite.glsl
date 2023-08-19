@@ -38,9 +38,9 @@ void main() {
 	// ======== BLOOM FILTERING ========
 	
 	#ifdef BLOOM_ENABLED
-		float lum = getColorLum(bloomColor);
-		float alpha = (lum - BLOOM_LOW_CUTOFF) / (BLOOM_HIGH_CUTOFF - BLOOM_LOW_CUTOFF);
-		alpha = pow(clamp(alpha, 0.0, 1.0), BLOOM_CURVE);
+		float alpha = getColorLum(bloomColor);
+		alpha = (alpha - BLOOM_LOW_CUTOFF) / (BLOOM_HIGH_CUTOFF - BLOOM_LOW_CUTOFF);
+		alpha = clamp(alpha, 0.0, 1.0);
 		bloomColor *= alpha;
 	#endif
 	

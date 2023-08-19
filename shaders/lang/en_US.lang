@@ -160,8 +160,6 @@ option.BLOOM_LOW_CUTOFF=Bloom Low Cutoff
 option.BLOOM_LOW_CUTOFF.comment=The value at which all colors are treated as equally dark
 option.BLOOM_HIGH_CUTOFF=Bloom High Cutoff
 option.BLOOM_HIGH_CUTOFF.comment=The value at which all colors are treated as equally light
-option.BLOOM_CURVE=Bloom Curve
-option.BLOOM_CURVE.comment=How quickly darker colors are ignored
 option.BLOOM_SKY_BRIGHTNESS=Bloom Sky Brightness
 option.BLOOM_ENTITY_BRIGHTNESS=Bloom Entity Brightness
 option.BLOOM_CLOUD_BRIGHTNESS=Bloom Cloud Brightness
@@ -277,11 +275,13 @@ option.CONTRAST_DETECT_BLUE=Contrast Detect Blue
 option.CONTRAST_DETECT_BLUE.comment=Contrast Detect is the color that Contrast moves away from
 
 option.TONEMAPPER=Tonemapper
-option.TONEMAPPER.comment=This defines how light data is interpreted.\n\nNone: clamps the value into 0-1\nExtra simple: uses smoothMin and smoothMax to clamp into 0-1\nSimple: Custom simple tonemapper\nACES: Industry standard for good, realistic graphics
+option.TONEMAPPER.comment=This defines how light data is interpreted.\n\nNone: clamps the value into 0-1\nExtra simple: same as 'none' but uses a smoothened clamp function\nSimple: Custom simple tonemapper\nACES: Industry standard for good, realistic graphics
 value.TONEMAPPER.0=None
 value.TONEMAPPER.1=Extra Simple
 value.TONEMAPPER.2=Simple
 value.TONEMAPPER.3=ACES
+option.USE_GAMMA_CORRECTION=Use Gamma Correction
+option.USE_GAMMA_CORRECTION.comment=Corrects for gamma before and after color correction
 
 
 
