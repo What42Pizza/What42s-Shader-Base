@@ -1,6 +1,6 @@
 varying vec2 texcoord;
 varying vec2 lmcoord;
-varying vec4 glcolor;
+//varying vec4 glcolor;
 
 #undef SHADOWS_ENABLED
 
@@ -13,7 +13,7 @@ varying vec4 glcolor;
 #ifdef FSH
 
 void main() {
-	vec4 color = texture2D(MAIN_BUFFER, texcoord) * glcolor;
+	vec4 color = texture2D(MAIN_BUFFER, texcoord);// * glcolor;
 	#ifdef DEBUG_OUTPUT_ENABLED
 		vec3 debugOutput = vec3(0.0);
 	#endif
@@ -22,8 +22,9 @@ void main() {
 	
 	// main lighting
 	
-	vec3 brightnesses = getLightingBrightnesses(lmcoord);
-	color.rgb *= getLightColor(brightnesses.x, brightnesses.y, brightnesses.z);
+	//vec3 brightnesses = getLightingBrightnesses(lmcoord);
+	//color.rgb *= getLightColor(brightnesses.x, brightnesses.y, brightnesses.z);
+	color.rgb *= max(max(lmcoord.x, lmcoord.y), 0.1);
 	
 	
 	
@@ -46,8 +47,6 @@ void main() {
 
 #ifdef VSH
 
-#include "/lib/taa_jitter.glsl"
-
 void main() {
 	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
 	lmcoord  = (gl_TextureMatrix[1] * gl_MultiTexCoord1).xy;
@@ -58,11 +57,11 @@ void main() {
 	
 	
 	#ifdef TAA_ENABLED
-		gl_Position.xy = TAAJitter(gl_Position.xy, gl_Position.w);
+		gl_Position.xy += taaOffset * gl_Position.w;
 	#endif
 	
 	
-	glcolor = gl_Color;
+	//glcolor = gl_Color;
 	
 	
 	doPreLighting();

@@ -44,8 +44,8 @@ vec3 sampleBloom(float sizeMult, inout uint rng) {
 
 vec3 getBloomAddition(inout uint rng) {
 	
-	float depth = toLinearDepth(texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r);
-	float sizeMult = inversesqrt(depth * far);
+	float depth = toBlockDepth(texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r);
+	float sizeMult = inversesqrt(depth);
 	
 	vec3 bloomAddition = vec3(0.0);
 	for (int i = 0; i < BLOOM_COMPUTE_COUNT; i++) {

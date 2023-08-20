@@ -1,5 +1,12 @@
 <br>
 
+- b1.5.1 (23/08/19)
+  - Re-added shadow filtering levels
+  - Improved handheld light (and removed 'Use Fixed Depth' option)
+  - Maybe improved performance
+
+<br>
+
 - **b1.5.0** (23/08/18)
   - Added settings:
   - - 'Use Gamma Correction' (no new functionality, just allows stuff to be disabled)

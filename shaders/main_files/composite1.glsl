@@ -5,11 +5,6 @@
 
 
 varying vec2 texcoord;
-flat vec2 lightCoord;
-
-#ifdef SUNRAYS_ENABLED
-	flat float sunraysAmountMult;
-#endif
 
 
 
@@ -55,8 +50,6 @@ void main() {
 			sunraysAmount += getSunraysAmount(rng);
 		};
 		sunraysAmount /= SUNRAYS_COMPUTE_COUNT;
-		sunraysAmount *= max(1.0 - length(lightCoord - 0.5) * 1.5, 0.0);
-		sunraysAmount *= sunraysAmountMult;
 		
 		vec3 sunraysColor = isSun ? SUNRAYS_SUN_COLOR : SUNRAYS_MOON_COLOR;
 		vec3 sunraysAddition = sunraysAmount * sunraysColor;
@@ -85,16 +78,15 @@ void main() {
 
 #ifdef VSH
 
+#include "/lib/sunrays.glsl"
+
 void main() {
 	gl_Position = ftransform();
 	texcoord = gl_MultiTexCoord0.xy;
 	
-	vec3 lightPos = shadowLightPosition * mat3(gbufferProjection);
-	lightPos /= lightPos.z;
-	lightCoord = lightPos.xy * 0.5 + 0.5;
-	
 	#ifdef SUNRAYS_ENABLED
-		sunraysAmountMult = getSunraysAmountMult();
+		calculateLightCoord();
+		calculateSunraysAmount();
 	#endif
 	
 }

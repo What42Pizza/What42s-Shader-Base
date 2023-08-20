@@ -102,7 +102,11 @@ option.shadowDistance.comment=Maximum distance that shadows are rendered\n\n(Per
 option.SHADOW_DISTORT_EXP=Shadow Distort Exponent
 option.SHADOW_DISTORT_EXP.comment=How much more to render closer objects. Higher values increase the resolution of closer objects, lower values increase the resolution of of further objects.\n\n(Performance cost: None)
 option.SHADOW_FILTERING=Shadow Filtering
-option.SHADOW_FILTERING.comment=Shoothens shadow edges (works best with TAA)\n\n(Performance cost: Medium-Low)
+option.SHADOW_FILTERING.comment=Shoothens shadow edges (works best with TAA)\n\n(Performance cost: Low)
+value.SHADOW_FILTERING.0=Off
+value.SHADOW_FILTERING.1=Low
+value.SHADOW_FILTERING.2=Medium
+value.SHADOW_FILTERING.3=High
 option.EXCLUDE_FOLIAGE=Exlude Foliage
 option.EXCLUDE_FOLIAGE.comment=If true, foliage will not cast shadows\n\n(Performance cost: Low)
 option.sunPathRotation=Sun Path Rotation
@@ -122,8 +126,6 @@ screen.HANDHELD_LIGHT_SETTINGS=Handheld Light
 option.HANDHELD_LIGHT_ENABLED=Handheld Light Enabled
 option.HANDHELD_LIGHT_DISTANCE=Handheld Light Distance
 option.HANDHELD_LIGHT_BRIGHTNESS=Handheld Light Brightness
-option.HANDHELD_LIGHT_USE_FIXED_DEPTH=Use Fixed Depth
-option.HANDHELD_LIGHT_USE_FIXED_DEPTH.comment=Gives correct lighting to things like entities (by default it uses an already calculated value as an estimation)
 
 
 

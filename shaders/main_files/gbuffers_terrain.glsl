@@ -1,6 +1,6 @@
 varying vec2 texcoord;
 varying vec2 lmcoord;
-varying vec4 glcolor;
+varying vec3 glcolor;
 
 #include "../lib/lighting.glsl"
 #include "/lib/fog.glsl"
@@ -25,7 +25,7 @@ void main() {
 	
 	
 	// main lighting
-	color *= glcolor;
+	color.rgb *= glcolor;
 	vec3 brightnesses = getLightingBrightnesses(lmcoord);
 	color.rgb *= getLightColor(brightnesses.x, brightnesses.y, brightnesses.z);
 	#ifdef SHOW_SUNLIGHT
@@ -82,7 +82,6 @@ void main() {
 #ifdef VSH
 
 #include "/lib/waving.glsl"
-#include "/lib/taa_jitter.glsl"
 
 void main() {
 	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
@@ -103,7 +102,7 @@ void main() {
 	
 	
 	#ifdef TAA_ENABLED
-		gl_Position.xy = TAAJitter(gl_Position.xy, gl_Position.w);
+		gl_Position.xy += taaOffset * gl_Position.w;
 	#endif
 	
 	
@@ -112,20 +111,15 @@ void main() {
 	#endif
 	
 	
-	glcolor = gl_Color;
+	glcolor = gl_Color.rgb;
 	#ifdef USE_SIMPLE_LIGHT
-		if (glcolor.r == glcolor.b) {
-			glcolor = vec4(1.0);
+		if (glcolor.r == glcolor.g && glcolor.g == glcolor.b) {
+			glcolor = vec3(1.0);
 		}
 	#endif
 	
 	
-	#ifdef HANDHELD_LIGHT_ENABLED
-		doPreLighting(length(worldPos.xyz));
-	#else
-		doPreLighting();
-	#endif
-	
+	doPreLighting();
 	
 }
 

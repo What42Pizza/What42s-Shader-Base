@@ -77,6 +77,8 @@ uniform bool isSun;
 uniform float centerDepthSmooth; // needed for `centerLinearDepthSmooth` to work?
 uniform float centerLinearDepthSmooth;
 
+uniform vec2 taaOffset;
+
 uniform float sunriseTime;
 uniform vec4 rawSkylightPercents;
 uniform float rawSunTotal;
@@ -214,16 +216,42 @@ float maxAbs(vec3 v) {
 	return max(max(r, g), b);
 }
 
+// all these smooth functions seem the same for speed
+
+//// from: https://iquilezles.org/articles/smin/
+//vec3 smoothMin(vec3 a, vec3 b, float k) {
+//	vec3 h = max(k-abs(a-b), 0.0)/k;
+//	return min(a, b) - h*h*k*0.25;
+//}
+
+//// same as smoothMin but w/ in&out inverted
+//vec3 smoothMax(vec3 a, vec3 b, float k) {
+//	vec3 h = max(k-abs(a-b), 0.0)/k;
+//	return max(a, b) + h*h*k*0.25;
+//}
+
+//// from: https://www.shadertoy.com/view/Ml3Gz8
+//vec3 smoothMin(vec3 a, vec3 b, float k) {
+//	vec3 h = clamp(0.5 + 0.5*(a-b)/k, 0.0, 1.0);
+//	return mix(a, b, h) - k*h*(1.0-h);
+//}
+
+//// same as smoothMin but w/ in&out inverted
+//vec3 smoothMax(vec3 a, vec3 b, float k) {
+//	vec3 h = clamp(0.5 + 0.5*(b-a)/k, 0.0, 1.0);
+//	return mix(a, b, h) + k*h*(1.0-h);
+//}
+
 vec3 smoothMin(vec3 v1, vec3 v2, float a) {
 	float v1Lum = getColorLum(v1);
 	float v2Lum = getColorLum(v2);
-	return (v1 + v2 - sqrt((v1 - v2) * (v1 - v2) + a * (v1Lum + v2Lum) / 2)) / 2;
+	return (v1 + v2 - sqrt((v1 - v2) * (v1 - v2) + a * (v1Lum + v2Lum) / 2.0)) / 2.0;
 }
 
 vec3 smoothMax(vec3 v1, vec3 v2, float a) {
 	float v1Lum = getColorLum(v1);
 	float v2Lum = getColorLum(v2);
-	return (v1 + v2 + sqrt((v1 - v2) * (v1 - v2) + a * (v1Lum + v2Lum) / 2)) / 2;
+	return (v1 + v2 + sqrt((v1 - v2) * (v1 - v2) + a * (v1Lum + v2Lum) / 2.0)) / 2.0;
 }
 
 vec3 smoothClamp(vec3 v, vec3 minV, vec3 maxV, float a) {
@@ -231,17 +259,17 @@ vec3 smoothClamp(vec3 v, vec3 minV, vec3 maxV, float a) {
 }
 
 float cosineInterpolate(float edge1, float edge2, float value) {
-   float value2 = (1.0 - cos(value * PI)) / 2.0;
-   return(edge1 * (1.0 - value2) + edge2 * value2);
+	float value2 = (1.0 - cos(value * PI)) / 2.0;
+	return edge1 * (1.0 - value2) + edge2 * value2;
 }
 
 float cubicInterpolate(float edge0, float edge1, float edge2, float edge3, float value) {
-   float value2 = value * value;
-   float a0 = edge3 - edge2 - edge0 + edge1;
-   float a1 = edge0 - edge1 - a0;
-   float a2 = edge2 - edge0;
-   float a3 = edge1;
-   return(a0 * value * value2 + a1 * value2 + a2 * value + a3);
+	float value2 = value * value;
+	float a0 = edge3 - edge2 - edge0 + edge1;
+	float a1 = edge0 - edge1 - a0;
+	float a2 = edge2 - edge0;
+	float a3 = edge1;
+	return(a0 * value * value2 + a1 * value2 + a2 * value + a3);
 }
 
 vec3 cubicInterpolate(vec3 edge0, vec3 edge1, vec3 edge2, vec3 edge3, float value) {
@@ -252,7 +280,7 @@ vec3 cubicInterpolate(vec3 edge0, vec3 edge1, vec3 edge2, vec3 edge3, float valu
 }
 
 float toLinearDepth(float depth) {
-    return twoTimesNear / (farPlusNear - depth * farMinusNear);
+	return twoTimesNear / (farPlusNear - depth * farMinusNear);
 }
 
 float fromLinearDepth(float depth) {
@@ -260,7 +288,7 @@ float fromLinearDepth(float depth) {
 }
 
 float toBlockDepth(float depth) {
-    return twoTimesNearTimesFar / (farPlusNear - depth * farMinusNear);
+	return twoTimesNearTimesFar / (farPlusNear - depth * farMinusNear);
 }
 
 bool depthIsSky(float depth) {
@@ -270,6 +298,19 @@ bool depthIsHand(float depth) {
 	return depth < 0.003;
 }
 
+// never underestimate trial and error
+#ifdef FSH
+	float estimateDepthFSH(vec2 texcoord, float linearDepth) {
+		float len = length(texcoord * 2.0 - 1.0);
+		return linearDepth + len * len / 8.0;
+	}
+#else
+	float estimateDepthVSH() {
+		float len = length(gl_Position.xy / gl_Position.w);
+		return gl_Position.z * (1.0 + len * len * 0.3);
+	}
+#endif
+
 
 
 #ifdef FSH
@@ -278,10 +319,6 @@ bool depthIsHand(float depth) {
 		uint(gl_FragCoord.y) * uint(viewWidth) +
 		uint(frameCounter  ) * uint(viewWidth) * uint(viewHeight);
 #endif
-
-uint rotateRight(uint value, uint shift) {
-    return (value >> shift) | (value << (32u - shift));
-}
 
 #ifdef USE_BETTER_RAND
 	// taken from: https://www.reedbeta.com/blog/hash-functions-for-gpu-rendering/
@@ -305,6 +342,9 @@ uint rotateRight(uint value, uint shift) {
 	}
 	*/
 #else
+	uint rotateRight(uint value, uint shift) {
+		return (value >> shift) | (value << (32u - shift));
+	}
 	float randomFloat(inout uint rng) {
 		rng = rng * 747796405u + 2891336453u;
 		rng ^= rotateRight(rng, 11u);
@@ -439,29 +479,4 @@ vec3 getAmbientColor(vec4 skylightPercents) {
 		skylightPercents.y * AMBIENT_NIGHT_COLOR +
 		skylightPercents.z * AMBIENT_SUNRISE_COLOR +
 		skylightPercents.w * AMBIENT_SUNSET_COLOR;
-}
-
-
-
-
-
-// this entire function SHOULD be computed on the cpu, but it has to be glsl code because it uses settings that are ONLY defined in glsl
-float getSunraysAmountMult() {
-	vec4 skylightPercents = getSkylightPercents();
-	
-	float sunraysAmount =
-		skylightPercents.x * SUNRAYS_AMOUNT_DAY +
-		skylightPercents.y * SUNRAYS_AMOUNT_NIGHT +
-		skylightPercents.z * SUNRAYS_AMOUNT_SUNRISE +
-		skylightPercents.w * SUNRAYS_AMOUNT_SUNSET;
-	
-	if (isOtherLightSource) {
-		if (isSun) {
-			sunraysAmount *= skylightPercents.x + skylightPercents.z + skylightPercents.w;
-		} else {
-			sunraysAmount *= skylightPercents.y;
-		}
-	}
-	
-	return sunraysAmount;
 }

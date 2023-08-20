@@ -1,10 +1,3 @@
-float estimateDistance(float linearDepth) {
-	float len = length(texcoord * 2.0 - 1.0);
-	return linearDepth + len * len / 8.0; // never underestimate trial and error
-}
-
-
-
 float getAoInfluence(float centerDepth, vec2 offset) {
 	
 	float depth1 = toLinearDepth(texture2D(DEPTH_BUFFER_ALL, texcoord + offset).r);
@@ -24,20 +17,23 @@ float getAoInfluence(float centerDepth, vec2 offset) {
 float getAoFactor() {
 	
 	float depth = toLinearDepth(texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r);
-	float noise = randomFloat(rngStart) * 1000.0;
+	float noise = normalizeNoiseAround1(randomFloat(rngStart), 0.3);
 	float scale = AO_SIZE * 0.13 / (depth * far);
 	
 	float total = 0.0;
+	float maxTotal = 0.0; // this doesn't seem to have any performance impact vs total/=AO_SAMPLE_COUNT at the end, so it's probably being pre-computed at comp-time
 	for (int i = 1; i <= AO_SAMPLE_COUNT; i ++) {
 		
 		float len = (float(i) / AO_SAMPLE_COUNT + 0.3) * scale;
 		vec2 offset = vec2(cos(i * noise) * len * invAspectRatio, sin(i * noise) * len);
 		
-		total += getAoInfluence(depth, offset);
+		float weight = 2.0 - float(i) / AO_SAMPLE_COUNT;
+		total += getAoInfluence(depth, offset) * weight;
+		maxTotal += weight;
 		
 	}
-	total /= AO_SAMPLE_COUNT;
-	total *= smoothstep(0.8, 0.7, estimateDistance(depth));
+	total /= maxTotal;
+	total *= smoothstep(0.8, 0.7, estimateDepthFSH(texcoord, depth));
 	
 	return total * 0.35;
 }

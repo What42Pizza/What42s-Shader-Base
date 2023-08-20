@@ -1,3 +1,12 @@
+#ifdef SUNRAYS_ENABLED
+	flat vec2 lightCoord;
+	flat float sunraysAmountMult;
+#endif
+
+
+
+#ifdef FSH
+
 float getSunraysAmount(inout uint rng) {
 	
 	
@@ -32,5 +41,47 @@ float getSunraysAmount(inout uint rng) {
 	
 	if (total > 0.0) total = max(total, 0.2);
 	
-	return sqrt(total) * 0.3;
+	float output = sqrt(total) * sunraysAmountMult;
+	output *= max(1.0 - length(lightCoord - 0.5) * 1.5, 0.0);
+	
+	return output;
 }
+
+#endif
+
+
+
+#ifdef VSH
+
+void calculateLightCoord() {
+	
+	vec3 lightPos = shadowLightPosition * mat3(gbufferProjection);
+	lightPos /= lightPos.z;
+	lightCoord = lightPos.xy * 0.5 + 0.5;
+	
+}
+
+// this entire function SHOULD be computed on the cpu, but it has to be glsl code because it uses settings that are ONLY defined in glsl
+void calculateSunraysAmount() {
+	
+	vec4 skylightPercents = getSkylightPercents();
+	
+	sunraysAmountMult =
+		skylightPercents.x * SUNRAYS_AMOUNT_DAY +
+		skylightPercents.y * SUNRAYS_AMOUNT_NIGHT +
+		skylightPercents.z * SUNRAYS_AMOUNT_SUNRISE +
+		skylightPercents.w * SUNRAYS_AMOUNT_SUNSET;
+	
+	if (isOtherLightSource) {
+		if (isSun) {
+			sunraysAmountMult *= skylightPercents.x + skylightPercents.z + skylightPercents.w;
+		} else {
+			sunraysAmountMult *= skylightPercents.y;
+		}
+	}
+	
+	sunraysAmountMult *= 0.3;
+	
+}
+
+#endif

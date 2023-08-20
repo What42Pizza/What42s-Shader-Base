@@ -1,11 +1,11 @@
 Current:
 Add profiles
-Re-add levels to shadow filtering
 Add post-processing effects like the super secret settings
 Move advanced options to 'advanced options' menus
 Do a round of replacing smoothsteps with flat line?
 Do a round of adding dynamic noise (change noise based on quality level)
 Add more TAA settings
+Fix spider and endermen eyes
 Find a way to make shadowLightPosition stop flickering?
 Make sure sunrays work well at sunrise & sunset
 Store bloom mult instead of bloom color?
@@ -51,6 +51,7 @@ Match the vanilla look, especially in:
 
 
 Finished:
+Re-add levels to shadow filtering
 Add more 'program.enable'-s
 Fix ssao on beacon beam (fixed w/ new ssao)
 Replace normal-based ssao w/ depth-based ssao?
