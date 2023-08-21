@@ -38,7 +38,8 @@ void main() {
 	#ifdef BLOOM_ENABLED
 		#ifdef OVERWORLD
 			float blockLight = brightnesses.x;
-			float skyLight = brightnesses.y;
+			const float nightBloomIncrease = 0.1;
+			float skyLight = brightnesses.y * (1.0 + nightBloomIncrease - rawSunTotal * nightBloomIncrease);
 			colorForBloom.rgb *= max(blockLight * blockLight * 1.05, skyLight * 0.75);
 		#endif
 	#endif

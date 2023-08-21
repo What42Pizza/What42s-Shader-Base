@@ -142,7 +142,7 @@ const bool colortex0MipmapEnabled = true;
 const bool colortex3MipmapEnabled = true;
 const float wetnessHalflife = 50.0f;
 const float drynessHalflife = 50.0f;
-const float centerDepthHalflife = 2.5f;
+const float centerDepthHalflife = 2.0f;
 const int noiseTextureResolution = 256;
 */
 

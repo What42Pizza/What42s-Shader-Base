@@ -51,7 +51,7 @@ vec3 getBloomAddition(inout uint rng) {
 	for (int i = 0; i < BLOOM_COMPUTE_COUNT; i++) {
 		bloomAddition += sampleBloom(sizeMult, rng);
 	}
-	bloomAddition *= (1.0 / BLOOM_COMPUTE_COUNT) * BLOOM_AMOUNT;
+	bloomAddition *= (1.0 / BLOOM_COMPUTE_COUNT) * BLOOM_AMOUNT * 2.0;
 	
 	#ifdef NETHER
 		bloomAddition *= BLOOM_NETHER_MULT;

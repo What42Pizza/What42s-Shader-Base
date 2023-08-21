@@ -114,13 +114,9 @@ vec3 getLightColor(float blockBrightness, float skyBrightness, float ambientBrig
 	vec3 skyColor = getSkyColor(skylightPercents);
 	vec3 ambientColor = getAmbientColor(skylightPercents);
 	
-	#ifdef OVERWORLD
-		float ambientMin = 0.15;
-	#else
-		float ambientMin = 0.3;
-	#endif
+	float ambientMin = 0.5;
 	#ifdef USE_VANILLA_BRIGHTNESS
-		ambientMin *= 0.33 + screenBrightness * 0.66;
+		ambientMin *= 0.7 + screenBrightness * 0.3;
 	#endif
 	
 	ambientBrightness = ambientBrightness * (1.0 - ambientMin) + ambientMin;
