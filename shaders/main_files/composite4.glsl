@@ -39,7 +39,7 @@ void main() {
 	// ======== TAA ========
 	
 	#ifdef TAA_ENABLED
-		doTAA(color, prev, depth, linearDepth, prevCoord, handFactor);
+		doTAA(color, prev, linearDepth, prevCoord, handFactor);
 	#endif
 	
 	

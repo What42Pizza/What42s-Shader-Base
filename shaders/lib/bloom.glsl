@@ -9,7 +9,7 @@ vec3 sampleBloom(float sizeMult, inout uint rng) {
 		vec2 coord = texcoord + noiseVec * size;
 		float noise = noiseVec.x * 100000.0;
 		
-		size *= BLOOM_SIZE * 0.1;
+		size *= BLOOM_SIZE * 0.125;
 		
 		vec3 brightest = vec3(0.0);
 		float brightestLum = 0.0;
@@ -51,7 +51,7 @@ vec3 getBloomAddition(inout uint rng) {
 	for (int i = 0; i < BLOOM_COMPUTE_COUNT; i++) {
 		bloomAddition += sampleBloom(sizeMult, rng);
 	}
-	bloomAddition *= (1.0 / BLOOM_COMPUTE_COUNT) * BLOOM_AMOUNT * 2.0;
+	bloomAddition *= (1.0 / BLOOM_COMPUTE_COUNT) * BLOOM_AMOUNT;
 	
 	#ifdef NETHER
 		bloomAddition *= BLOOM_NETHER_MULT;

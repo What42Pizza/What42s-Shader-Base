@@ -48,6 +48,8 @@ void main() {
 		color *= 1.0 - vignetteAlpha;
 	#endif
 	
+	//color = texture2D(shadowtex0, texcoord).rgb;
+	
 	
 	
 	/* DRAWBUFFERS:0 */

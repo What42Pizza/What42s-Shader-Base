@@ -1,19 +1,11 @@
 <br>
 
-- a1.1.0 (23/08/20)
-  - Updated to W42SH b1.5.1
-  - Reverted constant sky color
-  - More tuning
+- b1.5.2
+  - Significantly improved close-up shadows
+  - Fixed handheld light for blocks that were too close
+  - Many small tweaks to bloom, taa, etc
 
 <br>
-
-- **a1.0.0** (23/08/17)
-  - Started tuning
-
-<br>
-<br>
-
-## Old Changelog: (from What42's Shader Base (aka W42SB))
 
 - b1.5.1 (23/08/19)
   - Re-added shadow filtering levels
