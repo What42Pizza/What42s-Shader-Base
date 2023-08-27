@@ -1,6 +1,10 @@
 varying vec2 texcoord;
 varying vec4 glcolor;
 
+#ifdef REFLECTIONS_ENABLED
+	varying vec3 normal;
+#endif
+
 
 
 #ifdef FSH
@@ -16,6 +20,10 @@ void main() {
 		color = vec4(debugOutput, 1.0);
 	#endif
 	gl_FragData[0] = color;
+	#ifdef REFLECTIONS_ENABLED
+		/* DRAWBUFFERS:04 */
+		gl_FragData[1] = vec4(normal, 1.0);
+	#endif
 }
 
 #endif
@@ -33,6 +41,8 @@ void main() {
 	#endif
 	
 	glcolor = gl_Color;
+	
+	normal = gl_NormalMatrix * gl_Normal;
 	
 }
 

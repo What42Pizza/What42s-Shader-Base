@@ -1,7 +1,5 @@
-#ifdef SUNRAYS_ENABLED
-	flat vec2 lightCoord;
-	flat float sunraysAmountMult;
-#endif
+flat vec2 lightCoord;
+flat float sunraysAmountMult;
 
 
 

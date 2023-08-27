@@ -22,6 +22,8 @@
 - **Shadows:**
 - - Rendering:  /main_files/shadow.glsl
 - - Usage:  lib/lighting.glsl
+- **Reflections**
+- - Water Reflections:  /main_files/water.glsl
 - **Anti-Aliasing:**
 - - Main Processing:  /main_files/composite4.glsl
 - - TAA Jitter:  /lib/taa_jitter.glsl,  (almost) every VSH shader ('taaOffset' is added to 'gl_Position.xy')
@@ -62,6 +64,8 @@
 - **colortex1:  TAA Texture**
 - **colortex2:  Bloom Texture**
 - **colortex3:  Noisy Additions (things like bloom, sunrays, etc (anything that gives noisy results) are rendered to this buffer then LOD-sampled when added to the image)**
+- **colortex4:  Normals**
+- **colortex5 / gaux2:  Copy of colortex0, only used for water reflections**
 
 <br>
 <br>

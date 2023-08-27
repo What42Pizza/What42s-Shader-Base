@@ -4,6 +4,9 @@ varying vec3 glcolor;
 
 #ifdef REFLECTIONS_ENABLED
 	varying vec3 normal;
+	varying vec3 viewPos;
+	varying vec4 worldPos;
+	flat int blockType;
 #endif
 
 #include "../lib/lighting.glsl"
@@ -21,11 +24,17 @@ varying vec3 glcolor;
 
 #ifdef FSH
 
+#ifdef REFLECTIONS_ENABLED
+	#include "/lib/reflections.glsl"
+#endif
+
 void main() {
 	vec4 color = texture2D(MAIN_BUFFER, texcoord);
 	#ifdef DEBUG_OUTPUT_ENABLED
 		vec3 debugOutput = vec3(0.0);
 	#endif
+	
+	color.rgb = mix(vec3(getColorLum(color.rgb)), color.rgb, 0.8);
 	
 	
 	// bloom value
@@ -51,6 +60,27 @@ void main() {
 			float skyLight = brightnesses.y * rawSunTotal;
 			colorForBloom.rgb *= max(blockLight * blockLight * 1.05, skyLight * 0.75);
 		#endif
+	#endif
+	
+	
+	// reflection
+	#ifdef REFLECTIONS_ENABLED
+		if (blockType == 1007) {
+			vec2 reflectionPos = Raytrace(viewPos, normal);
+			float fresnel = 1.0 + min(dot(normalize(viewPos), normal), 1.0);
+			fresnel *= fresnel;
+			fresnel *= fresnel;
+			float lerpAmount = 0.1 + fresnel * 0.4;
+			if (reflectionPos.x > -0.5) {
+				vec3 reflectionColor = texture2D(MAIN_BUFFER_COPY, reflectionPos).rgb;
+				color.rgb = mix(color.rgb, reflectionColor, lerpAmount);
+			} else if (reflectionPos.x < -1.5) {
+				float fresnel = 1.0 + min(dot(normalize(viewPos), normal), 1.0);
+				fresnel *= fresnel;
+				fresnel *= fresnel;
+				color.rgb *= 1.0 - lerpAmount * 0.8;
+			}
+		}
 	#endif
 	
 	
@@ -104,11 +134,19 @@ void main() {
 	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
 	lmcoord  = (gl_TextureMatrix[1] * gl_MultiTexCoord1).xy;
 	
-	vec4 worldPos = gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex);
+	#if !defined REFLECTIONS_ENABLED
+		vec4 worldPos;
+	#endif
+	worldPos = gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex);
 	
 	
 	#ifdef WAVING_ENABLED
-		applyWaving(worldPos.xyz);
+		blockType = int(mc_Entity.x);
+		if (blockType == 1007) {
+			vec3 actualWorldPos = worldPos.xyz + cameraPosition;
+			worldPos.y += sin(actualWorldPos.x * 0.6 + actualWorldPos.z * 1.4 + frameCounter * 0.05) * 0.08;
+			worldPos.y += sin(actualWorldPos.x * 0.9 + actualWorldPos.z * 0.6 + frameCounter * 0.04) * 0.05;
+		}
 		gl_Position = gl_ProjectionMatrix * gbufferModelView * worldPos;
 	#else
 		gl_Position = gl_ProjectionMatrix * (gl_ModelViewMatrix * gl_Vertex);
@@ -125,6 +163,11 @@ void main() {
 	
 	#ifdef FOG_ENABLED
 		getFogData(worldPos.xyz);
+	#endif
+	
+	
+	#ifdef REFLECTIONS_ENABLED
+		viewPos = (gl_ModelViewMatrix * gl_Vertex).xyz;
 	#endif
 	
 	

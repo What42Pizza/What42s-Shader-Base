@@ -1,7 +1,17 @@
 varying vec2 texcoord;
 flat float glcolor;
 
-#include "/lib/fog.glsl"
+#ifdef REFLECTIONS_ENABLED
+	varying vec3 normal;
+#endif
+
+#ifdef FOG_ENABLED
+	#include "/lib/fog.glsl"
+#endif
+
+#if defined BLOOM_ENABLED && defined REFLECTIONS_ENABLED
+	#define BLOOM_AND_REFLECTIONS
+#endif
 
 
 
@@ -36,9 +46,16 @@ void main() {
 		color.rgb = debugOutput;
 	#endif
 	gl_FragData[0] = color;
-	#ifdef BLOOM_ENABLED
+	#ifdef BLOOM_AND_REFLECTIONS
+		/* DRAWBUFFERS:024 */
+		gl_FragData[1] = colorForBloom;
+		gl_FragData[2] = vec4(normal, 1.0);
+	#elif defined BLOOM_ENABLED
 		/* DRAWBUFFERS:02 */
 		gl_FragData[1] = colorForBloom;
+	#elif defined REFLECTIONS_ENABLED
+		/* DRAWBUFFERS:04 */
+		gl_FragData[1] = vec4(normal, 1.0);
 	#endif
 }
 
@@ -63,6 +80,8 @@ void main() {
 	#endif
 	
 	glcolor = gl_Color.r;
+	
+	normal = gl_NormalMatrix * gl_Normal;
 	
 }
 

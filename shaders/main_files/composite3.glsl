@@ -10,7 +10,9 @@ varying vec2 texcoord;
 
 #ifdef FSH
 
-#include "/lib/depth_of_field.glsl"
+#ifdef DOF_ENABLED
+	#include "/lib/depth_of_field.glsl"
+#endif
 
 void main() {
 	vec3 color = texelFetch(MAIN_BUFFER, texelcoord, 0).rgb;

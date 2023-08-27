@@ -143,7 +143,7 @@ vec3 getLightingBrightnesses(vec2 lmcoord) {
 			
 			vec3 offsetShadowPos = shadowPos;
 			vec2 noise = randomVec2(rngStart);
-			offsetShadowPos.xy += noise * offsetMult * 0.3;
+			offsetShadowPos.xy += noise * offsetMult * 0.2;
 			
 			#if SHADOW_FILTERING == 0
 				
@@ -165,7 +165,7 @@ vec3 getLightingBrightnesses(vec2 lmcoord) {
 					}
 				}
 				skyBrightness /= SHADOW_OFFSET_WEIGHTS_TOTAL;
-				const float shadowMult1 = 1.0; // for when lightDot is 1.0 (sun is directly facing surface)
+				const float shadowMult1 = 1.4; // for when lightDot is 1.0 (sun is directly facing surface)
 				const float shadowMult2 = 2.2; // for when lightDot is 0.0 (sun is angled relative to surface)
 				skyBrightness = min(skyBrightness * (shadowMult2 - skyBrightnessMult * (shadowMult2 - shadowMult1)), 1.0);
 				

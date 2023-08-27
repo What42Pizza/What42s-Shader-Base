@@ -1,10 +1,13 @@
 varying vec2 texcoord;
-varying vec2 lmcoord;
-//varying vec4 glcolor;
+varying float lightMult;
 
-#undef SHADOWS_ENABLED
+#ifdef REFLECTIONS_ENABLED
+	varying vec3 normal;
+#endif
 
-#include "../lib/lighting.glsl"
+#if defined BLOOM_ENABLED && defined REFLECTIONS_ENABLED
+	#define BLOOM_AND_REFLECTIONS
+#endif
 
 
 
@@ -13,29 +16,28 @@ varying vec2 lmcoord;
 #ifdef FSH
 
 void main() {
-	vec4 color = texture2D(MAIN_BUFFER, texcoord);// * glcolor;
+	vec4 color = texture2D(MAIN_BUFFER, texcoord);
 	#ifdef DEBUG_OUTPUT_ENABLED
 		vec3 debugOutput = vec3(0.0);
 	#endif
 	
-	
-	
-	// main lighting
-	
-	//vec3 brightnesses = getLightingBrightnesses(lmcoord);
-	//color.rgb *= getLightColor(brightnesses.x, brightnesses.y, brightnesses.z);
-	color.rgb *= max(max(lmcoord.x, lmcoord.y), 0.1);
-	
-	
+	color.rgb *= lightMult;
 	
 	/* DRAWBUFFERS:0 */
 	#ifdef DEBUG_OUTPUT_ENABLED
 		color = vec4(debugOutput, 1.0);
 	#endif
 	gl_FragData[0] = color;
-	#ifdef BLOOM_ENABLED
+	#ifdef BLOOM_AND_REFLECTIONS
+		/* DRAWBUFFERS:024 */
+		gl_FragData[1] = color;
+		gl_FragData[2] = vec4(normal, 1.0);
+	#elif defined BLOOM_ENABLED
 		/* DRAWBUFFERS:02 */
 		gl_FragData[1] = color;
+	#elif defined REFLECTIONS_ENABLED
+		/* DRAWBUFFERS:04 */
+		gl_FragData[1] = vec4(normal, 1.0);
 	#endif
 }
 
@@ -49,7 +51,8 @@ void main() {
 
 void main() {
 	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
-	lmcoord  = (gl_TextureMatrix[1] * gl_MultiTexCoord1).xy;
+	vec2 lmcoord  = (gl_TextureMatrix[1] * gl_MultiTexCoord1).xy;
+	lightMult = max(max(lmcoord.x, lmcoord.y), 0.1);
 	
 	
 	gl_Position = ftransform();
@@ -61,10 +64,8 @@ void main() {
 	#endif
 	
 	
-	//glcolor = gl_Color;
+	normal = gl_NormalMatrix * gl_Normal;
 	
-	
-	doPreLighting();
 	
 }
 

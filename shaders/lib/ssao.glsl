@@ -1,7 +1,7 @@
 float getAoInfluence(float centerDepth, vec2 offset) {
 	
-	float depth1 = toLinearDepth(texture2D(DEPTH_BUFFER_ALL, texcoord + offset).r);
-	float depth2 = toLinearDepth(texture2D(DEPTH_BUFFER_ALL, texcoord - offset).r);
+	float depth1 = toLinearDepth(texture2D(DEPTH_BUFFER_WO_TRANS, texcoord + offset).r);
+	float depth2 = toLinearDepth(texture2D(DEPTH_BUFFER_WO_TRANS, texcoord - offset).r);
 	float diff1 = centerDepth - depth1;
 	float diff2 = centerDepth - depth2;
 	
@@ -16,7 +16,7 @@ float getAoInfluence(float centerDepth, vec2 offset) {
 
 float getAoFactor() {
 	
-	float depth = toLinearDepth(texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r);
+	float depth = toLinearDepth(texelFetch(DEPTH_BUFFER_WO_TRANS, texelcoord, 0).r);
 	float noise = normalizeNoiseAround1(randomFloat(rngStart), 0.3);
 	float scale = AO_SIZE * 0.13 / (depth * far);
 	

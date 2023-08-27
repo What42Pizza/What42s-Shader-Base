@@ -10,7 +10,9 @@ varying vec2 texcoord;
 
 #ifdef FSH
 
-#include "/lib/sharpening.glsl"
+#ifdef SHARPENING_ENABLED
+	#include "/lib/sharpening.glsl"
+#endif
 #include "/lib/color_correction.glsl"
 
 void main() {
@@ -48,7 +50,7 @@ void main() {
 		color *= 1.0 - vignetteAlpha;
 	#endif
 	
-	//color = texture2D(shadowtex0, texcoord).rgb;
+	//color = texture2D(MAIN_BUFFER_COPY, texcoord).rgb;
 	
 	
 	

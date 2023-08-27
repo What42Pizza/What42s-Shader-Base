@@ -6,11 +6,17 @@
 
 varying vec2 texcoord;
 
+//#ifdef REFLECTIONS_ENABLED
+//	flat vec3 upVec;
+//#endif
+
 
 
 #ifdef FSH
 
-#include "/lib/ssao.glsl"
+//#ifdef REFLECTIONS_ENABLED
+//	#include "/lib/reflections.glsl"
+//#endif
 
 void main() {
 	vec3 color = texelFetch(MAIN_BUFFER, texelcoord, 0).rgb;
@@ -23,15 +29,21 @@ void main() {
 	
 	
 	
-	// ======== SSAO ========
+	// ======== REFLECTIONS ========
 	
-	#ifdef SSAO_ENABLED
-		float aoFactor = getAoFactor();
-		color *= 1.0 - aoFactor * AO_AMOUNT;
-		#ifdef SSAO_SHOW_AMOUNT
-			debugOutput = vec3(1.0 - aoFactor);
-		#endif
-	#endif
+	//#ifdef REFLECTIONS_ENABLED
+	//	vec3 normal = normalize(texelFetch(NORMALS_BUFFER, texelcoord, 0).rgb);
+	//	float reflectionMult = dot(normal, upVec);
+	//	vec3 viewPos = getViewPos(texcoord, texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r);
+	//	vec2 reflectionPos = Raytrace(viewPos, normal);
+	//	if (reflectionPos.x > -0.5) {
+	//		vec3 reflectionColor = texture2DLod(MAIN_BUFFER, reflectionPos, 0).rgb; // WHY DO I HAVE TO USE LOD HERE??????
+	//		color = mix(color, reflectionColor, 0.7);
+	//	} else {
+	//		vec3 reflectionColor = getSkyColor();
+	//		color = mix(color, reflectionColor, 0.7);
+	//	}
+	//#endif
 	
 	
 	
@@ -66,6 +78,11 @@ void main() {
 void main() {
 	gl_Position = ftransform();
 	texcoord = gl_MultiTexCoord0.xy;
+	
+	//#ifdef REFLECTIONS_ENABLED
+	//	upVec = normalize(gbufferModelView[1].xyz);
+	//#endif
+	
 }
 
 #endif

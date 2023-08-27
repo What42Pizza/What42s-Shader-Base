@@ -10,8 +10,12 @@ varying vec2 texcoord;
 
 #ifdef FSH
 
-#include "/lib/bloom.glsl"
-#include "/lib/sunrays.glsl"
+#ifdef BLOOM_ENABLED
+	#include "/lib/bloom.glsl"
+#endif
+#ifdef SUNRAYS_ENABLED
+	#include "/lib/sunrays.glsl"
+#endif
 
 void main() {
 	vec3 color = texelFetch(MAIN_BUFFER, texelcoord, 0).rgb;
@@ -78,7 +82,9 @@ void main() {
 
 #ifdef VSH
 
-#include "/lib/sunrays.glsl"
+#ifdef SUNRAYS_ENABLED
+	#include "/lib/sunrays.glsl"
+#endif
 
 void main() {
 	gl_Position = ftransform();

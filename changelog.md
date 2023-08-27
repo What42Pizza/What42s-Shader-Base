@@ -1,5 +1,12 @@
 <br>
 
+- **b1.6.0**
+  - Added water reflections (more to come!)
+  - Added waving water
+
+<br>
+<br>
+
 - b1.5.2
   - Significantly improved close-up shadows
   - Fixed handheld light for blocks that were too close

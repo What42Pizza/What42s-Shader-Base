@@ -42,13 +42,7 @@ uniform sampler2D colortex1;
 uniform sampler2D colortex2;
 uniform sampler2D colortex3;
 uniform sampler2D colortex4;
-uniform sampler2D colortex5;
-uniform sampler2D colortex6;
-uniform sampler2D colortex7;
-uniform sampler2D colortex8;
-uniform sampler2D colortex9;
-uniform sampler2D colortex10;
-uniform sampler2D colortex11;
+uniform sampler2D gaux2;
 uniform sampler2D depthtex0;
 uniform sampler2D depthtex1;
 uniform sampler2D depthtex2;
@@ -129,6 +123,8 @@ varying vec3 testValue;
 #define TAA_PREV_BUFFER         colortex1
 #define BLOOM_BUFFER            colortex2
 #define NOISY_ADDITIONS_BUFFER  colortex3
+#define NORMALS_BUFFER          colortex4
+#define MAIN_BUFFER_COPY        gaux2
 #define DEBUG_BUFFER            colortex0
 
 #define DEPTH_BUFFER_ALL                   depthtex0
@@ -140,28 +136,11 @@ varying vec3 testValue;
 const bool colortex1Clear = false;
 const bool colortex0MipmapEnabled = true;
 const bool colortex3MipmapEnabled = true;
+const int colortex4Format = RGB32F;
 const float wetnessHalflife = 50.0f;
 const float drynessHalflife = 50.0f;
 const float centerDepthHalflife = 2.5f;
-const int noiseTextureResolution = 256;
 */
-
-
-
-
-
-// CODE FROM COMPLEMENTARY REIMAGINED:
-
-//vec3 screenToView(vec3 pos) {
-//	vec4 iProjDiag = vec4(gbufferProjectionInverse[0].x,
-//						  gbufferProjectionInverse[1].y,
-//						  gbufferProjectionInverse[2].zw);
-//    vec3 p3 = pos * 2.0 - 1.0;
-//    vec4 viewPos = iProjDiag * p3.xyzz + gbufferProjectionInverse[3];
-//    return viewPos.xyz / viewPos.w;
-//}
-
-// END OF COMPLEMENTARY REIMAGINED'S CODE
 
 
 
@@ -387,6 +366,42 @@ vec3 normalizeNoiseAround1(vec3 noise, float range) {
 	float y = normalizeNoiseAround1(noise.y, range);
 	float z = normalizeNoiseAround1(noise.z, range);
 	return vec3(x, y, z);
+}
+
+
+
+
+
+// CODE FROM COMPLEMENTARY REIMAGINED:
+
+vec3 screenToView(vec3 pos) {
+	vec4 iProjDiag = vec4(
+		gbufferProjectionInverse[0].x,
+		gbufferProjectionInverse[1].y,
+		gbufferProjectionInverse[2].zw
+	);
+	vec3 p3 = pos * 2.0 - 1.0;
+	vec4 viewPos = iProjDiag * p3.xyzz + gbufferProjectionInverse[3];
+	return viewPos.xyz / viewPos.w;
+}
+
+float sqrt3(float x) {
+	x = 1.0 - x;
+	x *= x;
+	x *= x;
+	x *= x;
+	return 1.0 - x;
+}
+
+// END OF COMPLEMENTARY REIMAGINED'S CODE
+
+vec3 getViewPos(vec2 coords, float rawDepth) {
+	float linearDepth = toLinearDepth(rawDepth);
+	if (depthIsSky(linearDepth) || depthIsHand(linearDepth)) {
+		return vec3(0.0);
+	}
+	vec3 screenPos = vec3(coords, rawDepth);
+	return screenToView(screenPos);
 }
 
 
