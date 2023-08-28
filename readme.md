@@ -1,8 +1,8 @@
-# Minecraft Shaders Base b1.6.0
+# Minecraft Shaders Base b1.6.1
 
 ### This is a base shaderpack that can be used to easily create shaders.
 
-## Warning: There are still many basic features / fixes that I'm still working on
+## Warning: There are probably many features / fixes that I'm still working on
 
 <br>
 
@@ -49,6 +49,6 @@
 ## Credits:
 
 - **[ShaderLabs](https://wiki.shaderlabs.org/wiki/Getting_Started):** Initial shaders base
-- **[EminGTR](https://modrinth.com/shader/complementary-reimagined):** TAA, coordinate transformation code, and code structure inspiration
+- **[EminGTR](https://modrinth.com/shader/complementary-reimagined):** TAA, original reflection code, coordinate transformation code, and code structure inspiration
 - **[Acerola](https://github.com/GarrettGunnell/Minecraft-Shaders/blob/c1a6f5060dfd91ccac31e04fa529f2be4304a21a/shaders/final.fsh):** ACES tonemapping code
 - **[Nathan Reed](https://www.reedbeta.com/blog/hash-functions-for-gpu-rendering/):** Easy hashing function

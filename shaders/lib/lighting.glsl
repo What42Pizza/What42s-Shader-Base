@@ -232,7 +232,6 @@ void doPreLighting() {
 		float depth = estimateDepthVSH();
 		if (depth <= HANDHELD_LIGHT_DISTANCE) {
 			float handLightBrightness = max(1.0 - depth / HANDHELD_LIGHT_DISTANCE, 0.0);
-			handLightBrightness = handLightBrightness;
 			handLightBrightness *= heldBlockLightValue / 15.0 * HANDHELD_LIGHT_BRIGHTNESS;
 			lmcoord.x = max(lmcoord.x, handLightBrightness);
 		}

@@ -135,6 +135,13 @@ screen.POST_PROCESSING_SETTINGS=Post Processing
 
 
 
+screen.REFLECTION_SETTINGS=Reflections
+
+option.WATER_REFLECTIONS_ENABLED=Water Reflections Enabled
+option.WATER_REFLECTIONS_ENABLED.comment=Whether reflections appear on water\n\n(Performance cost: HIGH)
+
+
+
 screen.SSAO_SETTINGS=SSAO
 
 option.SSAO_ENABLED=SSAO Enabled
@@ -319,6 +326,15 @@ option.WAVING_RAIN_MULT=Waving Rain Multiplier
 option.WAVING_RAIN_MULT.comment=How much to increase / decrease the waving amount when it is raining
 option.WAVING_NIGHT_MULT=Waving Night Multiplier
 option.WAVING_NIGHT_MULT.comment=How much to increase / decrease the waving amount when it is night
+
+
+
+screen.WAVING_WATER_SETTINGS=Waving Water
+
+option.PHYSICALLY_WAVING_WATER_ENABLED=Physical Waving Enabled
+option.PHYSICALLY_WAVING_WATER_ENABLED.comment=Makes the water actually wave
+option.WAVING_WATER_NORMALS_ENABLED=Waving Normals Enabled
+option.WAVING_WATER_NORMALS_ENABLED.comment=Makes the water reflections wavy (only takes effect when water reflections are enabled)
 
 
 

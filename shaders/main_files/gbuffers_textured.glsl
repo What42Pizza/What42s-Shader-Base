@@ -1,12 +1,12 @@
 varying vec2 texcoord;
 varying float lightMult;
 
-#ifdef REFLECTIONS_ENABLED
+#ifdef NORMALS_NEEDED
 	varying vec3 normal;
 #endif
 
-#if defined BLOOM_ENABLED && defined REFLECTIONS_ENABLED
-	#define BLOOM_AND_REFLECTIONS
+#if defined BLOOM_ENABLED && defined NORMALS_NEEDED
+	#define BLOOM_AND_NORMALS
 #endif
 
 
@@ -28,14 +28,14 @@ void main() {
 		color = vec4(debugOutput, 1.0);
 	#endif
 	gl_FragData[0] = color;
-	#ifdef BLOOM_AND_REFLECTIONS
+	#ifdef BLOOM_AND_NORMALS
 		/* DRAWBUFFERS:024 */
 		gl_FragData[1] = color;
 		gl_FragData[2] = vec4(normal, 1.0);
 	#elif defined BLOOM_ENABLED
 		/* DRAWBUFFERS:02 */
 		gl_FragData[1] = color;
-	#elif defined REFLECTIONS_ENABLED
+	#elif defined NORMALS_NEEDED
 		/* DRAWBUFFERS:04 */
 		gl_FragData[1] = vec4(normal, 1.0);
 	#endif
@@ -64,7 +64,9 @@ void main() {
 	#endif
 	
 	
-	normal = gl_NormalMatrix * gl_Normal;
+	#ifdef NORMALS_NEEDED
+		normal = gl_NormalMatrix * gl_Normal;
+	#endif
 	
 	
 }

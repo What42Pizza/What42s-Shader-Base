@@ -13,9 +13,10 @@ vec3 sampleBloom(float sizeMult, inout uint rng) {
 		
 		vec3 brightest = vec3(0.0);
 		float brightestLum = 0.0;
-		for (int i = 0; i <= BLOOM_SAMPLE_COUNT; i ++) {
+		const int SAMPLE_COUNT = BLOOM_QUALITY * BLOOM_QUALITY;
+		for (int i = 0; i <= SAMPLE_COUNT; i ++) {
 			
-			float len = sqrt(float(i) / BLOOM_SAMPLE_COUNT + 0.1) * size;
+			float len = sqrt(float(i) / SAMPLE_COUNT + 0.1) * size;
 			vec2 offset = vec2(cos(i + noise) * len * invAspectRatio, sin(i + noise) * len);
 			vec2 sampleCoord = coord + offset;
 			

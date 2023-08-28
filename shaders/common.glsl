@@ -35,6 +35,11 @@ uniform vec3 sunPosition;
 uniform vec3 moonPosition;
 uniform vec3 shadowLightPosition;
 
+#ifdef VSH
+	attribute vec4 mc_Entity;
+	attribute vec2 mc_midTexCoord;
+#endif
+
 uniform sampler2D texture;
 uniform sampler2D lightmap;
 uniform sampler2D colortex0;
@@ -88,24 +93,19 @@ uniform float invFarMinusNear;
 
 // misc data
 
-#ifdef FSH
-	ivec2 texelcoord = ivec2(gl_FragCoord.xy);
-#endif
-
-#ifdef VSH
-	attribute vec4 mc_Entity;
-	attribute vec2 mc_midTexCoord;
-#endif
-
 varying vec3 testValue;
-
-#define HAND_DEPTH 0.19 // idk what should actually be here
 
 #ifdef FSH
 	#define flat flat in
 #else
 	#define flat flat out
 #endif
+
+#ifdef FSH
+	ivec2 texelcoord = ivec2(gl_FragCoord.xy);
+#endif
+
+#define HAND_DEPTH 0.19 // idk what should actually be here
 
 #ifdef DEBUG_OUTPUT_ENABLED
 	#define DEBUG_ARG_IN , debugOutput
@@ -130,17 +130,6 @@ varying vec3 testValue;
 #define DEPTH_BUFFER_ALL                   depthtex0
 #define DEPTH_BUFFER_WO_TRANS              depthtex1
 #define DEPTH_BUFFER_WO_TRANS_OR_HANDHELD  depthtex2
-
-// DON'T DELETE:
-/*
-const bool colortex1Clear = false;
-const bool colortex0MipmapEnabled = true;
-const bool colortex3MipmapEnabled = true;
-const int colortex4Format = RGB32F;
-const float wetnessHalflife = 50.0f;
-const float drynessHalflife = 50.0f;
-const float centerDepthHalflife = 2.5f;
-*/
 
 
 
@@ -256,6 +245,14 @@ vec3 cubicInterpolate(vec3 edge0, vec3 edge1, vec3 edge2, vec3 edge3, float valu
 	float y = cubicInterpolate(edge0.y, edge1.y, edge2.y, edge3.y, value);
 	float z = cubicInterpolate(edge0.z, edge1.z, edge2.z, edge3.z, value);
 	return vec3(x, y, z);
+}
+
+vec4 startMat(vec3 screenPos) {
+	return vec4(screenPos.xyz, 1.0);
+}
+
+vec3 endMat(vec4 screenPos) {
+	return screenPos.xyz/screenPos.w;
 }
 
 float toLinearDepth(float depth) {

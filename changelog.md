@@ -1,6 +1,13 @@
 <br>
 
-- **b1.6.0**
+- b1.6.1 (23/08/28)
+  - Added water reflections to settings
+  - Added proper waving water
+  - Tweaked water reflection colors
+
+<br>
+
+- **b1.6.0** (23/08/26)
   - Added water reflections (more to come!)
   - Added waving water
 

@@ -1,8 +1,19 @@
-//-----------------------------//
-//        SETTINGS FILE        //
-//-----------------------------//
+// OptiFine Settings (DON'T DELETE)
+/*
+const bool colortex1Clear = false;
+const bool colortex0MipmapEnabled = true;
+const bool colortex3MipmapEnabled = true;
+const int colortex4Format = RGB32F;
+const float wetnessHalflife = 50.0f;
+const float drynessHalflife = 50.0f;
+const float centerDepthHalflife = 2.5f;
+*/
 
 
+
+
+
+// User Settings
 
 
 
@@ -93,16 +104,12 @@
 #define SHADOWS_ENABLED
 #define EXCLUDE_FOLIAGE
 #define SHADOW_FILTERING 2 // [0 1 2 3]
-
 const float shadowDistance = 128.0; // [64.0 80.0 96.0 112.0 128.0 160.0 192.0 224.0 256.0 320.0 384.0 512.0 768.0 1024.0]
 const int shadowMapResolution = 512; // [256 512 1024 2048 4096 8192]
 const float sunPathRotation = -30.0; // [-80.0 -75.0 -70.0 -65.0 -60.0 -55.0 -50.0 -45.0 -40.0 -35.0 -30.0 -25.0 -20.0 -15.0 -10.0 -9.0 -8.0 -7.0 -6.0 -5.0 -4.0 -3.0 -2.0 -1.0 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 10.0 15.0 20.0 25.0 30.0 35.0 40.0 45.0 50.0 55.0 60.0 65.0 70.0 75.0 80.0]
 const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0]
-
 #define SIDE_SHADING 0.25 // [0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
-
 #define RAIN_LIGHT_MULT 0.5 // [0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
-
 #define USE_VANILLA_BRIGHTNESS
 
 
@@ -115,7 +122,7 @@ const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8
 
 
 
-#define REFLECTIONS_ENABLED
+#define WATER_REFLECTIONS_ENABLED
 
 
 
@@ -225,6 +232,8 @@ const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8
 
 
 #define WAVING_ENABLED
+#define PHYSICALLY_WAVING_WATER_ENABLED
+#define WAVING_WATER_NORMALS_ENABLED
 #define WAVING_SPEED 1.0 // [0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0 2.2 2.4 2.6 2.8 3.0 3.2 3.4 3.6 3.8 4.0 4.2 4.4 4.6 4.8 5.0 5.25 5.5 5.75 6.0 6.25 6.5 6.75 7.0 7.25 7.25 7.5 8.0 8.5 9.0 9.5 10.0]
 #define WAVING_WORLD_SCALE 0.15 // [0.01 0.02 0.03 0.04 0.05 0.06 0.07 0.08 0.09 0.1 0.11 0.12 0.13 0.14 0.15 0.16 0.17 0.18 0.19 0.2 0.21 0.22 0.23 0.24 0.25 0.26 0.27 0.28 0.29 0.3 0.31 0.32 0.33 0.34 0.35 0.36 0.37 0.38 0.39 0.4 0.41 0.42 0.43 0.44 0.45 0.46 0.47 0.48 0.49 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
 #define WAVING_AMOUNT_1 0.15 // [0.01 0.02 0.03 0.04 0.05 0.06 0.07 0.08 0.09 0.1 0.11 0.12 0.13 0.14 0.15 0.16 0.17 0.18 0.19 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0 2.1 2.2 2.3 2.4 2.5 2.6 2.7 2.8 2.9 3.0 3.25 2.5 2.75 4.0 4.25 4.5 4.75 5.0]
@@ -247,6 +256,12 @@ const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8
 //#define BLOOM_SHOW_FILTERED_TEXTURE
 //#define SUNRAYS_SHOW_ADDITION
 //#define DOF_SHOW_AMOUNTS
+
+
+
+
+
+// Additional setting defines
 
 #ifdef SHOW_SUNLIGHT
 	#define DEBUG_OUTPUT_ENABLED
@@ -279,34 +294,11 @@ const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8
 
 
 
+// Hidden settings
+
 #define SHADOW_DISTORT_ADDITION 0.05
 
 #define LIGHT_SMOOTHING 0.1
 
-
-
-
-
 const float SHADOW_OFFSET_INCREASE = 0.9 / shadowMapResolution;
 const float SHADOW_OFFSET_MIN = 1.5 / shadowMapResolution;
-
-const int AO_SAMPLE_COUNT = AO_QUALITY * AO_QUALITY;
-const int BLOOM_SAMPLE_COUNT = BLOOM_QUALITY * BLOOM_QUALITY;
-const int SUNRAY_SAMPLE_COUNT = int(SUNRAYS_QUALITY * SUNRAYS_QUALITY / 2);
-const int MOTION_BLUR_SAMPLE_COUNT = MOTION_BLUR_QUALITY * MOTION_BLUR_QUALITY;
-
-
-
-
-
-
-
-
-
-
-//--------------------------------------//
-//        ENSURE SETTINGS APPEAR        //
-//--------------------------------------//
-
-#ifdef HANDHELD_LIGHT_USE_FIXED_DEPTH
-#endif

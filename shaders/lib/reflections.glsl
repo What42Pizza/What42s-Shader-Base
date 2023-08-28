@@ -7,14 +7,6 @@
 
 
 
-vec3 endMat(vec4 screenPos) {
-	return screenPos.xyz/screenPos.w;
-}
-
-vec4 startMat(vec3 screenPos) {
-	return vec4(screenPos.xyz, 1.0);
-}
-
 float cdist(vec2 coord) {
 	return max(abs(coord.s-0.5) * 1.95, abs(coord.t-0.5) * 2.0);
 }
@@ -32,7 +24,7 @@ vec2 Raytrace(vec3 viewPos, vec3 normal) {
 		if (screenPos.x < -0.02 || screenPos.x > 1.02 || screenPos.y < -0.02 || screenPos.y > 1.02) break;
 		
 		float screenPosDepth = toBlockDepth(screenPos.z);
-		if (screenPosDepth < 0.0 || screenPosDepth > far * 0.9) break;
+		if (screenPosDepth < 0.0 || screenPosDepth > far * 0.99) break;
 		float realDepth = toBlockDepth(texture2D(depthtex1, screenPos.xy).r) * 1.01;
 		float realToScreen = screenPosDepth - realDepth;
 		float stepVectorLen = length(stepVector);

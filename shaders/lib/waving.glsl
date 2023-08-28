@@ -23,7 +23,7 @@ void applyWaving(inout vec3 position) {
 	int wavingData = rawWavingData % 1000;
 	if (wavingData < 2 || wavingData > 7) {return;}
 	float wavingScale = wavingScales[wavingData / 2];
-	if (wavingData % 2 == 0 && gl_MultiTexCoord0.t > mc_midTexCoord.t) {return;} // don't apply waving to base
+	if (wavingData % 2 == 0 && gl_MultiTexCoord0.x > mc_midTexCoord.x) {return;} // don't apply waving to base
 	#if !defined SHADER_SHADOW
 		wavingScale *= lmcoord.y * lmcoord.y;
 	#endif
