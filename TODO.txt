@@ -1,5 +1,4 @@
 Current:
-Add Lygia properly
 Add more reflection settings
 Add profiles
 Add post-processing effects like the super secret settings

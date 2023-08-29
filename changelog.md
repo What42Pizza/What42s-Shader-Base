@@ -1,5 +1,10 @@
 <br>
 
+- b1.6.2 (23/08/29)
+  - Updated license
+
+<br>
+
 - b1.6.1 (23/08/28)
   - Added water reflections to settings
   - Added proper waving water
