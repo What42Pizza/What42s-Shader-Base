@@ -1,5 +1,5 @@
-What42's Shader License 1.1
-Effective Date: 2023-08-29
+What42's Shader License 1.2
+Effective Date: 2023-08-30
 
 By using the contents packaged with this license in any way, you agree to the terms and conditions listed in this file.
 
@@ -13,7 +13,8 @@ You can:
 - Use this in modpacks (with restrictions)
 - Create private modifications (without any restrictions)
 - Create public modifications (with restrictions)
-- Use parts of this shader in other shader (with restrictions)
+- Use parts of this shader in other shaders (with restrictions)
+- Make and publish forks of this shader (with restrictions)
 - Use parts of this shader in other projects (with restrictions)
 - Copy parts / all of this license (without any restrictions)
 
@@ -26,6 +27,7 @@ You cannot:
 Notes:
 - Making changes to the code isn't required for publishing altered versions of this shader; a significant enough change to the default settings is enough to count
 - Modpacks that include this shader can also include custom shaderpack settings
+- The rules in the license of a fork don't apply to the creators and/or owners of said fork, though the licenses of the base shader(s) do still take effect.
 
 No one person holds the copyright for all of the contents of this shader. Full credits can be found in the file 'readme.md'.
 If you feel that your copyrights have been violated, please contact all parties involved to have your work removed.
@@ -51,9 +53,9 @@ The creator of What42's Shader Base goes by "What42" / "What42Pizza", and you ca
 
 1.5. "Code" refers to any data that is intended to be interpreted by computers and/or the ideas behind said data.
 
-1.6. "Substantial Portions", in the context of a Shaderpack, refers to more than one third of the contents or ideas that originated in said Shaderpack.
+1.6. "Small Portions", in the context of a Shaderpack, refers to less than one third of the contents or ideas that originated in said Shaderpack.
 
-1.7. "Small Portions", in the context of a Shaderpack, refers to less than one third of the contents or ideas that originated in said Shaderpack.
+1.7. "Substantial Portions", in the context of a Shaderpack, refers to more than one third of the contents or ideas that originated in said Shaderpack.
 
 1.8. "What42" refers to the creator of What42's Shader Base, which can be found at https://github.com/What42Pizza/What42s-Shader-Base.
 
@@ -86,11 +88,11 @@ The creator of What42's Shader Base goes by "What42" / "What42Pizza", and you ca
 	2.5.4. The Shaderpack has an apparent, substantial amount of effect put into it by the creator(s) of said Shaderpacks.
 	2.5.5. The Shaderpack is not monetized in any way, unless permission to do so is granted by every person whose Code is packaged with the Shaderpack.
 
-2.6. (Concerning code reuse) You are allowed to use Small Portions of This Shaderpack in the creation, modification, and/or updating of non-Shaderpack projects and distribute said projects if and only if the following conditions are met for each of said projects:
+2.6. (Concerning other code reuse) You are allowed to use Small Portions of This Shaderpack in the creation, modification, and/or updating of non-Shaderpack projects and distribute said projects if and only if the following conditions are met for each of said projects:
 	2.6.1. This Shaderpack is clearly credited everywhere that the project is distributed.
 	2.6.2. The project is not monetized in any way, unless permission to do so is granted by every person whose Code is packaged with the project.
 
-2.7. You are allowed to use parts or all of the contents of This License (inluding, but not limited to: ideas, wording, style, etc.) in the creation, modification, and/or updating of other licences without any restriction.
+2.7. You are allowed to use parts or all of the contents of This License (inluding, but not limited to: ideas, wording, style, etc.) in the creation, modification, and/or updating of other licences without any restrictions.
 
 
 
@@ -100,9 +102,11 @@ The creator of What42's Shader Base goes by "What42" / "What42Pizza", and you ca
 
 3.2. You are not allowed to redistribute This Shaderpack unless said action is allowed by section 2.2.
 
-3.3. You are not allowed to redistribute any of the contents of This Shaderpack unless said action is allowed by section 2.4, section 2.5, or section 2.6.
+3.3. You are not allowed to issue licenses that override This License unless permission to do so is granted by What42.
 
-3.4. You are not allowed to create links that indirectly lead to a distributor of This Shaderpack.
+3.4. You are not allowed to redistribute any of the contents of This Shaderpack unless said action is allowed by section 2.4, section 2.5, or section 2.6.
+
+3.5. You are not allowed to create links that indirectly lead to a distributor of This Shaderpack.
 
 
 

@@ -1,4 +1,4 @@
-# Minecraft Shaders Base b1.6.2
+# Minecraft Shaders Base b1.6.3
 
 ### This is a base shaderpack that can be used to easily create shaders.
 
@@ -14,8 +14,7 @@
 ## Effects:
 
 - **Shadows**
-- **Reflections**
-- - Only water for now
+- **Reflections** (water and rain puddles)
 - **Anti-Aliasing**
 - **SSAO**
 - **Sunrays**
