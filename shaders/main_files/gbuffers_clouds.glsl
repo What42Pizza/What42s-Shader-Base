@@ -1,3 +1,11 @@
+// defines
+
+#if defined BLOOM_ENABLED && defined NORMALS_NEEDED
+	#define BLOOM_AND_NORMALS
+#endif
+
+// transfers
+
 varying vec2 texcoord;
 flat float glcolor;
 
@@ -5,12 +13,10 @@ flat float glcolor;
 	varying vec3 normal;
 #endif
 
+// includes
+
 #ifdef FOG_ENABLED
 	#include "/lib/fog.glsl"
-#endif
-
-#if defined BLOOM_ENABLED && defined NORMALS_NEEDED
-	#define BLOOM_AND_NORMALS
 #endif
 
 

@@ -1,18 +1,28 @@
+// defines
+
+#if defined BLOOM_ENABLED && defined NORMALS_NEEDED
+	#define BLOOM_AND_NORMALS
+#endif
+
+// transfers
+
 varying vec2 texcoord;
 varying vec2 lmcoord;
 varying vec3 glcolor;
 
+#ifdef RAIN_REFLECTIONS_ENABLED
+	varying vec3 worldPos;
+	varying float baseRainReflectionStrength;
+#endif
 #ifdef NORMALS_NEEDED
 	varying vec3 normal;
 #endif
 
-#include "../lib/lighting.glsl"
+// includes
+
+#include "/lib/lighting.glsl"
 #ifdef FOG_ENABLED
 	#include "/lib/fog.glsl"
-#endif
-
-#if defined BLOOM_ENABLED && defined NORMALS_NEEDED
-	#define BLOOM_AND_NORMALS
 #endif
 
 
@@ -20,6 +30,10 @@ varying vec3 glcolor;
 
 
 #ifdef FSH
+
+#ifdef RAIN_REFLECTIONS_ENABLED
+	#include "/lib/simplex_noise.glsl"
+#endif
 
 void main() {
 	vec4 color = texture2D(MAIN_BUFFER, texcoord);
@@ -72,21 +86,35 @@ void main() {
 	#endif
 	
 	
+	// rain reflection strength
+	#ifdef RAIN_REFLECTIONS_ENABLED
+		float rainReflectionStrength = baseRainReflectionStrength;
+		rainReflectionStrength *= simplexNoise((worldPos + cameraPosition) * 0.2);
+		rainReflectionStrength *= lmcoord.y;
+	#endif
+	
+	
 	/* DRAWBUFFERS:0 */
 	#ifdef DEBUG_OUTPUT_ENABLED
 		color = vec4(debugOutput, 1.0);
 	#endif
 	gl_FragData[0] = color;
 	#ifdef BLOOM_AND_NORMALS
-		/* DRAWBUFFERS:024 */
+		/* DRAWBUFFERS:0243 */
 		gl_FragData[1] = colorForBloom;
 		gl_FragData[2] = vec4(normal, 1.0);
+		#ifdef RAIN_REFLECTIONS_ENABLED
+			gl_FragData[3] = vec4(rainReflectionStrength, 0.0, 0.0, 1.0);
+		#endif
 	#elif defined BLOOM_ENABLED
 		/* DRAWBUFFERS:02 */
 		gl_FragData[1] = colorForBloom;
 	#elif defined NORMALS_NEEDED
-		/* DRAWBUFFERS:04 */
+		/* DRAWBUFFERS:043 */
 		gl_FragData[1] = vec4(normal, 1.0);
+		#ifdef RAIN_REFLECTIONS_ENABLED
+			gl_FragData[3] = vec4(rainReflectionStrength, 0.0, 0.0, 1.0);
+		#endif
 	#endif
 }
 
@@ -104,12 +132,15 @@ void main() {
 	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
 	lmcoord  = (gl_TextureMatrix[1] * gl_MultiTexCoord1).xy;
 	
-	vec4 worldPos = gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex);
+	#if !defined RAIN_REFLECTIONS_ENABLED
+		vec3 worldPos;
+	#endif
+	worldPos = endMat(gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex));
 	
 	
 	#ifdef WAVING_ENABLED
-		applyWaving(worldPos.xyz);
-		gl_Position = gl_ProjectionMatrix * gbufferModelView * worldPos;
+		applyWaving(worldPos);
+		gl_Position = gl_ProjectionMatrix * gbufferModelView * startMat(worldPos);
 	#else
 		gl_Position = gl_ProjectionMatrix * (gl_ModelViewMatrix * gl_Vertex);
 	#endif
@@ -124,7 +155,7 @@ void main() {
 	
 	
 	#ifdef FOG_ENABLED
-		getFogData(worldPos.xyz);
+		getFogData(worldPos);
 	#endif
 	
 	
@@ -138,6 +169,16 @@ void main() {
 	
 	#ifdef NORMALS_NEEDED
 		normal = gl_NormalMatrix * gl_Normal;
+	#endif
+	
+	
+	#ifdef RAIN_REFLECTIONS_ENABLED
+		vec3 upVec = normalize(gbufferModelView[1].xyz);
+		baseRainReflectionStrength = dot(upVec, normal) * 0.5 + 0.5;
+		baseRainReflectionStrength *= baseRainReflectionStrength;
+		baseRainReflectionStrength *= baseRainReflectionStrength;
+		baseRainReflectionStrength *= baseRainReflectionStrength;
+		baseRainReflectionStrength *= betterRainStrength;
 	#endif
 	
 	

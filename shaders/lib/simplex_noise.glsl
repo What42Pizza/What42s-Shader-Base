@@ -18,14 +18,14 @@ vec4 grad4(float j, vec4 ip) {
 	return p;
 }
 
-float mod289(const in float x) {return x - floor(x * (1.0 / 289.0)) * 289.0;}
-vec4 mod289(const in vec4 x) {return x - floor(x * (1.0 / 289.0)) * 289.0;}
+float mod289(const float x) {return x - floor(x * (1.0 / 289.0)) * 289.0;}
+vec4 mod289(const vec4 x) {return x - floor(x * (1.0 / 289.0)) * 289.0;}
 
-float permute(const in float x) {return mod289(((x * 34.0) + 1.0) * x);}
-vec4 permute(const in vec4 x) {return mod289(((x * 34.0) + 1.0) * x);}
+float permute(const float x) {return mod289(((x * 34.0) + 1.0) * x);}
+vec4 permute(const vec4 x) {return mod289(((x * 34.0) + 1.0) * x);}
 
-float taylorInvSqrt(in float r) {return 1.79284291400159 - 0.85373472095314 * r;}
-vec4 taylorInvSqrt(in vec4 r) {return 1.79284291400159 - 0.85373472095314 * r;}
+float taylorInvSqrt(float r) {return 1.79284291400159 - 0.85373472095314 * r;}
+vec4 taylorInvSqrt(vec4 r) {return 1.79284291400159 - 0.85373472095314 * r;}
 
 float simplexNoise(vec3 v){ 
 	const vec2 C = vec2(1.0/6.0, 1.0/3.0);
@@ -106,7 +106,7 @@ float simplexNoise(vec3 v){
 	);
 }
 
-float simplexNoise(in vec4 v) {
+float simplexNoise(vec4 v) {
 	const vec4 C = vec4(
 		0.138196601125011, // (5 - sqrt(5))/20 G4
 		0.276393202250021, // 2 * G4

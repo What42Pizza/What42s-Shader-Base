@@ -7,11 +7,7 @@
 
 
 
-float cdist(vec2 coord) {
-	return max(abs(coord.s-0.5) * 1.95, abs(coord.t-0.5) * 2.0);
-}
-
-vec2 Raytrace(vec3 viewPos, vec3 normal) {
+void raytrace(out vec2 reflectionPos, out int error, vec3 viewPos, vec3 normal) {
 	vec3 screenPos = vec3(0.0);
 	
 	vec3 stepVector = reflect(normalize(viewPos), normalize(normal)) * 0.1;
@@ -29,10 +25,18 @@ vec2 Raytrace(vec3 viewPos, vec3 normal) {
 		float realToScreen = screenPosDepth - realDepth;
 		float stepVectorLen = length(stepVector);
 		
-		if (realToScreen > stepVectorLen * 2.0 + 0.5) return vec2(-2.0); // went behind surface
+		if (realToScreen > stepVectorLen * 2.0 + 0.5) { // went behind object
+			reflectionPos = screenPos.xy;
+			error = 1;
+			return;
+		}
 		if (realToScreen > 0.0) {
 			hitCount ++;
-			if (hitCount >= 6) return screenPos.xy; // converged on point
+			if (hitCount >= 6) { // converged on point
+				reflectionPos = screenPos.xy;
+				error = 0;
+				return;
+			}
 			viewPos -= stepVector;
 			stepVector *= 0.1;
 		}
@@ -41,5 +45,30 @@ vec2 Raytrace(vec3 viewPos, vec3 normal) {
 		viewPos += stepVector;
 	}
 	
-	return vec2(-1.0);
+	error = 2;
+}
+
+
+
+void addReflection(inout vec3 color, vec3 viewPos, vec3 normal, sampler2D texture, float baseStrength, float fresnelStrength) {
+	vec2 reflectionPos;
+	int error;
+	raytrace(reflectionPos, error, viewPos, normal);
+	
+	float fresnel = 1.0 + dot(normalize(viewPos), normal);
+	fresnel *= fresnel;
+	fresnel *= fresnel;
+	float lerpAmount = baseStrength + fresnel * fresnelStrength;
+	
+	if (error == 0) {
+		vec3 reflectionColor = texture2D(texture, reflectionPos).rgb;
+		reflectionColor *= 0.8 + color.rgb * 0.2;
+		lerpAmount *= clamp(8.0 - 8.0 * max(abs(reflectionPos.x * 2.0 - 1.0), abs(reflectionPos.y * 2.0 - 1.0)), 0.0, 1.0);
+		color.rgb = mix(color.rgb, reflectionColor, lerpAmount);
+		
+	} else if (error == 1) {
+		color.rgb *= 1.0 - lerpAmount * 0.8;
+		
+	}
+	
 }

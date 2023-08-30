@@ -340,6 +340,15 @@ option.WAVING_WATER_NORMALS_ENABLED.comment=Makes the water reflections wavy (on
 
 
 
+screen.WATER_SETTINGS=Water
+
+option.WATER_RESNEL_ADDITION=Fresnel Addition
+option.WATER_RESNEL_ADDITION.comment=Makes the water lighter / darker depending on how parallel the surface is to the camera
+
+
+
+
+
 screen.DEBUG_SETTINGS=Debug
 
 option.USE_BETTER_RAND=Use Better Random

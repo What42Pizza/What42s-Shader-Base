@@ -1,7 +1,5 @@
 varying vec2 texcoord;
 
-// this file is to stop the colormap from being used and calculated
-
 
 
 #ifdef FSH

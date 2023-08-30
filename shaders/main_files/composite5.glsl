@@ -50,7 +50,7 @@ void main() {
 		color *= 1.0 - vignetteAlpha;
 	#endif
 	
-	//color = texture2D(NORMALS_BUFFER, texcoord).rgb;
+	//color = texture2D(NOISY_ADDITIONS_BUFFER, texcoord).rgb;
 	
 	
 	

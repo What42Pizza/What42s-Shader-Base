@@ -63,9 +63,11 @@
 - **texture / colortex0:  Main Image OR Debug Output** 
 - **colortex1:  TAA Texture**
 - **colortex2:  Bloom Texture**
-- **colortex3:  Noisy Additions (things like bloom, sunrays, etc (anything that gives noisy results) are rendered to this buffer then LOD-sampled when added to the image)**
+- **colortex3:  Reflection Strength / Noisy Additions (RS exists from gbuffers to deffered, NA exists from composite1 and on)**
 - **colortex4:  Normals**
 - **colortex5 / gaux2:  Copy of colortex0, only used for water reflections**
+
+Note: 'noisy additions' is for things like bloom, sunrays, etc (anything that gives noisy results) are rendered to this buffer then LOD-sampled when added to the image
 
 <br>
 <br>

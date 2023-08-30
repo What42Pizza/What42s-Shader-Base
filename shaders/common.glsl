@@ -119,13 +119,14 @@ varying vec3 testValue;
 
 // buffer values:
 
-#define MAIN_BUFFER             colortex0
-#define TAA_PREV_BUFFER         colortex1
-#define BLOOM_BUFFER            colortex2
-#define NOISY_ADDITIONS_BUFFER  colortex3
-#define NORMALS_BUFFER          colortex4
-#define MAIN_BUFFER_COPY        gaux2
-#define DEBUG_BUFFER            colortex0
+#define MAIN_BUFFER                 colortex0
+#define TAA_PREV_BUFFER             colortex1
+#define BLOOM_BUFFER                colortex2
+#define REFLECTION_STRENGTH_BUFFER  colortex3
+#define NOISY_ADDITIONS_BUFFER      colortex3
+#define NORMALS_BUFFER              colortex4
+#define MAIN_BUFFER_COPY            gaux2
+#define DEBUG_BUFFER                colortex0
 
 #define DEPTH_BUFFER_ALL                   depthtex0
 #define DEPTH_BUFFER_WO_TRANS              depthtex1

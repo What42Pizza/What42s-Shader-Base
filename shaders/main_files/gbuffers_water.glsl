@@ -1,7 +1,5 @@
 // defines
 
-#define NORMALS_NEEDED
-
 #ifdef NORMALS_NEEDED
 	#define OUTPUT_NORMALS
 #endif
@@ -13,7 +11,7 @@
 	#define BLOOM_AND_NORMALS
 #endif
 
-// transferred
+// transfers
 
 varying vec2 texcoord;
 varying vec2 lmcoord;
@@ -32,7 +30,7 @@ flat int blockType;
 
 // includes
 
-#include "../lib/lighting.glsl"
+#include "/lib/lighting.glsl"
 #ifdef FOG_ENABLED
 	#include "/lib/fog.glsl"
 #endif
@@ -63,9 +61,20 @@ void main() {
 	#ifdef WAVING_WATER_NORMALS_ENABLED
 		vec3 normal = normal;
 		if (blockType == 1007) {
-			vec3 worldPos = (worldPos + cameraPosition) * 0.6 + frameCounter * 0.01;
-			normal += simplexNoise3From4(vec4(worldPos, frameCounter * 0.005)) * 0.015;
+			vec3 worldPosForNormal = (worldPos + cameraPosition) * 0.3 + frameCounter * 0.007;
+			normal += simplexNoise3From4(vec4(worldPosForNormal, frameCounter * 0.005)) * 0.025;
 			normal = normalize(normal);
+		}
+	#endif
+	
+	
+	// fresnel addition
+	#ifdef WATER_RESNEL_ADDITION
+		if (blockType == 1007) {
+			vec3 worldPosForFresnel = (worldPos + cameraPosition) * 0.7 + frameCounter * 0.007;
+			vec3 normalForFresnel = normal + simplexNoise3From4(vec4(worldPosForFresnel, frameCounter * 0.007));
+			float fresnel = 1.0 + dot(normalize(viewPos), normalize(normalForFresnel));
+			color.rgb *= 0.8 + fresnel * 0.4;
 		}
 	#endif
 	
@@ -99,19 +108,7 @@ void main() {
 	// reflection
 	#ifdef WATER_REFLECTIONS_ENABLED
 		if (blockType == 1007) {
-			vec2 reflectionPos = Raytrace(viewPos, normal);
-			float fresnel = 1.0 + min(dot(normalize(viewPos), normal), 1.0);
-			fresnel *= fresnel;
-			fresnel *= fresnel;
-			float lerpAmount = 0.3 + fresnel * 0.5;
-			if (reflectionPos.x > -0.5) {
-				vec3 reflectionColor = texture2D(MAIN_BUFFER_COPY, reflectionPos).rgb;
-				reflectionColor *= 0.8 + color.rgb * 0.2;
-				lerpAmount *= clamp(10.0 - 10.0 * max(abs(reflectionPos.x * 2.0 - 1.0), abs(reflectionPos.y * 2.0 - 1.0)), 0.0, 1.0);
-				color.rgb = mix(color.rgb, reflectionColor, lerpAmount);
-			} else if (reflectionPos.x < -1.5) {
-				color.rgb *= 1.0 - lerpAmount * 0.8;
-			}
+			addReflection(color.rgb, viewPos, normal, MAIN_BUFFER_COPY, 0.3, 0.5);
 		}
 	#endif
 	
@@ -124,6 +121,8 @@ void main() {
 			applyFog(color.rgb);
 		#endif
 	#endif
+	
+	//color.rgb = vec3(fresnel);
 	
 	
 	/* DRAWBUFFERS:0 */

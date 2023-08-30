@@ -1,6 +1,8 @@
 <br>
 
 - b1.6.2 (23/08/29)
+  - Added rain reflections
+  - Added water fresnel addition
   - Updated license
 
 <br>

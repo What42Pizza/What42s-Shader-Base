@@ -1,8 +1,6 @@
 varying vec2 texcoord;
 flat float glcolor_alpha;
 
-// this file is included to remove the vertex depth optimization
-
 
 
 

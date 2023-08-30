@@ -1,12 +1,16 @@
+// defines
+
+#if defined BLOOM_ENABLED && defined NORMALS_NEEDED
+	#define BLOOM_AND_NORMALS
+#endif
+
+// transfers
+
 varying vec2 texcoord;
 varying float lightMult;
 
 #ifdef NORMALS_NEEDED
 	varying vec3 normal;
-#endif
-
-#if defined BLOOM_ENABLED && defined NORMALS_NEEDED
-	#define BLOOM_AND_NORMALS
 #endif
 
 
