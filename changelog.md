@@ -1,5 +1,11 @@
 <br>
 
+- b1.6.4 (23/09/12)
+  - Added isometric rendering
+  - Improved shadow filtering when TAA is disabled
+
+<br>
+
 - b1.6.3 (23/08/30)
   - Updated license
 

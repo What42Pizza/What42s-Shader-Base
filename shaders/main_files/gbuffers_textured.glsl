@@ -53,18 +53,34 @@ void main() {
 
 #ifdef VSH
 
+#ifdef ISOMETRIC_RENDERING_ENABLED
+	#include "/lib/isometric.glsl"
+#endif
+
 void main() {
 	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
 	vec2 lmcoord  = (gl_TextureMatrix[1] * gl_MultiTexCoord1).xy;
 	lightMult = max(max(lmcoord.x, lmcoord.y), 0.1);
 	
 	
-	gl_Position = ftransform();
-	if (gl_Position.z < -1.0) return; // simple but effective optimization
+	#ifdef ISOMETRIC_RENDERING_ENABLED
+		vec3 worldPos = endMat(gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex));
+		gl_Position = projectIsometric(worldPos);
+	#else
+		gl_Position = ftransform();
+	#endif
+	
+	#if !defined ISOMETRIC_RENDERING_ENABLED
+		if (gl_Position.z < -1.0) return; // simple but effective optimization
+	#endif
 	
 	
 	#ifdef TAA_ENABLED
-		gl_Position.xy += taaOffset * gl_Position.w;
+		#ifdef ISOMETRIC_RENDERING_ENABLED
+			gl_Position.xy += taaOffset * 0.5;
+		#else
+			gl_Position.xy += taaOffset * gl_Position.w;
+		#endif
 	#endif
 	
 	

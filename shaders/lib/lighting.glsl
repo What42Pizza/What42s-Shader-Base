@@ -165,8 +165,13 @@ vec3 getLightingBrightnesses(vec2 lmcoord) {
 					}
 				}
 				skyBrightness /= SHADOW_OFFSET_WEIGHTS_TOTAL;
-				const float shadowMult1 = 1.4; // for when lightDot is 1.0 (sun is directly facing surface)
-				const float shadowMult2 = 2.2; // for when lightDot is 0.0 (sun is angled relative to surface)
+				#ifdef TAA_ENABLED
+					const float shadowMult1 = 1.4; // for when lightDot is 1.0 (sun is directly facing surface)
+					const float shadowMult2 = 2.2; // for when lightDot is 0.0 (sun is angled relative to surface)
+				#else
+					const float shadowMult1 = 2.0; // for when lightDot is 1.0 (sun is directly facing surface)
+					const float shadowMult2 = 3.0; // for when lightDot is 0.0 (sun is angled relative to surface)
+				#endif
 				skyBrightness = min(skyBrightness * (shadowMult2 - skyBrightnessMult * (shadowMult2 - shadowMult1)), 1.0);
 				
 			#endif
@@ -195,6 +200,31 @@ vec3 getLightingBrightnesses(vec2 lmcoord) {
 
 
 #ifdef VSH
+
+
+
+vec3 getShadowPos(vec4 viewPos, float lightDot) {
+	vec4 playerPos = gbufferModelViewInverse * viewPos;
+	vec3 shadowPos = (shadowProjection * (shadowModelView * playerPos)).xyz; // convert to shadow screen space
+	float distortFactor = getDistortFactor(shadowPos);
+	float bias = 0.05
+		+ 0.01 / (lightDot + 0.03)
+		+ distortFactor * distortFactor * 0.5;
+	shadowPos = distort(shadowPos, distortFactor); // apply shadow distortion
+	shadowPos = shadowPos * 0.5 + 0.5;
+	shadowPos.z -= bias * 0.02; // apply shadow bias
+	return shadowPos;
+}
+
+vec3 getLessBiasedShadowPos(vec4 viewPos) {
+	vec4 playerPos = gbufferModelViewInverse * viewPos;
+	vec3 shadowPos = (shadowProjection * (shadowModelView * playerPos)).xyz; // convert to shadow screen space
+	float distortFactor = getDistortFactor(shadowPos);
+	shadowPos = distort(shadowPos, distortFactor); // apply shadow distortion
+	shadowPos = shadowPos * 0.5 + 0.5;
+	shadowPos.z -= 0.005 * distortFactor; // apply shadow bias
+	return shadowPos;
+}
 
 
 

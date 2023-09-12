@@ -139,6 +139,8 @@ screen.REFLECTION_SETTINGS=Reflections
 
 option.WATER_REFLECTIONS_ENABLED=Water Reflections Enabled
 option.WATER_REFLECTIONS_ENABLED.comment=Whether reflections appear on water\n\n(Performance cost: HIGH)
+option.RAIN_REFLECTIONS_ENABLED=Rain Reflections Enabled
+option.RAIN_REFLECTIONS_ENABLED.comment=Whether the ground has reflections in the rain
 
 
 
@@ -344,6 +346,15 @@ screen.WATER_SETTINGS=Water
 
 option.WATER_RESNEL_ADDITION=Fresnel Addition
 option.WATER_RESNEL_ADDITION.comment=Makes the water lighter / darker depending on how parallel the surface is to the camera
+
+
+
+
+
+screen.ISOMETRIC_SETTINGS=Isometric Settings
+
+option.ISOMETRIC_RENDERING_ENABLED=Isometric Rendering Enabled
+option.ISOMETRIC_RENDERING_ENABLED.comment=Changes the projection to Isometric
 
 
 

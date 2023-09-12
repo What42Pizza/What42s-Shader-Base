@@ -29,14 +29,16 @@ void main() {
 	float depth = texelFetch(depthtex1, texelcoord, 0).r;
 	float linearDepth = toLinearDepth(depth);
 	float handFactor = 0.0;
-	if (depthIsHand(linearDepth)) {
-		depth = fromLinearDepth(HAND_DEPTH);
-		handFactor = -0.25;
-	}
+	#if !defined ISOMETRIC_RENDERING_ENABLED
+		if (depthIsHand(linearDepth)) {
+			depth = fromLinearDepth(HAND_DEPTH);
+			handFactor = -0.25;
+		}
+	#endif
 	
-	vec3 coord = vec3(texcoord, depth);
+	vec3 pos = vec3(texcoord, depth);
 	vec3 cameraOffset = cameraPosition - previousCameraPosition;
-	vec2 prevCoord = reprojection(coord, cameraOffset);
+	vec2 prevCoord = reprojection(pos, cameraOffset);
 	
 	
 	

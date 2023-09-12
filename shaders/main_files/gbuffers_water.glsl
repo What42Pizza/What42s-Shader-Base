@@ -21,7 +21,7 @@ flat int blockType;
 #ifdef NORMALS_NEEDED
 	varying vec3 normal;
 #endif
-#ifdef WATER_REFLECTIONS_ENABLED
+#if defined WATER_REFLECTIONS_ENABLED || defined WATER_RESNEL_ADDITION
 	varying vec3 viewPos;
 #endif
 #ifdef WAVING_WATER_NORMALS_ENABLED
@@ -122,8 +122,6 @@ void main() {
 		#endif
 	#endif
 	
-	//color.rgb = vec3(fresnel);
-	
 	
 	/* DRAWBUFFERS:0 */
 	#ifdef DEBUG_OUTPUT_ENABLED
@@ -151,6 +149,10 @@ void main() {
 
 #ifdef VSH
 
+#ifdef ISOMETRIC_RENDERING_ENABLED
+	#include "/lib/isometric.glsl"
+#endif
+
 void main() {
 	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
 	lmcoord  = (gl_TextureMatrix[1] * gl_MultiTexCoord1).xy;
@@ -169,16 +171,25 @@ void main() {
 			worldPos.y += sin(actualWorldPos.x * 0.6 + actualWorldPos.z * 1.4 + frameCounter * 0.05) * 0.04;
 			worldPos.y += sin(actualWorldPos.x * 0.9 + actualWorldPos.z * 0.6 + frameCounter * 0.04) * 0.03;
 		}
-		gl_Position = gl_ProjectionMatrix * gbufferModelView * startMat(worldPos);
-	#else
-		gl_Position = gl_ProjectionMatrix * (gl_ModelViewMatrix * gl_Vertex);
 	#endif
 	
-	if (gl_Position.z < -1.5) return; // simple but effective optimization
+	#ifdef ISOMETRIC_RENDERING_ENABLED
+		gl_Position = projectIsometric(worldPos);
+	#else
+		gl_Position = gl_ProjectionMatrix * gbufferModelView * startMat(worldPos);
+	#endif
+	
+	#if !defined ISOMETRIC_RENDERING_ENABLED
+		if (gl_Position.z < -1.0) return; // simple but effective optimization
+	#endif
 	
 	
 	#ifdef TAA_ENABLED
-		gl_Position.xy += taaOffset * gl_Position.w;
+		#ifdef ISOMETRIC_RENDERING_ENABLED
+			gl_Position.xy += taaOffset * 0.5;
+		#else
+			gl_Position.xy += taaOffset * gl_Position.w;
+		#endif
 	#endif
 	
 	
@@ -187,7 +198,7 @@ void main() {
 	#endif
 	
 	
-	#ifdef WATER_REFLECTIONS_ENABLED
+	#if defined WATER_REFLECTIONS_ENABLED || defined WATER_RESNEL_ADDITION
 		viewPos = (gl_ModelViewMatrix * gl_Vertex).xyz;
 	#endif
 	

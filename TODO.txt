@@ -1,4 +1,6 @@
 Current:
+Add isometric setting locales
+Make reflections work with isometric rendering
 Add more reflection settings
 Add profiles
 Add post-processing effects like the super secret settings

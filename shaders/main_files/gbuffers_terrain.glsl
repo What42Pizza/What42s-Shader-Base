@@ -126,7 +126,12 @@ void main() {
 
 #ifdef VSH
 
-#include "/lib/waving.glsl"
+#ifdef WAVING_ENABLED
+	#include "/lib/waving.glsl"
+#endif
+#ifdef ISOMETRIC_RENDERING_ENABLED
+	#include "/lib/isometric.glsl"
+#endif
 
 void main() {
 	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
@@ -140,17 +145,27 @@ void main() {
 	
 	#ifdef WAVING_ENABLED
 		applyWaving(worldPos);
-		gl_Position = gl_ProjectionMatrix * gbufferModelView * startMat(worldPos);
-	#else
-		gl_Position = gl_ProjectionMatrix * (gl_ModelViewMatrix * gl_Vertex);
 	#endif
 	
 	
-	if (gl_Position.z < -1.0) return; // simple but effective optimization
+	#ifdef ISOMETRIC_RENDERING_ENABLED
+		gl_Position = projectIsometric(worldPos);
+	#else
+		gl_Position = gl_ProjectionMatrix * gbufferModelView * startMat(worldPos);
+	#endif
+	
+	
+	#if !defined ISOMETRIC_RENDERING_ENABLED
+		if (gl_Position.z < -1.0) return; // simple but effective optimization
+	#endif
 	
 	
 	#ifdef TAA_ENABLED
-		gl_Position.xy += taaOffset * gl_Position.w;
+		#ifdef ISOMETRIC_RENDERING_ENABLED
+			gl_Position.xy += taaOffset * 0.5;
+		#else
+			gl_Position.xy += taaOffset * gl_Position.w;
+		#endif
 	#endif
 	
 	

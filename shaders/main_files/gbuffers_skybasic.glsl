@@ -61,9 +61,14 @@ void main() {
 
 #ifdef VSH
 
+#ifdef ISOMETRIC_RENDERING_ENABLED
+	#include "/lib/isometric.glsl"
+#endif
+
 void main() {
 	
 	gl_Position = ftransform();
+	
 	#ifdef TAA_ENABLED
 		gl_Position.xy += taaOffset * gl_Position.w;
 	#endif

@@ -2,7 +2,7 @@
 //        TAA        //
 //-------------------//
 
-// This code was taken from Complementary Reimagined
+// This code was originally taken from Complementary Reimagined
 // Link: https://modrinth.com/shader/complementary-reimagined
 
 
@@ -21,19 +21,36 @@ ivec2 clampingOffsets[clampingOffsetCount] = ivec2[clampingOffsetCount](
 
 
 
-// Previous frame reprojection from Chocapic13
-vec2 reprojection(vec3 pos, vec3 cameraOffset) {
-	pos = pos * 2.0 - 1.0;
-	
-	vec4 viewPosPrev = gbufferProjectionInverse * vec4(pos, 1.0);
-	viewPosPrev /= viewPosPrev.w;
-	viewPosPrev = gbufferModelViewInverse * viewPosPrev;
-	
-	vec4 previousPosition = viewPosPrev + vec4(cameraOffset, 0.0);
-	previousPosition = gbufferPreviousModelView * previousPosition;
-	previousPosition = gbufferPreviousProjection * previousPosition;
-	return previousPosition.xy / previousPosition.w * 0.5 + 0.5;
-}
+#if !defined ISOMETRIC_RENDERING_ENABLED
+	// Previous frame reprojection from Chocapic13
+	vec2 reprojection(vec3 screenPos, vec3 cameraOffset) {
+		screenPos = screenPos * 2.0 - 1.0;
+		
+		vec4 viewPos = gbufferProjectionInverse * vec4(screenPos, 1.0);
+		viewPos /= viewPos.w;
+		vec4 worldPos = gbufferModelViewInverse * viewPos;
+		
+		vec4 prevWorldPos = worldPos + vec4(cameraOffset, 0.0);
+		vec4 prevCoord = gbufferPreviousProjection * gbufferPreviousModelView * prevWorldPos;
+		return prevCoord.xy / prevCoord.w * 0.5 + 0.5;
+	}
+#else
+	vec2 reprojection(vec3 screenPos, vec3 cameraOffset) {
+		const float scale = ISOMETRIC_WORLD_SCALE * 0.5;
+		const float forwardPlusBackward = ISOMETRIC_FORWARD_VISIBILITY * 0.5 + ISOMETRIC_BACKWARD_VISIBILITY * 0.5;
+		const float forwardMinusBackward = ISOMETRIC_FORWARD_VISIBILITY * 0.5 - ISOMETRIC_BACKWARD_VISIBILITY * 0.5;
+		vec4 scaleVec = vec4(scale * aspectRatio, scale, -forwardPlusBackward, 1);
+		const vec4 offsetVec = vec4(0, 0, forwardMinusBackward / forwardPlusBackward, 0);
+		screenPos = screenPos * 2.0 - 1.0;
+		
+		vec4 worldPos = gbufferModelViewInverse * ((vec4(screenPos, 1.0) + offsetVec) * scaleVec);
+		worldPos /= worldPos.w;
+		
+		vec4 prevWorldPos = worldPos + vec4(cameraOffset, 0.0);
+		vec4 prevCoord = (gbufferPreviousModelView * prevWorldPos) / scaleVec - offsetVec;
+		return prevCoord.xy / prevCoord.w * 0.5 + 0.5;
+	}
+#endif
 
 
 
@@ -76,7 +93,11 @@ void doTAA(inout vec3 color, inout vec3 newPrev, float linearDepth, vec2 prevCoo
 	vec2 velocity = (texcoord - prevCoord.xy) * viewSize;
 	float velocityAmount = dot(velocity, velocity) * 10.0;
 	
-	float blockDepth = linearDepth * far;
+	#if !defined ISOMETRIC_RENDERING_ENABLED
+		float blockDepth = linearDepth * far;
+	#else
+		float blockDepth = 0;
+	#endif
 	
 	float blendAmount = blendConstant
 		+ exp(-velocityAmount) * (blendVariable + sqrt(blockDepth) * depthFactor)

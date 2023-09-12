@@ -25,12 +25,26 @@ void main() {
 
 #ifdef VSH
 
+#ifdef ISOMETRIC_RENDERING_ENABLED
+	#include "/lib/isometric.glsl"
+#endif
+
 void main() {
 	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
 	
-	gl_Position = ftransform();
+	#ifdef ISOMETRIC_RENDERING_ENABLED
+		vec3 worldPos = endMat(gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex));
+		gl_Position = projectIsometric(worldPos);
+	#else
+		gl_Position = ftransform();
+	#endif
+	
 	#ifdef TAA_ENABLED
-		gl_Position.xy += taaOffset * gl_Position.w;
+		#ifdef ISOMETRIC_RENDERING_ENABLED
+			gl_Position.xy += taaOffset * 0.5;
+		#else
+			gl_Position.xy += taaOffset * gl_Position.w;
+		#endif
 	#endif
 	
 }
