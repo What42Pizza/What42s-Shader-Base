@@ -141,6 +141,10 @@ option.WATER_REFLECTIONS_ENABLED=Water Reflections Enabled
 option.WATER_REFLECTIONS_ENABLED.comment=Whether reflections appear on water\n\n(Performance cost: HIGH)
 option.RAIN_REFLECTIONS_ENABLED=Rain Reflections Enabled
 option.RAIN_REFLECTIONS_ENABLED.comment=Whether the ground has reflections in the rain
+option.REFLECTION_ITERATIONS=Reflection Iterations
+option.REFLECTION_ITERATIONS.comment=The number of steps that the pseudo-raytracer takes
+option.REFLECTION_STEP_INCREASE=Reflection Step Increase
+option.REFLECTION_STEP_INCREASE.comment=How much the step amount is increased per step
 
 
 

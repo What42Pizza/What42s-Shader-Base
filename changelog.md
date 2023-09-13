@@ -2,6 +2,8 @@
 
 - b1.6.4 (23/09/12)
   - Added isometric rendering
+  - Improved reflection performance
+  - Added more reflection settings
   - Improved shadow filtering when TAA is disabled
   - Tweaks / updates for 1.19
 

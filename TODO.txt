@@ -1,7 +1,6 @@
 Current:
 Add isometric setting locales
 Make reflections work with isometric rendering
-Add more reflection settings
 Add profiles
 Add post-processing effects like the super secret settings
 Move advanced options to 'advanced options' menus
@@ -54,6 +53,7 @@ Match the vanilla look, especially in:
 
 
 Finished:
+Add more reflection settings
 Add deferred and water to world 1 and -1
 Re-add levels to shadow filtering
 Add more 'program.enable'-s

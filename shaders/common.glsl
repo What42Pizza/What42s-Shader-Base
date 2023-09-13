@@ -248,12 +248,12 @@ vec3 cubicInterpolate(vec3 edge0, vec3 edge1, vec3 edge2, vec3 edge3, float valu
 	return vec3(x, y, z);
 }
 
-vec4 startMat(vec3 screenPos) {
-	return vec4(screenPos.xyz, 1.0);
+vec4 startMat(vec3 pos) {
+	return vec4(pos.xyz, 1.0);
 }
 
-vec3 endMat(vec4 screenPos) {
-	return screenPos.xyz/screenPos.w;
+vec3 endMat(vec4 pos) {
+	return pos.xyz / pos.w;
 }
 
 float toLinearDepth(float depth) {
@@ -392,6 +392,42 @@ float sqrt3(float x) {
 }
 
 // END OF COMPLEMENTARY REIMAGINED'S CODE
+
+
+
+// this code has to be in common bc motion blur uses it too
+#if !defined ISOMETRIC_RENDERING_ENABLED
+	// Previous frame reprojection from Chocapic13
+	vec2 reprojection(vec3 screenPos, vec3 cameraOffset) {
+		screenPos = screenPos * 2.0 - 1.0;
+		
+		vec4 viewPos = gbufferProjectionInverse * vec4(screenPos, 1.0);
+		viewPos /= viewPos.w;
+		vec4 worldPos = gbufferModelViewInverse * viewPos;
+		
+		vec4 prevWorldPos = worldPos + vec4(cameraOffset, 0.0);
+		vec4 prevCoord = gbufferPreviousProjection * gbufferPreviousModelView * prevWorldPos;
+		return prevCoord.xy / prevCoord.w * 0.5 + 0.5;
+	}
+#else
+	vec2 reprojection(vec3 screenPos, vec3 cameraOffset) {
+		const float scale = ISOMETRIC_WORLD_SCALE * 0.5;
+		const float forwardPlusBackward = ISOMETRIC_FORWARD_VISIBILITY * 0.5 + ISOMETRIC_BACKWARD_VISIBILITY * 0.5;
+		const float forwardMinusBackward = ISOMETRIC_FORWARD_VISIBILITY * 0.5 - ISOMETRIC_BACKWARD_VISIBILITY * 0.5;
+		vec4 scaleVec = vec4(scale * aspectRatio, scale, -forwardPlusBackward, 1);
+		const vec4 offsetVec = vec4(0, 0, forwardMinusBackward / forwardPlusBackward, 0);
+		screenPos = screenPos * 2.0 - 1.0;
+		
+		vec4 worldPos = gbufferModelViewInverse * ((vec4(screenPos, 1.0) + offsetVec) * scaleVec);
+		worldPos /= worldPos.w;
+		
+		vec4 prevWorldPos = worldPos + vec4(cameraOffset, 0.0);
+		vec4 prevCoord = (gbufferPreviousModelView * prevWorldPos) / scaleVec - offsetVec;
+		return prevCoord.xy / prevCoord.w * 0.5 + 0.5;
+	}
+#endif
+
+
 
 vec3 getViewPos(vec2 coords, float rawDepth) {
 	float linearDepth = toLinearDepth(rawDepth);
