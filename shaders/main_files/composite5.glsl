@@ -53,7 +53,6 @@ void main() {
 	//color = texture2D(NOISY_ADDITIONS_BUFFER, texcoord).rgb;
 	
 	
-	
 	/* DRAWBUFFERS:0 */
 	#ifdef DEBUG_OUTPUT_ENABLED
 		color = debugOutput;

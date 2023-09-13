@@ -87,18 +87,9 @@ varying float skyBrightnessMult;
 
 
 float getSkyBrightnessMult(float lightDot) {
-	
-	//return sin((lightDot + 1.0) * PI / 4.0);
-	
-	//float temp = lightDot * 0.5 - 0.5;
-	//return temp * temp * temp + 1.0;
-	
-	//return pow(max(lightDot, 0.0), 0.12);
-	
 	const float curve = 3.0;
 	const float finalFactor = 1.0 / (1.0 - 1.0 / (curve * 10.0 + 1.0));
 	return (1.0 - 1.0 / (max(lightDot, 0.0) * curve * 10.0 + 1.0)) * finalFactor;
-	
 }
 
 
@@ -157,7 +148,7 @@ vec3 getLightingBrightnesses(vec2 lmcoord) {
 				// filtered
 				// tactic: just absorb the shadow acne and average it out, then multiply and clamp to get back to 1.0
 				// actually I don't think that's how this works
-				// the problem is that the offset pos goes inside the block half the time, which gets counted as in shadow when the lightDot is low
+				// the problem is that the offset pos goes inside the block half the time (especially when lightDot is low), which gets counted as 'in shadow'
 				for (int i = 0; i < SHADOW_OFFSET_COUNT; i++) {
 					if (texture2D(shadowtex0, offsetShadowPos.xy + SHADOW_OFFSETS[i].xy * offsetMult).r >= offsetShadowPos.z) {
 						float currentShadowWeight = SHADOW_OFFSETS[i].z;

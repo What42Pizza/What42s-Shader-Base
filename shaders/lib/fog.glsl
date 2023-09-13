@@ -50,7 +50,11 @@ void getFogData(vec3 playerPos) {
 	
 	
 	if (isEyeInWater == 0) { // not in liquid
-		fogAmount /= far * 0.9;
+		#if MC_VERSION >= 11300
+			fogAmount /= far;
+		#else
+			fogAmount /= far * 0.9;
+		#endif
 		fogAmount = (fogAmount - 1.0) / (1.0 - mix(FOG_START, FOG_RAIN_START, betterRainStrength)) + 1.0;
 		fogAmount = clamp(fogAmount, 0.0, 1.0);
 		#if FOG_CURVE == 2

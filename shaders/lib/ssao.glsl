@@ -34,7 +34,7 @@ float getAoFactor() {
 		
 	}
 	total /= maxTotal;
-	total *= smoothstep(0.8, 0.7, estimateDepthFSH(texcoord, depth));
+	total *= smoothstep(0.65, 0.55, estimateDepthFSH(texcoord, depth));
 	
 	return total * 0.35;
 }
