@@ -7,6 +7,9 @@
   - Improved shadow filtering when TAA is disabled
   - Tweaks / updates for 1.19
 
+- b1.6.4.1 (23/09/15)
+  - More 1.19 tweaks
+
 <br>
 
 - b1.6.3 (23/08/30)

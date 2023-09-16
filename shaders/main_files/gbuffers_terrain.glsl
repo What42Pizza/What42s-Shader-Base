@@ -156,7 +156,7 @@ void main() {
 	
 	
 	#if !defined ISOMETRIC_RENDERING_ENABLED
-		if (gl_Position.z < -1.0) return; // simple but effective optimization
+		if (gl_Position.z < -1.5) return; // simple but effective optimization
 	#endif
 	
 	

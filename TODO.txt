@@ -1,5 +1,8 @@
 Current:
-Add isometric setting locales
+Add file for taa jitter
+Add handhelt light to textured
+Add backwards depth check to reflections
+Finish isometric setting locales
 Make reflections work with isometric rendering
 Add profiles
 Add post-processing effects like the super secret settings

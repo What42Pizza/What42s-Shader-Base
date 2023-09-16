@@ -7,6 +7,7 @@
 // transfers
 
 varying vec2 texcoord;
+varying vec4 glcolor;
 varying float lightMult;
 
 #ifdef NORMALS_NEEDED
@@ -20,7 +21,7 @@ varying float lightMult;
 #ifdef FSH
 
 void main() {
-	vec4 color = texture2D(MAIN_BUFFER, texcoord);
+	vec4 color = texture2D(MAIN_BUFFER, texcoord) * glcolor;
 	#ifdef DEBUG_OUTPUT_ENABLED
 		vec3 debugOutput = vec3(0.0);
 	#endif
@@ -60,7 +61,7 @@ void main() {
 void main() {
 	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
 	vec2 lmcoord  = (gl_TextureMatrix[1] * gl_MultiTexCoord1).xy;
-	lightMult = max(max(lmcoord.x, lmcoord.y), 0.1);
+	lightMult = max(max(lmcoord.x, lmcoord.y), 0.01);
 	
 	
 	#ifdef ISOMETRIC_RENDERING_ENABLED
@@ -83,6 +84,8 @@ void main() {
 		#endif
 	#endif
 	
+	
+	glcolor = gl_Color;
 	
 	#ifdef NORMALS_NEEDED
 		normal = gl_NormalMatrix * gl_Normal;
