@@ -18,16 +18,19 @@ void raytrace(out vec2 reflectionPos, out int error, vec3 viewPos, vec3 normal) 
 	
 	for (int i = 0; i < REFLECTION_ITERATIONS; i++) {
 		
-		float realDepth = texture2D(depthtex1, screenPos.xy).r * 1.0;
+		float realDepth = texture2D(depthtex1, screenPos.xy).r;
 		float realToScreen = screenPos.z - realDepth;
 		float stepVectorLen = length(stepVector);
 		
-		if (realToScreen > stepVectorLen){ // went behind object
-			reflectionPos = screenPos.xy;
-			error = 1;
-			return;
-		}
-		if (realToScreen > 0.0 || (screenPos.x < -0.02 || screenPos.x > 1.02 || screenPos.y < -0.02 || screenPos.y > 1.02)) {
+		//if (realToScreen > stepVectorLen * 100) { // went behind object
+		//	reflectionPos = screenPos.xy;
+		//	error = 1;
+		//	return;
+		//}
+		if (
+			(realToScreen > 0.0 || (screenPos.x < -0.02 || screenPos.x > 1.02 || screenPos.y < -0.02 || screenPos.y > 1.02))
+			//&& realToScreen < stepVectorLen * 1.5
+		) {
 			hitCount ++;
 			if (hitCount >= 6) { // converged on point
 				reflectionPos = screenPos.xy;
@@ -40,6 +43,16 @@ void raytrace(out vec2 reflectionPos, out int error, vec3 viewPos, vec3 normal) 
 		
 		stepVector *= REFLECTION_STEP_INCREASE;
 		screenPos += stepVector;
+		float newLinearDepth = toLinearDepth(screenPos.z);
+		//if (newLinearDepth < 0) { // went behind camera (maybe?)
+		//	error = 2;
+		//	return;
+		//}
+		//if (newLinearDepth > 1) { // went into sky (maybe?)
+		//	reflectionPos = screenPos.xy;
+		//	error = 0;
+		//	return;
+		//}
 	}
 	
 	error = 2;
@@ -64,8 +77,12 @@ void addReflection(inout vec3 color, vec3 viewPos, vec3 normal, sampler2D textur
 		color.rgb = mix(color.rgb, reflectionColor, lerpAmount);
 		
 	} else if (error == 1) {
+		vec3 reflectionColor = fogColor;//texture2D(texture, reflectionPos).rgb;
+		reflectionColor *= 0.8 + color.rgb * 0.2;
 		lerpAmount *= clamp(5.0 - 5.0 * max(abs(reflectionPos.x * 2.0 - 1.0), abs(reflectionPos.y * 2.0 - 1.0)), 0.0, 1.0);
-		color.rgb *= 1.0 - lerpAmount * 0.8;
+		color.rgb = mix(color.rgb, reflectionColor, lerpAmount);
+		//lerpAmount *= clamp(5.0 - 5.0 * max(abs(reflectionPos.x * 2.0 - 1.0), abs(reflectionPos.y * 2.0 - 1.0)), 0.0, 1.0);
+		//color.rgb *= 1.0 - lerpAmount * 0.8;
 		
 	}
 	

@@ -1,7 +1,7 @@
 Current:
 Add file for taa jitter
 Add handhelt light to textured
-Add backwards depth check to reflections
+Add backwards depth check to reflections?
 Finish isometric setting locales
 Make reflections work with isometric rendering
 Add profiles

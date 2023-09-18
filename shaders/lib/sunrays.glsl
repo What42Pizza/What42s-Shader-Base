@@ -6,7 +6,7 @@ flat float sunraysAmountMult;
 #ifdef FSH
 
 const int SAMPLE_COUNT = int(SUNRAYS_QUALITY * SUNRAYS_QUALITY / 2);
-float getSunraysAmount(inout uint rng) {
+float getSunraysAmount(inout int rng) {
 	
 	
 	#if SUNRAYS_STYLE == 1

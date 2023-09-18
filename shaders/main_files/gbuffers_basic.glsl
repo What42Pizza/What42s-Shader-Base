@@ -26,6 +26,9 @@ void main() {
 #ifdef ISOMETRIC_RENDERING_ENABLED
 	#include "/lib/isometric.glsl"
 #endif
+#ifdef TAA_ENABLED
+	#include "/lib/taa_jitter.glsl"
+#endif
 
 void main() {
 	
@@ -37,11 +40,7 @@ void main() {
 	#endif
 	
 	#ifdef TAA_ENABLED
-		#ifdef ISOMETRIC_RENDERING_ENABLED
-			gl_Position.xy += taaOffset * 0.5;
-		#else
-			gl_Position.xy += taaOffset * gl_Position.w;
-		#endif
+		doTaaJitter(gl_Position.xy);
 	#endif
 	
 	glcolor = gl_Color;

@@ -64,13 +64,16 @@ void main() {
 #ifdef ISOMETRIC_RENDERING_ENABLED
 	#include "/lib/isometric.glsl"
 #endif
+#ifdef TAA_ENABLED
+	#include "/lib/taa_jitter.glsl"
+#endif
 
 void main() {
 	
 	gl_Position = ftransform();
 	
 	#ifdef TAA_ENABLED
-		gl_Position.xy += taaOffset * gl_Position.w;
+		doTaaJitter(gl_Position.xy);
 	#endif
 	
 	starData = vec4(gl_Color.rgb, float(gl_Color.r == gl_Color.g && gl_Color.g == gl_Color.b && gl_Color.r > 0.0));

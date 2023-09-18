@@ -23,7 +23,7 @@ void main() {
 	#ifdef DEBUG_OUTPUT_ENABLED
 		vec3 debugOutput = texelFetch(DEBUG_BUFFER, texelcoord, 0).rgb;
 	#endif
-	uint rng = rngStart;
+	int rng = rngStart;
 	
 	
 	

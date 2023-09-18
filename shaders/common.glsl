@@ -291,10 +291,10 @@ bool depthIsHand(float depth) {
 
 
 #ifdef FSH
-	uint rngStart =
-		uint(gl_FragCoord.x) +
-		uint(gl_FragCoord.y) * uint(viewWidth) +
-		uint(frameCounter  ) * uint(viewWidth) * uint(viewHeight);
+	int rngStart =
+		int(gl_FragCoord.x) +
+		int(gl_FragCoord.y) * int(viewWidth) +
+		int(frameCounter  ) * int(viewWidth) * int(viewHeight);
 #endif
 
 #ifdef USE_BETTER_RAND
@@ -319,33 +319,33 @@ bool depthIsHand(float depth) {
 	}
 	*/
 #else
-	uint rotateRight(uint value, uint shift) {
+	int rotateRight(int value, uint shift) {
 		return (value >> shift) | (value << (32u - shift));
 	}
-	float randomFloat(inout uint rng) {
-		rng = rng * 747796405u + 2891336453u;
+	float randomFloat(inout int rng) {
+		rng = rng * 747796405 + 2891336453;
 		rng ^= rotateRight(rng, 11u);
 		rng ^= rotateRight(rng, 17u);
 		rng ^= rotateRight(rng, 23u);
-		float f = float(rng % 1000000u);
+		float f = float(rng % 1000000);
 		return f / 500000.0 - 1.0;
 	}
 #endif
 
-vec2 randomVec2(inout uint rng) {
+vec2 randomVec2(inout int rng) {
 	float x = randomFloat(rng);
 	float y = randomFloat(rng);
 	return vec2(x, y);
 }
 
-vec3 randomVec3(inout uint rng) {
+vec3 randomVec3(inout int rng) {
 	float x = randomFloat(rng);
 	float y = randomFloat(rng);
 	float z = randomFloat(rng);
 	return vec3(x, y, z);
 }
 
-vec3 randomVec3FromRValue(uint rng) {
+vec3 randomVec3FromRValue(int rng) {
 	return randomVec3(rng);
 }
 

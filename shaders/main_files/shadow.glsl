@@ -1,7 +1,13 @@
+varying vec2 texcoord;
+
+
+
 #ifdef FSH
 
 void main() {
-	gl_FragData[0] = vec4(1.0);
+	vec4 color = texture2D(texture, texcoord);
+	
+	gl_FragData[0] = color;
 }
 
 #endif
@@ -13,6 +19,7 @@ void main() {
 #include "/lib/waving.glsl"
 
 void main() {
+	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
 	
 	#ifdef WAVING_ENABLED
 		vec4 position = gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex);
