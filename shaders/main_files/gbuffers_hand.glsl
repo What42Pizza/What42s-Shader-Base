@@ -8,12 +8,16 @@
 
 // transfers
 
-varying vec2 texcoord;
-varying vec2 lmcoord;
-varying vec4 glcolor;
-
-#ifdef NORMALS_NEEDED
-	varying vec3 normal;
+#ifdef FIRST_PASS
+	
+	varying vec2 texcoord;
+	varying vec2 lmcoord;
+	varying vec4 glcolor;
+	
+	#ifdef NORMALS_NEEDED
+		varying vec3 normal;
+	#endif
+	
 #endif
 
 // includes
@@ -36,8 +40,8 @@ void main() {
 	
 	// main lighting
 	
-	vec3 brightnesses = getLightingBrightnesses(lmcoord);
-	color.rgb *= getLightColor(brightnesses.x, brightnesses.y, brightnesses.z);
+	vec3 brightnesses = getLightingBrightnesses(lmcoord  ARGS_IN);
+	color.rgb *= getLightColor(brightnesses.x, brightnesses.y, brightnesses.z  ARGS_IN);
 	
 	
 	
@@ -50,21 +54,22 @@ void main() {
 	
 	
 	
-	/* DRAWBUFFERS:0 */
+	/* DRAWBUFFERS:06 */
 	#ifdef DEBUG_OUTPUT_ENABLED
 		color = vec4(debugOutput, 1.0);
 	#endif
 	gl_FragData[0] = color;
+	gl_FragData[1] = vec4(lmcoord, 0.0, color.a);
 	#ifdef BLOOM_AND_NORMALS
-		/* DRAWBUFFERS:024 */
-		gl_FragData[1] = colorForBloom;
-		gl_FragData[2] = vec4(normal, 1.0);
+		/* DRAWBUFFERS:0624 */
+		gl_FragData[2] = colorForBloom;
+		gl_FragData[3] = vec4(normal, 1.0);
 	#elif defined BLOOM_ENABLED
-		/* DRAWBUFFERS:02 */
-		gl_FragData[1] = colorForBloom;
+		/* DRAWBUFFERS:062 */
+		gl_FragData[2] = colorForBloom;
 	#elif defined NORMALS_NEEDED
-		/* DRAWBUFFERS:04 */
-		gl_FragData[1] = vec4(normal, 1.0);
+		/* DRAWBUFFERS:064 */
+		gl_FragData[2] = vec4(normal, 1.0);
 	#endif
 }
 
@@ -96,7 +101,7 @@ void main() {
 	#endif
 	
 	#ifdef TAA_ENABLED
-		doTaaJitter(gl_Position.xy);
+		doTaaJitter(gl_Position.xy  ARGS_IN);
 	#endif
 	
 	
@@ -107,7 +112,7 @@ void main() {
 	#endif
 	
 	
-	doPreLighting();
+	doPreLighting(ARG_IN);
 	
 }
 

@@ -1,23 +1,51 @@
-varying vec4 starData; //rgb = star color, a = flag for weather or not this pixel is a star.
-flat vec3 upVec;
-
-
+#ifdef FIRST_PASS
+	varying vec4 starData; //rgb = star color, a = flag for weather or not this pixel is a star.
+#endif
 
 
 
 #ifdef FSH
 
-float getHorizonMultiplier() {
-	#ifdef OVERWORLD
-		vec4 screenPos = vec4(gl_FragCoord.xy * invViewSize, gl_FragCoord.z, 1.0);
-		vec4 viewPos = gbufferProjectionInverse * (screenPos * 2.0 - 1.0);
-		float viewDot = dot(normalize(viewPos.xyz), upVec);
-		float altitudeAddend = min(horizonAltitudeAddend, 1.0 - 2.0 * eyeBrightnessSmooth.y / 240.0); // don't darken sky when there's sky light
-		return clamp(viewDot * 5.0 - altitudeAddend * 8.0, 0.0, 1.0);
-	#else
-		return 1.0;
-	#endif
+float fogify(float x, float w  ARGS_OUT) {
+	return w / (x * x + w);
 }
+
+vec3 getSkyColor(ARG_OUT) {
+	
+	#include "/import/invViewSize.glsl"
+	#include "/import/gbufferProjectionInverse.glsl"
+	#include "/import/gbufferModelView.glsl"
+	#include "/import/skyColor.glsl"
+	#include "/import/fogColor.glsl"
+	
+	vec4 pos = vec4(gl_FragCoord.xy * invViewSize * 2.0 - 1.0, 1.0, 1.0);
+	pos = gbufferProjectionInverse * pos;
+	float upDot = dot(normalize(pos.xyz), gbufferModelView[1].xyz);
+	return mix(skyColor, fogColor, fogify(max(upDot, 0.0), 0.25  ARGS_IN));
+	
+}
+
+#ifdef DARKEN_SKY_UNDERGROUND
+	float getHorizonMultiplier(ARG_OUT) {
+		#ifdef OVERWORLD
+			
+			#include "/import/invViewSize.glsl"
+			#include "/import/gbufferProjectionInverse.glsl"
+			#include "/import/upPosition.glsl"
+			#include "/import/horizonAltitudeAddend.glsl"
+			#include "/import/eyeBrightnessSmooth.glsl"
+			
+			vec4 screenPos = vec4(gl_FragCoord.xy * invViewSize, gl_FragCoord.z, 1.0);
+			vec4 viewPos = gbufferProjectionInverse * (screenPos * 2.0 - 1.0);
+			float viewDot = dot(normalize(viewPos.xyz), normalize(upPosition));
+			float altitudeAddend = min(horizonAltitudeAddend, 1.0 - 2.0 * eyeBrightnessSmooth.y / 240.0); // don't darken sky when there's sky light
+			return clamp(viewDot * 5.0 - altitudeAddend * 8.0, 0.0, 1.0);
+			
+		#else
+			return 1.0;
+		#endif
+	}
+#endif
 
 
 
@@ -61,9 +89,6 @@ void main() {
 
 #ifdef VSH
 
-#ifdef ISOMETRIC_RENDERING_ENABLED
-	#include "/lib/isometric.glsl"
-#endif
 #ifdef TAA_ENABLED
 	#include "/lib/taa_jitter.glsl"
 #endif
@@ -77,7 +102,6 @@ void main() {
 	#endif
 	
 	starData = vec4(gl_Color.rgb, float(gl_Color.r == gl_Color.g && gl_Color.g == gl_Color.b && gl_Color.r > 0.0));
-	upVec = normalize(gbufferModelView[1].xyz);
 	
 }
 

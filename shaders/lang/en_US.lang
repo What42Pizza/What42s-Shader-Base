@@ -359,6 +359,12 @@ screen.ISOMETRIC_SETTINGS=Isometric Settings
 
 option.ISOMETRIC_RENDERING_ENABLED=Isometric Rendering Enabled
 option.ISOMETRIC_RENDERING_ENABLED.comment=Changes the projection to Isometric
+option.ISOMETRIC_WORLD_SCALE=Isometric World Scale
+option.ISOMETRIC_WORLD_SCALE.comment=This controls how "zoomed-out" the camera is
+option.ISOMETRIC_BACKWARD_VISIBILITY=Isometric Backwards Visibility
+option.ISOMETRIC_BACKWARD_VISIBILITY.comment=This controls how close the clipping plane is behind you
+option.ISOMETRIC_FORWARD_VISIBILITY=Isometric Forward Visibility
+option.ISOMETRIC_FORWARD_VISIBILITY.comment=This controls how close the clipping plane is in front of you
 
 
 
@@ -369,7 +375,7 @@ screen.DEBUG_SETTINGS=Debug
 option.USE_BETTER_RAND=Use Better Random
 option.USE_BETTER_RAND.comment=The better random function is technically better, but the performance cost doesn't exactly make up for it
 option.SHOW_DANGEROUS_LIGHT=Show Dangerous Light
-option.SHOW_DANGEROUS_LIGHT.comment=Show areas where hostile mobs can spawn
+option.SHOW_DANGEROUS_LIGHT.comment=Show areas where hostile mobs can spawn (has false positives)
 option.USE_SIMPLE_LIGHT=Use Simple Light
 option.USE_SIMPLE_LIGHT.comment=Breaks the lighting in a strangely artistic way
 option.SHOW_SUNLIGHT=Show Sunlight

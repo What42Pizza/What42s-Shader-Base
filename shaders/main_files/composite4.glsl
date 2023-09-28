@@ -4,7 +4,9 @@
 
 
 
-varying vec2 texcoord;
+#ifdef FIRST_PASS
+	varying vec2 texcoord;
+#endif
 
 
 
@@ -26,26 +28,28 @@ void main() {
 	
 	
 	
-	float depth = texelFetch(depthtex1, texelcoord, 0).r;
-	float linearDepth = toLinearDepth(depth);
+	float depth = texelFetch(DEPTH_BUFFER_WO_TRANS, texelcoord, 0).r;
+	float linearDepth = toLinearDepth(depth  ARGS_IN);
 	float handFactor = 0.0;
 	#if !defined ISOMETRIC_RENDERING_ENABLED
 		if (depthIsHand(linearDepth)) {
-			depth = fromLinearDepth(HAND_DEPTH);
+			depth = fromLinearDepth(HAND_DEPTH  ARGS_IN);
 			handFactor = -0.25;
 		}
 	#endif
 	
 	vec3 pos = vec3(texcoord, depth);
+	#include "/import/cameraPosition.glsl"
+	#include "/import/previousCameraPosition.glsl"
 	vec3 cameraOffset = cameraPosition - previousCameraPosition;
-	vec2 prevCoord = reprojection(pos, cameraOffset);
+	vec2 prevCoord = reprojection(pos, cameraOffset  ARGS_IN);
 	
 	
 	
 	// ======== TAA ========
 	
 	#ifdef TAA_ENABLED
-		doTAA(color, prev, linearDepth, prevCoord, handFactor);
+		doTAA(color, prev, linearDepth, prevCoord, handFactor  ARGS_IN);
 	#endif
 	
 	
@@ -54,7 +58,7 @@ void main() {
 	
 	#ifdef MOTION_BLUR_ENABLED
 		if (length(texcoord - prevCoord) > 0.00001) {
-			doMotionBlur(color, prevCoord);
+			doMotionBlur(color, prevCoord  ARGS_IN);
 		}
 	#endif
 	

@@ -1,4 +1,6 @@
-varying vec2 texcoord;
+#ifdef FIRST_PASS
+	varying vec2 texcoord;
+#endif
 
 
 
@@ -23,12 +25,12 @@ void main() {
 	// ======== REFLECTIONS ========
 	
 	#ifdef RAIN_REFLECTIONS_ENABLED
+		vec3 viewPos = getViewPos(texcoord, texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r  ARGS_IN);
 		float rainReflectionStrength = texelFetch(REFLECTION_STRENGTH_BUFFER, texelcoord, 0).r;
 		if (rainReflectionStrength > 0.01) {
-			vec3 viewPos = getViewPos(texcoord, texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r);
 			if (viewPos != vec3(0.0)) {
 				vec3 normal = texelFetch(NORMALS_BUFFER, texelcoord, 0).rgb;
-				addReflection(color, viewPos, normal, MAIN_BUFFER, rainReflectionStrength, 0.0);
+				addReflection(color, viewPos, normal, MAIN_BUFFER, rainReflectionStrength, 0.0  ARGS_IN);
 			}
 		}
 	#endif
@@ -38,7 +40,7 @@ void main() {
 	// ======== SSAO ========
 	
 	#ifdef SSAO_ENABLED
-		float aoFactor = getAoFactor();
+		float aoFactor = getAoFactor(ARG_IN);
 		color *= 1.0 - aoFactor * AO_AMOUNT;
 		#ifdef SSAO_SHOW_AMOUNT
 			debugOutput = vec3(1.0 - aoFactor);

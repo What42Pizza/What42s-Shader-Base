@@ -4,7 +4,9 @@
 
 
 
-varying vec2 texcoord;
+#ifdef FIRST_PASS
+	varying vec2 texcoord;
+#endif
 
 
 
@@ -23,7 +25,8 @@ void main() {
 	#ifdef DEBUG_OUTPUT_ENABLED
 		vec3 debugOutput = texelFetch(DEBUG_BUFFER, texelcoord, 0).rgb;
 	#endif
-	int rng = rngStart;
+	
+	#include "/utils/var_rng.glsl"
 	
 	
 	
@@ -31,7 +34,7 @@ void main() {
 	
 	#ifdef BLOOM_ENABLED
 		
-		vec3 bloomAddition = getBloomAddition(rng);
+		vec3 bloomAddition = getBloomAddition(rng  ARGS_IN);
 		noisyAdditions += bloomAddition;
 		
 		#ifdef BLOOM_SHOW_ADDITION
@@ -51,10 +54,11 @@ void main() {
 		
 		float sunraysAmount = 0.0;
 		for (int i = 0; i < SUNRAYS_COMPUTE_COUNT; i ++) {
-			sunraysAmount += getSunraysAmount(rng);
+			sunraysAmount += getSunraysAmount(rng  ARGS_IN);
 		};
 		sunraysAmount /= SUNRAYS_COMPUTE_COUNT;
 		
+		#include "/import/isSun.glsl"
 		vec3 sunraysColor = isSun ? SUNRAYS_SUN_COLOR : SUNRAYS_MOON_COLOR;
 		vec3 sunraysAddition = sunraysAmount * sunraysColor;
 		
@@ -91,8 +95,8 @@ void main() {
 	texcoord = gl_MultiTexCoord0.xy;
 	
 	#ifdef SUNRAYS_ENABLED
-		calculateLightCoord();
-		calculateSunraysAmount();
+		calculateLightCoord(ARG_IN);
+		calculateSunraysAmount(ARG_IN);
 	#endif
 	
 }

@@ -7,11 +7,12 @@
 
 
 
-vec4 projectIsometric(vec3 worldPos) {
+vec4 projectIsometric(vec3 worldPos  ARGS_OUT) {
 	const float scale = ISOMETRIC_WORLD_SCALE * 0.5;
 	const float forwardPlusBackward = ISOMETRIC_FORWARD_VISIBILITY * 0.5 + ISOMETRIC_BACKWARD_VISIBILITY * 0.5;
 	const float forwardMinusBackward = ISOMETRIC_FORWARD_VISIBILITY * 0.5 - ISOMETRIC_BACKWARD_VISIBILITY * 0.5;
 	vec4 scaleVec = vec4(scale * aspectRatio, scale, -forwardPlusBackward, 1);
 	const vec4 offsetVec = vec4(0, 0, forwardMinusBackward / forwardPlusBackward, 0);
+	#include "/import/gbufferModelView.glsl"
 	return (gbufferModelView * vec4(worldPos, 1.0)) / scaleVec - offsetVec;
 }

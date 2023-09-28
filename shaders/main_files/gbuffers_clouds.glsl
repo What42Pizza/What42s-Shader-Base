@@ -6,11 +6,15 @@
 
 // transfers
 
-varying vec2 texcoord;
-flat float glcolor;
-
-#ifdef NORMALS_NEEDED
-	varying vec3 normal;
+#ifdef FIRST_PASS
+	
+	varying vec2 texcoord;
+	flat float glcolor;
+	
+	#ifdef NORMALS_NEEDED
+		varying vec3 normal;
+	#endif
+	
 #endif
 
 // includes
@@ -40,9 +44,9 @@ void main() {
 	// fog
 	#ifdef FOG_ENABLED
 		#ifdef BLOOM_ENABLED
-			applyFog(color.rgb, colorForBloom.rgb);
+			applyFog(color.rgb, colorForBloom.rgb  ARGS_IN);
 		#else
-			applyFog(color.rgb);
+			applyFog(color.rgb  ARGS_IN);
 		#endif
 	#endif
 	
@@ -83,18 +87,18 @@ void main() {
 	
 	#ifdef ISOMETRIC_RENDERING_ENABLED
 		vec3 worldPos = endMat(gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex));
-		gl_Position = projectIsometric(worldPos);
+		gl_Position = projectIsometric(worldPos  ARGS_IN);
 	#else
 		gl_Position = ftransform();
 	#endif
 	
 	#ifdef TAA_ENABLED
-		doTaaJitter(gl_Position.xy);
+		doTaaJitter(gl_Position.xy  ARGS_IN);
 	#endif
 	
 	#ifdef FOG_ENABLED
 		vec4 position = gl_Vertex;
-		getFogData(position.xyz);
+		getFogData(position.xyz  ARGS_IN);
 	#endif
 	
 	glcolor = gl_Color.r;

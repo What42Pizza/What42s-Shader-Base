@@ -6,12 +6,16 @@
 
 // transferres
 
-varying vec2 texcoord;
-varying vec2 lmcoord;
-varying vec4 glcolor;
-
-#ifdef NORMALS_NEEDED
-	varying vec3 normal;
+#ifdef FIRST_PASS
+	
+	varying vec2 texcoord;
+	varying vec2 lmcoord;
+	varying vec4 glcolor;
+	
+	#ifdef NORMALS_NEEDED
+		varying vec3 normal;
+	#endif
+	
 #endif
 
 // includes
@@ -28,19 +32,20 @@ varying vec4 glcolor;
 #ifdef FSH
 
 void main() {
-	vec4 color = texture2D(MAIN_BUFFER, texcoord);// * glcolor;
+	vec4 color = texture2D(MAIN_BUFFER, texcoord) * glcolor;
 	#ifdef DEBUG_OUTPUT_ENABLED
 		vec3 debugOutput = vec3(0.0);
 	#endif
 	
 	
 	// hurt flash, creeper flash, etc
+	#include "/import/entityColor.glsl"
 	color.rgb = mix(color.rgb, entityColor.rgb, entityColor.a);
 	
 	
 	// main lighting
-	vec3 brightnesses = getLightingBrightnesses(lmcoord);
-	color.rgb *= getLightColor(brightnesses.x, brightnesses.y, brightnesses.z);
+	vec3 brightnesses = getLightingBrightnesses(lmcoord  ARGS_IN);
+	color.rgb *= getLightColor(brightnesses.x, brightnesses.y, brightnesses.z  ARGS_IN);
 	
 	
 	// bloom
@@ -52,25 +57,26 @@ void main() {
 	
 	// fog
 	#ifdef ENTITY_FOG_ENABLED
-		applyFog(color.rgb, colorForBloom.rgb);
+		applyFog(color.rgb, colorForBloom.rgb  ARGS_IN);
 	#endif
 	
 	
-	/* DRAWBUFFERS:0 */
+	/* DRAWBUFFERS:0 6*/
 	#ifdef DEBUG_OUTPUT_ENABLED
 		color = vec4(debugOutput, 1.0);
 	#endif
 	gl_FragData[0] = color;
+	gl_FragData[1] = vec4(lmcoord, 0.0, color.a);
 	#ifdef BLOOM_AND_NORMALS
-		/* DRAWBUFFERS:024 */
-		gl_FragData[1] = colorForBloom;
-		gl_FragData[2] = vec4(normal, 1.0);
+		/* DRAWBUFFERS:0624 */
+		gl_FragData[2] = colorForBloom;
+		gl_FragData[3] = vec4(normal, 1.0);
 	#elif defined BLOOM_ENABLED
-		/* DRAWBUFFERS:02 */
-		gl_FragData[1] = colorForBloom;
+		/* DRAWBUFFERS:062 */
+		gl_FragData[2] = colorForBloom;
 	#elif defined NORMALS_NEEDED
-		/* DRAWBUFFERS:04 */
-		gl_FragData[1] = vec4(normal, 1.0);
+		/* DRAWBUFFERS:064 */
+		gl_FragData[2] = vec4(normal, 1.0);
 	#endif
 }
 
@@ -96,7 +102,7 @@ void main() {
 	
 	#ifdef ISOMETRIC_RENDERING_ENABLED
 		vec3 worldPos = endMat(gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex));
-		gl_Position = projectIsometric(worldPos);
+		gl_Position = projectIsometric(worldPos  ARGS_IN);
 	#else
 		gl_Position = ftransform();
 	#endif
@@ -107,13 +113,13 @@ void main() {
 	
 	
 	#ifdef TAA_ENABLED
-		doTaaJitter(gl_Position.xy);
+		doTaaJitter(gl_Position.xy  ARGS_IN);
 	#endif
 	
 	
 	#ifdef ENTITY_FOG_ENABLED
 		vec4 position = gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex);
-		getFogData(position.xyz);
+		getFogData(position.xyz  ARGS_IN);
 	#endif
 	
 	
@@ -124,7 +130,7 @@ void main() {
 	#endif
 	
 	
-	doPreLighting();
+	doPreLighting(ARG_IN);
 	
 }
 

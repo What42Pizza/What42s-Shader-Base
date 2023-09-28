@@ -1,10 +1,22 @@
 Current:
-Add file for taa jitter
-Add handhelt light to textured
+Add uniforms system to documentation
+Move all uniform-using function from common into /utils
+Make nether bloom look good again
+Add water caustics?
+Add Underwater waviness
+Remove texcoord from composites & deffered and replace with gl_FragCoord?
+Add cave ambient to settings menu
+Make cave ambient light detection go all the way down to 0
+Add setting for SHADOW_DISTORT_ADDITION
+Stop rain reflections underwater?
+Make sun / moon / sunrise / sunset detection based on sunAngle
+Add documentation for isometrics
+Add langs for profile names
+Add style option?
+Move more fog logic into shaders.properties
+Make only top of water wavy
 Add backwards depth check to reflections?
-Finish isometric setting locales
 Make reflections work with isometric rendering
-Add profiles
 Add post-processing effects like the super secret settings
 Move advanced options to 'advanced options' menus
 Do a round of replacing smoothsteps with flat line?
@@ -15,7 +27,6 @@ Find a way to make shadowLightPosition stop flickering?
 Make sure sunrays work well at sunrise & sunset
 Store bloom mult instead of bloom color?
 Add setting to fade fog into sky buffer (to make the sun and moon appear in fog) (would also need sunray depth fix)
-Calculate light data in vertex shaders?
 Do a round of general optimizations
 Take FXAA from Comp Reimagined?
 Prevent TAA on entities?
@@ -34,7 +45,6 @@ Determine performance costs
 Potion effects?
 Colorblind aids?
 Custom sun / moon?
-Realistic water?
 
 
 
@@ -56,6 +66,15 @@ Match the vanilla look, especially in:
 
 
 Finished:
+Improve 'show dangerous light'
+Realistic water? (done a while ago)
+Calculate light data in vertex shaders? (done a while ago)
+Finish isometric setting locales
+Add profiles
+Add handhelt light to textured
+Make no-ambient-light a consistent brightness (add lerp from no-amlbient-light color to daytime-specific ambient color?)
+Fix blank xp and banners
+Add file for taa jitter
 Add more reflection settings
 Add deferred and water to world 1 and -1
 Re-add levels to shadow filtering

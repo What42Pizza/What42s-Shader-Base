@@ -1,4 +1,4 @@
-vec3 sampleBloom(float sizeMult, inout int rng) {
+vec3 sampleBloom(float sizeMult, inout int rng  ARGS_OUT) {
 	vec3 bloomAddition = vec3(0.0);
 	for (int layer = 0; layer < BLOOM_LEVELS; layer++) {
 		float size = float(layer + 1) / BLOOM_LEVELS;
@@ -17,6 +17,7 @@ vec3 sampleBloom(float sizeMult, inout int rng) {
 		for (int i = 0; i <= SAMPLE_COUNT; i ++) {
 			
 			float len = sqrt(float(i) / SAMPLE_COUNT + 0.1) * size;
+			#include "/import/invAspectRatio.glsl"
 			vec2 offset = vec2(cos(i + noise) * len * invAspectRatio, sin(i + noise) * len);
 			vec2 sampleCoord = coord + offset;
 			
@@ -43,14 +44,14 @@ vec3 sampleBloom(float sizeMult, inout int rng) {
 
 
 
-vec3 getBloomAddition(inout int rng) {
+vec3 getBloomAddition(inout int rng  ARGS_OUT) {
 	
-	float depth = toBlockDepth(texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r);
+	float depth = toBlockDepth(texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r  ARGS_IN);
 	float sizeMult = inversesqrt(depth);
 	
 	vec3 bloomAddition = vec3(0.0);
 	for (int i = 0; i < BLOOM_COMPUTE_COUNT; i++) {
-		bloomAddition += sampleBloom(sizeMult, rng);
+		bloomAddition += sampleBloom(sizeMult, rng  ARGS_IN);
 	}
 	bloomAddition *= (1.0 / BLOOM_COMPUTE_COUNT) * BLOOM_AMOUNT;
 	

@@ -1,19 +1,41 @@
-varying float fogAmount;
-varying vec3 fogSkyColor;
-#ifdef BLOOM_ENABLED
-	varying vec3 fogBloomSkyColor;
+#ifdef FIRST_PASS
+	varying float fogAmount;
+	varying vec3 fogSkyColor;
+	#ifdef BLOOM_ENABLED
+		varying vec3 fogBloomSkyColor;
+	#endif
 #endif
 
 
 
 #ifdef FSH
 
+float fogify(float x, float w  ARGS_OUT) {
+	return w / (x * x + w);
+}
+
+vec3 getSkyColor(ARG_OUT) {
+	
+	#include "/import/invViewSize.glsl"
+	#include "/import/gbufferProjectionInverse.glsl"
+	#include "/import/gbufferModelView.glsl"
+	#include "/import/skyColor.glsl"
+	#include "/import/fogColor.glsl"
+	
+	vec4 pos = vec4(gl_FragCoord.xy * invViewSize * 2.0 - 1.0, 1.0, 1.0);
+	pos = gbufferProjectionInverse * pos;
+	float upDot = dot(normalize(pos.xyz), gbufferModelView[1].xyz);
+	return mix(skyColor, fogColor, fogify(max(upDot, 0.0), 0.25  ARGS_IN));
+	
+}
+
 #ifdef BLOOM_ENABLED
-	void applyFog(inout vec3 color, inout vec3 colorForBloom) {
+	void applyFog(inout vec3 color, inout vec3 colorForBloom  ARGS_OUT) {
 		vec3 colorMix;
 		vec3 bloomColorMix;
+		#include "/import/isEyeInWater.glsl"
 		if (isEyeInWater == 0) {
-			colorMix = getSkyColor();
+			colorMix = getSkyColor(ARG_IN);
 			bloomColorMix = colorMix * sqrt(BLOOM_SKY_BRIGHTNESS);
 		} else {
 			colorMix = fogSkyColor;
@@ -23,10 +45,11 @@ varying vec3 fogSkyColor;
 		colorForBloom.rgb = mix(colorForBloom.rgb, bloomColorMix, fogAmount);
 	}
 #else
-	void applyFog(inout vec3 color) {
+	void applyFog(inout vec3 color  ARGS_OUT) {
 		vec3 colorMix;
+		#include "/import/isEyeInWater.glsl"
 		if (isEyeInWater == 0) {
-			colorMix = getSkyColor();
+			colorMix = getSkyColor(ARG_IN);
 		} else {
 			colorMix = fogSkyColor;
 		}
@@ -40,7 +63,7 @@ varying vec3 fogSkyColor;
 
 #ifdef VSH
 
-void getFogData(vec3 playerPos) {
+void getFogData(vec3 playerPos  ARGS_OUT) {
 	
 	playerPos.y /= FOG_HEIGHT_SCALE;
 	fogAmount = length(playerPos);
@@ -49,12 +72,15 @@ void getFogData(vec3 playerPos) {
 	#endif
 	
 	
+	#include "/import/isEyeInWater.glsl"
 	if (isEyeInWater == 0) { // not in liquid
+		#include "/import/far.glsl"
 		#if MC_VERSION >= 11300
 			fogAmount /= far;
 		#else
 			fogAmount /= far * 0.9;
 		#endif
+		#include "/import/betterRainStrength.glsl"
 		fogAmount = (fogAmount - 1.0) / (1.0 - mix(FOG_START, FOG_RAIN_START, betterRainStrength)) + 1.0;
 		fogAmount = clamp(fogAmount, 0.0, 1.0);
 		#if FOG_CURVE == 2

@@ -4,7 +4,9 @@
 
 
 
-varying vec2 texcoord;
+#ifdef FIRST_PASS
+	varying vec2 texcoord;
+#endif
 
 
 
@@ -25,7 +27,7 @@ void main() {
 	// ======== DEPTH OF FIELD ========
 	
 	#ifdef DOF_ENABLED
-		doDOF(color DEBUG_ARG_IN);
+		doDOF(color  ARGS_IN);
 	#endif
 	
 	

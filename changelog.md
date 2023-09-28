@@ -1,5 +1,24 @@
 <br>
 
+- **b1.7.0** (23/09/21)
+  - Reformmated entire shader for slightly better performance (300+ files updated)
+  - Added Cave Ambient color settings for consistent underground lighting
+  - Improved water waving & fresnel
+  - Improved reflections
+  - Improved particle lighting
+  - Added High and Ultra profiles and improved other profiles
+  - Fixed crash caused by non-default settings
+  - Fixed special entity colors not appearing (sheep wool color, etc)
+  - Significantly improved 'Show Dangerous Light' option
+  - Tweaked many settings
+  - Fixed settings rgb color ordering (used to be red, blue, green)
+  - Fixed waving shadows moving when the camera rotates
+  - Fixed sides of grass waving instead of top
+
+<br>
+<br>
+<br>
+
 - b1.6.5 (23/09/17)
   - Overhauled water rendering
   - Fixed shadow transparency
@@ -44,6 +63,7 @@
 
 <br>
 <br>
+<br>
 
 - b1.5.2
   - Significantly improved close-up shadows
@@ -74,6 +94,7 @@
   - Improved performance (in multiple ways)
   - Tweaked many settings
 
+<br>
 <br>
 <br>
 
@@ -119,6 +140,7 @@
 
 <br>
 <br>
+<br>
 
 - b1.3.2 (23/08/06)
   - Improved shadow filtering amount
@@ -142,6 +164,7 @@
 
 <br>
 <br>
+<br>
 
 - **b1.2.0** (23/08/03)
   - Added Motion Blur (disabled by default)
@@ -149,6 +172,7 @@
   - Improved lighting calculations
   - Fixed debug outputs
 
+<br>
 <br>
 <br>
 
@@ -169,6 +193,7 @@
   - Improved angled lighting
   - Updated documentation
 
+<br>
 <br>
 <br>
 

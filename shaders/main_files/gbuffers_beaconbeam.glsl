@@ -1,7 +1,7 @@
-varying vec2 texcoord;
-flat float glcolor_alpha;
-
-
+#ifdef FIRST_PASS
+	varying vec2 texcoord;
+	flat float glcolor_alpha;
+#endif
 
 
 
@@ -32,8 +32,6 @@ void main() {
 
 
 
-
-
 #ifdef VSH
 
 #ifdef ISOMETRIC_RENDERING_ENABLED
@@ -48,13 +46,13 @@ void main() {
 	
 	#ifdef ISOMETRIC_RENDERING_ENABLED
 		vec3 worldPos = endMat(gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex));
-		gl_Position = projectIsometric(worldPos);
+		gl_Position = projectIsometric(worldPos  ARGS_IN);
 	#else
 		gl_Position = ftransform();
 	#endif
 	
 	#ifdef TAA_ENABLED
-		doTaaJitter(gl_Position.xy);
+		doTaaJitter(gl_Position.xy  ARGS_IN);
 	#endif
 	
 	glcolor_alpha = gl_Color.a;

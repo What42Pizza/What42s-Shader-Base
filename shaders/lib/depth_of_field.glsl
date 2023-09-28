@@ -1,4 +1,4 @@
-vec3 getBlurredColor(vec2 coord, float size) {
+vec3 getBlurredColor(vec2 coord, float size  ARGS_OUT) {
 	vec3 colorTotal = vec3(0.0);
 	colorTotal += texture2D(MAIN_BUFFER, coord + vec2(-1, -2) * pixelSize * size, 0).rgb * 0.574;
 	colorTotal += texture2D(MAIN_BUFFER, coord + vec2( 0, -2) * pixelSize * size, 0).rgb * 0.641;
@@ -26,7 +26,7 @@ vec3 getBlurredColor(vec2 coord, float size) {
 
 
 
-void doDOF(inout vec3 color DEBUG_ARG_OUT) {
+void doDOF(inout vec3 color DEBUG_ARG_OUT  ARGS_OUT) {
 	
 	#ifdef DOF_LOCKED_FOCAL_PLANE
 		float focusDepth = DOF_FOCAL_PLANE_DISTANCE * invFar;
@@ -34,7 +34,7 @@ void doDOF(inout vec3 color DEBUG_ARG_OUT) {
 		float focusDepth = centerLinearDepthSmooth;
 	#endif
 	
-	float linearDepth = toLinearDepth(texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r);
+	float linearDepth = toLinearDepth(texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r  ARGS_IN);
 	float depthChange = linearDepth - focusDepth;
 	#if DOF_SLOPE_TYPE == 1
 		depthChange /= 15.0 * focusDepth;
@@ -50,8 +50,8 @@ void doDOF(inout vec3 color DEBUG_ARG_OUT) {
 	#endif
 	
 	float blurSizeMult = 1.0 / (linearDepth * far * 0.01 + 1.0);
-	vec3 nearBlur = getBlurredColor(texcoord, nearBlurAmount * blurSizeMult * DOF_NEAR_BLUR_SIZE);
-	vec3 farBlur = getBlurredColor(texcoord, farBlurAmount * blurSizeMult * DOF_FAR_BLUR_SIZE);
+	vec3 nearBlur = getBlurredColor(texcoord, nearBlurAmount * blurSizeMult * DOF_NEAR_BLUR_SIZE  ARGS_IN);
+	vec3 farBlur = getBlurredColor(texcoord, farBlurAmount * blurSizeMult * DOF_FAR_BLUR_SIZE  ARGS_IN);
 	color = mix(color, farBlur, min(farBlurAmount, 1.0));
 	color = mix(color, nearBlur, min(nearBlurAmount, 1.0));
 	

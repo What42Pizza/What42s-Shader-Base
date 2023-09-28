@@ -1,10 +1,14 @@
-const float[4] wavingScales = float[4] (0.0, WAVING_AMOUNT_1, WAVING_AMOUNT_2, WAVING_AMOUNT_3);
-const vec3 windDirection = vec3(1.0, 0.1, 0.3); // another way to think of it: weights for timePos influence
+#ifdef FIRST_PASS
+	const float[4] wavingScales = float[4] (0.0, WAVING_AMOUNT_1, WAVING_AMOUNT_2, WAVING_AMOUNT_3);
+	const vec3 windDirection = vec3(1.0, 0.1, 0.3); // another way to think of it: weights for timePos influence
+#endif
 
 
 
-vec3 getWavingAddition(vec3 position) {
+vec3 getWavingAddition(vec3 position  ARGS_OUT) {
+	#include "/import/cameraPosition.glsl"
 	vec3 worldPos = position + cameraPosition;
+	#include "/import/frameTimeCounter.glsl"
 	float timePos = frameTimeCounter + dot(worldPos, windDirection) * WAVING_WORLD_SCALE;
 	timePos *= WAVING_SPEED * 1.75;
 	int timePosFloor = int(floor(timePos));
@@ -17,17 +21,21 @@ vec3 getWavingAddition(vec3 position) {
 
 
 
-void applyWaving(inout vec3 position) {
+void applyWaving(inout vec3 position  ARGS_OUT) {
+	#include "/import/mc_Entity.glsl"
 	int rawWavingData = int(mc_Entity.x);
-	if (rawWavingData < 1000) {return;}
+	if (rawWavingData < 1000) return;
 	int wavingData = rawWavingData % 1000;
-	if (wavingData < 2 || wavingData > 7) {return;}
+	if (wavingData < 2 || wavingData > 7) return;
 	float wavingScale = wavingScales[wavingData / 2];
-	if (wavingData % 2 == 0 && gl_MultiTexCoord0.x > mc_midTexCoord.x) {return;} // don't apply waving to base
+	#include "/import/mc_midTexCoord.glsl"
+	if (wavingData % 2 == 0 && gl_MultiTexCoord0.y > mc_midTexCoord.y) return; // don't apply waving to base
 	#if !defined SHADER_SHADOW
 		wavingScale *= lmcoord.y * lmcoord.y;
 	#endif
+	#include "/import/betterRainStrength.glsl"
 	wavingScale *= 1.0 + betterRainStrength * (WAVING_RAIN_MULT - 1.0);
+	#include "/import/rawSunTotal.glsl"
 	wavingScale *= WAVING_NIGHT_MULT + rawSunTotal * (1.0 - WAVING_NIGHT_MULT);
-	position += getWavingAddition(position) * wavingScale;
+	position += getWavingAddition(position  ARGS_IN) * wavingScale;
 }

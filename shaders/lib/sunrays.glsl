@@ -1,12 +1,14 @@
-flat vec2 lightCoord;
-flat float sunraysAmountMult;
+#ifdef FIRST_PASS
+	flat vec2 lightCoord;
+	flat float sunraysAmountMult;
+#endif
 
 
 
 #ifdef FSH
 
-const int SAMPLE_COUNT = int(SUNRAYS_QUALITY * SUNRAYS_QUALITY / 2);
-float getSunraysAmount(inout int rng) {
+float getSunraysAmount(inout int rng  ARGS_OUT) {
+	const int SAMPLE_COUNT = int(SUNRAYS_QUALITY * SUNRAYS_QUALITY / 2);
 	
 	
 	#if SUNRAYS_STYLE == 1
@@ -30,8 +32,9 @@ float getSunraysAmount(inout int rng) {
 				break;
 			}
 		#endif
+		#include "/import/viewSize.glsl"
 		float depth = texelFetch(DEPTH_BUFFER_ALL, ivec2(pos * viewSize), 0).r;
-		if (depthIsSky(toLinearDepth(depth))) {
+		if (depthIsSky(toLinearDepth(depth  ARGS_IN))) {
 			total += 1.0 + float(i) / SAMPLE_COUNT;
 		}
 		pos += coordStep;
@@ -52,8 +55,10 @@ float getSunraysAmount(inout int rng) {
 
 #ifdef VSH
 
-void calculateLightCoord() {
+void calculateLightCoord(ARG_OUT) {
 	
+	#include "/import/shadowLightPosition.glsl"
+	#include "/import/gbufferProjection.glsl"
 	vec3 lightPos = shadowLightPosition * mat3(gbufferProjection);
 	lightPos /= lightPos.z;
 	lightCoord = lightPos.xy * 0.5 + 0.5;
@@ -61,7 +66,8 @@ void calculateLightCoord() {
 }
 
 // this entire function SHOULD be computed on the cpu, but it has to be glsl code because it uses settings that are ONLY defined in glsl
-void calculateSunraysAmount() {
+void calculateSunraysAmount(ARG_OUT) {
+	#include "/import/rawSkylightPercents.glsl"
 	
 	sunraysAmountMult =
 		rawSkylightPercents.x * SUNRAYS_AMOUNT_DAY +
@@ -69,6 +75,8 @@ void calculateSunraysAmount() {
 		rawSkylightPercents.z * SUNRAYS_AMOUNT_SUNRISE +
 		rawSkylightPercents.w * SUNRAYS_AMOUNT_SUNSET;
 	
+	#include "/import/isOtherLightSource.glsl"
+	#include "/import/isSun.glsl"
 	if (isOtherLightSource) {
 		if (isSun) {
 			sunraysAmountMult *= rawSkylightPercents.x + rawSkylightPercents.z + rawSkylightPercents.w;

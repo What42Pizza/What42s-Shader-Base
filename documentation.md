@@ -66,8 +66,9 @@
 - **colortex3:  Reflection Strength / Noisy Additions (RS exists from gbuffers to deffered, NA exists from composite1 and on)**
 - **colortex4:  Normals**
 - **colortex5 / gaux2:  Copy of colortex0, only used for water reflections**
+- **colortex6:  Light Values**
 
-Note: 'noisy additions' is for things like bloom, sunrays, etc (anything that gives noisy results) are rendered to this buffer then LOD-sampled when added to the image
+Note: 'noisy additions' is where things like bloom, sunrays, etc (anything that gives noisy results) are rendered before being added to the main image using LOD-sampling as a high-perf blur
 
 <br>
 <br>

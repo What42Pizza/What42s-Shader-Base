@@ -7,21 +7,23 @@
 
 
 
-const int clampingOffsetCount = 8;
-ivec2 clampingOffsets[clampingOffsetCount] = ivec2[clampingOffsetCount](
-	ivec2(-1, -1),
-	ivec2( 0, -1),
-	ivec2( 1, -1),
-	ivec2(-1,  0),
-	ivec2( 1,  0),
-	ivec2(-1,  1),
-	ivec2( 0,  1),
-	ivec2( 1,  1)
-);
+#ifdef FIRST_PASS
+	const int clampingOffsetCount = 8;
+	ivec2 clampingOffsets[clampingOffsetCount] = ivec2[clampingOffsetCount](
+		ivec2(-1, -1),
+		ivec2( 0, -1),
+		ivec2( 1, -1),
+		ivec2(-1,  0),
+		ivec2( 1,  0),
+		ivec2(-1,  1),
+		ivec2( 0,  1),
+		ivec2( 1,  1)
+	);
+#endif
 
 
 
-void neighbourhoodClamping(vec3 color, inout vec3 prevColor) {
+void neighbourhoodClamping(vec3 color, inout vec3 prevColor  ARGS_OUT) {
 	vec3 minColor = color;
 	vec3 maxColor = color;
 	
@@ -37,7 +39,7 @@ void neighbourhoodClamping(vec3 color, inout vec3 prevColor) {
 
 
 
-void doTAA(inout vec3 color, inout vec3 newPrev, float linearDepth, vec2 prevCoord, float handFactor) {
+void doTAA(inout vec3 color, inout vec3 newPrev, float linearDepth, vec2 prevCoord, float handFactor  ARGS_OUT) {
 	
 	if (
 		prevCoord.x < 0.0 || prevCoord.x > 1.0 ||
@@ -49,7 +51,7 @@ void doTAA(inout vec3 color, inout vec3 newPrev, float linearDepth, vec2 prevCoo
 	
 	vec3 prevColor = texture2D(TAA_PREV_BUFFER, prevCoord).rgb;
 	
-	neighbourhoodClamping(color, prevColor);
+	neighbourhoodClamping(color, prevColor  ARGS_IN);
 	
 	const float blendMin = 0.3;
 	const float blendMax = 0.98;
@@ -57,10 +59,12 @@ void doTAA(inout vec3 color, inout vec3 newPrev, float linearDepth, vec2 prevCoo
 	const float blendConstant = 0.65;
 	const float depthFactor = 0.017;
 	
+	#include "/import/viewSize.glsl"
 	vec2 velocity = (texcoord - prevCoord.xy) * viewSize;
 	float velocityAmount = dot(velocity, velocity) * 10.0;
 	
 	#if !defined ISOMETRIC_RENDERING_ENABLED
+		#include "/import/far.glsl"
 		float blockDepth = linearDepth * far;
 	#else
 		float blockDepth = 0;

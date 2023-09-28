@@ -7,6 +7,8 @@
 
 
 
+#ifdef FIRST_PASS
+
 const mat3 ACES_INPUT_MATRIX = mat3(
 	vec3(0.59719, 0.35458, 0.04823),
 	vec3(0.07600, 0.90834, 0.01566),
@@ -37,3 +39,5 @@ vec3 acesFitted(vec3 v) {
 	v = rttAndOdtFit(v);
 	return matrixMult(ACES_OUTPUT_MATRIX, v);
 }
+
+#endif

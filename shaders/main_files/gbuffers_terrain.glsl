@@ -6,16 +6,23 @@
 
 // transfers
 
-varying vec2 texcoord;
-varying vec2 lmcoord;
-varying vec3 glcolor;
-
-#ifdef RAIN_REFLECTIONS_ENABLED
-	varying vec3 worldPos;
-	varying float baseRainReflectionStrength;
-#endif
-#ifdef NORMALS_NEEDED
-	varying vec3 normal;
+#ifdef FIRST_PASS
+	
+	varying vec2 texcoord;
+	varying vec2 lmcoord;
+	varying vec3 glcolor;
+	
+	#ifdef RAIN_REFLECTIONS_ENABLED
+		varying vec3 worldPos;
+		varying float baseRainReflectionStrength;
+	#endif
+	#ifdef NORMALS_NEEDED
+		varying vec3 normal;
+	#endif
+	#ifdef SHOW_DANGEROUS_LIGHT
+		varying float isDangerousLight;
+	#endif
+	
 #endif
 
 // includes
@@ -50,8 +57,8 @@ void main() {
 	
 	// main lighting
 	color.rgb *= glcolor;
-	vec3 brightnesses = getLightingBrightnesses(lmcoord);
-	color.rgb *= getLightColor(brightnesses.x, brightnesses.y, brightnesses.z);
+	vec3 brightnesses = getLightingBrightnesses(lmcoord  ARGS_IN);
+	color.rgb *= getLightColor(brightnesses.x, brightnesses.y, brightnesses.z  ARGS_IN);
 	#ifdef SHOW_SUNLIGHT
 		debugOutput = vec3(brightnesses.y);
 	#endif
@@ -62,6 +69,7 @@ void main() {
 	#ifdef BLOOM_ENABLED
 		#ifdef OVERWORLD
 			float blockLight = brightnesses.x;
+			#include "/import/rawSunTotal.glsl"
 			float skyLight = brightnesses.y * rawSunTotal;
 			colorForBloom.rgb *= max(blockLight * blockLight * 1.05, skyLight * 0.75);
 		#endif
@@ -71,16 +79,16 @@ void main() {
 	// fog
 	#ifdef FOG_ENABLED
 		#ifdef BLOOM_ENABLED
-			applyFog(color.rgb, colorForBloom.rgb);
+			applyFog(color.rgb, colorForBloom.rgb  ARGS_IN);
 		#else
-			applyFog(color.rgb);
+			applyFog(color.rgb  ARGS_IN);
 		#endif
 	#endif
 	
 	
 	// show dangerous light
 	#ifdef SHOW_DANGEROUS_LIGHT
-		if (lmcoord.x < 0.5) {
+		if (isDangerousLight > 0.0) {
 			color.rgb = mix(color.rgb, vec3(1.0, 0.0, 0.0), 0.6);
 		}
 	#endif
@@ -89,29 +97,31 @@ void main() {
 	// rain reflection strength
 	#ifdef RAIN_REFLECTIONS_ENABLED
 		float rainReflectionStrength = baseRainReflectionStrength;
-		rainReflectionStrength *= simplexNoise((worldPos + cameraPosition) * 0.2);
+		#include "/import/cameraPosition.glsl"
+		rainReflectionStrength *= simplexNoise((worldPos + cameraPosition) * 0.2  ARGS_IN);
 		rainReflectionStrength *= lmcoord.y;
 	#endif
 	
 	
-	/* DRAWBUFFERS:0 */
+	/* DRAWBUFFERS:06 */
 	#ifdef DEBUG_OUTPUT_ENABLED
 		color = vec4(debugOutput, 1.0);
 	#endif
 	gl_FragData[0] = color;
+	gl_FragData[1] = vec4(lmcoord, 0.0, color.a);
 	#ifdef BLOOM_AND_NORMALS
-		/* DRAWBUFFERS:0243 */
-		gl_FragData[1] = colorForBloom;
-		gl_FragData[2] = vec4(normal, 1.0);
+		/* DRAWBUFFERS:06243 */
+		gl_FragData[2] = colorForBloom;
+		gl_FragData[3] = vec4(normal, 1.0);
 		#ifdef RAIN_REFLECTIONS_ENABLED
-			gl_FragData[3] = vec4(rainReflectionStrength, 0.0, 0.0, 1.0);
+			gl_FragData[4] = vec4(rainReflectionStrength, 0.0, 0.0, 1.0);
 		#endif
 	#elif defined BLOOM_ENABLED
-		/* DRAWBUFFERS:02 */
-		gl_FragData[1] = colorForBloom;
+		/* DRAWBUFFERS:062 */
+		gl_FragData[2] = colorForBloom;
 	#elif defined NORMALS_NEEDED
-		/* DRAWBUFFERS:043 */
-		gl_FragData[1] = vec4(normal, 1.0);
+		/* DRAWBUFFERS:0643 */
+		gl_FragData[2] = vec4(normal, 1.0);
 		#ifdef RAIN_REFLECTIONS_ENABLED
 			gl_FragData[3] = vec4(rainReflectionStrength, 0.0, 0.0, 1.0);
 		#endif
@@ -147,13 +157,14 @@ void main() {
 	
 	
 	#ifdef WAVING_ENABLED
-		applyWaving(worldPos);
+		applyWaving(worldPos  ARGS_IN);
 	#endif
 	
 	
 	#ifdef ISOMETRIC_RENDERING_ENABLED
-		gl_Position = projectIsometric(worldPos);
+		gl_Position = projectIsometric(worldPos  ARGS_IN);
 	#else
+		#include "/import/gbufferModelView.glsl"
 		gl_Position = gl_ProjectionMatrix * gbufferModelView * startMat(worldPos);
 	#endif
 	
@@ -164,12 +175,12 @@ void main() {
 	
 	
 	#ifdef TAA_ENABLED
-		doTaaJitter(gl_Position.xy);
+		doTaaJitter(gl_Position.xy  ARGS_IN);
 	#endif
 	
 	
 	#ifdef FOG_ENABLED
-		getFogData(worldPos);
+		getFogData(worldPos  ARGS_IN);
 	#endif
 	
 	
@@ -187,8 +198,8 @@ void main() {
 	
 	
 	#ifdef RAIN_REFLECTIONS_ENABLED
-		vec3 upVec = normalize(gbufferModelView[1].xyz);
-		baseRainReflectionStrength = dot(upVec, normal) * 0.5 + 0.5;
+		#include "/import/upPosition.glsl"
+		baseRainReflectionStrength = dot(normalize(upPosition), normal) * 0.5 + 0.5;
 		baseRainReflectionStrength *= baseRainReflectionStrength;
 		baseRainReflectionStrength *= baseRainReflectionStrength;
 		baseRainReflectionStrength *= baseRainReflectionStrength;
@@ -196,7 +207,15 @@ void main() {
 	#endif
 	
 	
-	doPreLighting();
+	#ifdef SHOW_DANGEROUS_LIGHT
+		isDangerousLight = float(
+			lmcoord.x < 0.51
+			&& dot(normal, normalize(upPosition)) > 0.9
+		);
+	#endif
+	
+	
+	doPreLighting(ARG_IN);
 	
 }
 

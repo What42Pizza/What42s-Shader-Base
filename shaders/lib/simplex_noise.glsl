@@ -6,6 +6,8 @@
 
 
 
+#ifdef FIRST_PASS
+
 vec4 grad4(float j, vec4 ip) {
 	const vec4 ones = vec4(1.0, 1.0, 1.0, -1.0);
 	vec4 p,s;
@@ -199,7 +201,9 @@ float simplexNoise(vec4 v) {
 
 vec3 simplexNoise3From4(vec4 x){
 	float s = simplexNoise(vec4(x));
-	float s1 = simplexNoise(vec4(x.y - 19.1, x.z + 33.4, x.x + 47.2, x.w));
-	float s2 = simplexNoise(vec4(x.z + 74.2, x.x - 124.5, x.y + 99.4, x.w));
+	float s1 = simplexNoise(vec4(x.y - 19.1 * 10, x.z + 33.4 * 10, x.x + 47.2 * 10, x.w + 65.4 * 10));
+	float s2 = simplexNoise(vec4(x.z + 74.2 * 10, x.x - 124.5 * 10, x.y + 99.4 * 10, x.w + 113.4 * 10));
 	return vec3(s, s1, s2);
 }
+
+#endif

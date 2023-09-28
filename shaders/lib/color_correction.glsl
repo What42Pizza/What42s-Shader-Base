@@ -3,7 +3,7 @@
 
 
 // custom tonemapper, probably trash according to color theory
-vec3 simpleTonemap(vec3 color) {
+vec3 simpleTonemap(vec3 color  ARGS_OUT) {
 	vec3 lowCurve = color * color;
 	vec3 highCurve = 1.0 - 1.0 / (color * 10.0 + 1.0);
 	return mix(lowCurve, highCurve, color);
@@ -11,7 +11,7 @@ vec3 simpleTonemap(vec3 color) {
 
 
 
-void doColorCorrection(inout vec3 color) {
+void doColorCorrection(inout vec3 color  ARGS_OUT) {
 	
 	// brightness
 	color *= (BRIGHTNESS - 1.0) / 1.5 + 1.0;
@@ -23,7 +23,7 @@ void doColorCorrection(inout vec3 color) {
 	#elif TONEMAPPER == 1
 		color = smoothMin(color, vec3(1.0), 0.01);
 	#elif TONEMAPPER == 2
-		color = simpleTonemap(color);
+		color = simpleTonemap(color  ARGS_IN);
 	#elif TONEMAPPER == 3
 		color = acesFitted(color);
 	#endif

@@ -1,4 +1,4 @@
-void doSharpening(inout vec3 color) {
+void doSharpening(inout vec3 color  ARGS_OUT) {
 	
 	#if SHARPENING_DETECT_SIZE == 3
 		
@@ -81,6 +81,7 @@ void doSharpening(inout vec3 color) {
 		
 	#endif
 	
+	#include "/import/sharpenVelocityFactor.glsl"
 	float sharpenAmount = SHARPEN_AMOUNT * 0.12 + sharpenVelocityFactor * SHARPEN_VEL_ADDITION;
 	color = mix(color, blur, sharpenAmount * -1.0); // exaggerate the difference between the image and the blurred image
 	//color = blur;
