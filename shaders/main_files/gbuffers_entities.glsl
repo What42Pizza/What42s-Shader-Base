@@ -61,22 +61,21 @@ void main() {
 	#endif
 	
 	
-	/* DRAWBUFFERS:0 6*/
+	/* DRAWBUFFERS:0*/
 	#ifdef DEBUG_OUTPUT_ENABLED
 		color = vec4(debugOutput, 1.0);
 	#endif
 	gl_FragData[0] = color;
-	gl_FragData[1] = vec4(lmcoord, 0.0, color.a);
 	#ifdef BLOOM_AND_NORMALS
-		/* DRAWBUFFERS:0624 */
-		gl_FragData[2] = colorForBloom;
-		gl_FragData[3] = vec4(normal, 1.0);
-	#elif defined BLOOM_ENABLED
-		/* DRAWBUFFERS:062 */
-		gl_FragData[2] = colorForBloom;
-	#elif defined NORMALS_NEEDED
-		/* DRAWBUFFERS:064 */
+		/* DRAWBUFFERS:024 */
+		gl_FragData[1] = colorForBloom;
 		gl_FragData[2] = vec4(normal, 1.0);
+	#elif defined BLOOM_ENABLED
+		/* DRAWBUFFERS:02 */
+		gl_FragData[1] = colorForBloom;
+	#elif defined NORMALS_NEEDED
+		/* DRAWBUFFERS:04 */
+		gl_FragData[1] = vec4(normal, 1.0);
 	#endif
 }
 

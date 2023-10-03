@@ -73,6 +73,7 @@ void main() {
 		// waving water normals
 		#ifdef WAVING_WATER_NORMALS_ENABLED
 			const float worldPosScale = 1.5;
+			#include "/import/frameCounter.glsl"
 			vec3 randomPoint = abs(simplexNoise3From4(vec4(worldPos / worldPosScale, frameCounter * 0.01)  ARGS_IN));
 			vec3 normalWavingAddition = randomPoint * 0.03;
 			normal += normalWavingAddition;

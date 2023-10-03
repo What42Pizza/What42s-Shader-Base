@@ -1,6 +1,14 @@
 <br>
 
-- **b1.7.0** (23/09/21)
+- b1.7.1 (23/09/30)
+  - Massively improved SSAO
+  - Massively improved missing reflection rendering
+  - Fixed more crashes caused by non-default settings
+  - Tweaked settings
+
+<br>
+
+- **b1.7.0** (23/09/28)
   - Reformmated entire shader for slightly better performance (300+ files updated)
   - Added Cave Ambient color settings for consistent underground lighting
   - Improved water waving & fresnel

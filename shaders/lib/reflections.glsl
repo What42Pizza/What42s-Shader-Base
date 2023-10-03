@@ -2,7 +2,7 @@
 //        REFLECTIONS        //
 //---------------------------//
 
-// This code was originally taken from Complementary v4, but it's basically been completely rewritten
+// This code was originally taken from Complementary v4, but it has been completely rewritten
 
 
 
@@ -21,14 +21,20 @@ void raytrace(out vec2 reflectionPos, out int error, vec3 viewPos, vec3 normal  
 		
 		float realDepth = texture2D(DEPTH_BUFFER_WO_TRANS, screenPos.xy).r;
 		float realToScreen = screenPos.z - realDepth;
-		float stepVectorLen = length(stepVector);
+		//float stepVectorLen = length(stepVector);
 		
-		//if (realToScreen > stepVectorLen * 2) { // went behind object
-		//	reflectionPos = screenPos.xy;
-		//	error = 1;
-		//	return;
-		//}
-		if (realToScreen > 0.0 && realToScreen < stepVectorLen * 5) {
+		if (realToScreen > stepVector.z) { // went behind object
+			if (realDepth < 0.98) {
+				error = 2;
+				return;
+			}
+			#include "/utils/var_rng.glsl"
+			screenPos -= stepVector * randomFloat(rng);
+			reflectionPos = screenPos.xy;
+			error = 0;
+			return;
+		}
+		if (realToScreen > 0.0) {//} && realToScreen < stepVectorLen * 5) {
 			hitCount ++;
 			if (hitCount >= 6) { // converged on point
 				reflectionPos = screenPos.xy;
@@ -45,14 +51,14 @@ void raytrace(out vec2 reflectionPos, out int error, vec3 viewPos, vec3 normal  
 			error = 2;
 			return;
 		}
-		//float newLinearDepth = toLinearDepth(screenPos.z);
-		//if (newLinearDepth < 0) { // went behind camera (maybe?)
-		//	error = 2;
+		//float newLinearDepth = toLinearDepth(screenPos.z * 0.5 + 0.5  ARGS_IN);
+		//if (newLinearDepth < 0.0) { // went behind camera (maybe?)
+		//	error = 1;
 		//	return;
 		//}
-		//if (newLinearDepth > 1) { // went into sky (maybe?)
-		//	reflectionPos = screenPos.xy;
-		//	error = 0;
+		//if (newLinearDepth > 1.0) { // went into sky (maybe?)
+		//	//reflectionPos = screenPos.xy;
+		//	error = 1;
 		//	return;
 		//}
 	}
@@ -80,6 +86,9 @@ void addReflection(inout vec3 color, vec3 viewPos, vec3 normal, sampler2D textur
 		reflectionColor = mix(alteredFogColor, reflectionColor, clamp(5.0 - 5.0 * max(abs(reflectionPos.x * 2.0 - 1.0), abs(reflectionPos.y * 2.0 - 1.0)), 0.0, 1.0));
 		reflectionColor *= 0.8 + color * 0.2;
 		color = mix(color, reflectionColor, lerpAmount);
+		
+	//} else if (error == 1) {
+	//	color *= vec3(1.0, 0.1, 0.1);
 		
 	//} else if (error == 1) {
 	//	reflectionPos = (reflectionPos + texcoord) / 2;//mix(texcoord, reflectionPos, randomFloat(rngStart));

@@ -121,7 +121,7 @@ const bool shadowcolor1Clear = false;
 #define EXCLUDE_FOLIAGE
 #define SHADOW_FILTERING 2 // [0 1 2 3]
 const float shadowDistance = 96.0; // [64.0 80.0 96.0 112.0 128.0 160.0 192.0 224.0 256.0 320.0 384.0 512.0 768.0 1024.0]
-const int shadowMapResolution = 512; // [256 512 1024 2048 4096 8192]
+const int shadowMapResolution = 512; // [256 384 512 768 1024 1536 2048 3072 4096 6144 8192]
 const float sunPathRotation = -30.0; // [-80.0 -75.0 -70.0 -65.0 -60.0 -55.0 -50.0 -45.0 -40.0 -35.0 -30.0 -25.0 -20.0 -15.0 -10.0 -9.0 -8.0 -7.0 -6.0 -5.0 -4.0 -3.0 -2.0 -1.0 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 10.0 15.0 20.0 25.0 30.0 35.0 40.0 45.0 50.0 55.0 60.0 65.0 70.0 75.0 80.0]
 const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0]
 #define SIDE_SHADING 0.25 // [0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
@@ -341,9 +341,9 @@ const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8
 
 // Hidden settings
 
-#define SHADOW_DISTORT_ADDITION 0.07
+#define SHADOW_DISTORT_ADDITION 0.09
 
 #define LIGHT_SMOOTHING 0.1
 
-const float SHADOW_OFFSET_INCREASE = 0.9 / shadowMapResolution;
-const float SHADOW_OFFSET_MIN = 1.5 / shadowMapResolution;
+const float SHADOW_OFFSET_INCREASE = 1.1 / shadowMapResolution;
+const float SHADOW_OFFSET_MIN = 1.1 / pow(shadowMapResolution, 0.95);

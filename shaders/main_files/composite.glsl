@@ -22,7 +22,6 @@ void main(ARG_OUT) {
 	#endif
 	
 	
-	
 	// ======== BLOOM FILTERING ========
 	
 	#ifdef BLOOM_ENABLED
@@ -31,7 +30,6 @@ void main(ARG_OUT) {
 		alpha = clamp(alpha, 0.0, 1.0);
 		bloomColor *= alpha;
 	#endif
-	
 	
 	
 	/* DRAWBUFFERS:0 */

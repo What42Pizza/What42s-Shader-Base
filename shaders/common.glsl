@@ -15,11 +15,12 @@
 	uniform sampler2D colortex3;
 	uniform sampler2D colortex4;
 	uniform sampler2D gaux2;
+	uniform sampler2D colortex6;
 	uniform sampler2D depthtex0;
 	uniform sampler2D depthtex1;
 	uniform sampler2D depthtex2;
 	uniform sampler2D shadowtex0;
-	uniform sampler2D noisetex;
+	//uniform sampler2D noisetex;
 	
 	//uniform float centerDepth;
 	//uniform float centerDepthSmooth;
@@ -57,6 +58,7 @@
 #define NOISY_ADDITIONS_BUFFER      colortex3
 #define NORMALS_BUFFER              colortex4
 #define MAIN_BUFFER_COPY            gaux2
+#define HAND_BUFFER                 colortex6
 #define DEBUG_BUFFER                colortex0
 
 #define DEPTH_BUFFER_ALL                   depthtex0

@@ -1,4 +1,5 @@
 Current:
+Add alpha to debug vars
 Add uniforms system to documentation
 Move all uniform-using function from common into /utils
 Make nether bloom look good again
