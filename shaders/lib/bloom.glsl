@@ -1,3 +1,7 @@
+#include "/utils/depth.glsl"
+
+
+
 vec3 sampleBloom(float sizeMult, inout int rng  ARGS_OUT) {
 	vec3 bloomAddition = vec3(0.0);
 	for (int layer = 0; layer < BLOOM_LEVELS; layer++) {

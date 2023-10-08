@@ -12,23 +12,22 @@
 
 #ifdef FSH
 
-#ifdef SHARPENING_ENABLED
-	#include "/lib/sharpening.glsl"
-#endif
+#include "/lib/simplex_noise.glsl"
 #include "/lib/color_correction.glsl"
 
 void main() {
-	vec3 color = texelFetch(MAIN_BUFFER, texelcoord, 0).rgb;
+	
+	vec2 texcoord = texcoord;
+	#include "/import/isEyeInWater.glsl"
+	if (isEyeInWater == 1) {
+		texcoord = (texcoord - 0.5) * 0.95 + 0.5;
+		#include "/import/frameTimeCounter.glsl"
+		texcoord += simplexNoise2From3(vec3(texcoord * 5.0, frameTimeCounter * 0.6)) * 0.003;
+	}
+	
+	vec3 color = texture2D(MAIN_BUFFER, texcoord).rgb;
 	#ifdef DEBUG_OUTPUT_ENABLED
-		vec3 debugOutput = texelFetch(DEBUG_BUFFER, texelcoord, 0).rgb;
-	#endif
-	
-	
-	
-	// ======== SHARPENING ========
-	
-	#ifdef SHARPENING_ENABLED
-		doSharpening(color  ARGS_IN);
+		vec3 debugOutput = texture2D(DEBUG_BUFFER, texcoord).rgb;
 	#endif
 	
 	

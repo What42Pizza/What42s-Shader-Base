@@ -9,6 +9,8 @@
 void main() {
 	vec4 color = texture2D(texture, texcoord);
 	
+	color.a = floor(color.a);
+	
 	gl_FragData[0] = color;
 }
 
@@ -45,7 +47,7 @@ void main() {
 		gl_Position = ftransform();
 	#endif
 	
-	gl_Position.xyz = distort(gl_Position.xyz  ARGS_IN);
+	gl_Position.xyz = distort(gl_Position.xyz);
 	
 }
 

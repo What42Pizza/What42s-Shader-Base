@@ -14,6 +14,28 @@ float fogify(float x, float w  ARGS_OUT) {
 	return w / (x * x + w);
 }
 
+#ifdef DARKEN_SKY_UNDERGROUND
+	float getHorizonMultiplier(ARG_OUT) {
+		#ifdef OVERWORLD
+			
+			#include "/import/invViewSize.glsl"
+			#include "/import/gbufferProjectionInverse.glsl"
+			#include "/import/upPosition.glsl"
+			#include "/import/horizonAltitudeAddend.glsl"
+			#include "/import/eyeBrightnessSmooth.glsl"
+			
+			vec4 screenPos = vec4(gl_FragCoord.xy * invViewSize, gl_FragCoord.z, 1.0);
+			vec4 viewPos = gbufferProjectionInverse * (screenPos * 2.0 - 1.0);
+			float viewDot = dot(normalize(viewPos.xyz), normalize(upPosition));
+			float altitudeAddend = min(horizonAltitudeAddend, 1.0 - 2.0 * eyeBrightnessSmooth.y / 240.0); // don't darken sky when there's sky light
+			return clamp(viewDot * 5.0 - altitudeAddend * 8.0, 0.0, 1.0);
+			
+		#else
+			return 1.0;
+		#endif
+	}
+#endif
+
 vec3 getSkyColor(ARG_OUT) {
 	
 	#include "/import/invViewSize.glsl"
@@ -25,8 +47,13 @@ vec3 getSkyColor(ARG_OUT) {
 	vec4 pos = vec4(gl_FragCoord.xy * invViewSize * 2.0 - 1.0, 1.0, 1.0);
 	pos = gbufferProjectionInverse * pos;
 	float upDot = dot(normalize(pos.xyz), gbufferModelView[1].xyz);
-	return mix(skyColor, fogColor, fogify(max(upDot, 0.0), 0.25  ARGS_IN));
+	vec3 finalSkyColor = mix(skyColor, fogColor, fogify(max(upDot, 0.0), 0.25  ARGS_IN));
 	
+	#ifdef DARKEN_SKY_UNDERGROUND
+		finalSkyColor *= getHorizonMultiplier(ARG_IN);
+	#endif
+	
+	return finalSkyColor;
 }
 
 #ifdef BLOOM_ENABLED
@@ -74,14 +101,15 @@ void getFogData(vec3 playerPos  ARGS_OUT) {
 	
 	#include "/import/isEyeInWater.glsl"
 	if (isEyeInWater == 0) { // not in liquid
-		#include "/import/far.glsl"
+		#include "/import/invFar.glsl"
 		#if MC_VERSION >= 11300
-			fogAmount /= far;
+			fogAmount *= invFar;
 		#else
-			fogAmount /= far * 0.9;
+			fogAmount *= invFar / 0.9;
 		#endif
 		#include "/import/betterRainStrength.glsl"
-		fogAmount = (fogAmount - 1.0) / (1.0 - mix(FOG_START, FOG_RAIN_START, betterRainStrength)) + 1.0;
+		float fogStart = mix(FOG_START, FOG_RAIN_START, betterRainStrength);
+		fogAmount = (fogAmount - 1.0) / (1.0 - fogStart) + 1.0;
 		fogAmount = clamp(fogAmount, 0.0, 1.0);
 		#if FOG_CURVE == 2
 			fogAmount = pow2(fogAmount);
@@ -96,7 +124,7 @@ void getFogData(vec3 playerPos  ARGS_OUT) {
 		
 	} else if (isEyeInWater == 1) { // in water
 		fogAmount /= FOG_WATER_DISTANCE;
-		fogAmount = clamp(fogAmount, 0.1, 1.0);
+		fogAmount = clamp(fogAmount, 0.2, 1.0);
 		#if FOG_WATER_CURVE == 2
 			fogAmount = pow2(fogAmount);
 		#elif FOG_WATER_CURVE == 3
@@ -114,7 +142,7 @@ void getFogData(vec3 playerPos  ARGS_OUT) {
 		
 	} else if (isEyeInWater == 2) { // in lava
 		fogAmount = 1.0;
-		fogSkyColor = vec3(0.8, 0.2, 0.1);
+		fogSkyColor = vec3(0.8, 0.25, 0.1);
 		#ifdef BLOOM_ENABLED
 			fogBloomSkyColor = fogSkyColor;
 		#endif

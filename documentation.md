@@ -67,7 +67,36 @@
 - **colortex4:  Normals**
 - **colortex5 / gaux2:  Copy of colortex0, only used for water reflections**
 
-Note: 'noisy additions' is where things like bloom, sunrays, etc (anything that gives noisy results) are rendered before being added to the main image using LOD-sampling as a high-perf blur
+Note: 'noisy additions' buffer is where things like bloom, sunrays, etc (anything that gives noisy results) are rendered before being added to the main image using LOD-sampling as a high-perf blur
+
+<br>
+
+## Uniforms System:
+
+This shader uses a complex preprocessor system to define which uniforms are included. You only need to know how it is used, but it's also interesting how it works.
+
+### Usage:
+
+- For evey place that a uniform is used, there needs to be a #include statement with this format: `#include "/import/{uniform name}.glsl"`
+- Every function definition needs to have `ARGS_OUT` at the end of multiple argument, or `ARG_OUT` if there are no other arguments (unless the function is in a `#ifdef FIRST_PASS` block)
+- Every function call needs to have `ARGS_IN` at the end of multiple argument, or `ARG_IN` if there are no other arguments (unless the function definition is in a `#ifdef FIRST_PASS` block)
+- Every `varying`, `flat`, `const`, etc. needs to be defined in a `#ifdef FIRST_PASS` block
+
+### How it works:
+
+Here's the basic idea: Include the main file once to test which uniforms are needed, use a 'switchboard' file to include the needed uniforms, then include the main file again for actual use.
+
+You can just look at the files in /world0, but here's a quick explaination of the system and its quirks:
+
+- 1: Definitions are set for 'FIRST_PASS', arguments, and 'main'
+- 2: The /main file is included
+- 3: The /main file sets #define-s for every uniform that is needed
+- 4: 'FIRST_PASS' and 'main are un-defined
+- 5: 'switchboard.glsl' is included, which uses `#if` statements to include the needed uniforms
+- 6: Definitions are set for 'SECOND_PASS' and arguments
+- 7: The /main file in included
+
+Hopefully with a bit of thinking, it's very clear why the defines are needed: you can only have one definition for each function, value, and so on. It's pretty easy to put variables in a #if block, but that doesn't work with the funcitons since those need to have the `#include "/import/..."` statements. The only way for this to work is for functions to have a different signature, and as far as I know, using argument defines is the only way to do so (other than literally typing out two definitions w/ #if & #else). Also, main() functions cannot have arguments, which is why the 'main' define is needed. This took an INSANE amount of effort to devolop and implement, but there's definitely a chance that it helps performance.
 
 <br>
 <br>

@@ -1,6 +1,13 @@
 <br>
 
-- b1.7.1 (23/09/30)
+- b1.7.2 (23/10/07)
+  - Added underwater waviness
+  - Improved reflections (possibly just going in circles)
+  - MANY general improvements
+
+<br>
+
+- b1.7.1 (23/10/03)
   - Massively improved SSAO
   - Massively improved missing reflection rendering
   - Fixed more crashes caused by non-default settings

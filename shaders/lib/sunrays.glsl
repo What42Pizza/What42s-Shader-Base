@@ -3,6 +3,8 @@
 	flat float sunraysAmountMult;
 #endif
 
+#include "/utils/depth.glsl"
+
 
 
 #ifdef FSH
@@ -33,7 +35,7 @@ float getSunraysAmount(inout int rng  ARGS_OUT) {
 			}
 		#endif
 		#include "/import/viewSize.glsl"
-		float depth = texelFetch(DEPTH_BUFFER_ALL, ivec2(pos * viewSize), 0).r;
+		float depth = texelFetch(DEPTH_BUFFER_WO_TRANS, ivec2(pos * viewSize), 0).r;
 		if (depthIsSky(toLinearDepth(depth  ARGS_IN))) {
 			total += 1.0 + float(i) / SAMPLE_COUNT;
 		}

@@ -10,7 +10,7 @@
 void main() {
 	vec4 color = vec4(texture2D(MAIN_BUFFER, texcoord).rgb, glcolor_alpha);
 	#ifdef DEBUG_OUTPUT_ENABLED
-		vec3 debugOutput = vec3(0.0);
+		vec4 debugOutput = vec4(0.0, 0.0, 0.0, color.a);
 	#endif
 	
 	
@@ -19,7 +19,7 @@ void main() {
 	
 	/* DRAWBUFFERS:0 */
 	#ifdef DEBUG_OUTPUT_ENABLED
-		color = vec4(debugOutput, 1.0);
+		color = debugOutput;
 	#endif
 	gl_FragData[0] = color;
 	#ifdef BLOOM_ENABLED

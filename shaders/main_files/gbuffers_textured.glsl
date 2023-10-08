@@ -33,26 +33,32 @@
 void main() {
 	vec4 color = texture2D(MAIN_BUFFER, texcoord) * glcolor;
 	#ifdef DEBUG_OUTPUT_ENABLED
-		vec3 debugOutput = vec3(0.0);
+		vec4 debugOutput = vec4(0.0, 0.0, 0.0, color.a);
 	#endif
 	
 	color.rgb *= getLightColor(lmcoord.x, 0.0, lmcoord.y  ARGS_IN);
 	
 	/* DRAWBUFFERS:0 */
 	#ifdef DEBUG_OUTPUT_ENABLED
-		color = vec4(debugOutput, 1.0);
+		color = debugOutput;
 	#endif
 	gl_FragData[0] = color;
 	#ifdef BLOOM_AND_NORMALS
-		/* DRAWBUFFERS:024 */
+		/* DRAWBUFFERS:0243 */
 		gl_FragData[1] = color;
 		gl_FragData[2] = vec4(normal, 1.0);
+		#ifdef RAIN_REFLECTIONS_ENABLED
+			gl_FragData[3] = vec4(0.0, 0.0, 0.0, 1.0);
+		#endif
 	#elif defined BLOOM_ENABLED
 		/* DRAWBUFFERS:02 */
 		gl_FragData[1] = color;
 	#elif defined NORMALS_NEEDED
-		/* DRAWBUFFERS:04 */
+		/* DRAWBUFFERS:043 */
 		gl_FragData[1] = vec4(normal, 1.0);
+		#ifdef RAIN_REFLECTIONS_ENABLED
+			gl_FragData[2] = vec4(0.0, 0.0, 0.0, 1.0);
+		#endif
 	#endif
 }
 

@@ -8,6 +8,9 @@
 	varying vec2 texcoord;
 #endif
 
+#include "/utils/depth.glsl"
+#include "/utils/reprojection.glsl"
+
 
 
 #ifdef FSH
@@ -17,6 +20,9 @@
 #endif
 #ifdef MOTION_BLUR_ENABLED
 	#include "/lib/motion_blur.glsl"
+#endif
+#ifdef SHARPENING_ENABLED
+	#include "/lib/sharpening.glsl"
 #endif
 
 void main() {
@@ -60,6 +66,14 @@ void main() {
 		if (length(texcoord - prevCoord) > 0.00001) {
 			doMotionBlur(color, prevCoord  ARGS_IN);
 		}
+	#endif
+	
+	
+	
+	// ======== SHARPENING ========
+	
+	#ifdef SHARPENING_ENABLED
+		doSharpening(color  ARGS_IN);
 	#endif
 	
 	

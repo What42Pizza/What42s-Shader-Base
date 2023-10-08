@@ -10,21 +10,6 @@ float fogify(float x, float w  ARGS_OUT) {
 	return w / (x * x + w);
 }
 
-vec3 getSkyColor(ARG_OUT) {
-	
-	#include "/import/invViewSize.glsl"
-	#include "/import/gbufferProjectionInverse.glsl"
-	#include "/import/gbufferModelView.glsl"
-	#include "/import/skyColor.glsl"
-	#include "/import/fogColor.glsl"
-	
-	vec4 pos = vec4(gl_FragCoord.xy * invViewSize * 2.0 - 1.0, 1.0, 1.0);
-	pos = gbufferProjectionInverse * pos;
-	float upDot = dot(normalize(pos.xyz), gbufferModelView[1].xyz);
-	return mix(skyColor, fogColor, fogify(max(upDot, 0.0), 0.25  ARGS_IN));
-	
-}
-
 #ifdef DARKEN_SKY_UNDERGROUND
 	float getHorizonMultiplier(ARG_OUT) {
 		#ifdef OVERWORLD
@@ -47,6 +32,26 @@ vec3 getSkyColor(ARG_OUT) {
 	}
 #endif
 
+vec3 getSkyColor(ARG_OUT) {
+	
+	#include "/import/invViewSize.glsl"
+	#include "/import/gbufferProjectionInverse.glsl"
+	#include "/import/gbufferModelView.glsl"
+	#include "/import/skyColor.glsl"
+	#include "/import/fogColor.glsl"
+	
+	vec4 pos = vec4(gl_FragCoord.xy * invViewSize * 2.0 - 1.0, 1.0, 1.0);
+	pos = gbufferProjectionInverse * pos;
+	float upDot = dot(normalize(pos.xyz), gbufferModelView[1].xyz);
+	vec3 finalSkyColor = mix(skyColor, fogColor, fogify(max(upDot, 0.0), 0.25  ARGS_IN));
+	
+	#ifdef DARKEN_SKY_UNDERGROUND
+		finalSkyColor *= getHorizonMultiplier(ARG_IN);
+	#endif
+	
+	return finalSkyColor;
+}
+
 
 
 void main() {
@@ -60,10 +65,6 @@ void main() {
 	} else {
 		color = getSkyColor();
 	}
-	
-	#ifdef DARKEN_SKY_UNDERGROUND
-		color *= getHorizonMultiplier();
-	#endif
 	
 	#ifdef BLOOM_ENABLED
 		vec3 colorForBloom = color;

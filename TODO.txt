@@ -1,21 +1,21 @@
 Current:
-Add alpha to debug vars
-Add uniforms system to documentation
-Move all uniform-using function from common into /utils
-Make nether bloom look good again
-Add water caustics?
-Add Underwater waviness
-Remove texcoord from composites & deffered and replace with gl_FragCoord?
+Add light flickering
+Add void fog option?
+Do a round of making sure different settings combinations work
+Make rain puddles last longer
+Add settings for underwater waviness
 Add cave ambient to settings menu
-Make cave ambient light detection go all the way down to 0
-Add setting for SHADOW_DISTORT_ADDITION
-Stop rain reflections underwater?
+Make nether fog work correctly?
+Remove 'fogBloomSkyColor' from fog.glsl?
+Add water caustics?
 Make sun / moon / sunrise / sunset detection based on sunAngle
-Add documentation for isometrics
-Add langs for profile names
-Add style option?
+Add setting for SHADOW_DISTORT_ADDITION
 Move more fog logic into shaders.properties
 Make only top of water wavy
+Remove texcoord from composites & deffered and replace with gl_FragCoord?
+Make cave ambient light detection go all the way down to 0
+Add documentation for isometrics
+Add style option?
 Add backwards depth check to reflections?
 Make reflections work with isometric rendering
 Add post-processing effects like the super secret settings
@@ -24,8 +24,8 @@ Do a round of replacing smoothsteps with flat line?
 Do a round of adding dynamic noise (change noise based on quality level)
 Add more TAA settings
 Fix spider and endermen eyes
-Find a way to make shadowLightPosition stop flickering?
-Make sure sunrays work well at sunrise & sunset
+//Find a way to make shadowLightPosition stop flickering?
+//Make sure sunrays work well at sunrise & sunset
 Store bloom mult instead of bloom color?
 Add setting to fade fog into sky buffer (to make the sun and moon appear in fog) (would also need sunray depth fix)
 Do a round of general optimizations
@@ -36,7 +36,7 @@ Do a round of adding debug settings
 Do a round of adding more ways to get to options (e.g. access to light brightnesses from the 'shading' menu)
 Custom sky color?
 Switch to Contrast Adaptive Sharpening?
-Dither final output?
+Dither outputs?
 Disable unneded shader files?
 Test glsl optimizer (https://github.com/aras-p/glsl-optimizer)
 Add support for fogStart, fogEnd, and fogMode?
@@ -67,6 +67,16 @@ Match the vanilla look, especially in:
 
 
 Finished:
+Stop rain reflections for underwater ground? (done as rewrite side effect)
+Add horizon multiplier to fog
+Add more writes to reflection strength buffer
+Adjust rain brightnesses (make sunlight not very bright)
+Add Underwater waviness
+Move all uniform-using function from common into /utils
+Add langs for profile names (done a while ago)
+Make nether bloom look good again
+Add uniforms system to documentation
+Add alpha to debug vars
 Improve 'show dangerous light'
 Realistic water? (done a while ago)
 Calculate light data in vertex shaders? (done a while ago)

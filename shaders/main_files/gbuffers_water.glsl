@@ -58,7 +58,7 @@
 void main() {
 	vec4 color = texture2D(MAIN_BUFFER, texcoord);
 	#ifdef DEBUG_OUTPUT_ENABLED
-		vec3 debugOutput = vec3(0.0);
+		vec4 debugOutput = vec4(0.0, 0.0, 0.0, color.a);
 	#endif
 	
 	color.rgb = mix(vec3(getColorLum(color.rgb  ARGS_IN)), color.rgb, 0.8);
@@ -72,10 +72,10 @@ void main() {
 		
 		// waving water normals
 		#ifdef WAVING_WATER_NORMALS_ENABLED
-			const float worldPosScale = 1.5;
-			#include "/import/frameCounter.glsl"
-			vec3 randomPoint = abs(simplexNoise3From4(vec4(worldPos / worldPosScale, frameCounter * 0.01)  ARGS_IN));
-			vec3 normalWavingAddition = randomPoint * 0.03;
+			const float worldPosScale = 1.6;
+			#include "/import/frameTimeCounter.glsl"
+			vec3 randomPoint = abs(simplexNoise3From4(vec4(worldPos / worldPosScale, frameTimeCounter * 0.6)  ARGS_IN));
+			vec3 normalWavingAddition = randomPoint * 0.04;
 			normal += normalWavingAddition;
 			normal = normalize(normal);
 		#endif
@@ -125,14 +125,6 @@ void main() {
 	#endif
 	
 	
-	// reflection
-	#ifdef WATER_REFLECTIONS_ENABLED
-		if (blockType == 1007) {
-			addReflection(color.rgb, viewPos, normal, MAIN_BUFFER_COPY, 0.3, 0.6  ARGS_IN);
-		}
-	#endif
-	
-	
 	
 	// fog
 	#ifdef FOG_ENABLED
@@ -144,21 +136,28 @@ void main() {
 	#endif
 	
 	
+	
 	/* DRAWBUFFERS:0 */
 	#ifdef DEBUG_OUTPUT_ENABLED
-		color = vec4(debugOutput, 1.0);
+		color = debugOutput;
 	#endif
 	gl_FragData[0] = color;
 	#ifdef BLOOM_AND_NORMALS
-		/* DRAWBUFFERS:024 */
+		/* DRAWBUFFERS:0243 */
 		gl_FragData[1] = colorForBloom;
 		gl_FragData[2] = vec4(normal, 1.0);
+		#ifdef WATER_REFLECTIONS_ENABLED
+			gl_FragData[3] = vec4(0.2, 0.4, 0.0, 1.0);
+		#endif
 	#elif defined BLOOM_ENABLED
 		/* DRAWBUFFERS:02 */
 		gl_FragData[1] = colorForBloom;
-	#elif defined NORMALS_NEEDED
-		/* DRAWBUFFERS:04 */
+	#elif defined OUTPUT_NORMALS
+		/* DRAWBUFFERS:043 */
 		gl_FragData[1] = vec4(normal, 1.0);
+		#ifdef WATER_REFLECTIONS_ENABLED
+			gl_FragData[2] = vec4(0.2, 0.4, 0.0, 1.0);
+		#endif
 	#endif
 }
 
@@ -193,10 +192,10 @@ void main() {
 	#ifdef PHYSICALLY_WAVING_WATER_ENABLED
 		if (blockType == 1007) {
 			#include "/import/cameraPosition.glsl"
-			#include "/import/frameCounter.glsl"
+			#include "/import/frameTimeCounter.glsl"
 			worldPos += cameraPosition;
-			worldPos.y += sin(worldPos.x * 0.6 + worldPos.z * 1.4 + frameCounter * 0.05) * 0.03;
-			worldPos.y += sin(worldPos.x * 0.9 + worldPos.z * 0.6 + frameCounter * 0.04) * 0.02;
+			worldPos.y += sin(worldPos.x * 0.6 + worldPos.z * 1.4 + frameTimeCounter * 3.0) * 0.03;
+			worldPos.y += sin(worldPos.x * 0.9 + worldPos.z * 0.6 + frameTimeCounter * 2.5) * 0.02;
 			worldPos -= cameraPosition;
 		}
 	#endif

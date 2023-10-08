@@ -45,13 +45,18 @@
 void main() {
 	vec4 color = texture2D(MAIN_BUFFER, texcoord) * vec4(glcolor, 1.0);
 	#ifdef DEBUG_OUTPUT_ENABLED
-		vec3 debugOutput = vec3(0.0);
+		vec4 debugOutput = vec4(0.0, 0.0, 0.0, color.a);
 	#endif
 	
 	
 	// bloom value
 	#ifdef BLOOM_ENABLED
 		vec4 colorForBloom = color;
+		#ifdef NETHER
+			float minChannel = min(min(colorForBloom.r, colorForBloom.g), colorForBloom.b);
+			float maxChannel = max(max(colorForBloom.r, colorForBloom.g), colorForBloom.b);
+			colorForBloom *= 0.4 + 0.6 * (maxChannel - minChannel);
+		#endif
 	#endif
 	
 	
@@ -98,13 +103,13 @@ void main() {
 		float rainReflectionStrength = baseRainReflectionStrength;
 		#include "/import/cameraPosition.glsl"
 		rainReflectionStrength *= simplexNoise((worldPos + cameraPosition) * 0.2  ARGS_IN);
-		rainReflectionStrength *= lmcoord.y;
+		rainReflectionStrength *= lmcoord.y * lmcoord.y;
 	#endif
 	
 	
 	/* DRAWBUFFERS:0 */
 	#ifdef DEBUG_OUTPUT_ENABLED
-		color = vec4(debugOutput, 1.0);
+		color = debugOutput;
 	#endif
 	gl_FragData[0] = color;
 	#ifdef BLOOM_AND_NORMALS
@@ -112,7 +117,7 @@ void main() {
 		gl_FragData[1] = colorForBloom;
 		gl_FragData[2] = vec4(normal, 1.0);
 		#ifdef RAIN_REFLECTIONS_ENABLED
-			gl_FragData[3] = vec4(rainReflectionStrength, 0.0, 0.0, 1.0);
+			gl_FragData[3] = vec4(rainReflectionStrength * 0.3, rainReflectionStrength * 0.6, 0.0, 1.0);
 		#endif
 	#elif defined BLOOM_ENABLED
 		/* DRAWBUFFERS:02 */
@@ -121,7 +126,7 @@ void main() {
 		/* DRAWBUFFERS:043 */
 		gl_FragData[1] = vec4(normal, 1.0);
 		#ifdef RAIN_REFLECTIONS_ENABLED
-			gl_FragData[2] = vec4(rainReflectionStrength, 0.0, 0.0, 1.0);
+			gl_FragData[2] = vec4(rainReflectionStrength * 0.3, rainReflectionStrength * 0.6, 0.0, 1.0);
 		#endif
 	#endif
 }

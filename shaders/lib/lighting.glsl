@@ -194,6 +194,8 @@ vec3 getLightingBrightnesses(vec2 lmcoord  ARGS_OUT) {
 	
 	#if !defined SHOW_SUNLIGHT
 		skyBrightness *= skyBrightnessMult;
+		#include "/import/rainStrength.glsl"
+		skyBrightness *= 1.0 - rainStrength * (1.0 - RAIN_LIGHT_MULT) * 0.5;
 	#endif
 	
 	
@@ -220,11 +222,11 @@ vec3 getShadowPos(vec4 viewPos, float lightDot  ARGS_OUT) {
 	#include "/import/shadowProjection.glsl"
 	#include "/import/shadowModelView.glsl"
 	vec3 shadowPos = (shadowProjection * (shadowModelView * playerPos)).xyz; // convert to shadow screen space
-	float distortFactor = getDistortFactor(shadowPos  ARGS_IN);
+	float distortFactor = getDistortFactor(shadowPos);
 	float bias = 0.05
 		+ 0.01 / (lightDot + 0.03)
 		+ distortFactor * distortFactor * 0.5;
-	shadowPos = distort(shadowPos, distortFactor  ARGS_IN); // apply shadow distortion
+	shadowPos = distort(shadowPos, distortFactor); // apply shadow distortion
 	shadowPos = shadowPos * 0.5 + 0.5;
 	shadowPos.z -= bias * 0.02; // apply shadow bias
 	return shadowPos;
@@ -236,8 +238,8 @@ vec3 getLessBiasedShadowPos(vec4 viewPos  ARGS_OUT) {
 	#include "/import/shadowProjection.glsl"
 	#include "/import/shadowModelView.glsl"
 	vec3 shadowPos = (shadowProjection * (shadowModelView * playerPos)).xyz; // convert to shadow screen space
-	float distortFactor = getDistortFactor(shadowPos  ARGS_IN);
-	shadowPos = distort(shadowPos, distortFactor  ARGS_IN); // apply shadow distortion
+	float distortFactor = getDistortFactor(shadowPos);
+	shadowPos = distort(shadowPos, distortFactor); // apply shadow distortion
 	shadowPos = shadowPos * 0.5 + 0.5;
 	shadowPos.z -= 0.005 * distortFactor; // apply shadow bias
 	return shadowPos;
