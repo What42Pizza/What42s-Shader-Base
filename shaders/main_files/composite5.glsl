@@ -17,13 +17,19 @@
 
 void main() {
 	
-	vec2 texcoord = texcoord;
-	#include "/import/isEyeInWater.glsl"
-	if (isEyeInWater == 1) {
-		texcoord = (texcoord - 0.5) * 0.95 + 0.5;
-		#include "/import/frameTimeCounter.glsl"
-		texcoord += simplexNoise2From3(vec3(texcoord * 5.0, frameTimeCounter * 0.6)) * 0.003;
-	}
+	
+	
+	// ======== UNDERWATER WAVING ========
+	
+	#ifdef UNDERWATER_WAVINESS_ENABLED
+		vec2 texcoord = texcoord;
+		#include "/import/isEyeInWater.glsl"
+		if (isEyeInWater == 1) {
+			texcoord = (texcoord - 0.5) * 0.95 + 0.5;
+			#include "/import/frameTimeCounter.glsl"
+			texcoord += simplexNoise2From3(vec3(texcoord * 5.0 * UNDERWATER_WAVINESS_SCALE, frameTimeCounter * 0.6 * UNDERWATER_WAVINESS_SPEED)) * 0.003 * UNDERWATER_WAVINESS_AMOUNT;
+		}
+	#endif
 	
 	vec3 color = texture2D(MAIN_BUFFER, texcoord).rgb;
 	#ifdef DEBUG_OUTPUT_ENABLED
@@ -54,6 +60,7 @@ void main() {
 	#endif
 	
 	//color = texture2D(shadowtex0, texcoord).rgb;
+	
 	
 	
 	/* DRAWBUFFERS:0 */

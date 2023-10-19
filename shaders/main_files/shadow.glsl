@@ -9,8 +9,6 @@
 void main() {
 	vec4 color = texture2D(texture, texcoord);
 	
-	color.a = floor(color.a);
-	
 	gl_FragData[0] = color;
 }
 

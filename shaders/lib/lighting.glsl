@@ -122,7 +122,7 @@ vec3 getAmbientColor(vec4 skylightPercents, float ambientBrightness  ARGS_OUT) {
 		skylightPercents.y * AMBIENT_NIGHT_COLOR +
 		skylightPercents.z * AMBIENT_SUNRISE_COLOR +
 		skylightPercents.w * AMBIENT_SUNSET_COLOR;
-	return mix(CAVE_AMBIENT_COLOR, ambient, sqrt(ambientBrightness));
+	return mix(CAVE_AMBIENT_COLOR, ambient, ambientBrightness);
 }
 
 vec3 getLightColor(float blockBrightness, float skyBrightness, float ambientBrightness  ARGS_OUT) {

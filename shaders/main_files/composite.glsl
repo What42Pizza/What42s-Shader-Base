@@ -13,9 +13,9 @@
 #ifdef FSH
 
 #ifdef RAIN_REFLECTIONS_ENABLED
-	#include "/lib/reflections.glsl"
 	#include "/utils/depth.glsl"
 	#include "/utils/screenToView.glsl"
+	#include "/lib/reflections.glsl"
 #endif
 #ifdef SSAO_ENABLED
 	#include "/lib/ssao.glsl"
@@ -53,7 +53,11 @@ void main() {
 	
 	#ifdef SSAO_ENABLED
 		float aoFactor = getAoFactor(ARG_IN);
-		color *= 1.0 - aoFactor * AO_AMOUNT;
+		//#if SSAO_APPLICATION_TYPE == 1
+			color *= 1.0 - aoFactor * AO_AMOUNT;
+		//#elif SSAO_APPLICATION_TYPE == 2
+		//	color = pow(color, vec3(1.0 + aoFactor * 1.5));
+		//#endif
 		#ifdef SSAO_SHOW_AMOUNT
 			debugOutput = vec3(1.0 - aoFactor);
 		#endif

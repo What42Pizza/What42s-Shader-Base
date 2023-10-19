@@ -179,6 +179,7 @@ void main() {
 void main() {
 	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
 	lmcoord  = (gl_TextureMatrix[1] * gl_MultiTexCoord1).xy;
+	adjustLmcoord(lmcoord);
 	
 	
 	#include "/import/mc_Entity.glsl"

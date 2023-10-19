@@ -1,4 +1,4 @@
-# Waht42's Shaders Base
+# What42's Shaders Base
 
 ### This is a base shaderpack that can be used to easily create your own shaders.
 
@@ -6,7 +6,7 @@
 
 <br>
 
-## Note: This has only been tested with Optifine 1.12.2 and Iris 1.19.4. I hope to support both Optifine and Iris for all versions >= 1.12, but I need more time to test and bugfix
+## Note: This has only been tested with Optifine 1.12.2 and Iris 1.19.4 & 1.20.2. I hope to support both Optifine and Iris for all versions >= 1.12, but I need more time to test and bugfix
 
 <br>
 <br>
@@ -25,13 +25,15 @@
 - **Waving blocks**
 - **Fog**
 - **Handheld light**
-- **Vignette**
-- **Tonemapping and Color Correction**
-- - Brightness
-- - Gamma
-- - Saturation
-- - Vibrance
-- - Contrast
+- **Post-Processing**
+- - Underwater Waviness
+- - Vignette
+- - Tonemapping and Color Correction
+- - - Brightness
+- - - Gamma
+- - - Saturation
+- - - Vibrance
+- - - Contrast
 - **Advanced Lighting**
 - - Block light, ambient light, and sunlight are combined with smooth max
 - - Sides of blocks are darkened

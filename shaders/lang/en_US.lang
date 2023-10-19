@@ -29,15 +29,6 @@ screen.COLOR_SETTINGS=Colors
 
 
 
-screen.BLOCK_COLOR_SETTINGS=Block Color Settings
-
-option.BLOCK_BRIGHTNESS=Block Brightness
-option.BLOCK_RED=Block Red
-option.BLOCK_GREEN=Block Green
-option.BLOCK_BLUE=Block Blue
-
-
-
 screen.DAY_COLOR_SETTINGS=Day Color Settings
 
 option.SKYLIGHT_DAY_BRIGHTNESS=Skylight Day Brightness
@@ -87,6 +78,24 @@ option.AMBIENT_SUNSET_BRIGHTNESS=Ambient Sunset Brightness
 option.AMBIENT_SUNSET_RED=Ambient Sunset Red
 option.AMBIENT_SUNSET_GREEN=Ambient Sunset Green
 option.AMBIENT_SUNSET_BLUE=Ambient Sunset Blue
+
+
+
+screen.BLOCK_COLOR_SETTINGS=Block Color Settings
+
+option.BLOCK_BRIGHTNESS=Block Brightness
+option.BLOCK_RED=Block Red
+option.BLOCK_GREEN=Block Green
+option.BLOCK_BLUE=Block Blue
+
+
+
+screen.CAVE_COLOR_SETTINGS=Cave Color Settings
+
+option.CAVE_AMBIENT_BRIGHTNESS=Cave Brightness
+option.CAVE_AMBIENT_RED=Cave Red
+option.CAVE_AMBIENT_GREEN=Cave Green
+option.CAVE_AMBIENT_BLUE=Cave Blue
 
 
 
@@ -158,6 +167,8 @@ option.AO_SIZE=AO Size
 option.AO_SIZE.comment=How much the AO should spread
 option.AO_QUALITY=AO Quality
 option.AO_QUALITY.comment=Controls the number of samples
+option.SSAO_APPLICATION_TYPE=AO Application Type
+option.SSAO_APPLICATION_TYPE.comment=How the SSAO is applied\n\n1: Multiply (fast)\n2: Pow (better preserves color)
 
 
 

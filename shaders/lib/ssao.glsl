@@ -1,19 +1,17 @@
+#include "/utils/depth.glsl"
+
+
+
 float getAoInfluence(float centerDepth, vec2 offset  ARGS_OUT) {
 	
-	float depth1 = toBlockDepth(texture2D(DEPTH_BUFFER_ALL, texcoord + offset).r  ARGS_IN);
-	float depth2 = toBlockDepth(texture2D(DEPTH_BUFFER_ALL, texcoord - offset).r  ARGS_IN);
-	float diff1 = sqrt(centerDepth - depth1);
-	float diff2 = sqrt(centerDepth - depth2);
-	
-	//float output = float(diff1 + diff2 > 0.0001);
-	//output *= smoothstep(0.01, 0.0, diff1);
-	//output *= smoothstep(0.01, 0.0, diff2);
-	//output /= 1 + diff1 + depth2;
-	
-	//return output;
+	float depth1 = toBlockDepth(texture2D(DEPTH_BUFFER_WO_TRANS, texcoord + offset).r  ARGS_IN);
+	float depth2 = toBlockDepth(texture2D(DEPTH_BUFFER_WO_TRANS, texcoord - offset).r  ARGS_IN);
+	float diff1 = centerDepth - depth1;
+	float diff2 = centerDepth - depth2;
 	
 	float diffTotal = max(diff1 + diff2, 0.0);
-	return 1.0 - 1.0 / (3.0 * diffTotal + 1.0);
+	diffTotal *= 4.0;
+	return (diffTotal * diffTotal) / pow(2.0, diffTotal);
 }
 
 

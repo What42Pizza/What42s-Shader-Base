@@ -52,11 +52,6 @@ void main() {
 	// bloom value
 	#ifdef BLOOM_ENABLED
 		vec4 colorForBloom = color;
-		#ifdef NETHER
-			float minChannel = min(min(colorForBloom.r, colorForBloom.g), colorForBloom.b);
-			float maxChannel = max(max(colorForBloom.r, colorForBloom.g), colorForBloom.b);
-			colorForBloom *= 0.4 + 0.6 * (maxChannel - minChannel);
-		#endif
 	#endif
 	
 	
@@ -76,6 +71,9 @@ void main() {
 			#include "/import/rawSunTotal.glsl"
 			float skyLight = brightnesses.y * rawSunTotal;
 			colorForBloom.rgb *= max(blockLight * blockLight * 1.05, skyLight * 0.75);
+		#elif defined NETHER
+			colorForBloom.rgb *= brightnesses.x;
+			colorForBloom.rgb *= dot(colorForBloom.rgb, vec3(0.92, 0.35, 0.07)) * 1.3;
 		#endif
 	#endif
 	
@@ -103,7 +101,7 @@ void main() {
 		float rainReflectionStrength = baseRainReflectionStrength;
 		#include "/import/cameraPosition.glsl"
 		rainReflectionStrength *= simplexNoise((worldPos + cameraPosition) * 0.2  ARGS_IN);
-		rainReflectionStrength *= lmcoord.y * lmcoord.y;
+		rainReflectionStrength *= lmcoord.y * lmcoord.y * lmcoord.y;
 	#endif
 	
 	
@@ -152,6 +150,7 @@ void main() {
 void main() {
 	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
 	lmcoord  = (gl_TextureMatrix[1] * gl_MultiTexCoord1).xy;
+	adjustLmcoord(lmcoord);
 	
 	#if !defined RAIN_REFLECTIONS_ENABLED
 		vec3 worldPos;

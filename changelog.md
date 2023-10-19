@@ -1,5 +1,14 @@
 <br>
 
+- b1.7.3 (23/10/18)
+  - Further improved ssao
+  - Further improved nether bloom
+  - Reverted shadow transparenct to pre-b1.7.2
+  - Added settings for cave ambient color
+  - Added settings for underwater waviness
+
+<br>
+
 - b1.7.2 (23/10/07)
   - Added underwater waviness
   - Improved reflections (possibly just going in circles)

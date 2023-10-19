@@ -1,20 +1,19 @@
 Current:
+Add setting for SHADOW_DISTORT_ADDITION
 Add light flickering
 Add void fog option?
 Do a round of making sure different settings combinations work
 Make rain puddles last longer
-Add settings for underwater waviness
-Add cave ambient to settings menu
-Make nether fog work correctly?
 Remove 'fogBloomSkyColor' from fog.glsl?
 Add water caustics?
 Make sun / moon / sunrise / sunset detection based on sunAngle
-Add setting for SHADOW_DISTORT_ADDITION
+Fix ssao causing desaturation on sand?
 Move more fog logic into shaders.properties
 Make only top of water wavy
 Remove texcoord from composites & deffered and replace with gl_FragCoord?
-Make cave ambient light detection go all the way down to 0
+Add reflections to normal glass too?
 Add documentation for isometrics
+Increase waviness of plant tops
 Add style option?
 Add backwards depth check to reflections?
 Make reflections work with isometric rendering
@@ -23,7 +22,7 @@ Move advanced options to 'advanced options' menus
 Do a round of replacing smoothsteps with flat line?
 Do a round of adding dynamic noise (change noise based on quality level)
 Add more TAA settings
-Fix spider and endermen eyes
+Fix spider and endermen eyes?
 //Find a way to make shadowLightPosition stop flickering?
 //Make sure sunrays work well at sunrise & sunset
 Store bloom mult instead of bloom color?
@@ -67,6 +66,12 @@ Match the vanilla look, especially in:
 
 
 Finished:
+Make cave ambient light detection go all the way down to 0
+Add underwater waving to documentation & effects list
+Add settings for underwater waviness
+Add cave ambient to settings menu
+Fix inconsistent ssao
+Make nether bloom based off of blocklight
 Stop rain reflections for underwater ground? (done as rewrite side effect)
 Add horizon multiplier to fog
 Add more writes to reflection strength buffer
