@@ -2,6 +2,8 @@ screen.SKY_SETTINGS=Sky
 
 option.DARKEN_SKY_UNDERGROUND=Darken Sky Underground
 option.DARKEN_SKY_UNDERGROUND.comment=Darken the sky when underground
+option.DARKEN_STARS_NEAR_BLOCKLIGHT=Darken Stars Near Blocklight
+option.DARKEN_STARS_NEAR_BLOCKLIGHT.comment=Simulates light pollution by darkening stars when you're near blocklight
 
 
 
@@ -108,8 +110,8 @@ option.shadowMapResolution=Shadow Map Resolution
 option.shadowMapResolution.comment=Resolution of the shadow map. Higher is more accurate, lower is more performance\n\n(Performance cost: HIGH)
 option.shadowDistance=Shadow Distance
 option.shadowDistance.comment=Maximum distance that shadows are rendered\n\n(Performance cost: Unknown)
-option.SHADOW_DISTORT_EXP=Shadow Distort Exponent
-option.SHADOW_DISTORT_EXP.comment=How much more to render closer objects. Higher values increase the resolution of closer objects, lower values increase the resolution of of further objects.\n\n(Performance cost: None)
+option.SHADOW_DISTORT_ADDITION=Shadow Distortion
+option.SHADOW_DISTORT_ADDITION.comment=This controls the resolution of closer shadows. Lower values make closer shadows sharper, and vice versa\n\n(Performance cost: None)
 option.SHADOW_FILTERING=Shadow Filtering
 option.SHADOW_FILTERING.comment=Shoothens shadow edges (works best with TAA)\n\n(Performance cost: Low)
 value.SHADOW_FILTERING.0=Off

@@ -72,10 +72,11 @@ void main() {
 		
 		// waving water normals
 		#ifdef WAVING_WATER_NORMALS_ENABLED
-			const float worldPosScale = 1.6;
+			const float worldPosScale = 2.0;
 			#include "/import/frameTimeCounter.glsl"
-			vec3 randomPoint = abs(simplexNoise3From4(vec4(worldPos / worldPosScale, frameTimeCounter * 0.6)  ARGS_IN));
-			vec3 normalWavingAddition = randomPoint * 0.04;
+			vec3 randomPoint = abs(simplexNoise3From4(vec4(worldPos / worldPosScale, frameTimeCounter * 0.7)  ARGS_IN));
+			randomPoint = normalize(randomPoint);
+			vec3 normalWavingAddition = randomPoint * 0.03;
 			normal += normalWavingAddition;
 			normal = normalize(normal);
 		#endif
@@ -83,15 +84,17 @@ void main() {
 		
 		// fresnel addition
 		#ifdef WATER_RESNEL_ADDITION
+			const vec3 fresnelColor = vec3(1.0, 0.9, 0.5);
+			const float fresnelStrength = 0.25;
 			vec3 fresnelNormal = normal;
 			#ifdef WAVING_WATER_NORMALS_ENABLED
-				fresnelNormal = normalize(fresnelNormal + normalWavingAddition * 100);
+				fresnelNormal = normalize(fresnelNormal + normalWavingAddition * 25);
 			#endif
 			vec3 reflectedNormal = reflect(normalize(viewPos), fresnelNormal);
 			#include "/import/shadowLightPosition.glsl"
-			float fresnel = max(dot(reflectedNormal, normalize(shadowLightPosition)), 0.0);
+			float fresnel = 1.0 - abs(dot(reflectedNormal, normalize(shadowLightPosition)));
 			fresnel *= fresnel;
-			color.rgb *= 0.7 + fresnel * 0.6;
+			color.rgb *= (1.0 - fresnelColor * fresnelStrength) + fresnel * fresnelColor * fresnelStrength * 2.0;
 		#endif
 		
 		
@@ -147,7 +150,7 @@ void main() {
 		gl_FragData[1] = colorForBloom;
 		gl_FragData[2] = vec4(normal, 1.0);
 		#ifdef WATER_REFLECTIONS_ENABLED
-			gl_FragData[3] = vec4(0.2, 0.4, 0.0, 1.0);
+			gl_FragData[3] = vec4(0.1, 0.8, 0.0, 1.0);
 		#endif
 	#elif defined BLOOM_ENABLED
 		/* DRAWBUFFERS:02 */
@@ -156,7 +159,7 @@ void main() {
 		/* DRAWBUFFERS:043 */
 		gl_FragData[1] = vec4(normal, 1.0);
 		#ifdef WATER_REFLECTIONS_ENABLED
-			gl_FragData[2] = vec4(0.2, 0.4, 0.0, 1.0);
+			gl_FragData[2] = vec4(0.1, 0.8, 0.0, 1.0);
 		#endif
 	#endif
 }

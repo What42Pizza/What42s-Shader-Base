@@ -59,11 +59,17 @@ void main() {
 		vec3 debugOutput = vec3(0.0);
 	#endif
 	
-	vec3 color;
+	vec3 color = getSkyColor();
 	if (starData.a > 0.5) {
-		color = starData.rgb;
-	} else {
-		color = getSkyColor();
+		#ifdef DARKEN_STARS_NEAR_BLOCKLIGHT
+			#include "/import/eyeBrightnessSmooth.glsl"
+			float blockBrightness = eyeBrightnessSmooth.x / 240.0;
+			blockBrightness = min(blockBrightness * 10.0, 1.0);
+			blockBrightness = mix(1.3, 0.2, blockBrightness);
+			color = mix(color, starData.rgb, blockBrightness);
+		#else
+			color = starData.rgb;
+		#endif
 	}
 	
 	#ifdef BLOOM_ENABLED

@@ -126,6 +126,10 @@ vec3 getAmbientColor(vec4 skylightPercents, float ambientBrightness  ARGS_OUT) {
 }
 
 vec3 getLightColor(float blockBrightness, float skyBrightness, float ambientBrightness  ARGS_OUT) {
+	// cel shading experiments
+	//blockBrightness = round(blockBrightness * 5) / 5;
+	//skyBrightness = round(skyBrightness * 5) / 5;
+	//ambientBrightness = round(ambientBrightness * 5) / 5;
 	vec4 skylightPercents = getSkylightPercents(ARG_IN);
 	vec3 skyColor = getSkyColor(skylightPercents  ARGS_IN);
 	vec3 ambientColor = getAmbientColor(skylightPercents, ambientBrightness  ARGS_IN);

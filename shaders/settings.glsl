@@ -9,12 +9,8 @@ const float drynessHalflife = 50.0f;
 const float centerDepthHalflife = 2.5f;
 const bool shadowtex0Mipmap = false;
 const bool shadowtex1Mipmap = false;
-const bool shadowColor0Mipmap = false;
-const bool shadowColor1Mipmap = false;
 const bool shadowtex0Clear = false;
 const bool shadowtex1Clear = false;
-const bool shadowcolor0Clear = false;
-const bool shadowcolor1Clear = false;
 */
 
 
@@ -26,6 +22,7 @@ const bool shadowcolor1Clear = false;
 
 
 #define DARKEN_SKY_UNDERGROUND
+#define DARKEN_STARS_NEAR_BLOCKLIGHT
 
 
 
@@ -67,7 +64,7 @@ const bool shadowcolor1Clear = false;
 
 #define AMBIENT_DAY_RED 0.98 // [0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.91 0.92 0.93 0.94 0.95 0.96 0.97 0.98 0.99 1.0 1.01 1.02 1.03 1.04, 1.05 1.06 1.07 1.08 1.09 1.1 1.15 1.2 1.25 1.3 1.35 1.4 1.45 1.5 1.6 1.7 1.8 1.9 2.0]
 #define AMBIENT_DAY_GREEN 1.0 // [0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.91 0.92 0.93 0.94 0.95 0.96 0.97 0.98 0.99 1.0 1.01 1.02 1.03 1.04, 1.05 1.06 1.07 1.08 1.09 1.1 1.15 1.2 1.25 1.3 1.35 1.4 1.45 1.5 1.6 1.7 1.8 1.9 2.0]
-#define AMBIENT_DAY_BLUE 1.02 // [0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.91 0.92 0.93 0.94 0.95 0.96 0.97 0.98 0.99 1.0 1.01 1.02 1.03 1.04, 1.05 1.06 1.07 1.08 1.09 1.1 1.15 1.2 1.25 1.3 1.35 1.4 1.45 1.5 1.6 1.7 1.8 1.9 2.0]
+#define AMBIENT_DAY_BLUE 1.05 // [0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.91 0.92 0.93 0.94 0.95 0.96 0.97 0.98 0.99 1.0 1.01 1.02 1.03 1.04, 1.05 1.06 1.07 1.08 1.09 1.1 1.15 1.2 1.25 1.3 1.35 1.4 1.45 1.5 1.6 1.7 1.8 1.9 2.0]
 #define AMBIENT_DAY_BRIGHTNESS 0.8 // [0.0 0.01 0.02 0.03 0.04 0.05 0.06 0.07 0.08 0.09 0.1 0.11 0.12 0.13 0.14 0.15 0.16 0.17 0.18 0.19 0.2 0.21 0.22 0.23 0.24 0.25 0.26 0.27 0.28 0.29 0.3 0.31 0.32 0.33 0.34 0.35 0.36 0.37 0.38 0.39 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0, 1.05 1.1 1.15 1.2 1.25 1.3 1.35 1.4 1.45 1.5 1.55 1.6 1.65 1.7 1.75 1.8 1.85 1.9 1.95 2.0 2.1 2.2 2.3 2.4 2.5 2.6 2.7 2.8 2.9 3.0]
 #define AMBIENT_DAY_COLOR vec3(AMBIENT_DAY_RED, AMBIENT_DAY_GREEN, AMBIENT_DAY_BLUE)*AMBIENT_DAY_BRIGHTNESS
 
@@ -122,6 +119,7 @@ const bool shadowcolor1Clear = false;
 #define SHADOW_FILTERING 2 // [0 1 2 3]
 const float shadowDistance = 96.0; // [64.0 80.0 96.0 112.0 128.0 160.0 192.0 224.0 256.0 320.0 384.0 512.0 768.0 1024.0]
 const int shadowMapResolution = 512; // [256 384 512 768 1024 1536 2048 3072 4096 6144 8192]
+#define SHADOW_DISTORT_ADDITION 0.09 // [0.05 0.06 0.07 0.08 0.09 0.1 0.11 0.12 0.13 0.14 0.15 0.2 0.25 0.3]
 const float sunPathRotation = -30.0; // [-80.0 -75.0 -70.0 -65.0 -60.0 -55.0 -50.0 -45.0 -40.0 -35.0 -30.0 -25.0 -20.0 -15.0 -10.0 -9.0 -8.0 -7.0 -6.0 -5.0 -4.0 -3.0 -2.0 -1.0 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 10.0 15.0 20.0 25.0 30.0 35.0 40.0 45.0 50.0 55.0 60.0 65.0 70.0 75.0 80.0]
 const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0]
 #define SIDE_SHADING 0.25 // [0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
@@ -141,7 +139,7 @@ const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8
 #define WATER_REFLECTIONS_ENABLED
 #define RAIN_REFLECTIONS_ENABLED
 #define REFLECTION_ITERATIONS 40 // [20 25 30 35 40 45 50 55 60 65 70 80 90 100]
-#define REFLECTION_STEP_INCREASE 1.2 // [1.0 1.05 1.1 1.15 1.2 1.3 1.4 1.5 1.6 1.8 2.0 2.25 2.5 2.75 3.0 3.5 4.0 5.0]
+#define REFLECTION_STEP_INCREASE 1.1 // [1.0 1.05 1.1 1.15 1.2 1.3 1.4 1.5 1.6 1.8 2.0 2.25 2.5 2.75 3.0 3.5 4.0 5.0]
 
 
 
@@ -355,8 +353,6 @@ const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8
 
 
 // Hidden settings
-
-#define SHADOW_DISTORT_ADDITION 0.09
 
 #define LIGHT_SMOOTHING 0.1
 

@@ -57,7 +57,11 @@ void main() {
 	
 	// fog
 	#ifdef ENTITY_FOG_ENABLED
-		applyFog(color.rgb, colorForBloom.rgb  ARGS_IN);
+		#ifdef BLOOM_ENABLED
+			applyFog(color.rgb, colorForBloom.rgb  ARGS_IN);
+		#else
+			applyFog(color.rgb  ARGS_IN);
+		#endif
 	#endif
 	
 	

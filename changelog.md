@@ -1,5 +1,12 @@
 <br>
 
+- b1.7.4 (23/11/16)
+  - Improved water rendering (reflections & fresnel)
+  - Added setting for Shadow Distortion
+  - Added feature: decrease star brightness near blocklight
+
+<br>
+
 - b1.7.3 (23/10/18)
   - Further improved ssao
   - Further improved nether bloom

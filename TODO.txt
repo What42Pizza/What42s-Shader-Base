@@ -1,13 +1,14 @@
 Current:
-Add setting for SHADOW_DISTORT_ADDITION
+Add example image to readme
+Make sun / moon / sunrise / sunset detection based on sunAngle
+Slightly darken stars near blocklight?
+Add tilted weather
 Add light flickering
 Add void fog option?
 Do a round of making sure different settings combinations work
-Make rain puddles last longer
+Smoothen rain puddles strength
 Remove 'fogBloomSkyColor' from fog.glsl?
 Add water caustics?
-Make sun / moon / sunrise / sunset detection based on sunAngle
-Fix ssao causing desaturation on sand?
 Move more fog logic into shaders.properties
 Make only top of water wavy
 Remove texcoord from composites & deffered and replace with gl_FragCoord?
@@ -18,6 +19,9 @@ Add style option?
 Add backwards depth check to reflections?
 Make reflections work with isometric rendering
 Add post-processing effects like the super secret settings
+    ascii art
+	vhs?
+	inverted x and y
 Move advanced options to 'advanced options' menus
 Do a round of replacing smoothsteps with flat line?
 Do a round of adding dynamic noise (change noise based on quality level)
@@ -25,7 +29,6 @@ Add more TAA settings
 Fix spider and endermen eyes?
 //Find a way to make shadowLightPosition stop flickering?
 //Make sure sunrays work well at sunrise & sunset
-Store bloom mult instead of bloom color?
 Add setting to fade fog into sky buffer (to make the sun and moon appear in fog) (would also need sunray depth fix)
 Do a round of general optimizations
 Take FXAA from Comp Reimagined?
@@ -36,6 +39,7 @@ Do a round of adding more ways to get to options (e.g. access to light brightnes
 Custom sky color?
 Switch to Contrast Adaptive Sharpening?
 Dither outputs?
+Fix ssao causing desaturation on sand?
 Disable unneded shader files?
 Test glsl optimizer (https://github.com/aras-p/glsl-optimizer)
 Add support for fogStart, fogEnd, and fogMode?
@@ -66,6 +70,7 @@ Match the vanilla look, especially in:
 
 
 Finished:
+Add setting for SHADOW_DISTORT_ADDITION
 Make cave ambient light detection go all the way down to 0
 Add underwater waving to documentation & effects list
 Add settings for underwater waviness

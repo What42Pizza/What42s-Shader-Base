@@ -102,8 +102,9 @@ void raytrace(out vec2 reflectionPos, out int error, vec3 viewPos, vec3 normal  
 	vec3 viewStepVector = reflect(normalize(viewPos), normalize(normal));
 	vec3 nextScreenPos = endMat(gbufferProjection * startMat(viewPos + viewStepVector)) * 0.5 + 0.5;
 	vec3 stepVector = nextScreenPos - screenPos;
-	//stepVector *= 0.1;
+	//stepVector *= 0.5;
 	screenPos = nextScreenPos;
+	//screenPos += stepVector;
 	
 	int hitCount = 0;
 	
@@ -148,7 +149,7 @@ void raytrace(out vec2 reflectionPos, out int error, vec3 viewPos, vec3 normal  
 				return;
 			}
 			screenPos -= stepVector;
-			stepVector *= 0.1;
+			stepVector *= 0.5;
 		}
 		
 		stepVector *= REFLECTION_STEP_INCREASE;
@@ -295,7 +296,7 @@ void addReflection(inout vec3 color, vec3 viewPos, vec3 normal, sampler2D textur
 	int error;
 	raytrace(reflectionPos, error, viewPos, normal  ARGS_IN);
 	
-	float fresnel = 1.0 + dot(normalize(viewPos), normal);
+	float fresnel = 1.0 - abs(dot(normalize(viewPos), normal));
 	fresnel *= fresnel;
 	fresnel *= fresnel;
 	float lerpAmount = baseStrength + fresnelStrength * fresnel;
@@ -303,14 +304,16 @@ void addReflection(inout vec3 color, vec3 viewPos, vec3 normal, sampler2D textur
 	#include "/import/eyeBrightness.glsl"
 	vec3 alteredFogColor = fogColor * (0.25 + 0.75 * eyeBrightness.y / 240.0);
 	
+	const float inputColorWeight = 0.4;
+	
 	if (error == 0) {
 		vec3 reflectionColor = texture2DLod(texture, reflectionPos, 0).rgb;
 		reflectionColor = mix(alteredFogColor, reflectionColor, clamp(5.0 - 5.0 * max(abs(reflectionPos.x * 2.0 - 1.0), abs(reflectionPos.y * 2.0 - 1.0)), 0.0, 1.0));
-		reflectionColor *= 0.8 + color * 0.2;
+		reflectionColor *= (1.0 - inputColorWeight) + color * inputColorWeight;
 		color = mix(color, reflectionColor, lerpAmount);
 		
-	} else if (error == 1) {
-		color *= vec3(1.0, 0.1, 0.1);
+	//} else if (error == 1) {
+	//	color *= vec3(1.0, 0.1, 0.1);
 		
 	//} else if (error == 1) {
 	//	reflectionPos = (reflectionPos + texcoord) / 2;//mix(texcoord, reflectionPos, randomFloat(rngStart));
@@ -321,7 +324,7 @@ void addReflection(inout vec3 color, vec3 viewPos, vec3 normal, sampler2D textur
 		
 	} else {
 		vec3 reflectionColor = alteredFogColor;
-		reflectionColor *= 0.8 + color * 0.2;
+		reflectionColor *= (1.0 - inputColorWeight) + color * inputColorWeight;
 		color = mix(color, reflectionColor, lerpAmount);
 		
 	}
