@@ -27,11 +27,29 @@
 
 #ifdef FSH
 
+vec3 getSkyColor(ARG_OUT) {
+	#include "/import/rawSkylightPercents.glsl"
+	vec4 skylightPercents = rawSkylightPercents;
+	#include "/import/rainStrength.glsl"
+	skylightPercents.xzw *= 1.0 - rainStrength * (1.0 - RAIN_LIGHT_MULT);
+	return
+		skylightPercents.x * SKYLIGHT_DAY_COLOR +
+		skylightPercents.y * SKYLIGHT_NIGHT_COLOR +
+		skylightPercents.z * SKYLIGHT_SUNRISE_COLOR +
+		skylightPercents.w * SKYLIGHT_SUNSET_COLOR;
+}
+
 void main() {
 	vec4 color = texture2D(MAIN_BUFFER, texcoord) * glcolor;
+	color.a = 0.7;
 	#ifdef DEBUG_OUTPUT_ENABLED
 		vec4 debugOutput = vec4(0.0, 0.0, 0.0, color.a);
 	#endif
+	
+	
+	vec3 skyColor = getSkyColor(ARG_IN);
+	skyColor = mix(vec3(getColorLum(skyColor)), skyColor, 1.3);
+	color.rgb *= skyColor * 1.4;
 	
 	
 	// bloom

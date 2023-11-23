@@ -61,13 +61,14 @@ void main() {
 		vec4 debugOutput = vec4(0.0, 0.0, 0.0, color.a);
 	#endif
 	
-	color.rgb = mix(vec3(getColorLum(color.rgb  ARGS_IN)), color.rgb, 0.8);
 	#ifdef WAVING_WATER_NORMALS_ENABLED
 		vec3 normal = normal;
 	#endif
 	
 	
 	if (blockType == 1007) {
+		
+		color.rgb = mix(vec3(getColorLum(color.rgb  ARGS_IN)), color.rgb, 0.8);
 		
 		
 		// waving water normals
@@ -84,8 +85,8 @@ void main() {
 		
 		// fresnel addition
 		#ifdef WATER_RESNEL_ADDITION
-			const vec3 fresnelColor = vec3(1.0, 0.9, 0.5);
-			const float fresnelStrength = 0.25;
+			const vec3 fresnelColor = vec3(1.0, 0.6, 0.5);
+			const float fresnelStrength = 0.3;
 			vec3 fresnelNormal = normal;
 			#ifdef WAVING_WATER_NORMALS_ENABLED
 				fresnelNormal = normalize(fresnelNormal + normalWavingAddition * 25);

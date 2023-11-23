@@ -1,9 +1,8 @@
 Current:
 Add example image to readme
+Add setting for cloud transparency
 Make sun / moon / sunrise / sunset detection based on sunAngle
-Slightly darken stars near blocklight?
 Add tilted weather
-Add light flickering
 Add void fog option?
 Do a round of making sure different settings combinations work
 Smoothen rain puddles strength
@@ -11,7 +10,7 @@ Remove 'fogBloomSkyColor' from fog.glsl?
 Add water caustics?
 Move more fog logic into shaders.properties
 Make only top of water wavy
-Remove texcoord from composites & deffered and replace with gl_FragCoord?
+Remove texcoord from composites & deferred and replace with gl_FragCoord?
 Add reflections to normal glass too?
 Add documentation for isometrics
 Increase waviness of plant tops
@@ -33,14 +32,14 @@ Add setting to fade fog into sky buffer (to make the sun and moon appear in fog)
 Do a round of general optimizations
 Take FXAA from Comp Reimagined?
 Prevent TAA on entities?
-Exclude sun, moon, and sunrays based on horison multiplier
+Exclude sun, moon, and sunrays based on horizon multiplier
 Do a round of adding debug settings
 Do a round of adding more ways to get to options (e.g. access to light brightnesses from the 'shading' menu)
 Custom sky color?
 Switch to Contrast Adaptive Sharpening?
 Dither outputs?
 Fix ssao causing desaturation on sand?
-Disable unneded shader files?
+Disable unneeded shader files?
 Test glsl optimizer (https://github.com/aras-p/glsl-optimizer)
 Add support for fogStart, fogEnd, and fogMode?
 Find a way to stop sugar cane base from waving?
@@ -70,6 +69,9 @@ Match the vanilla look, especially in:
 
 
 Finished:
+Change cloud color based on day time
+Add light flickering
+Slightly darken stars near blocklight?
 Add setting for SHADOW_DISTORT_ADDITION
 Make cave ambient light detection go all the way down to 0
 Add underwater waving to documentation & effects list
@@ -92,8 +94,8 @@ Realistic water? (done a while ago)
 Calculate light data in vertex shaders? (done a while ago)
 Finish isometric setting locales
 Add profiles
-Add handhelt light to textured
-Make no-ambient-light a consistent brightness (add lerp from no-amlbient-light color to daytime-specific ambient color?)
+Add handheld light to textured
+Make no-ambient-light a consistent brightness (add lerp from no-ambient-light color to daytime-specific ambient color?)
 Fix blank xp and banners
 Add file for taa jitter
 Add more reflection settings
@@ -108,11 +110,11 @@ Decrease waving at night?
 Process handheld light amount in vertex shaders
 Calculate sunrays data in vertex shaders
 Make sure the moon light doesn't just pop in after sunset
-Make motion blue framerate independant
+Make motion blue framerate independent
 Fix block outline flickering
 Better shadow filtering
 Try moving the `* 0.08` in `getWavingAddition` to after the interp
-Do a round of converting calculations to 'shader.properites' uniforms
+Do a round of converting calculations to 'shader.properties' uniforms
 UPDATE DOCUMENTATION
 Fix ssao
 fix lang file on 1.12
@@ -152,7 +154,7 @@ Add settings for horizon mult
 Make horizon mult go away with ambient brightness
 Add horizon multiplier
 Add noise to bloom angle
-Seperate incl into common stuff and lib
+Separate incl into common stuff and lib
 Use texelFetch()?
 Vignette
 Fog
@@ -161,7 +163,7 @@ Add noise to bloom sampling
 Improve sunray sampling (add noise?)
 Entity color thing
 Sunray saturation
-Seperate bloom levels more
+Separate bloom levels more
 Sunrays settings and documentation
 Rework sunray sampling
 Decrease brightness during rain
@@ -169,5 +171,5 @@ Settings per time of day
 Sun rays
 Sharpening
 Bloom
-Seperate shaded.glsl and have shared code instead
+Separate shaded.glsl and have shared code instead
 Rename torch light to block light

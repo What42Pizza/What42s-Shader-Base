@@ -193,3 +193,6 @@
 #ifdef import_shadowProjectionInverse
 	uniform mat4 shadowProjectionInverse;
 #endif
+#ifdef import_blockFlickerAmount
+	uniform float blockFlickerAmount;
+#endif

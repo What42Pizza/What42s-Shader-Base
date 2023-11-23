@@ -134,6 +134,11 @@ vec3 getLightColor(float blockBrightness, float skyBrightness, float ambientBrig
 	vec3 skyColor = getSkyColor(skylightPercents  ARGS_IN);
 	vec3 ambientColor = getAmbientColor(skylightPercents, ambientBrightness  ARGS_IN);
 	
+	#ifdef BLOCKLIGHT_FLICKERING_ENABLED
+		#include "/import/blockFlickerAmount.glsl"
+		blockBrightness *= blockFlickerAmount;
+	#endif
+	
 	vec3 blockLight   = blockBrightness   * BLOCK_COLOR;
 	vec3 skyLight     = skyBrightness     * skyColor;
 	vec3 ambientLight = ambientColor;

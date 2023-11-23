@@ -36,7 +36,7 @@ float fogify(float x, float w  ARGS_OUT) {
 	}
 #endif
 
-vec3 getSkyColor(ARG_OUT) {
+vec3 getSkyColorForFog(ARG_OUT) {
 	
 	#include "/import/invViewSize.glsl"
 	#include "/import/gbufferProjectionInverse.glsl"
@@ -62,7 +62,7 @@ vec3 getSkyColor(ARG_OUT) {
 		vec3 bloomColorMix;
 		#include "/import/isEyeInWater.glsl"
 		if (isEyeInWater == 0) {
-			colorMix = getSkyColor(ARG_IN);
+			colorMix = getSkyColorForFog(ARG_IN);
 			bloomColorMix = colorMix * sqrt(BLOOM_SKY_BRIGHTNESS);
 		} else {
 			colorMix = fogSkyColor;
@@ -76,7 +76,7 @@ vec3 getSkyColor(ARG_OUT) {
 		vec3 colorMix;
 		#include "/import/isEyeInWater.glsl"
 		if (isEyeInWater == 0) {
-			colorMix = getSkyColor(ARG_IN);
+			colorMix = getSkyColorForFog(ARG_IN);
 		} else {
 			colorMix = fogSkyColor;
 		}

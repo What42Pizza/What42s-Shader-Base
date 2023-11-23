@@ -304,7 +304,7 @@ void addReflection(inout vec3 color, vec3 viewPos, vec3 normal, sampler2D textur
 	#include "/import/eyeBrightness.glsl"
 	vec3 alteredFogColor = fogColor * (0.25 + 0.75 * eyeBrightness.y / 240.0);
 	
-	const float inputColorWeight = 0.4;
+	const float inputColorWeight = 0.2;
 	
 	if (error == 0) {
 		vec3 reflectionColor = texture2DLod(texture, reflectionPos, 0).rgb;

@@ -14,6 +14,9 @@
 
 #include "/lib/simplex_noise.glsl"
 #include "/lib/color_correction.glsl"
+#if COLORBLIND_MODE != 0
+	#include "/lib/colorblindness.glsl"
+#endif
 
 void main() {
 	
@@ -41,6 +44,9 @@ void main() {
 	// ======== COLOR CORRECTION & TONE MAPPING ========
 	
 	doColorCorrection(color  ARGS_IN);
+	#if COLORBLIND_MODE != 0
+		apply_colorblindness_correction(color  ARGS_IN);
+	#endif
 	
 	
 	

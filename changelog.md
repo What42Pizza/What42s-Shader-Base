@@ -1,5 +1,13 @@
 <br>
 
+- b1.7.5 (23/11/23)
+  - Added feature: blocklight flickering
+  - Added feature: cloud color changed with sunlight color
+  - Added feature: simple colorblindness correction
+  - Tweaked water rendering values
+
+<br>
+
 - b1.7.4 (23/11/16)
   - Improved water rendering (reflections & fresnel)
   - Added setting for Shadow Distortion
@@ -10,7 +18,7 @@
 - b1.7.3 (23/10/18)
   - Further improved ssao
   - Further improved nether bloom
-  - Reverted shadow transparenct to pre-b1.7.2
+  - Reverted shadow transparency to pre-b1.7.2
   - Added settings for cave ambient color
   - Added settings for underwater waviness
 
@@ -32,7 +40,7 @@
 <br>
 
 - **b1.7.0** (23/09/28)
-  - Reformmated entire shader for slightly better performance (300+ files updated)
+  - Reformatted entire shader for slightly better performance (300+ files updated)
   - Added Cave Ambient color settings for consistent underground lighting
   - Improved water waving & fresnel
   - Improved reflections
@@ -188,9 +196,9 @@
 <br>
 
 - **b1.3.0** (23/08/04)
-  - Imroved shadow filtering (maybe worse performance)
+  - Improved shadow filtering (maybe worse performance)
   - Fixed block outline and leash
-  - Made motion blur framerate-independant
+  - Made motion blur framerate-independent
   - Slightly improved performance (in other areas)
 
 <br>

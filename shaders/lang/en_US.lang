@@ -129,6 +129,8 @@ option.SIDE_SHADING.comment=How much to increase / decrease the sides of blocks 
 option.RAIN_LIGHT_MULT=Rain Light Multiplier
 option.USE_VANILLA_BRIGHTNESS=Use Vanilla Brightness
 option.USE_VANILLA_BRIGHTNESS.comment=Whether or not the vanilla brightness slider should be used
+option.BLOCKLIGHT_FLICKERING_ENABLED=Blocklight Flickering
+option.BLOCKLIGHT_FLICKERING_ENABLED.comment=Makes block light flicker slightly
 
 
 
@@ -310,6 +312,20 @@ value.TONEMAPPER.2=Simple
 value.TONEMAPPER.3=ACES
 option.USE_GAMMA_CORRECTION=Use Gamma Correction
 option.USE_GAMMA_CORRECTION.comment=Corrects for gamma before and after color correction
+
+
+
+screen.COLORBLIND_CORRECTION=Colorblindness Correction
+screen.COLORBLIND_MODE.comment=Helps correct for colorblindness (supposedly)
+
+option.COLORBLIND_MODE=Colorblind Mode
+option.COLORBLIND_MODE.comment=Helps correct for colorblindness (supposedly)
+value.COLORBLIND_MODE.0=Off
+value.COLORBLIND_MODE.1=Protanopia
+value.COLORBLIND_MODE.2=Deuteranopia
+value.COLORBLIND_MODE.3=Tritanopia
+
+option.COLORBLIND_INTENSITY=Correction Intensity
 
 
 
