@@ -1,9 +1,3 @@
-// defines
-
-#if defined BLOOM_ENABLED && defined NORMALS_NEEDED
-	#define BLOOM_AND_NORMALS
-#endif
-
 // transfers
 
 #ifdef FIRST_PASS
@@ -11,13 +5,11 @@
 	varying vec2 texcoord;
 	varying vec2 lmcoord;
 	varying vec3 glcolor;
+	varying vec3 normal;
 	
 	#ifdef RAIN_REFLECTIONS_ENABLED
 		varying vec3 worldPos;
 		varying float baseRainReflectionStrength;
-	#endif
-	#ifdef NORMALS_NEEDED
-		varying vec3 normal;
 	#endif
 	#ifdef SHOW_DANGEROUS_LIGHT
 		varying float isDangerousLight;
@@ -27,7 +19,8 @@
 
 // includes
 
-#include "/lib/lighting.glsl"
+#include "/lib/pre_lighting.glsl"
+#include "/lib/basic_lighting.glsl"
 #ifdef FOG_ENABLED
 	#include "/lib/fog.glsl"
 #endif
@@ -56,23 +49,16 @@ void main() {
 	
 	
 	// main lighting
-	vec3 brightnesses = getLightingBrightnesses(lmcoord  ARGS_IN);
-	color.rgb *= getLightColor(brightnesses.x, brightnesses.y, brightnesses.z  ARGS_IN);
-	#ifdef SHOW_SUNLIGHT
-		debugOutput = vec3(brightnesses.y);
-	#endif
-	#ifdef SHOW_BRIGHTNESSES
-		debugOutput = brightnesses;
-	#endif
+	color.rgb *= getBasicLighting(lmcoord.x, lmcoord.y  ARGS_IN);
 	
 	#ifdef BLOOM_ENABLED
 		#ifdef OVERWORLD
-			float blockLight = brightnesses.x;
+			float blockLight = lmcoord.x;
 			#include "/import/rawSunTotal.glsl"
-			float skyLight = brightnesses.y * rawSunTotal;
+			float skyLight = lmcoord.y * rawSunTotal;
 			colorForBloom.rgb *= max(blockLight * blockLight * 1.05, skyLight * 0.75);
 		#elif defined NETHER
-			colorForBloom.rgb *= brightnesses.x;
+			colorForBloom.rgb *= lmcoord.x;
 			colorForBloom.rgb *= dot(colorForBloom.rgb, vec3(0.92, 0.35, 0.07)) * 1.3;
 		#endif
 	#endif
@@ -105,28 +91,33 @@ void main() {
 	#endif
 	
 	
-	/* DRAWBUFFERS:0 */
+	
+	// outputs
+	
 	#ifdef DEBUG_OUTPUT_ENABLED
 		color = debugOutput;
 	#endif
+	
+	/* DRAWBUFFERS:04 */
 	gl_FragData[0] = color;
-	#ifdef BLOOM_AND_NORMALS
-		/* DRAWBUFFERS:0243 */
-		gl_FragData[1] = colorForBloom;
-		gl_FragData[2] = vec4(normal, 1.0);
-		#ifdef RAIN_REFLECTIONS_ENABLED
-			gl_FragData[3] = vec4(rainReflectionStrength * 0.3, rainReflectionStrength * 0.6, 0.0, 1.0);
-		#endif
-	#elif defined BLOOM_ENABLED
-		/* DRAWBUFFERS:02 */
-		gl_FragData[1] = colorForBloom;
-	#elif defined NORMALS_NEEDED
-		/* DRAWBUFFERS:043 */
-		gl_FragData[1] = vec4(normal, 1.0);
-		#ifdef RAIN_REFLECTIONS_ENABLED
-			gl_FragData[2] = vec4(rainReflectionStrength * 0.3, rainReflectionStrength * 0.6, 0.0, 1.0);
-		#endif
+	gl_FragData[1] = vec4(normal, 1.0);
+	
+	#if defined BLOOM_ENABLED && defined RAIN_REFLECTIONS_ENABLED
+		/* DRAWBUFFERS:0423 */
+		gl_FragData[2] = colorForBloom;
+		gl_FragData[3] = vec4(rainReflectionStrength * 0.3, rainReflectionStrength * 0.6, 0.0, 1.0);
 	#endif
+	
+	#if defined BLOOM_ENABLED && !defined RAIN_REFLECTIONS_ENABLED
+		/* DRAWBUFFERS:042 */
+		gl_FragData[2] = colorForBloom;
+	#endif
+	
+	#if !defined BLOOM_ENABLED && defined RAIN_REFLECTIONS_ENABLED
+		/* DRAWBUFFERS:043 */
+		gl_FragData[2] = vec4(rainReflectionStrength * 0.3, rainReflectionStrength * 0.6, 0.0, 1.0);
+	#endif
+	
 }
 
 #endif
@@ -155,6 +146,7 @@ void main() {
 	#if !defined RAIN_REFLECTIONS_ENABLED
 		vec3 worldPos;
 	#endif
+	#include "/import/gbufferModelViewInverse.glsl"
 	worldPos = endMat(gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex));
 	
 	
@@ -194,9 +186,7 @@ void main() {
 	#endif
 	
 	
-	#ifdef NORMALS_NEEDED
-		normal = gl_NormalMatrix * gl_Normal;
-	#endif
+	normal = gl_NormalMatrix * gl_Normal;
 	
 	
 	#ifdef RAIN_REFLECTIONS_ENABLED

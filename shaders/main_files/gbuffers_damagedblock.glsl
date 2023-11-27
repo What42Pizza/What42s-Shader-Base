@@ -12,11 +12,15 @@ void main() {
 		vec4 debugOutput = vec4(0.0, 0.0, 0.0, color.a);
 	#endif
 	
-	/* DRAWBUFFERS:0 */
+	
+	
 	#ifdef DEBUG_OUTPUT_ENABLED
 		color = debugOutput;
 	#endif
+	
+	/* DRAWBUFFERS:0 */
 	gl_FragData[0] = color;
+	
 }
 
 #endif

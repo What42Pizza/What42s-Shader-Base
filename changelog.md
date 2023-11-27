@@ -1,5 +1,16 @@
 <br>
 
+- **b1.8.0** (23/11/26)
+  - Improved performance (hopefully, might just apply to resolutions > 1080p, and may be nullified by next point)
+  - Increased shadowmap resolution from 512 -> 768, and distance from 96 -> 112
+  - Improved reflections
+  - Reworked lighting values due to slight shading overhaul
+  - Removed 'Ultra' profile and added 'Unplayable' profile
+
+<br>
+<br>
+<br>
+
 - b1.7.5 (23/11/23)
   - Added feature: blocklight flickering
   - Added feature: cloud color changed with sunlight color

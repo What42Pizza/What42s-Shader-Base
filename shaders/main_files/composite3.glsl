@@ -32,11 +32,13 @@ void main() {
 	
 	
 	
-	/* DRAWBUFFERS:0 */
 	#ifdef DEBUG_OUTPUT_ENABLED
 		color = debugOutput;
 	#endif
+	
+	/* DRAWBUFFERS:0 */
 	gl_FragData[0] = vec4(color, 1.0);
+	
 }
 
 #endif

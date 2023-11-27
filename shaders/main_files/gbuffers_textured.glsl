@@ -2,10 +2,6 @@
 
 #undef SHADOWS_ENABLED
 
-#if defined BLOOM_ENABLED && defined NORMALS_NEEDED
-	#define BLOOM_AND_NORMALS
-#endif
-
 // transfers
 
 #ifdef FIRST_PASS
@@ -14,15 +10,14 @@
 	varying vec2 lmcoord;
 	varying vec4 glcolor;
 	
-	#ifdef NORMALS_NEEDED
-		varying vec3 normal;
-	#endif
+	varying vec3 normal;
 	
 #endif
 
 // includes
 
-#include "/lib/lighting.glsl"
+#include "/lib/pre_lighting.glsl"
+#include "/lib/basic_lighting.glsl"
 
 
 
@@ -36,30 +31,38 @@ void main() {
 		vec4 debugOutput = vec4(0.0, 0.0, 0.0, color.a);
 	#endif
 	
-	color.rgb *= getLightColor(lmcoord.x, 0.0, lmcoord.y  ARGS_IN);
 	
-	/* DRAWBUFFERS:0 */
+	
+	color.rgb *= getBasicLighting(lmcoord.x, lmcoord.y  ARGS_IN);
+	
+	
+	
+	// outputs
+	
 	#ifdef DEBUG_OUTPUT_ENABLED
 		color = debugOutput;
 	#endif
+	
+	/* DRAWBUFFERS:04 */
 	gl_FragData[0] = color;
-	#ifdef BLOOM_AND_NORMALS
-		/* DRAWBUFFERS:0243 */
-		gl_FragData[1] = color;
-		gl_FragData[2] = vec4(normal, 1.0);
-		#ifdef RAIN_REFLECTIONS_ENABLED
-			gl_FragData[3] = vec4(0.0, 0.0, 0.0, 1.0);
-		#endif
-	#elif defined BLOOM_ENABLED
-		/* DRAWBUFFERS:02 */
-		gl_FragData[1] = color;
-	#elif defined NORMALS_NEEDED
+	gl_FragData[1] = vec4(normal, 1.0);
+	
+	#if defined BLOOM_ENABLED && defined RAIN_REFLECTIONS_ENABLED
 		/* DRAWBUFFERS:043 */
-		gl_FragData[1] = vec4(normal, 1.0);
-		#ifdef RAIN_REFLECTIONS_ENABLED
-			gl_FragData[2] = vec4(0.0, 0.0, 0.0, 1.0);
-		#endif
+		//gl_FragData[2] = colorForBloom;
+		gl_FragData[2] = vec4(0.0, 0.0, 0.0, 1.0);
 	#endif
+	
+	//#if defined BLOOM_ENABLED && !defined vec4(normal, 1.0);
+	//	/* DRAWBUFFERS:042 */
+	//	gl_FragData[2] = colorForBloom;
+	//#endif
+	
+	//#if !defined BLOOM_ENABLED && defined vec4(normal, 1.0);
+	//	/* DRAWBUFFERS:043 */
+	//	gl_FragData[2] = vec4(0.0, 0.0, 0.0, 1.0);
+	//#endif
+	
 }
 
 #endif
@@ -102,9 +105,7 @@ void main() {
 	
 	glcolor = gl_Color;
 	
-	#ifdef NORMALS_NEEDED
-		normal = gl_NormalMatrix * gl_Normal;
-	#endif
+	normal = gl_NormalMatrix * gl_Normal;
 	
 	
 	doPreLighting(ARG_IN);

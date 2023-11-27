@@ -14,27 +14,25 @@ float fogify(float x, float w  ARGS_OUT) {
 	return w / (x * x + w);
 }
 
-#ifdef DARKEN_SKY_UNDERGROUND
-	float getHorizonMultiplier(ARG_OUT) {
-		#ifdef OVERWORLD
-			
-			#include "/import/invViewSize.glsl"
-			#include "/import/gbufferProjectionInverse.glsl"
-			#include "/import/upPosition.glsl"
-			#include "/import/horizonAltitudeAddend.glsl"
-			#include "/import/eyeBrightnessSmooth.glsl"
-			
-			vec4 screenPos = vec4(gl_FragCoord.xy * invViewSize, gl_FragCoord.z, 1.0);
-			vec4 viewPos = gbufferProjectionInverse * (screenPos * 2.0 - 1.0);
-			float viewDot = dot(normalize(viewPos.xyz), normalize(upPosition));
-			float altitudeAddend = min(horizonAltitudeAddend, 1.0 - 2.0 * eyeBrightnessSmooth.y / 240.0); // don't darken sky when there's sky light
-			return clamp(viewDot * 5.0 - altitudeAddend * 8.0, 0.0, 1.0);
-			
-		#else
-			return 1.0;
-		#endif
-	}
-#endif
+float getHorizonMultiplier(ARG_OUT) {
+	#ifdef OVERWORLD
+		
+		#include "/import/invViewSize.glsl"
+		#include "/import/gbufferProjectionInverse.glsl"
+		#include "/import/upPosition.glsl"
+		#include "/import/horizonAltitudeAddend.glsl"
+		#include "/import/eyeBrightnessSmooth.glsl"
+		
+		vec4 screenPos = vec4(gl_FragCoord.xy * invViewSize, gl_FragCoord.z, 1.0);
+		vec4 viewPos = gbufferProjectionInverse * (screenPos * 2.0 - 1.0);
+		float viewDot = dot(normalize(viewPos.xyz), normalize(upPosition));
+		float altitudeAddend = min(horizonAltitudeAddend, 1.0 - 2.0 * eyeBrightnessSmooth.y / 240.0); // don't darken sky when there's sky light
+		return clamp(viewDot * 5.0 - altitudeAddend * 8.0, 0.0, 1.0);
+		
+	#else
+		return 1.0;
+	#endif
+}
 
 vec3 getSkyColorForFog(ARG_OUT) {
 	

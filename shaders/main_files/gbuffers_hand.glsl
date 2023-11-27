@@ -1,11 +1,3 @@
-// defines
-
-#undef SHADOWS_ENABLED
-
-#if defined BLOOM_ENABLED && defined NORMALS_NEEDED
-	#define BLOOM_AND_NORMALS
-#endif
-
 // transfers
 
 #ifdef FIRST_PASS
@@ -14,15 +6,14 @@
 	varying vec2 lmcoord;
 	varying vec4 glcolor;
 	
-	#ifdef NORMALS_NEEDED
-		varying vec3 normal;
-	#endif
+	varying vec3 normal;
 	
 #endif
 
 // includes
 
-#include "/lib/lighting.glsl"
+#include "/lib/pre_lighting.glsl"
+#include "/lib/basic_lighting.glsl"
 
 
 
@@ -40,8 +31,7 @@ void main() {
 	
 	// main lighting
 	
-	vec3 brightnesses = getLightingBrightnesses(lmcoord  ARGS_IN);
-	color.rgb *= getLightColor(brightnesses.x, brightnesses.y, brightnesses.z  ARGS_IN);
+	color.rgb *= getBasicLighting(lmcoord.x, lmcoord.y  ARGS_IN);
 	
 	
 	
@@ -54,28 +44,32 @@ void main() {
 	
 	
 	
-	/* DRAWBUFFERS:0 */
+	// outputs
+	
 	#ifdef DEBUG_OUTPUT_ENABLED
 		color = debugOutput;
 	#endif
+	
+	/* DRAWBUFFERS:04 */
 	gl_FragData[0] = color;
-	#ifdef BLOOM_AND_NORMALS
-		/* DRAWBUFFERS:0243 */
-		gl_FragData[1] = colorForBloom;
-		gl_FragData[2] = vec4(normal, 1.0);
-		#ifdef RAIN_REFLECTIONS_ENABLED
-			gl_FragData[3] = vec4(0.0, 0.0, 0.0, 1.0);
-		#endif
-	#elif defined BLOOM_ENABLED
-		/* DRAWBUFFERS:02 */
-		gl_FragData[1] = colorForBloom;
-	#elif defined NORMALS_NEEDED
-		/* DRAWBUFFERS:043 */
-		gl_FragData[1] = vec4(normal, 1.0);
-		#ifdef RAIN_REFLECTIONS_ENABLED
-			gl_FragData[2] = vec4(0.0, 0.0, 0.0, 1.0);
-		#endif
+	gl_FragData[1] = vec4(normal, 1.0);
+	
+	#if defined BLOOM_ENABLED && defined RAIN_REFLECTIONS_ENABLED
+		/* DRAWBUFFERS:0423 */
+		gl_FragData[2] = colorForBloom;
+		gl_FragData[3] = vec4(0.0, 0.0, 0.0, 1.0);
 	#endif
+	
+	#if defined BLOOM_ENABLED && !defined RAIN_REFLECTIONS_ENABLED
+		/* DRAWBUFFERS:042 */
+		gl_FragData[2] = colorForBloom;
+	#endif
+	
+	#if !defined BLOOM_ENABLED && defined RAIN_REFLECTIONS_ENABLED
+		/* DRAWBUFFERS:043 */
+		gl_FragData[2] = vec4(0.0, 0.0, 0.0, 1.0);
+	#endif
+	
 }
 
 #endif
@@ -113,9 +107,7 @@ void main() {
 	
 	glcolor = gl_Color;
 	
-	#ifdef NORMALS_NEEDED
-		normal = gl_NormalMatrix * gl_Normal;
-	#endif
+	normal = gl_NormalMatrix * gl_Normal;
 	
 	
 	doPreLighting(ARG_IN);

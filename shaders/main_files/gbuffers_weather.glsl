@@ -3,9 +3,7 @@
 	varying vec2 texcoord;
 	varying vec4 glcolor;
 	
-	#ifdef NORMALS_NEEDED
-		varying vec3 normal;
-	#endif
+	varying vec3 normal;
 	
 #endif
 
@@ -19,18 +17,21 @@ void main() {
 		vec4 debugOutput = vec4(0.0, 0.0, 0.0, color.a);
 	#endif
 	
-	/* DRAWBUFFERS:0 */
+	
+	
 	#ifdef DEBUG_OUTPUT_ENABLED
 		color = debugOutput;
 	#endif
+	
+	/* DRAWBUFFERS:04 */
 	gl_FragData[0] = color;
-	#ifdef NORMALS_NEEDED
+	gl_FragData[1] = vec4(normal, 1.0);
+	
+	#ifdef RAIN_REFLECTIONS_ENABLED
 		/* DRAWBUFFERS:043 */
-		gl_FragData[1] = vec4(normal, 1.0);
-		#ifdef RAIN_REFLECTIONS_ENABLED
-			gl_FragData[2] = vec4(0.0, 0.0, 0.0, 1.0);
-		#endif
+		gl_FragData[2] = vec4(0.0, 0.0, 0.0, 1.0);
 	#endif
+	
 }
 
 #endif
@@ -62,9 +63,7 @@ void main() {
 	
 	glcolor = gl_Color;
 	
-	#ifdef NORMALS_NEEDED
-		normal = gl_NormalMatrix * gl_Normal;
-	#endif
+	normal = gl_NormalMatrix * gl_Normal;
 	
 }
 

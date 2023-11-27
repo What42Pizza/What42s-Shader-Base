@@ -1,3 +1,13 @@
+profile.POTATO=§6Potato
+profile.LOW=§2Low
+profile.MEDIUM=§bMedium
+profile.HIGH=§eHigh
+profile.UNPLAYABLE=§cUnplayable
+
+
+
+
+
 screen.SKY_SETTINGS=Sky
 
 option.DARKEN_SKY_UNDERGROUND=Darken Sky Underground
@@ -113,12 +123,12 @@ option.shadowDistance.comment=Maximum distance that shadows are rendered\n\n(Per
 option.SHADOW_DISTORT_ADDITION=Shadow Distortion
 option.SHADOW_DISTORT_ADDITION.comment=This controls the resolution of closer shadows. Lower values make closer shadows sharper, and vice versa\n\n(Performance cost: None)
 option.SHADOW_FILTERING=Shadow Filtering
-option.SHADOW_FILTERING.comment=Shoothens shadow edges (works best with TAA)\n\n(Performance cost: Low)
+option.SHADOW_FILTERING.comment=Smoothens shadow edges (works best with TAA)\n\n(Performance cost: Low)
 value.SHADOW_FILTERING.0=Off
 value.SHADOW_FILTERING.1=Low
 value.SHADOW_FILTERING.2=Medium
 value.SHADOW_FILTERING.3=High
-option.EXCLUDE_FOLIAGE=Exlude Foliage
+option.EXCLUDE_FOLIAGE=Exclude Foliage
 option.EXCLUDE_FOLIAGE.comment=If true, foliage will not cast shadows\n\n(Performance cost: Low)
 option.sunPathRotation=Sun Path Rotation
 option.sunPathRotation.comment=How tilted the sun's rotation is. 0 is vanilla
@@ -179,7 +189,7 @@ option.SSAO_APPLICATION_TYPE.comment=How the SSAO is applied\n\n1: Multiply (fas
 screen.BLOOM_SETTINGS=Bloom
 
 option.BLOOM_ENABLED=Bloom Enabled
-option.BLOOM_EMABLED.comment=Makes bright colors bleed into the surroundings\n\n(Performance cost: Low-Medium, depending on settings)
+option.BLOOM_ENABLED.comment=Makes bright colors bleed into the surroundings\n\n(Performance cost: Low-Medium, depending on settings)
 option.BLOOM_AMOUNT=Bloom Amount
 option.BLOOM_SIZE=Bloom Size
 option.BLOOM_QUALITY=Bloom Quality
@@ -203,7 +213,7 @@ option.SUNRAYS_ENABLED=Sunrays Enabled
 option.SUNRAYS_ENABLED.comment=(Performance cost: Low-Medium, depending on settings)
 option.SUNRAYS_STYLE=Sunrays Style
 option.SUNRAYS_STYLE.comment=Alters how the sunrays are calculated. Option 1 is more natural, option 2 is more impressive looking.
-option.SUNRAYS_SATURATION=Sunrays Sauration
+option.SUNRAYS_SATURATION=Sunrays Saturation
 option.SUNRAYS_SATURATION.comment=The color of sun rays are the same as the sky color, saturated by this amount
 option.SUNRAYS_QUALITY=Sunrays Quality
 option.SUNRAYS_QUALITY.comment=Controls the number of samples for each pixel

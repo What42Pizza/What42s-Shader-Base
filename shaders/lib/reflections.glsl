@@ -103,8 +103,11 @@ void raytrace(out vec2 reflectionPos, out int error, vec3 viewPos, vec3 normal  
 	vec3 nextScreenPos = endMat(gbufferProjection * startMat(viewPos + viewStepVector)) * 0.5 + 0.5;
 	vec3 stepVector = nextScreenPos - screenPos;
 	//stepVector *= 0.5;
-	screenPos = nextScreenPos;
+	//screenPos = nextScreenPos;
 	//screenPos += stepVector;
+	
+	#include "/utils/var_rng.glsl"
+	screenPos = mix(screenPos, nextScreenPos, (randomFloat(rng) + 1.0) * 0.6);
 	
 	int hitCount = 0;
 	
@@ -291,7 +294,7 @@ void raytrace(out vec2 reflectionPos, out int error, vec3 viewPos, vec3 normal  
 
 
 ///*
-void addReflection(inout vec3 color, vec3 viewPos, vec3 normal, sampler2D texture, const float baseStrength, const float fresnelStrength  ARGS_OUT) {
+void addReflection(inout vec3 color, vec3 viewPos, vec3 normal, sampler2D texture, float baseStrength, float fresnelStrength  ARGS_OUT) {
 	vec2 reflectionPos;
 	int error;
 	raytrace(reflectionPos, error, viewPos, normal  ARGS_IN);

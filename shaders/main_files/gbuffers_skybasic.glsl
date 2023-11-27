@@ -59,6 +59,8 @@ void main() {
 		vec3 debugOutput = vec3(0.0);
 	#endif
 	
+	
+	
 	vec3 color = getSkyColor();
 	if (starData.a > 0.5) {
 		#ifdef DARKEN_STARS_NEAR_BLOCKLIGHT
@@ -72,20 +74,27 @@ void main() {
 		#endif
 	}
 	
+	
+	
 	#ifdef BLOOM_ENABLED
 		vec3 colorForBloom = color;
 		colorForBloom *= sqrt(BLOOM_SKY_BRIGHTNESS);
 	#endif
 	
-	/* DRAWBUFFERS:0 */
+	
+	
 	#ifdef DEBUG_OUTPUT_ENABLED
 		color = debugOutput;
 	#endif
+	
+	/* DRAWBUFFERS:0 */
 	gl_FragData[0] = vec4(color, 1.0);
+	
 	#ifdef BLOOM_ENABLED
 		/* DRAWBUFFERS:02 */
 		gl_FragData[1] = vec4(colorForBloom, 1.0);
 	#endif
+	
 }
 
 #endif

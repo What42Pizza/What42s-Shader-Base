@@ -12,9 +12,9 @@
 
 #ifdef FSH
 
+#include "/utils/depth.glsl"
 #ifdef RAIN_REFLECTIONS_ENABLED
-	#include "/utils/depth.glsl"
-	#include "/utils/screenToView.glsl"
+	#include "/utils/screen_to_view.glsl"
 	#include "/lib/reflections.glsl"
 #endif
 #ifdef SSAO_ENABLED
@@ -36,7 +36,7 @@ void main() {
 	
 	#ifdef RAIN_REFLECTIONS_ENABLED
 		vec2 reflectionStengths = texelFetch(REFLECTION_STRENGTH_BUFFER, texelcoord, 0).rg;
-		if (reflectionStengths.r + reflectionStengths.g > 0.01) {
+		//if (reflectionStengths.r + reflectionStengths.g > 0.01) {
 			float depth = texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r;
 			float linearDepth = toLinearDepth(depth  ARGS_IN);
 			if (!(depthIsSky(linearDepth) || depthIsHand(linearDepth))) {
@@ -44,7 +44,7 @@ void main() {
 				vec3 normal = texelFetch(NORMALS_BUFFER, texelcoord, 0).rgb;
 				addReflection(color, viewPos, normal, MAIN_BUFFER, reflectionStengths.r, reflectionStengths.g  ARGS_IN);
 			}
-		}
+		//}
 	#endif
 	
 	
@@ -76,15 +76,18 @@ void main() {
 	
 	
 	
-	/* DRAWBUFFERS:0 */
 	#ifdef DEBUG_OUTPUT_ENABLED
 		color = debugOutput;
 	#endif
+	
+	/* DRAWBUFFERS:0 */
 	gl_FragData[0] = vec4(color, 1.0);
+	
 	#ifdef BLOOM_ENABLED
 		/* DRAWBUFFERS:02 */
 		gl_FragData[1] = vec4(bloomColor, 1.0);
 	#endif
+	
 }
 
 #endif

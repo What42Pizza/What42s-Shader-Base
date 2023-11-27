@@ -17,6 +17,7 @@
 #if COLORBLIND_MODE != 0
 	#include "/lib/colorblindness.glsl"
 #endif
+#include "/utils/depth.glsl"
 
 void main() {
 	
@@ -65,15 +66,17 @@ void main() {
 		color *= 1.0 - vignetteAlpha;
 	#endif
 	
-	//color = texture2D(shadowtex0, texcoord).rgb;
+	//color = texelFetch(NORMALS_BUFFER, texelcoord, 0).rgb;
 	
 	
 	
-	/* DRAWBUFFERS:0 */
 	#ifdef DEBUG_OUTPUT_ENABLED
 		color = debugOutput;
 	#endif
+	
+	/* DRAWBUFFERS:0 */
 	gl_FragData[0] = vec4(color, 1.0);
+	
 }
 
 #endif

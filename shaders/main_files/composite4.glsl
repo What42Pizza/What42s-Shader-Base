@@ -8,12 +8,13 @@
 	varying vec2 texcoord;
 #endif
 
-#include "/utils/depth.glsl"
-#include "/utils/reprojection.glsl"
 
 
 
 #ifdef FSH
+
+#include "/utils/depth.glsl"
+#include "/utils/reprojection.glsl"
 
 #ifdef TAA_ENABLED
 	#include "/lib/taa.glsl"
@@ -78,12 +79,14 @@ void main() {
 	
 	
 	
-	/* DRAWBUFFERS:01 */
 	#ifdef DEBUG_OUTPUT_ENABLED
 		color = debugOutput;
 	#endif
+	
+	/* DRAWBUFFERS:01 */
 	gl_FragData[0] = vec4(color, 1.0);
 	gl_FragData[1] = vec4(prev, 1.0);
+	
 }
 
 #endif

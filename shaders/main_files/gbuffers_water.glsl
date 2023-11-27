@@ -1,19 +1,3 @@
-// defines
-
-#ifdef NORMALS_NEEDED
-	#define OUTPUT_NORMALS
-#endif
-#if defined WATER_REFLECTIONS_ENABLED || defined WATER_RESNEL_ADDITION
-	#define NORMALS_NEEDED
-#endif
-#ifndef NORMALS_NEEDED
-	#undef WAVING_WATER_NORMALS_ENABLED
-#endif
-
-#if defined BLOOM_ENABLED && defined OUTPUT_NORMALS
-	#define BLOOM_AND_NORMALS
-#endif
-
 // transfers
 
 #ifdef FIRST_PASS
@@ -23,9 +7,8 @@
 	varying vec3 glcolor;
 	flat int blockType;
 	
-	#ifdef NORMALS_NEEDED
-		varying vec3 normal;
-	#endif
+	varying vec3 normal;
+	
 	#if defined WATER_REFLECTIONS_ENABLED || defined WATER_RESNEL_ADDITION
 		varying vec3 viewPos;
 	#endif
@@ -37,7 +20,8 @@
 
 // includes
 
-#include "/lib/lighting.glsl"
+#include "/lib/pre_lighting.glsl"
+#include "/lib/basic_lighting.glsl"
 #ifdef FOG_ENABLED
 	#include "/lib/fog.glsl"
 #endif
@@ -77,7 +61,7 @@ void main() {
 			#include "/import/frameTimeCounter.glsl"
 			vec3 randomPoint = abs(simplexNoise3From4(vec4(worldPos / worldPosScale, frameTimeCounter * 0.7)  ARGS_IN));
 			randomPoint = normalize(randomPoint);
-			vec3 normalWavingAddition = randomPoint * 0.03;
+			vec3 normalWavingAddition = randomPoint * 0.02;
 			normal += normalWavingAddition;
 			normal = normalize(normal);
 		#endif
@@ -89,7 +73,7 @@ void main() {
 			const float fresnelStrength = 0.3;
 			vec3 fresnelNormal = normal;
 			#ifdef WAVING_WATER_NORMALS_ENABLED
-				fresnelNormal = normalize(fresnelNormal + normalWavingAddition * 25);
+				fresnelNormal = normalize(fresnelNormal + normalWavingAddition * 30);
 			#endif
 			vec3 reflectedNormal = reflect(normalize(viewPos), fresnelNormal);
 			#include "/import/shadowLightPosition.glsl"
@@ -110,20 +94,13 @@ void main() {
 	
 	// main lighting
 	color.rgb *= glcolor;
-	vec3 brightnesses = getLightingBrightnesses(lmcoord  ARGS_IN);
-	color.rgb *= getLightColor(brightnesses.x, brightnesses.y, brightnesses.z  ARGS_IN);
-	#ifdef SHOW_SUNLIGHT
-		debugOutput = vec3(brightnesses.y);
-	#endif
-	#ifdef SHOW_BRIGHTNESSES
-		debugOutput = brightnesses;
-	#endif
+	color.rgb *= getBasicLighting(lmcoord.x, lmcoord.y  ARGS_IN);
 	
 	#ifdef BLOOM_ENABLED
 		#ifdef OVERWORLD
-			float blockLight = brightnesses.x;
+			float blockLight = lmcoord.x;
 			#include "/import/rawSunTotal.glsl"
-			float skyLight = brightnesses.y * rawSunTotal;
+			float skyLight = lmcoord.y * rawSunTotal;
 			colorForBloom.rgb *= max(blockLight * blockLight * 1.05, skyLight * 0.75);
 		#endif
 	#endif
@@ -141,28 +118,32 @@ void main() {
 	
 	
 	
-	/* DRAWBUFFERS:0 */
+	// outputs
+	
 	#ifdef DEBUG_OUTPUT_ENABLED
 		color = debugOutput;
 	#endif
+	
+	/* DRAWBUFFERS:04 */
 	gl_FragData[0] = color;
-	#ifdef BLOOM_AND_NORMALS
-		/* DRAWBUFFERS:0243 */
-		gl_FragData[1] = colorForBloom;
-		gl_FragData[2] = vec4(normal, 1.0);
-		#ifdef WATER_REFLECTIONS_ENABLED
-			gl_FragData[3] = vec4(0.1, 0.8, 0.0, 1.0);
-		#endif
-	#elif defined BLOOM_ENABLED
-		/* DRAWBUFFERS:02 */
-		gl_FragData[1] = colorForBloom;
-	#elif defined OUTPUT_NORMALS
-		/* DRAWBUFFERS:043 */
-		gl_FragData[1] = vec4(normal, 1.0);
-		#ifdef WATER_REFLECTIONS_ENABLED
-			gl_FragData[2] = vec4(0.1, 0.8, 0.0, 1.0);
-		#endif
+	gl_FragData[1] = vec4(normal, 1.0);
+	
+	#if defined BLOOM_ENABLED && defined WATER_REFLECTIONS_ENABLED
+		/* DRAWBUFFERS:0423 */
+		gl_FragData[2] = colorForBloom;
+		gl_FragData[3] = vec4(0.1, 0.8, 0.0, 1.0);
 	#endif
+	
+	#if defined BLOOM_ENABLED && !defined WATER_REFLECTIONS_ENABLED
+		/* DRAWBUFFERS:042 */
+		gl_FragData[2] = colorForBloom;
+	#endif
+	
+	#if !defined BLOOM_ENABLED && defined WATER_REFLECTIONS_ENABLED
+		/* DRAWBUFFERS:043 */
+		gl_FragData[2] = vec4(0.1, 0.8, 0.0, 1.0);
+	#endif
+	
 }
 
 #endif
@@ -192,6 +173,7 @@ void main() {
 	#if !defined WAVING_WATER_NORMALS_ENABLED
 		vec3 worldPos;
 	#endif
+	#include "/import/gbufferModelViewInverse.glsl"
 	worldPos = endMat(gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex));
 	
 	#ifdef PHYSICALLY_WAVING_WATER_ENABLED
@@ -245,9 +227,7 @@ void main() {
 	#endif
 	
 	
-	#ifdef NORMALS_NEEDED
-		normal = gl_NormalMatrix * gl_Normal;
-	#endif
+	normal = gl_NormalMatrix * gl_Normal;
 	
 	
 	doPreLighting(ARG_IN);

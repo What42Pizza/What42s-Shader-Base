@@ -3,10 +3,10 @@
 #define import_frameCounter
 
 #ifdef FIRST_PASS
-	int rng = 0;
+	uint rng = 0u;
 #else
-	int rng =
-		int(gl_FragCoord.x) +
-		int(gl_FragCoord.y) * int(viewWidth) +
-		int(frameCounter  ) * int(viewWidth) * int(viewHeight);
+	uint rng =
+		uint(gl_FragCoord.x) +
+		uint(gl_FragCoord.y) * uint(viewWidth) +
+		uint(frameCounter  ) * uint(viewWidth) * uint(viewHeight);
 #endif

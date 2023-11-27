@@ -54,7 +54,7 @@ uniform sampler2D shadowtex0;
 #define NOISY_ADDITIONS_BUFFER      colortex3
 #define NORMALS_BUFFER              colortex4
 #define MAIN_BUFFER_COPY            gaux2
-#define HAND_BUFFER                 colortex6
+#define LMCOORDS_BUFFER             colortex6
 #define DEBUG_BUFFER                colortex0
 
 #define DEPTH_BUFFER_ALL                   depthtex0
@@ -216,6 +216,24 @@ void adjustLmcoord(inout vec2 lmcoord) {
 	lmcoord = clamp(lmcoord, 0.0, 1.0);
 }
 
+vec3 getSkyLight(vec4 skylightPercents) {
+	vec3 output = 
+		skylightPercents.x * SKYLIGHT_DAY_COLOR +
+		skylightPercents.y * SKYLIGHT_NIGHT_COLOR +
+		skylightPercents.z * SKYLIGHT_SUNRISE_COLOR +
+		skylightPercents.w * SKYLIGHT_SUNSET_COLOR;
+	return output / 2.0;
+}
+
+vec3 getAmbientLight(vec4 skylightPercents, float ambientBrightness) {
+	vec3 ambient = 
+		skylightPercents.x * AMBIENT_DAY_COLOR +
+		skylightPercents.y * AMBIENT_NIGHT_COLOR +
+		skylightPercents.z * AMBIENT_SUNRISE_COLOR +
+		skylightPercents.w * AMBIENT_SUNSET_COLOR;
+	return mix(CAVE_AMBIENT_COLOR, ambient, ambientBrightness);
+}
+
 
 
 #ifdef USE_BETTER_RAND
@@ -224,8 +242,11 @@ void adjustLmcoord(inout vec2 lmcoord) {
 		rng = rng * 747796405u + 2891336453u;
 		uint v = ((rng >> ((rng >> 28u) + 4u)) ^ rng) * 277803737u;
 		v = (v >> 22u) ^ v;
-		float f = float(v % 1000000u);
-		return f / 500000.0 - 1.0;
+		//float f = float(v % 1000000u);
+		//return f / 500000.0 - 1.0;
+		const uint BIT_MASK = (2u << 16u) - 1u;
+		float normalizedValue = float(v & BIT_MASK) / float(BIT_MASK);
+		return normalizedValue * 2.0 - 1.0;
 	}
 	/*
 	// maybe switch to this:
@@ -240,33 +261,36 @@ void adjustLmcoord(inout vec2 lmcoord) {
 	}
 	*/
 #else
-	int rotateRight(int value, uint shift) {
+	uint rotateRight(uint value, uint shift) {
 		return (value >> shift) | (value << (32u - shift));
 	}
-	float randomFloat(inout int rng) {
-		rng = rng * 747796405 + 2891336453;
+	float randomFloat(inout uint rng) {
+		rng = rng * 747796405u + 2891336453u;
 		rng ^= rotateRight(rng, 11u);
 		rng ^= rotateRight(rng, 17u);
 		rng ^= rotateRight(rng, 23u);
-		float f = float(rng % 1000000);
-		return f / 500000.0 - 1.0;
+		//float f = float(rng % 1000000u);
+		//return f / 500000.0 - 1.0;
+		const uint BIT_MASK = (2u << 16u) - 1u;
+		float normalizedValue = float(rng & BIT_MASK) / float(BIT_MASK);
+		return normalizedValue * 2.0 - 1.0;
 	}
 #endif
 
-vec2 randomVec2(inout int rng) {
+vec2 randomVec2(inout uint rng) {
 	float x = randomFloat(rng);
 	float y = randomFloat(rng);
 	return vec2(x, y);
 }
 
-vec3 randomVec3(inout int rng) {
+vec3 randomVec3(inout uint rng) {
 	float x = randomFloat(rng);
 	float y = randomFloat(rng);
 	float z = randomFloat(rng);
 	return vec3(x, y, z);
 }
 
-vec3 randomVec3FromRValue(int rng) {
+vec3 randomVec3FromRValue(uint rng) {
 	return randomVec3(rng);
 }
 

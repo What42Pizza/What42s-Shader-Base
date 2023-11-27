@@ -2,7 +2,7 @@
 
 
 
-vec3 sampleBloom(float sizeMult, inout int rng  ARGS_OUT) {
+vec3 sampleBloom(float sizeMult, inout uint rng  ARGS_OUT) {
 	vec3 bloomAddition = vec3(0.0);
 	for (int layer = 0; layer < BLOOM_LEVELS; layer++) {
 		float size = float(layer + 1) / BLOOM_LEVELS;
@@ -43,12 +43,12 @@ vec3 sampleBloom(float sizeMult, inout int rng  ARGS_OUT) {
 	}
 	bloomAddition /= BLOOM_LEVELS;
 	
-	return bloomAddition * 0.08;
+	return bloomAddition * 0.05;
 }
 
 
 
-vec3 getBloomAddition(inout int rng  ARGS_OUT) {
+vec3 getBloomAddition(inout uint rng  ARGS_OUT) {
 	
 	float depth = toBlockDepth(texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r  ARGS_IN);
 	float sizeMult = inversesqrt(depth);

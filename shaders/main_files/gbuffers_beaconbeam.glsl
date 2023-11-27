@@ -14,18 +14,23 @@ void main() {
 	#endif
 	
 	
+	
 	color.rgb *= 1.3;
 	
 	
-	/* DRAWBUFFERS:0 */
+	
 	#ifdef DEBUG_OUTPUT_ENABLED
 		color = debugOutput;
 	#endif
+	
+	/* DRAWBUFFERS:0 */
 	gl_FragData[0] = color;
+	
 	#ifdef BLOOM_ENABLED
 		/* DRAWBUFFERS:02 */
 		gl_FragData[1] = color;
 	#endif
+	
 }
 
 #endif

@@ -1,7 +1,10 @@
 Current:
+Add settings for water reflection base and fresnel
+Add lang support for profiles
+Make waving stronger the higher you are?
 Add example image to readme
 Add setting for cloud transparency
-Make sun / moon / sunrise / sunset detection based on sunAngle
+Make sun / moon / sunrise / sunset detection based on sun angle
 Add tilted weather
 Add void fog option?
 Do a round of making sure different settings combinations work
@@ -18,7 +21,7 @@ Add style option?
 Add backwards depth check to reflections?
 Make reflections work with isometric rendering
 Add post-processing effects like the super secret settings
-    ascii art
+	ascii art
 	vhs?
 	inverted x and y
 Move advanced options to 'advanced options' menus
