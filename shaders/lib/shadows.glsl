@@ -131,10 +131,14 @@ vec3 getLessBiasedShadowPos(vec3 viewPos  ARGS_OUT) {
 
 float getSkyBrightness(vec3 viewPos  ARGS_OUT) {
 	
-	vec3 normal = texelFetch(NORMALS_BUFFER, texelcoord, 0).rgb;
-	
-	#include "/import/shadowLightPosition.glsl"
-	float lightDot = dot(normalize(shadowLightPosition), normal);
+	#ifdef OVERWORLD
+		vec3 normal = texelFetch(NORMALS_BUFFER, texelcoord, 0).rgb;
+		
+		#include "/import/shadowLightPosition.glsl"
+		float lightDot = dot(normalize(shadowLightPosition), normal);
+	#else
+		float lightDot = 1.0;
+	#endif
 	
 	#ifdef SHADOWS_ENABLED
 		float skyBrightness = 0;

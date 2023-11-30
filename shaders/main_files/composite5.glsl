@@ -53,7 +53,7 @@ void main() {
 	
 	// ======== VIGNETTE ========
 	
-	#ifdef VIGNETTE_ENABLED
+	#if defined VIGNETTE_ENABLED && !defined END
 		#include "/import/eyeBrightnessSmooth.glsl"
 		float vignetteSkyAmount = 1.0 - eyeBrightnessSmooth.y / 240.0;
 		vignetteSkyAmount = vignetteSkyAmount * (VIGNETTE_AMOUNT_UNDERGROUND - VIGNETTE_AMOUNT_SURFACE) + VIGNETTE_AMOUNT_SURFACE;

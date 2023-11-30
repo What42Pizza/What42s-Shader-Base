@@ -1,5 +1,10 @@
 <br>
 
+- b1.8.2 (23/11/30)
+  - 1.12 compat
+
+<br>
+
 - b1.8.1 (23/11/29)
   - Added feature: height based waviness multiplier
   - Added settings: cloud and rain transparency, and many reflection settings

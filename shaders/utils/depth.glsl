@@ -1,19 +1,17 @@
-#ifndef util_depth
-	#define util_depth 0
+#undef INCLUDE_DEPTH
+
+#if defined FIRST_PASS && !defined DEPTH_FIRST_FINISHED
+	#define INCLUDE_DEPTH
+	#define DEPTH_FIRST_FINISHED
+#endif
+#if defined SECOND_PASS && !defined DEPTH_SECOND_FINISHED
+	#define INCLUDE_DEPTH
+	#define DEPTH_SECOND_FINISHED
 #endif
 
-#undef include_self
 
-#if defined FIRST_PASS && util_depth == 0
-	#define include_self
-	#define util_depth 1
-#endif
-#if defined SECOND_PASS && util_depth == 1
-	#define include_self
-	#define util_depth 2
-#endif
 
-#ifdef include_self
+#ifdef INCLUDE_DEPTH
 
 
 

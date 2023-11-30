@@ -8,51 +8,11 @@
 
 
 
+
+
 #ifdef FSH
 
-float fogify(float x, float w  ARGS_OUT) {
-	return w / (x * x + w);
-}
-
-float getHorizonMultiplier(ARG_OUT) {
-	#ifdef OVERWORLD
-		
-		#include "/import/invViewSize.glsl"
-		#include "/import/gbufferProjectionInverse.glsl"
-		#include "/import/upPosition.glsl"
-		#include "/import/horizonAltitudeAddend.glsl"
-		#include "/import/eyeBrightnessSmooth.glsl"
-		
-		vec4 screenPos = vec4(gl_FragCoord.xy * invViewSize, gl_FragCoord.z, 1.0);
-		vec4 viewPos = gbufferProjectionInverse * (screenPos * 2.0 - 1.0);
-		float viewDot = dot(normalize(viewPos.xyz), normalize(upPosition));
-		float altitudeAddend = min(horizonAltitudeAddend, 1.0 - 2.0 * eyeBrightnessSmooth.y / 240.0); // don't darken sky when there's sky light
-		return clamp(viewDot * 5.0 - altitudeAddend * 8.0, 0.0, 1.0);
-		
-	#else
-		return 1.0;
-	#endif
-}
-
-vec3 getSkyColorForFog(ARG_OUT) {
-	
-	#include "/import/invViewSize.glsl"
-	#include "/import/gbufferProjectionInverse.glsl"
-	#include "/import/gbufferModelView.glsl"
-	#include "/import/skyColor.glsl"
-	#include "/import/fogColor.glsl"
-	
-	vec4 pos = vec4(gl_FragCoord.xy * invViewSize * 2.0 - 1.0, 1.0, 1.0);
-	pos = gbufferProjectionInverse * pos;
-	float upDot = dot(normalize(pos.xyz), gbufferModelView[1].xyz);
-	vec3 finalSkyColor = mix(skyColor, fogColor, fogify(max(upDot, 0.0), 0.25  ARGS_IN));
-	
-	#ifdef DARKEN_SKY_UNDERGROUND
-		finalSkyColor *= getHorizonMultiplier(ARG_IN);
-	#endif
-	
-	return finalSkyColor;
-}
+#include "/utils/getSkyColor.glsl"
 
 #ifdef BLOOM_ENABLED
 	void applyFog(inout vec3 color, inout vec3 colorForBloom  ARGS_OUT) {
@@ -60,7 +20,7 @@ vec3 getSkyColorForFog(ARG_OUT) {
 		vec3 bloomColorMix;
 		#include "/import/isEyeInWater.glsl"
 		if (isEyeInWater == 0) {
-			colorMix = getSkyColorForFog(ARG_IN);
+			colorMix = getSkyColor(ARG_IN);
 			bloomColorMix = colorMix * sqrt(BLOOM_SKY_BRIGHTNESS);
 		} else {
 			colorMix = fogSkyColor;
@@ -74,7 +34,7 @@ vec3 getSkyColorForFog(ARG_OUT) {
 		vec3 colorMix;
 		#include "/import/isEyeInWater.glsl"
 		if (isEyeInWater == 0) {
-			colorMix = getSkyColorForFog(ARG_IN);
+			colorMix = getSkyColor(ARG_IN);
 		} else {
 			colorMix = fogSkyColor;
 		}
@@ -82,7 +42,11 @@ vec3 getSkyColorForFog(ARG_OUT) {
 	}
 #endif
 
+
+
 #endif
+
+
 
 
 

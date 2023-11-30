@@ -1,6 +1,7 @@
+
 #version 130
 
-#define SHADER_DAMAGED_BLOCK
+#define SHADER_GBUFFERS_DAMAGEDBLOCK
 #define OVERWORLD
 #define FSH
 
@@ -18,6 +19,10 @@
 #include "/main_files/gbuffers_damagedblock.glsl"
 #undef main
 #undef FIRST_PASS
+#undef ARGS_IN
+#undef ARGS_OUT
+#undef ARG_IN
+#undef ARG_OUT
 
 #include "/import/switchboard.glsl"
 

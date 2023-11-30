@@ -11,6 +11,7 @@
 
 
 
+
 #ifdef FSH
 
 #include "/lib/basic_lighting.glsl"
@@ -27,7 +28,7 @@ void main() {
 	
 	
 	float depth = texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r;
-	float linearDepth = toLinearDepth(depth);
+	float linearDepth = toLinearDepth(depth  ARGS_IN);
 	if (linearDepth < 0.99) {
 		vec3 viewPos = screenToView(vec3(texcoord, depth)  ARGS_IN);
 		float skyBrightness = getSkyBrightness(viewPos  ARGS_IN);
@@ -35,7 +36,12 @@ void main() {
 		skyBrightness *= 1.0 - rainStrength * (1.0 - RAIN_LIGHT_MULT) * 0.5;
 		vec3 skyColor = getSkyLight(getSkylightPercents(ARG_IN));
 		#include "/import/invFar.glsl"
-		color *= 1.0 + skyColor * skyBrightness * (1.0 - 0.6 * getColorLum(color.rgb)) * smoothstep(0.95, 0.9, length(viewPos) * invFar);
+		#if MC_VERSION >= 11300
+			const float FOG_END = 0.9;
+		#else
+			const float FOG_END = 0.85;
+		#endif
+		color *= 1.0 + skyColor * skyBrightness * (1.0 - 0.6 * getColorLum(color.rgb)) * smoothstep(FOG_END, FOG_END - 0.1, length(viewPos) * invFar);
 	}
 	
 	

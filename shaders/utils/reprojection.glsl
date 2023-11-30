@@ -2,22 +2,20 @@
 
 
 
-#ifndef util_reprojection
-	#define util_reprojection 0
+#undef INCLUDE_REPROJECTION
+
+#if defined FIRST_PASS && !defined REPROJECTION_FIRST_FINISHED
+	#define INCLUDE_REPROJECTION
+	#define REPROJECTION_FIRST_FINISHED
+#endif
+#if defined SECOND_PASS && !defined REPROJECTION_SECOND_FINISHED
+	#define INCLUDE_REPROJECTION
+	#define REPROJECTION_SECOND_FINISHED
 #endif
 
-#undef include_self
 
-#if defined FIRST_PASS && util_reprojection == 0
-	#define include_self
-	#define util_reprojection 1
-#endif
-#if defined SECOND_PASS && util_reprojection == 1
-	#define include_self
-	#define util_reprojection 2
-#endif
 
-#ifdef include_self
+#ifdef INCLUDE_REPROJECTION
 
 
 

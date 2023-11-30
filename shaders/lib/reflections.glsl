@@ -6,95 +6,6 @@
 
 
 
-/*
-#ifdef FIRST_PASS
-	vec3 nvec3(vec4 pos) {
-		return pos.xyz/pos.w;
-	}
-	vec4 nvec4(vec3 pos) {
-		return vec4(pos.xyz, 1.0);
-	}
-	float cdist(vec2 coord) {
-		return max(abs(coord.s-0.5) * 1.95, abs(coord.t-0.5) * 2.0);
-	}
-#endif
-
-vec4 Raytrace(sampler2D depthtex, vec3 viewPos, vec3 normal, float dither  ARGS_OUT) {
-	vec3 pos = vec3(0.0);
-	float dist = 0.0;
-
-	#if AA > 1
-		dither = fract(dither + frameTimeCounter);
-	#endif
-
-	vec3 start = viewPos;
-    vec3 vector = reflect(normalize(viewPos), normalize(normal));
-    viewPos += vector;
-	vec3 tvector = vector;
-
-    int sr = 0;
-
-    for(int i = 0; i < 30; i++) {
-		#include "/import/gbufferProjection.glsl"
-        pos = nvec3(gbufferProjection * nvec4(viewPos)) * 0.5 + 0.5;
-		if (pos.x < -0.05 || pos.x > 1.05 || pos.y < -0.05 || pos.y > 1.05) break;
-
-		vec3 rfragpos = vec3(pos.xy, texture2D(depthtex,pos.xy).r);
-		#include "/import/gbufferProjectionInverse.glsl"
-        rfragpos = nvec3(gbufferProjectionInverse * nvec4(rfragpos * 2.0 - 1.0));
-		dist = length(start - rfragpos);
-
-        float err = length(viewPos - rfragpos);
-		float lVector = length(vector);
-		if (lVector > 1.0) lVector = pow(lVector, 1.14);
-		if (err < lVector) {
-                sr++;
-                if(sr >= 6) break;
-				tvector -= vector;
-                vector *= 0.1;
-		}
-        vector *= 2.0;
-        tvector += vector * (dither * 0.05 + 1.0);
-		viewPos = start + tvector;
-    }
-
-	return vec4(pos, dist);
-}
-
-
-
-void addReflection(inout vec3 color, vec3 viewPos, vec3 normal, sampler2D texture, const float baseStrength, const float fresnelStrength  ARGS_OUT) {
-//vec4 SimpleReflection(vec3 viewPos, vec3 normal, float dither, float skyLightFactor) {
-	vec4 reflection = vec4(0.0);
-	
-	vec4 pos = Raytrace(depthtex1, viewPos, normal, 0.0  ARGS_IN);
-	
-	float border = clamp(1.0 - pow(cdist(pos.st), 50.0), 0.0, 1.0);
-		
-	if (pos.z < 1.0 - 1e-5) {
-		float refDepth = texture2D(depthtex1, pos.st).r;
-		reflection.a = float(0.999999 > refDepth);
-		if (reflection.a > 0.001) {
-			reflection.rgb = texture2D(MAIN_BUFFER, pos.st).rgb;
-			//if (refDepth > 0.9995) reflection.rgb *= sqrt3(skyLightFactor);
-		}
-		reflection.a *= border;
-	}
-	
-	color = reflection.rgb;
-	
-	//reflection.rgb = pow(reflection.rgb * 2.0, vec3(8.0));
-	
-	//return reflection;
-}
-*/
-
-
-
-//#include "/utils/depth.glsl"
-
-// newest:
-///*
 void raytrace(out vec2 reflectionPos, out int error, vec3 viewPos, vec3 normal  ARGS_OUT) {
 	
 	#include "/import/gbufferProjection.glsl"
@@ -165,7 +76,6 @@ void raytrace(out vec2 reflectionPos, out int error, vec3 viewPos, vec3 normal  
 	
 	error = 2;
 }
-//*/
 
 
 
@@ -293,7 +203,6 @@ void raytrace(out vec2 reflectionPos, out int error, vec3 viewPos, vec3 normal  
 
 
 
-///*
 void addReflection(inout vec3 color, vec3 viewPos, vec3 normal, sampler2D texture, float baseStrength, float fresnelStrength  ARGS_OUT) {
 	vec2 reflectionPos;
 	int error;
@@ -333,4 +242,3 @@ void addReflection(inout vec3 color, vec3 viewPos, vec3 normal, sampler2D textur
 	}
 	
 }
-//*/

@@ -17,7 +17,7 @@
 
 #ifdef FSH
 
-vec3 getSkyColor(ARG_OUT) {
+vec3 getSkyColorForClouds(ARG_OUT) {
 	#include "/import/rawSkylightPercents.glsl"
 	vec4 skylightPercents = rawSkylightPercents;
 	#include "/import/rainStrength.glsl"
@@ -37,7 +37,7 @@ void main() {
 	#endif
 	
 	
-	vec3 skyColor = getSkyColor(ARG_IN);
+	vec3 skyColor = getSkyColorForClouds(ARG_IN);
 	skyColor = mix(vec3(getColorLum(skyColor)), skyColor, vec3(0.7, 0.8, 0.8));
 	skyColor = normalize(skyColor);
 	color.rgb *= skyColor * 2.3;

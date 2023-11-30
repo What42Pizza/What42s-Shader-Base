@@ -37,7 +37,7 @@ void main() {
 		#include "/import/shadowModelViewInverse.glsl"
 		#include "/import/shadowProjectionInverse.glsl"
 		vec4 position = shadowModelViewInverse * shadowProjectionInverse * ftransform();
-		applyWaving(position.xyz);
+		applyWaving(position.xyz  ARGS_IN);
 		#include "/import/shadowProjection.glsl"
 		#include "/import/shadowModelView.glsl"
 		gl_Position = shadowProjection * shadowModelView * position;

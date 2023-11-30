@@ -1,6 +1,7 @@
+
 #version 130
 
-#define SHADER_ENTITIES
+#define SHADER_GBUFFERS_ENTITIES
 #define NETHER
 #define VSH
 
@@ -18,6 +19,10 @@
 #include "/main_files/gbuffers_entities.glsl"
 #undef main
 #undef FIRST_PASS
+#undef ARGS_IN
+#undef ARGS_OUT
+#undef ARG_IN
+#undef ARG_OUT
 
 #include "/import/switchboard.glsl"
 

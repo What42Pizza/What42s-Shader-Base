@@ -49,19 +49,8 @@ void main() {
 	
 	#if defined BLOOM_ENABLED && defined RAIN_REFLECTIONS_ENABLED
 		/* DRAWBUFFERS:043 */
-		//gl_FragData[2] = colorForBloom;
 		gl_FragData[2] = vec4(0.0, 0.0, 0.0, 1.0);
 	#endif
-	
-	//#if defined BLOOM_ENABLED && !defined vec4(normal, 1.0);
-	//	/* DRAWBUFFERS:042 */
-	//	gl_FragData[2] = colorForBloom;
-	//#endif
-	
-	//#if !defined BLOOM_ENABLED && defined vec4(normal, 1.0);
-	//	/* DRAWBUFFERS:043 */
-	//	gl_FragData[2] = vec4(0.0, 0.0, 0.0, 1.0);
-	//#endif
 	
 }
 

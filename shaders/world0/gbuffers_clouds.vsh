@@ -1,6 +1,7 @@
+
 #version 130
 
-#define SHADER_CLOUDS
+#define SHADER_GBUFFERS_CLOUDS
 #define OVERWORLD
 #define VSH
 
@@ -18,6 +19,10 @@
 #include "/main_files/gbuffers_clouds.glsl"
 #undef main
 #undef FIRST_PASS
+#undef ARGS_IN
+#undef ARGS_OUT
+#undef ARG_IN
+#undef ARG_OUT
 
 #include "/import/switchboard.glsl"
 

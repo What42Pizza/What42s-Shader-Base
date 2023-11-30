@@ -43,6 +43,10 @@ vec3 sampleBloom(float sizeMult, inout uint rng  ARGS_OUT) {
 	}
 	bloomAddition /= BLOOM_LEVELS;
 	
+	#ifdef END
+		bloomAddition *= 0.3;
+	#endif
+	
 	return bloomAddition * 0.05;
 }
 

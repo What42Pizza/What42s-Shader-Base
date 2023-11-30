@@ -36,7 +36,7 @@ void main() {
 	
 	#ifdef RAIN_REFLECTIONS_ENABLED
 		vec2 reflectionStengths = texelFetch(REFLECTION_STRENGTH_BUFFER, texelcoord, 0).rg;
-		//if (reflectionStengths.r + reflectionStengths.g > 0.01) {
+		if (reflectionStengths.r + reflectionStengths.g > 0.01) {
 			float depth = texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r;
 			float linearDepth = toLinearDepth(depth  ARGS_IN);
 			if (!(depthIsSky(linearDepth) || depthIsHand(linearDepth))) {
@@ -44,7 +44,7 @@ void main() {
 				vec3 normal = texelFetch(NORMALS_BUFFER, texelcoord, 0).rgb;
 				addReflection(color, viewPos, normal, MAIN_BUFFER, reflectionStengths.r, reflectionStengths.g  ARGS_IN);
 			}
-		//}
+		}
 	#endif
 	
 	
@@ -68,7 +68,7 @@ void main() {
 	// ======== BLOOM FILTERING ========
 	
 	#ifdef BLOOM_ENABLED
-		float alpha = getColorLum(bloomColor  ARGS_IN);
+		float alpha = getColorLum(bloomColor);
 		alpha = (alpha - BLOOM_LOW_CUTOFF) / (BLOOM_HIGH_CUTOFF - BLOOM_LOW_CUTOFF);
 		alpha = clamp(alpha, 0.0, 1.0);
 		bloomColor *= alpha;

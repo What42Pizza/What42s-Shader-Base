@@ -1,7 +1,8 @@
+
 #version 130
 
 #define SHADER_COMPOSITE2
-#define OVERWORLD
+#define NETHER
 #define FSH
 
 #include "/settings.glsl"
@@ -18,6 +19,10 @@
 #include "/main_files/composite2.glsl"
 #undef main
 #undef FIRST_PASS
+#undef ARGS_IN
+#undef ARGS_OUT
+#undef ARG_IN
+#undef ARG_OUT
 
 #include "/import/switchboard.glsl"
 

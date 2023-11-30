@@ -52,14 +52,14 @@ void main() {
 	
 	if (blockType == 1007) {
 		
-		color.rgb = mix(vec3(getColorLum(color.rgb  ARGS_IN)), color.rgb, 0.8);
+		color.rgb = mix(vec3(getColorLum(color.rgb)), color.rgb, 0.8);
 		
 		
 		// waving water normals
 		#ifdef WAVING_WATER_NORMALS_ENABLED
 			const float worldPosScale = 2.0;
 			#include "/import/frameTimeCounter.glsl"
-			vec3 randomPoint = abs(simplexNoise3From4(vec4(worldPos / worldPosScale, frameTimeCounter * 0.7)  ARGS_IN));
+			vec3 randomPoint = abs(simplexNoise3From4(vec4(worldPos / worldPosScale, frameTimeCounter * 0.7)));
 			randomPoint = normalize(randomPoint);
 			vec3 normalWavingAddition = randomPoint * 0.15;
 			normalWavingAddition *= abs(dot(normal, normalize(viewPos)));

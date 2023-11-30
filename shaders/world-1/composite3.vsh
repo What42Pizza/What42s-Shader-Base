@@ -1,3 +1,4 @@
+
 #version 130
 
 #define SHADER_COMPOSITE3
@@ -18,6 +19,10 @@
 #include "/main_files/composite3.glsl"
 #undef main
 #undef FIRST_PASS
+#undef ARGS_IN
+#undef ARGS_OUT
+#undef ARG_IN
+#undef ARG_OUT
 
 #include "/import/switchboard.glsl"
 
