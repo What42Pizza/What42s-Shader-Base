@@ -86,7 +86,9 @@ void main() {
 	#ifdef RAIN_REFLECTIONS_ENABLED
 		float rainReflectionStrength = baseRainReflectionStrength;
 		#include "/import/cameraPosition.glsl"
-		rainReflectionStrength *= simplexNoise((worldPos + cameraPosition) * 0.2  ARGS_IN);
+		float noise = simplexNoise((worldPos + cameraPosition) * 0.2  ARGS_IN);
+		noise = clamp(RAIN_REFLECTION_SLOPE * (noise - (1.0 - RAIN_REFLECTION_COVERAGE)) + 1.0, RAIN_REFLECTION_MIN, 1.0);
+		rainReflectionStrength *= noise;
 		rainReflectionStrength *= lmcoord.y * lmcoord.y * lmcoord.y;
 	#endif
 	
@@ -105,7 +107,7 @@ void main() {
 	#if defined BLOOM_ENABLED && defined RAIN_REFLECTIONS_ENABLED
 		/* DRAWBUFFERS:0423 */
 		gl_FragData[2] = colorForBloom;
-		gl_FragData[3] = vec4(rainReflectionStrength * 0.3, rainReflectionStrength * 0.6, 0.0, 1.0);
+		gl_FragData[3] = vec4(RAIN_REFLECTION_STRENGTHS * rainReflectionStrength, 0.0, 1.0);
 	#endif
 	
 	#if defined BLOOM_ENABLED && !defined RAIN_REFLECTIONS_ENABLED
@@ -115,7 +117,7 @@ void main() {
 	
 	#if !defined BLOOM_ENABLED && defined RAIN_REFLECTIONS_ENABLED
 		/* DRAWBUFFERS:043 */
-		gl_FragData[2] = vec4(rainReflectionStrength * 0.3, rainReflectionStrength * 0.6, 0.0, 1.0);
+		gl_FragData[2] = vec4(RAIN_REFLECTION_STRENGTHS * rainReflectionStrength, 0.0, 1.0);
 	#endif
 	
 }

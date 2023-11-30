@@ -14,6 +14,7 @@ option.DARKEN_SKY_UNDERGROUND=Darken Sky Underground
 option.DARKEN_SKY_UNDERGROUND.comment=Darken the sky when underground
 option.DARKEN_STARS_NEAR_BLOCKLIGHT=Darken Stars Near Blocklight
 option.DARKEN_STARS_NEAR_BLOCKLIGHT.comment=Simulates light pollution by darkening stars when you're near blocklight
+option.CLOUD_TRANSPARENCY=Cloud Transparency
 
 
 
@@ -162,8 +163,24 @@ screen.REFLECTION_SETTINGS=Reflections
 
 option.WATER_REFLECTIONS_ENABLED=Water Reflections Enabled
 option.WATER_REFLECTIONS_ENABLED.comment=Whether reflections appear on water\n\n(Performance cost: HIGH)
+option.WATER_REFLECTION_AMOUNT=Water Reflection Strength
+option.WATER_REFLECTION_AMOUNT.comment=Max rain reflections strength
+option.WATER_REFLECTION_FRESNEL=Water Reflection Fresnel Factor
+option.WATER_REFLECTION_FRESNEL.comment=How much the surface steepness contributes to reflection strength\n\nFor example, a Strength of 0.5 with a Fresnel Factor of 0.6 means the strength goes from 0.2 (when the surface is facing the camera) to 0.5 (when the surface is parallel to the camera)
+
 option.RAIN_REFLECTIONS_ENABLED=Rain Reflections Enabled
-option.RAIN_REFLECTIONS_ENABLED.comment=Whether the ground has reflections in the rain
+option.RAIN_REFLECTIONS_ENABLED.comment=Add ground reflections when raining
+option.RAIN_REFLECTION_AMOUNT=Rain Reflection Strength
+option.RAIN_REFLECTION_AMOUNT.comment=Max rain reflections strength
+option.RAIN_REFLECTION_FRESNEL=Rain Reflection Fresnel Factor
+option.RAIN_REFLECTION_FRESNEL.comment=How much the surface steepness contributes to reflection strength\n\nFor example, a Strength of 0.5 with a Fresnel Factor of 0.6 means the strength goes from 0.2 (when the surface is facing the camera) to 0.5 (when the surface is parallel to the camera)
+option.RAIN_REFLECTION_MIN=Rain Reflection Min
+option.RAIN_REFLECTION_MIN.comment=Minimum amount for reflection strength
+option.RAIN_REFLECTION_COVERAGE=Rain Reflection Coverage
+option.RAIN_REFLECTION_COVERAGE.comment=How much terrain is at full reflection strength
+option.RAIN_REFLECTION_SLOPE=Rain Reflection Slope
+option.RAIN_REFLECTION_SLOPE.comment=How quickly the reflection strength drops off
+
 option.REFLECTION_ITERATIONS=Reflection Iterations
 option.REFLECTION_ITERATIONS.comment=The number of steps that the pseudo-raytracer takes
 option.REFLECTION_STEP_INCREASE=Reflection Step Increase
@@ -371,6 +388,8 @@ option.WAVING_RAIN_MULT=Waving Rain Multiplier
 option.WAVING_RAIN_MULT.comment=How much to increase / decrease the waving amount when it is raining
 option.WAVING_NIGHT_MULT=Waving Night Multiplier
 option.WAVING_NIGHT_MULT.comment=How much to increase / decrease the waving amount when it is night
+option.HEIGHT_BASED_WAVING_ENABLED=Height Based Waviness Multiplier
+option.HEIGHT_BASED_WAVING_ENABLED.comment=Increases waviness when higher up
 
 
 
@@ -380,6 +399,15 @@ option.PHYSICALLY_WAVING_WATER_ENABLED=Physical Waving Enabled
 option.PHYSICALLY_WAVING_WATER_ENABLED.comment=Makes the water actually wave
 option.WAVING_WATER_NORMALS_ENABLED=Waving Normals Enabled
 option.WAVING_WATER_NORMALS_ENABLED.comment=Makes the water reflections wavy (only takes effect when water reflections are enabled)
+
+
+
+screen.UNDERWATER_WAVINESS_SETTINGS=Underwater Waviness
+
+option.UNDERWATER_WAVINESS_ENABLED=Underwater Waviness Enabled
+option.UNDERWATER_WAVINESS_AMOUNT=Underwater Waviness Amount
+option.UNDERWATER_WAVINESS_SCALE=Underwater Waviness Scale
+option.UNDERWATER_WAVINESS_SPEED=Underwater Waviness Speed
 
 
 

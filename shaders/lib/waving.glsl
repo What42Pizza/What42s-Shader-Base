@@ -9,14 +9,22 @@ vec3 getWavingAddition(vec3 position  ARGS_OUT) {
 	#include "/import/cameraPosition.glsl"
 	vec3 worldPos = position + cameraPosition;
 	#include "/import/frameTimeCounter.glsl"
-	float timePos = frameTimeCounter + dot(worldPos, windDirection) * WAVING_WORLD_SCALE;
+	float timePos = frameTimeCounter + dot(worldPos, windDirection) * WAVING_WORLD_SCALE * 0.5;
 	timePos *= WAVING_SPEED * 1.75;
 	uint timePosFloor = uint(int(timePos));
 	vec3 pos1 = randomVec3FromRValue(timePosFloor);
 	vec3 pos2 = randomVec3FromRValue(timePosFloor + 1u);
 	vec3 pos3 = randomVec3FromRValue(timePosFloor + 2u);
 	vec3 pos4 = randomVec3FromRValue(timePosFloor + 3u);
-	return cubicInterpolate(pos1, pos2, pos3, pos4, mod(timePos, 1.0)) * vec3(1.0, 0.2, 1.0) * 0.08;
+	vec3 output = cubicInterpolate(pos1, pos2, pos3, pos4, mod(timePos, 1.0)) * vec3(1.0, 0.2, 1.0) * 0.08;
+	#ifdef HEIGHT_BASED_WAVING_ENABLED
+		const float lowY = 16.0;
+		const float lowMult = 0.0;
+		const float highY = 224.0;
+		const float highMult = 2.0;
+		output *= clamp((worldPos.y - lowY) * (highMult - lowMult) / (highY - lowY) + lowMult, 0.0, 1.75);
+	#endif
+	return output;
 }
 
 

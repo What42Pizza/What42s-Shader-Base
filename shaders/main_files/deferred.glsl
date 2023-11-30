@@ -29,16 +29,13 @@ void main() {
 	float depth = texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r;
 	float linearDepth = toLinearDepth(depth);
 	if (linearDepth < 0.99) {
-		#ifdef SHADOWS_ENABLED
-			float skyBrightness = getSkyBrightness(depth  ARGS_IN);
-		#else
-			float skyBrightness = getSkyBrightness(ARG_IN);
-		#endif
+		vec3 viewPos = screenToView(vec3(texcoord, depth)  ARGS_IN);
+		float skyBrightness = getSkyBrightness(viewPos  ARGS_IN);
 		#include "/import/rainStrength.glsl"
 		skyBrightness *= 1.0 - rainStrength * (1.0 - RAIN_LIGHT_MULT) * 0.5;
 		vec3 skyColor = getSkyLight(getSkylightPercents(ARG_IN));
-		float estimatedDepth = estimateDepthFSH(texcoord, linearDepth);
-		color *= 1.0 + skyColor * skyBrightness * (1.0 - 0.6 * getColorLum(color.rgb)) * smoothstep(0.7, 0.6, estimatedDepth);
+		#include "/import/invFar.glsl"
+		color *= 1.0 + skyColor * skyBrightness * (1.0 - 0.6 * getColorLum(color.rgb)) * smoothstep(0.95, 0.9, length(viewPos) * invFar);
 	}
 	
 	

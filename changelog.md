@@ -1,5 +1,14 @@
 <br>
 
+- b1.8.1 (23/11/29)
+  - Added feature: height based waviness multiplier
+  - Added settings: cloud and rain transparency, and many reflection settings
+  - Reworked water reflection amounts
+  - Fixed lighting applied to fog with high FOV
+  - Tweaked some lighting colors
+
+<br>
+
 - **b1.8.0** (23/11/26)
   - Improved performance (hopefully, might just apply to resolutions > 1080p, and may be nullified by next point)
   - Increased shadowmap resolution from 512 -> 768, and distance from 96 -> 112

@@ -13,6 +13,7 @@
 
 void main() {
 	vec4 color = texture2D(MAIN_BUFFER, texcoord) * glcolor;
+	color.a *= RAIN_TRANSPARENCY;
 	#ifdef DEBUG_OUTPUT_ENABLED
 		vec4 debugOutput = vec4(0.0, 0.0, 0.0, color.a);
 	#endif

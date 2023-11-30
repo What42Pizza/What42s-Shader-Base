@@ -129,11 +129,7 @@ vec3 getLessBiasedShadowPos(vec3 viewPos  ARGS_OUT) {
 
 
 
-#ifdef SHADOWS_ENABLED
-float getSkyBrightness(float depth  ARGS_OUT) {
-#else
-float getSkyBrightness(ARG_OUT) {
-#endif
+float getSkyBrightness(vec3 viewPos  ARGS_OUT) {
 	
 	vec3 normal = texelFetch(NORMALS_BUFFER, texelcoord, 0).rgb;
 	
@@ -145,7 +141,6 @@ float getSkyBrightness(ARG_OUT) {
 		if (lightDot > 0.0) {
 			// surface is facing towards shadowLightPosition
 			
-			vec3 viewPos = screenToView(vec3(texcoord, depth)  ARGS_IN);
 			#if SHADOW_FILTERING == 0
 				vec3 shadowPos = getShadowPos(viewPos, lightDot  ARGS_IN);
 			#else

@@ -1,16 +1,12 @@
 Current:
-Add settings for water reflection base and fresnel
-Add lang support for profiles
-Make waving stronger the higher you are?
+Add waviness to rain reflections
 Add example image to readme
-Add setting for cloud transparency
-Make sun / moon / sunrise / sunset detection based on sun angle
-Add tilted weather
 Add void fog option?
 Do a round of making sure different settings combinations work
 Smoothen rain puddles strength
 Remove 'fogBloomSkyColor' from fog.glsl?
 Add water caustics?
+Make sun / moon / sunrise / sunset detection based on sun angle
 Move more fog logic into shaders.properties
 Make only top of water wavy
 Remove texcoord from composites & deferred and replace with gl_FragCoord?
@@ -18,6 +14,7 @@ Add reflections to normal glass too?
 Add documentation for isometrics
 Increase waviness of plant tops
 Add style option?
+Add tilted weather
 Add backwards depth check to reflections?
 Make reflections work with isometric rendering
 Add post-processing effects like the super secret settings
@@ -72,6 +69,10 @@ Match the vanilla look, especially in:
 
 
 Finished:
+Add setting for cloud transparency
+Add settings for water reflection base and fresnel
+Make waving stronger the higher you are?
+Add lang support for profiles
 Change cloud color based on day time
 Add light flickering
 Slightly darken stars near blocklight?

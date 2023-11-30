@@ -61,7 +61,8 @@ void main() {
 			#include "/import/frameTimeCounter.glsl"
 			vec3 randomPoint = abs(simplexNoise3From4(vec4(worldPos / worldPosScale, frameTimeCounter * 0.7)  ARGS_IN));
 			randomPoint = normalize(randomPoint);
-			vec3 normalWavingAddition = randomPoint * 0.02;
+			vec3 normalWavingAddition = randomPoint * 0.15;
+			normalWavingAddition *= abs(dot(normal, normalize(viewPos)));
 			normal += normalWavingAddition;
 			normal = normalize(normal);
 		#endif
@@ -131,7 +132,7 @@ void main() {
 	#if defined BLOOM_ENABLED && defined WATER_REFLECTIONS_ENABLED
 		/* DRAWBUFFERS:0423 */
 		gl_FragData[2] = colorForBloom;
-		gl_FragData[3] = vec4(0.1, 0.8, 0.0, 1.0);
+		gl_FragData[3] = vec4(WATER_REFLECTION_STRENGTHS, 0.0, 1.0);
 	#endif
 	
 	#if defined BLOOM_ENABLED && !defined WATER_REFLECTIONS_ENABLED
@@ -141,7 +142,7 @@ void main() {
 	
 	#if !defined BLOOM_ENABLED && defined WATER_REFLECTIONS_ENABLED
 		/* DRAWBUFFERS:043 */
-		gl_FragData[2] = vec4(0.1, 0.8, 0.0, 1.0);
+		gl_FragData[2] = vec4(WATER_REFLECTION_STRENGTHS, 0.0, 1.0);
 	#endif
 	
 }
@@ -165,6 +166,9 @@ void main() {
 	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
 	lmcoord  = (gl_TextureMatrix[1] * gl_MultiTexCoord1).xy;
 	adjustLmcoord(lmcoord);
+	
+	
+	normal = gl_NormalMatrix * gl_Normal;
 	
 	
 	#include "/import/mc_Entity.glsl"
@@ -225,9 +229,6 @@ void main() {
 			glcolor = vec3(1.0);
 		}
 	#endif
-	
-	
-	normal = gl_NormalMatrix * gl_Normal;
 	
 	
 	doPreLighting(ARG_IN);

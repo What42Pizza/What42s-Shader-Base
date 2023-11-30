@@ -5,8 +5,6 @@
 	varying vec2 texcoord;
 	flat float glcolor;
 	
-	varying vec3 normal;
-	
 #endif
 
 // includes
@@ -33,7 +31,7 @@ vec3 getSkyColor(ARG_OUT) {
 
 void main() {
 	vec4 color = texture2D(MAIN_BUFFER, texcoord) * glcolor;
-	color.a = 0.7;
+	color.a = CLOUD_TRANSPARENCY;
 	#ifdef DEBUG_OUTPUT_ENABLED
 		vec4 debugOutput = vec4(0.0, 0.0, 0.0, color.a);
 	#endif
@@ -42,7 +40,7 @@ void main() {
 	vec3 skyColor = getSkyColor(ARG_IN);
 	skyColor = mix(vec3(getColorLum(skyColor)), skyColor, vec3(0.7, 0.8, 0.8));
 	skyColor = normalize(skyColor);
-	color.rgb *= skyColor * 2.0;
+	color.rgb *= skyColor * 2.3;
 	
 	
 	// bloom
@@ -112,8 +110,6 @@ void main() {
 	#endif
 	
 	glcolor = gl_Color.r;
-	
-	normal = gl_NormalMatrix * gl_Normal;
 	
 }
 
