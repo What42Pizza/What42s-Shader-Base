@@ -43,7 +43,9 @@ void applyWaving(inout vec3 position  ARGS_OUT) {
 	#endif
 	#include "/import/betterRainStrength.glsl"
 	wavingScale *= 1.0 + betterRainStrength * (WAVING_RAIN_MULT - 1.0);
-	#include "/import/rawSunTotal.glsl"
-	wavingScale *= WAVING_NIGHT_MULT + rawSunTotal * (1.0 - WAVING_NIGHT_MULT);
+	#include "/import/sunriseColorPercent.glsl"
+	#include "/import/sunsetColorPercent.glsl"
+	#include "/import/sunDayPercent.glsl"
+	wavingScale *= WAVING_NIGHT_MULT + (sunriseColorPercent + sunsetColorPercent + sunDayPercent) * (1.0 - WAVING_NIGHT_MULT);
 	position += getWavingAddition(position  ARGS_IN) * wavingScale;
 }

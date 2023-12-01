@@ -4,6 +4,7 @@
 	
 	varying vec2 texcoord;
 	flat float glcolor;
+	flat vec3 colorMult;
 	
 #endif
 
@@ -17,18 +18,6 @@
 
 #ifdef FSH
 
-vec3 getSkyColorForClouds(ARG_OUT) {
-	#include "/import/rawSkylightPercents.glsl"
-	vec4 skylightPercents = rawSkylightPercents;
-	#include "/import/rainStrength.glsl"
-	skylightPercents.xzw *= 1.0 - rainStrength * (1.0 - RAIN_LIGHT_MULT);
-	return
-		skylightPercents.x * SKYLIGHT_DAY_COLOR +
-		skylightPercents.y * SKYLIGHT_NIGHT_COLOR +
-		skylightPercents.z * SKYLIGHT_SUNRISE_COLOR +
-		skylightPercents.w * SKYLIGHT_SUNSET_COLOR;
-}
-
 void main() {
 	vec4 color = texture2D(MAIN_BUFFER, texcoord) * glcolor;
 	color.a = CLOUD_TRANSPARENCY;
@@ -37,10 +26,7 @@ void main() {
 	#endif
 	
 	
-	vec3 skyColor = getSkyColorForClouds(ARG_IN);
-	skyColor = mix(vec3(getColorLum(skyColor)), skyColor, vec3(0.7, 0.8, 0.8));
-	skyColor = normalize(skyColor);
-	color.rgb *= skyColor * 2.3;
+	color.rgb *= colorMult * 2.3;
 	
 	
 	// bloom
@@ -83,6 +69,9 @@ void main() {
 
 #ifdef VSH
 
+#include "/utils/getSkyLight.glsl"
+#include "/utils/getAmbientLight.glsl"
+
 #ifdef ISOMETRIC_RENDERING_ENABLED
 	#include "/lib/isometric.glsl"
 #endif
@@ -92,6 +81,12 @@ void main() {
 
 void main() {
 	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
+	
+	vec3 skyLight = getSkyLight(ARG_IN);
+	vec3 ambientLight = getAmbientLight(ARG_IN);
+	colorMult = skyLight + ambientLight;
+	//colorMult = mix(vec3(getColorLum(colorMult)), colorMult, vec3(1.0));
+	colorMult = normalize(colorMult);
 	
 	#ifdef ISOMETRIC_RENDERING_ENABLED
 		vec3 worldPos = endMat(gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex));

@@ -69,21 +69,24 @@ void calculateLightCoord(ARG_OUT) {
 
 // this entire function SHOULD be computed on the cpu, but it has to be glsl code because it uses settings that are ONLY defined in glsl
 void calculateSunraysAmount(ARG_OUT) {
-	#include "/import/rawSkylightPercents.glsl"
+	#include "/import/ambientSunPercent.glsl"
+	#include "/import/ambientMoonPercent.glsl"
+	#include "/import/ambientSunrisePercent.glsl"
+	#include "/import/ambientSunsetPercent.glsl"
 	
 	sunraysAmountMult =
-		rawSkylightPercents.x * SUNRAYS_AMOUNT_DAY +
-		rawSkylightPercents.y * SUNRAYS_AMOUNT_NIGHT +
-		rawSkylightPercents.z * SUNRAYS_AMOUNT_SUNRISE +
-		rawSkylightPercents.w * SUNRAYS_AMOUNT_SUNSET;
+		ambientSunPercent * SUNRAYS_AMOUNT_DAY +
+		ambientMoonPercent * SUNRAYS_AMOUNT_NIGHT +
+		ambientSunrisePercent * SUNRAYS_AMOUNT_SUNRISE +
+		ambientSunsetPercent * SUNRAYS_AMOUNT_SUNSET;
 	
 	#include "/import/isOtherLightSource.glsl"
 	#include "/import/isSun.glsl"
 	if (isOtherLightSource) {
 		if (isSun) {
-			sunraysAmountMult *= rawSkylightPercents.x + rawSkylightPercents.z + rawSkylightPercents.w;
+			sunraysAmountMult *= ambientSunPercent + ambientSunrisePercent + ambientSunsetPercent;
 		} else {
-			sunraysAmountMult *= rawSkylightPercents.y;
+			sunraysAmountMult *= ambientMoonPercent;
 		}
 	}
 	

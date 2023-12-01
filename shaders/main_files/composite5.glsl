@@ -6,6 +6,7 @@
 
 #ifdef FIRST_PASS
 	varying vec2 texcoord;
+	uniform float sunAngle;
 #endif
 
 
@@ -67,6 +68,11 @@ void main() {
 	#endif
 	
 	//color = texelFetch(NORMALS_BUFFER, texelcoord, 0).rgb;
+	
+	//if (texcoord.y < 0.1) {
+	//	#include "/import/ambientMoonPercent.glsl"
+	//	color = vec3(ambientMoonPercent);
+	//}
 	
 	
 	

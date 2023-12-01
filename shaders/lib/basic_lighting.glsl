@@ -2,13 +2,7 @@
 
 
 
-vec4 getSkylightPercents(ARG_OUT) {
-	#include "/import/rawSkylightPercents.glsl"
-	vec4 skylightPercents = rawSkylightPercents;
-	#include "/import/rainStrength.glsl"
-	skylightPercents.xzw *= 1.0 - rainStrength * (1.0 - RAIN_LIGHT_MULT);
-	return skylightPercents;
-}
+#include "/utils/getAmbientLight.glsl"
 
 
 
@@ -18,8 +12,7 @@ vec3 getBasicLighting(float blockBrightness, float ambientBrightness  ARGS_OUT) 
 	//skyBrightness = round(skyBrightness * 5) / 5;
 	//ambientBrightness = round(ambientBrightness * 5) / 5;
 	
-	vec4 skylightPercents = getSkylightPercents(ARG_IN);
-	vec3 ambientLight = getAmbientLight(skylightPercents, ambientBrightness);
+	vec3 ambientLight = getAmbientLight(ARG_IN);
 	
 	#ifdef BLOCKLIGHT_FLICKERING_ENABLED
 		#include "/import/blockFlickerAmount.glsl"

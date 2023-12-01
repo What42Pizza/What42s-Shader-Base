@@ -18,6 +18,7 @@
 #include "/utils/depth.glsl"
 #include "/utils/screen_to_view.glsl"
 #include "/lib/shadows.glsl"
+#include "/utils/getSkyLight.glsl"
 
 void main() {
 	vec3 color = texelFetch(MAIN_BUFFER, texelcoord, 0).rgb;
@@ -34,14 +35,14 @@ void main() {
 		float skyBrightness = getSkyBrightness(viewPos  ARGS_IN);
 		#include "/import/rainStrength.glsl"
 		skyBrightness *= 1.0 - rainStrength * (1.0 - RAIN_LIGHT_MULT) * 0.5;
-		vec3 skyColor = getSkyLight(getSkylightPercents(ARG_IN));
+		vec3 skyColor = getSkyLight(ARG_IN);
 		#include "/import/invFar.glsl"
 		#if MC_VERSION >= 11300
 			const float FOG_END = 0.9;
 		#else
 			const float FOG_END = 0.85;
 		#endif
-		color *= 1.0 + skyColor * skyBrightness * (1.0 - 0.6 * getColorLum(color.rgb)) * smoothstep(FOG_END, FOG_END - 0.1, length(viewPos) * invFar);
+		color *= 1.0 + skyColor * skyBrightness * (1.0 - 0.6 * getColorLum(color)) * smoothstep(FOG_END, FOG_END - 0.1, length(viewPos) * invFar);
 	}
 	
 	

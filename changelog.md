@@ -1,5 +1,10 @@
 <br>
 
+- b1.8.3 (23/12/01)
+  - Fixed many problems related to light value detection (sometimes mods would make the moon be treated as the sun)
+
+<br>
+
 - b1.8.2b
   - Improved rain reflection strength
   - Tweaked settings more

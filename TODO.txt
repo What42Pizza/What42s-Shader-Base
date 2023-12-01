@@ -1,13 +1,10 @@
 Current:
-Clean up all light value calculations
 Add 'reflective everything' debug setting
 Add waviness to rain reflections
 Add void fog option?
 Do a round of making sure different settings combinations work
-Smoothen rain puddles strength
 Remove 'fogBloomSkyColor' from fog.glsl?
 Add water caustics?
-Make sun / moon / sunrise / sunset detection based on sun angle
 Move more fog logic into shaders.properties
 Make only top of water wavy
 Remove texcoord from composites & deferred and replace with gl_FragCoord?
@@ -70,6 +67,9 @@ Match the vanilla look, especially in:
 
 
 Finished:
+Clean up all light value calculations
+Make sun / moon / sunrise / sunset detection based on sun angle
+Smoothen rain puddles strength
 Add example image to readme
 Add setting for cloud transparency
 Add settings for water reflection base and fresnel

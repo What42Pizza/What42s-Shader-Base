@@ -99,9 +99,11 @@ void main() {
 	
 	#ifdef BLOOM_ENABLED
 		#ifdef OVERWORLD
+			#include "/import/sunriseColorPercent.glsl"
+			#include "/import/sunsetColorPercent.glsl"
+			#include "/import/sunDayPercent.glsl"
 			float blockLight = lmcoord.x;
-			#include "/import/rawSunTotal.glsl"
-			float skyLight = lmcoord.y * rawSunTotal;
+			float skyLight = lmcoord.y * (sunriseColorPercent + sunsetColorPercent + sunDayPercent);
 			colorForBloom.rgb *= max(blockLight * blockLight * 1.05, skyLight * 0.75);
 		#endif
 	#endif

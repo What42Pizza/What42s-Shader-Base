@@ -183,10 +183,6 @@ uniform float betterRainStrength;
 uniform float horizonAltitudeAddend;
 #endif
 
-#ifdef import_isDay
-uniform bool isDay;
-#endif
-
 #ifdef import_isOtherLightSource
 uniform bool isOtherLightSource;
 #endif
@@ -205,18 +201,6 @@ uniform float centerLinearDepthSmooth;
 
 #ifdef import_taaOffset
 uniform vec2 taaOffset;
-#endif
-
-#ifdef import_sunriseTime
-uniform float sunriseTime;
-#endif
-
-#ifdef import_rawSkylightPercents
-uniform vec4 rawSkylightPercents;
-#endif
-
-#ifdef import_rawSunTotal
-uniform float rawSunTotal;
 #endif
 
 #ifdef import_invAspectRatio
@@ -269,4 +253,40 @@ uniform float blockFlickerAmount;
 
 #ifdef import_rainReflectionStrength
 uniform float rainReflectionStrength;
+#endif
+
+#ifdef import_sunLightBrightness
+uniform float sunLightBrightness;
+#endif
+
+#ifdef import_moonLightBrightness
+uniform float moonLightBrightness;
+#endif
+
+#ifdef import_sunriseColorPercent
+uniform float sunriseColorPercent;
+#endif
+
+#ifdef import_sunsetColorPercent
+uniform float sunsetColorPercent;
+#endif
+
+#ifdef import_sunDayPercent
+uniform float sunDayPercent;
+#endif
+
+#ifdef import_ambientSunPercent
+uniform float ambientSunPercent;
+#endif
+
+#ifdef import_ambientMoonPercent
+uniform float ambientMoonPercent;
+#endif
+
+#ifdef import_ambientSunrisePercent
+uniform float ambientSunrisePercent;
+#endif
+
+#ifdef import_ambientSunsetPercent
+uniform float ambientSunsetPercent;
 #endif
