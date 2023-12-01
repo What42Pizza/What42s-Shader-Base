@@ -2,6 +2,8 @@ use crate::prelude::*;
 
 
 
+
+
 pub struct Command {
 	pub name: &'static str,
 	pub description: &'static str,
@@ -25,6 +27,8 @@ type CommandFunction = fn(args: &[String]) -> Result<()>;
 
 
 
+
+
 pub struct FileCopyData {
 	pub file_name: &'static str,
 	pub copy_name: Option<&'static str>,
@@ -40,4 +44,15 @@ impl FileCopyData {
 	pub fn get_copy_name(&self) -> &'static str {
 		self.copy_name.unwrap_or(self.file_name)
 	}
+}
+
+
+
+
+
+pub struct UniformData {
+	pub name: &'static str,
+	pub type_str: &'static str,
+	pub dummy_value_str: &'static str,
+	pub is_attribute: bool,
 }

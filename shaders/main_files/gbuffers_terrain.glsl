@@ -84,8 +84,8 @@ void main() {
 	
 	// rain reflection strength
 	#ifdef RAIN_REFLECTIONS_ENABLED
-		float rainReflectionStrength = baseRainReflectionStrength;
 		#include "/import/cameraPosition.glsl"
+		float rainReflectionStrength = baseRainReflectionStrength;
 		float noise = simplexNoise((worldPos + cameraPosition) * 0.2);
 		noise = clamp(RAIN_REFLECTION_SLOPE * (noise - (1.0 - RAIN_REFLECTION_COVERAGE)) + 1.0, RAIN_REFLECTION_MIN, 1.0);
 		rainReflectionStrength *= noise;
@@ -193,12 +193,12 @@ void main() {
 	
 	#ifdef RAIN_REFLECTIONS_ENABLED
 		#include "/import/upPosition.glsl"
-		#include "/import/betterRainStrength.glsl"
+		#include "/import/rainReflectionStrength.glsl"
 		baseRainReflectionStrength = dot(normalize(upPosition), normal) * 0.5 + 0.5;
 		baseRainReflectionStrength *= baseRainReflectionStrength;
 		baseRainReflectionStrength *= baseRainReflectionStrength;
 		baseRainReflectionStrength *= baseRainReflectionStrength;
-		baseRainReflectionStrength *= betterRainStrength;
+		baseRainReflectionStrength *= rainReflectionStrength;
 	#endif
 	
 	

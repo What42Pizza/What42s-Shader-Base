@@ -1,5 +1,7 @@
 # What42's Shaders Base
 
+![Example Image (Village)](/images/village.png)
+
 ### This is a base shaderpack that can be used to easily create your own shaders.
 
 ## Warning: There are probably many features / fixes that I'm still working on

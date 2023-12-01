@@ -2,7 +2,6 @@ Current:
 Clean up all light value calculations
 Add 'reflective everything' debug setting
 Add waviness to rain reflections
-Add example image to readme
 Add void fog option?
 Do a round of making sure different settings combinations work
 Smoothen rain puddles strength
@@ -71,6 +70,7 @@ Match the vanilla look, especially in:
 
 
 Finished:
+Add example image to readme
 Add setting for cloud transparency
 Add settings for water reflection base and fresnel
 Make waving stronger the higher you are?

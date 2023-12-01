@@ -63,6 +63,10 @@ pub const EXPORT_FILES: &[FileCopyData] = &[
 
 
 
+pub const ALL_UNIFORMS: &str = include_str!("../../all_uniforms.txt");
+
+
+
 // ======== END SETTINGS ========
 
 
@@ -72,7 +76,8 @@ pub const EXPORT_FILES: &[FileCopyData] = &[
 const COMMANDS: &[data::Command] = &[
 	data::Command::new("help", "Shows the help screen", commands::help::function),
 	data::Command::new("build_world_files", "Generates the '/world_' files using hard-coded data", commands::build_world_files::function),
-	data::Command::new("export", "exports the shader with only shader files included", commands::export::function),
+	data::Command::new("build_uniform_imports", "Generates the '/import' files using hard-coded data", commands::build_uniform_imports::function),
+	data::Command::new("export", "Exports the shader with only shader files included", commands::export::function),
 ];
 
 

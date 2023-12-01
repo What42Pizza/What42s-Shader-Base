@@ -111,6 +111,15 @@ Hopefully with a bit of thinking, it's very clear why the defines are needed: yo
 - **2: Try something different (whether or not it seems like a good idea)**
 - **3: Probably go back to step 1**
 - **4: Mess around with the formulas to simplify and optimize without compromising quality**
+- **5: Figure out what to do next**
+
+<br>
+<br>
+<br>
+
+### Rust-Utils:
+
+You may have noticed the 'rust-utils' folder, and that contains a program that automates some simple but tedious tasks. It's not necessary for developing this shader, but you might end up wanting to use it. There's a separate readme in the rust-utils folder that can get you started. You can also edit the rust code yourself to add more features if you want
 
 <br>
 <br>

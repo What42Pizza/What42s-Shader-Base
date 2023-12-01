@@ -2,6 +2,8 @@
 	"cSpell.words": [
 		"compat",
 		"damagedblock",
+		"gbuffer",
+		"ivec",
 		"raytracer",
 		"skybasic",
 		"skytextured"

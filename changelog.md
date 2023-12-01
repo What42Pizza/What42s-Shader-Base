@@ -1,5 +1,10 @@
 <br>
 
+- b1.8.2b
+  - Improved rain reflection strength
+  - Tweaked settings more
+  - Created example image
+
 - b1.8.2 (23/11/30)
   - 1.12 compat
 
