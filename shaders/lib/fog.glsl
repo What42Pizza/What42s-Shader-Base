@@ -56,7 +56,7 @@ void getFogData(vec3 playerPos  ARGS_OUT) {
 	
 	playerPos.y /= FOG_HEIGHT_SCALE;
 	fogAmount = length(playerPos);
-	#ifdef SHADER_CLOUDS
+	#ifdef SHADER_GBUFFERS_CLOUDS
 		fogAmount /= FOG_EXTRA_CLOUDS_DISTANCE;
 	#endif
 	

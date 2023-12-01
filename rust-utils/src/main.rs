@@ -51,8 +51,8 @@ pub const WORLDS_LIST: &[(&str, &str)] = &[
 
 
 
-pub const EXPORT_FOLDERS: &[FileCopyData] = &[
-	FileCopyData::new("shaders", None),
+pub const EXPORT_FOLDERS: &[&str] = &[
+	"shaders",
 ];
 
 pub const EXPORT_FILES: &[FileCopyData] = &[
@@ -83,8 +83,6 @@ pub mod prelude {
 	pub use crate::{*, data::*, utils::*, custom_impls::*};
 	pub use std::path::{PathBuf, Path};
 	pub use anyhow::*;
-	pub use fs_extra::dir::{copy as copy_dir, CopyOptions as DirCopyOptions};
-	pub use fs_extra::file::{copy as copy_file, CopyOptions as FileCopyOptions};
 }
 
 
