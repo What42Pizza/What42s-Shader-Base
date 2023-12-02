@@ -73,21 +73,16 @@ void calculateSunraysAmount(ARG_OUT) {
 	#include "/import/ambientMoonPercent.glsl"
 	#include "/import/ambientSunrisePercent.glsl"
 	#include "/import/ambientSunsetPercent.glsl"
-	
-	sunraysAmountMult =
-		ambientSunPercent * SUNRAYS_AMOUNT_DAY +
-		ambientMoonPercent * SUNRAYS_AMOUNT_NIGHT +
-		ambientSunrisePercent * SUNRAYS_AMOUNT_SUNRISE +
-		ambientSunsetPercent * SUNRAYS_AMOUNT_SUNSET;
-	
 	#include "/import/isOtherLightSource.glsl"
 	#include "/import/isSun.glsl"
-	if (isOtherLightSource) {
-		if (isSun) {
-			sunraysAmountMult *= ambientSunPercent + ambientSunrisePercent + ambientSunsetPercent;
-		} else {
-			sunraysAmountMult *= ambientMoonPercent;
-		}
+	
+	if (isSun) {
+		sunraysAmountMult = 
+			ambientSunPercent * SUNRAYS_AMOUNT_DAY +
+			ambientSunrisePercent * SUNRAYS_AMOUNT_SUNRISE +
+			ambientSunsetPercent * SUNRAYS_AMOUNT_SUNSET;
+	} else {
+		sunraysAmountMult = (ambientMoonPercent + (ambientSunrisePercent + ambientSunsetPercent) * 0.5) * SUNRAYS_AMOUNT_NIGHT;
 	}
 	
 	sunraysAmountMult *= 0.3;

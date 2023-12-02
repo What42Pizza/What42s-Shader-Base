@@ -5,6 +5,9 @@
 	varying vec2 texcoord;
 	flat float glcolor;
 	flat vec3 colorMult;
+	#ifdef HIDE_NEARBY_CLOUDS
+		varying float transparency;
+	#endif
 	
 #endif
 
@@ -20,10 +23,15 @@
 
 void main() {
 	vec4 color = texture2D(MAIN_BUFFER, texcoord) * glcolor;
-	color.a = CLOUD_TRANSPARENCY;
 	#ifdef DEBUG_OUTPUT_ENABLED
 		vec4 debugOutput = vec4(0.0, 0.0, 0.0, color.a);
 	#endif
+	
+	
+	#ifndef HIDE_NEARBY_CLOUDS
+		#define transparency CLOUD_TRANSPARENCY
+	#endif
+	color.a = transparency;
 	
 	
 	color.rgb *= colorMult * 2.3;
@@ -88,8 +96,12 @@ void main() {
 	//colorMult = mix(vec3(getColorLum(colorMult)), colorMult, vec3(1.0));
 	colorMult = normalize(colorMult);
 	
-	#ifdef ISOMETRIC_RENDERING_ENABLED
+	#if defined ISOMETRIC_RENDERING_ENABLED || defined HIDE_NEARBY_CLOUDS
+		#include "/import/gbufferModelViewInverse.glsl"
 		vec3 worldPos = endMat(gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex));
+	#endif
+	
+	#ifdef ISOMETRIC_RENDERING_ENABLED
 		gl_Position = projectIsometric(worldPos  ARGS_IN);
 	#else
 		gl_Position = ftransform();
@@ -102,6 +114,10 @@ void main() {
 	#ifdef FOG_ENABLED
 		vec4 position = gl_Vertex;
 		getFogData(position.xyz  ARGS_IN);
+	#endif
+	
+	#ifdef HIDE_NEARBY_CLOUDS
+		transparency = CLOUD_TRANSPARENCY * atan(length(worldPos) - 30.0) / PI + 0.5
 	#endif
 	
 	glcolor = gl_Color.r;

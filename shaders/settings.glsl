@@ -3,8 +3,8 @@
 const bool colortex1Clear = false;
 const bool colortex0MipmapEnabled = true;
 const bool colortex3MipmapEnabled = true;
+const int colortex2Format = RGB16F;
 const int colortex4Format = RGB32F;
-const int colortex6Format = RG16F;
 const float wetnessHalflife = 50.0f;
 const float drynessHalflife = 50.0f;
 const float centerDepthHalflife = 2.5f;
@@ -24,8 +24,9 @@ const bool shadowtex1Clear = false;
 
 #define DARKEN_SKY_UNDERGROUND
 #define DARKEN_STARS_NEAR_BLOCKLIGHT
-#define CLOUD_TRANSPARENCY 0.7 // [0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0]
+#define CLOUD_TRANSPARENCY 0.5 // [0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0]
 #define RAIN_TRANSPARENCY 0.7 // [0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0]
+//#define HIDE_NEARBY_CLOUDS
 
 
 
@@ -195,8 +196,8 @@ const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8
 //#define SUNRAYS_FLICKERING_FIX
 #define SUNRAYS_AMOUNT_DAY 0.4 // [0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0 2.25 2.5 2.75 3.0]
 #define SUNRAYS_AMOUNT_NIGHT 0.15 // [0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0 2.25 2.5 2.75 3.0]
-#define SUNRAYS_AMOUNT_SUNRISE 0.6 // [0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0 2.25 2.5 2.75 3.0]
-#define SUNRAYS_AMOUNT_SUNSET 0.6 // [0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0 2.25 2.5 2.75 3.0]
+#define SUNRAYS_AMOUNT_SUNRISE 0.7 // [0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0 2.25 2.5 2.75 3.0]
+#define SUNRAYS_AMOUNT_SUNSET 0.7 // [0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0 2.25 2.5 2.75 3.0]
 #define SUNRAYS_SUN_RED 1.0 // [0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.91 0.92 0.93 0.94 0.95 0.96 0.97 0.98 0.99 1.0 1.01 1.02 1.03 1.04, 1.05 1.06 1.07 1.08 1.09 1.1 1.15 1.2 1.25 1.3 1.35 1.4 1.45 1.5 1.6 1.7 1.8 1.9 2.0]
 #define SUNRAYS_SUN_GREEN 0.65 // [0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.91 0.92 0.93 0.94 0.95 0.96 0.97 0.98 0.99 1.0 1.01 1.02 1.03 1.04, 1.05 1.06 1.07 1.08 1.09 1.1 1.15 1.2 1.25 1.3 1.35 1.4 1.45 1.5 1.6 1.7 1.8 1.9 2.0]
 #define SUNRAYS_SUN_BLUE 0.4 // [0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.91 0.92 0.93 0.94 0.95 0.96 0.97 0.98 0.99 1.0 1.01 1.02 1.03 1.04, 1.05 1.06 1.07 1.08 1.09 1.1 1.15 1.2 1.25 1.3 1.35 1.4 1.45 1.5 1.6 1.7 1.8 1.9 2.0]
@@ -317,6 +318,7 @@ const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8
 //#define BLOOM_SHOW_FILTERED_TEXTURE
 //#define SUNRAYS_SHOW_ADDITION
 //#define DOF_SHOW_AMOUNTS
+//#define REFLECTIVE_EVERYTHING
 
 
 

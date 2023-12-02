@@ -15,6 +15,9 @@ option.DARKEN_SKY_UNDERGROUND.comment=Darken the sky when underground
 option.DARKEN_STARS_NEAR_BLOCKLIGHT=Darken Stars Near Blocklight
 option.DARKEN_STARS_NEAR_BLOCKLIGHT.comment=Simulates light pollution by darkening stars when you're near blocklight
 option.CLOUD_TRANSPARENCY=Cloud Transparency
+option.RAIN_TRANSPARENCY=Rain Transparency
+option.HIDE_NEARBY_CLOUDS=Hide Nearby Clouds
+option.HIDE_NEARBY_CLOUDS.comment=Increases transparency of clouds when you're near / inside them. Has slight performance impact
 
 
 
@@ -459,3 +462,5 @@ option.SUNRAYS_SHOW_ADDITION=Sunrays Show Addition
 option.SUNRAYS_SHOW_ADDITION.comment=Show the sunrays that are being added
 option.DOF_SHOW_AMOUNTS=DOF Show Blur Amounts
 option.DOF_SHOW_AMOUNTS.comment=Shows the near blur amount in red and the far blur amount in green
+option.REFLECTIVE_EVERYTHING=Reflective Everything
+option.REFLECTIVE_EVERYTHING.comment=Make EVERYTHING reflective

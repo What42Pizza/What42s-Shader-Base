@@ -1,17 +1,26 @@
 Current:
-Add 'reflective everything' debug setting
-Add waviness to rain reflections
+Make more example images:
+	Water
+	Rain
+	Sunset
+	Night
+	Nether
 Add void fog option?
 Do a round of making sure different settings combinations work
 Remove 'fogBloomSkyColor' from fog.glsl?
+Add style option?
+Prevent TAA on entities?
+Fix fog on water
 Add water caustics?
+Rename debug settings to have related feature as start of name
 Move more fog logic into shaders.properties
 Make only top of water wavy
 Remove texcoord from composites & deferred and replace with gl_FragCoord?
 Add reflections to normal glass too?
 Add documentation for isometrics
 Increase waviness of plant tops
-Add style option?
+Add waviness to rain reflections
+Add seasons?
 Add tilted weather
 Add backwards depth check to reflections?
 Make reflections work with isometric rendering
@@ -29,7 +38,6 @@ Fix spider and endermen eyes?
 Add setting to fade fog into sky buffer (to make the sun and moon appear in fog) (would also need sunray depth fix)
 Do a round of general optimizations
 Take FXAA from Comp Reimagined?
-Prevent TAA on entities?
 Exclude sun, moon, and sunrays based on horizon multiplier
 Do a round of adding debug settings
 Do a round of adding more ways to get to options (e.g. access to light brightnesses from the 'shading' menu)
@@ -67,6 +75,7 @@ Match the vanilla look, especially in:
 
 
 Finished:
+Add 'reflective everything' debug setting
 Clean up all light value calculations
 Make sun / moon / sunrise / sunset detection based on sun angle
 Smoothen rain puddles strength

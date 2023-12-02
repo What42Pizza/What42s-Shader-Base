@@ -4,6 +4,10 @@
 
 <br>
 
+### If you want vanilla Minecraft's shader files directly ported to Optifine, you can find it [Here](https://github.com/XorDev/XorDevs-Default-Shaderpack)
+
+<br>
+
 ## File Structure:
 
 ### /main_files: &nbsp; Main shader code

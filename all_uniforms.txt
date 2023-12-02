@@ -44,7 +44,6 @@ float velocity = 0.0
 float sharpenVelocityFactor = 0.0
 float betterRainStrength = 0.0
 float horizonAltitudeAddend = 0.0
-bool isOtherLightSource = false
 bool isSun = false
 float centerDepthSmooth = 0.0
 float centerLinearDepthSmooth = 0.0

@@ -49,10 +49,12 @@ vec3 getSkyColor(ARG_OUT) {
 	#include "/import/skyColor.glsl"
 	#include "/import/fogColor.glsl"
 	
+	vec3 alteredSkyColor = mix(vec3(getColorLum(skyColor)), skyColor, 0.8);
+	
 	vec4 pos = vec4(gl_FragCoord.xy * invViewSize * 2.0 - 1.0, 1.0, 1.0);
 	pos = gbufferProjectionInverse * pos;
 	float upDot = dot(normalize(pos.xyz), gbufferModelView[1].xyz);
-	vec3 finalSkyColor = mix(skyColor, fogColor, fogify(max(upDot, 0.0), 0.25  ARGS_IN));
+	vec3 finalSkyColor = mix(alteredSkyColor, fogColor, fogify(max(upDot, 0.0), 0.25  ARGS_IN));
 	
 	#ifdef DARKEN_SKY_UNDERGROUND
 		finalSkyColor *= getHorizonMultiplier(ARG_IN);

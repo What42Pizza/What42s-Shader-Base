@@ -32,7 +32,11 @@ void main() {
 		if (isEyeInWater == 1) {
 			texcoord = (texcoord - 0.5) * 0.95 + 0.5;
 			#include "/import/frameTimeCounter.glsl"
-			texcoord += simplexNoise2From3(vec3(texcoord * 5.0 * UNDERWATER_WAVINESS_SCALE, frameTimeCounter * 0.6 * UNDERWATER_WAVINESS_SPEED)) * 0.003 * UNDERWATER_WAVINESS_AMOUNT;
+			vec3 simplexInput = vec3(
+				texcoord * 6.0 * UNDERWATER_WAVINESS_SCALE,
+				frameTimeCounter * 0.65 * UNDERWATER_WAVINESS_SPEED
+			);
+			texcoord += simplexNoise2From3(simplexInput) * 0.0015 * UNDERWATER_WAVINESS_AMOUNT;
 		}
 	#endif
 	
@@ -68,11 +72,6 @@ void main() {
 	#endif
 	
 	//color = texelFetch(NORMALS_BUFFER, texelcoord, 0).rgb;
-	
-	//if (texcoord.y < 0.1) {
-	//	#include "/import/ambientMoonPercent.glsl"
-	//	color = vec3(ambientMoonPercent);
-	//}
 	
 	
 	

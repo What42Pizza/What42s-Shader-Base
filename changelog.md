@@ -1,7 +1,15 @@
 <br>
 
+- b1.8.3b
+  - Added setting: Hide Nearby Clouds
+  - Added 'Rain Transparency' setting to settings menu (whoops)
+  - Fixed more light-value related bugs
+  - Added debug setting: Reflective Everything
+  - Created more example images
+
 - b1.8.3 (23/12/01)
   - Fixed many problems related to light value detection (sometimes mods would make the moon be treated as the sun)
+  - Added smoothening to rain puddle strength
 
 <br>
 

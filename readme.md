@@ -2,13 +2,18 @@
 
 ![Example Image (Village)](/images/village.png)
 
-### This is a base shaderpack that can be used to easily create your own shaders.
+### This is a base shaderpack that can be easily used to create your own shaders.
 
 ## Warning: There are probably many features / fixes that I'm still working on
 
 <br>
 
 ## Note: This has only been tested with Optifine 1.12.2 and Iris 1.19.4 & 1.20.2. I hope to support both Optifine and Iris for all versions >= 1.12, but I need more time to test and bugfix
+
+<br>
+<br>
+
+## Download on [Modrinth](https://modrinth.com/shader/what42s-shader-base)
 
 <br>
 <br>
@@ -45,6 +50,11 @@
 - **Good Code Structuring**
 - **Vanilla-Like Graphics and Style**
 - **Thorough Options Menu**
+
+<br>
+<br>
+
+![Example Image (River)](/images/river.png)
 
 <br>
 <br>
