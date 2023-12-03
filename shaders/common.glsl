@@ -114,6 +114,11 @@ float maxAbs(vec3 v) {
 	return max(max(r, g), b);
 }
 
+float percentThroughClamped(float value, float low, float high) {
+	float percentThrough = (value - low) / (high - low);
+	return clamp(percentThrough, 0.0, 1.0);
+}
+
 // all these smooth functions seem the same for speed
 
 //// from: https://iquilezles.org/articles/smin/

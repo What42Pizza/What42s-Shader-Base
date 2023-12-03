@@ -211,7 +211,7 @@ void main() {
 	
 	
 	#ifdef FOG_ENABLED
-		getFogData(worldPos  ARGS_IN);
+		processFogVsh(worldPos  ARGS_IN);
 	#endif
 	
 	

@@ -1,5 +1,12 @@
 <br>
 
+- b1.8.4 (23/12/02)
+  - Improved performance (overhauled fog logic)
+  - Reworked many fog settings
+  - Tweaked rain settings
+
+<br>
+
 - b1.8.3b
   - Added setting: Hide Nearby Clouds
   - Added 'Rain Transparency' setting to settings menu (whoops)

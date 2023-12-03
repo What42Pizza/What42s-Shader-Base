@@ -113,7 +113,7 @@ void main() {
 	
 	#ifdef FOG_ENABLED
 		vec4 position = gl_Vertex;
-		getFogData(position.xyz  ARGS_IN);
+		processFogVsh(position.xyz  ARGS_IN);
 	#endif
 	
 	#ifdef HIDE_NEARBY_CLOUDS

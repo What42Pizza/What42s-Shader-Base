@@ -127,7 +127,7 @@ void main() {
 	#ifdef ENTITY_FOG_ENABLED
 		#include "/import/gbufferModelViewInverse.glsl"
 		vec4 position = gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex);
-		getFogData(position.xyz  ARGS_IN);
+		processFogVsh(position.xyz  ARGS_IN);
 	#endif
 	
 	
