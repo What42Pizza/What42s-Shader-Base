@@ -1,5 +1,13 @@
 <br>
 
+- b1.9.0
+  - Added feature: Style Override
+  - Fixed some light-value-related bugs
+
+<br>
+<br>
+<br>
+
 - b1.8.4 (23/12/02)
   - Improved performance (overhauled fog logic)
   - Fixed cave brightness

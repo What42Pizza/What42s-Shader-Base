@@ -53,11 +53,9 @@ void main() {
 	
 	#ifdef BLOOM_ENABLED
 		#ifdef OVERWORLD
-			#include "/import/sunriseColorPercent.glsl"
-			#include "/import/sunsetColorPercent.glsl"
-			#include "/import/sunDayPercent.glsl"
+			#include "/import/ambientMoonPercent.glsl"
 			float blockLight = lmcoord.x;
-			float skyLight = lmcoord.y * (sunriseColorPercent + sunsetColorPercent + sunDayPercent);
+			float skyLight = lmcoord.y * (1.0 - ambientMoonPercent);
 			colorForBloom.rgb *= max(blockLight * blockLight * 1.05, skyLight * 0.75);
 		#elif defined NETHER
 			colorForBloom.rgb *= lmcoord.x;

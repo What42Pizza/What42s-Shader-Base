@@ -4,8 +4,8 @@
 
 vec3 sampleBloom(float sizeMult, inout uint rng  ARGS_OUT) {
 	vec3 bloomAddition = vec3(0.0);
-	for (int layer = 0; layer < BLOOM_LEVELS; layer++) {
-		float size = float(layer + 1) / BLOOM_LEVELS;
+	for (int layer = 1; layer <= BLOOM_LEVELS; layer++) {
+		float size = float(layer) / BLOOM_LEVELS;
 		size = pow(size, 1.25);
 		size *= sizeMult;
 		
@@ -16,11 +16,11 @@ vec3 sampleBloom(float sizeMult, inout uint rng  ARGS_OUT) {
 		size *= BLOOM_SIZE * 0.125;
 		
 		vec3 brightest = vec3(0.0);
-		float brightestLum = 0.0;
 		const int SAMPLE_COUNT = BLOOM_QUALITY * BLOOM_QUALITY;
 		for (int i = 0; i <= SAMPLE_COUNT; i ++) {
 			
-			float len = sqrt(float(i) / SAMPLE_COUNT + 0.1) * size;
+			//float len = sqrt(float(i) / SAMPLE_COUNT + 0.1) * size;
+			float len = float(i) / SAMPLE_COUNT * size;
 			#include "/import/invAspectRatio.glsl"
 			vec2 offset = vec2(cos(i + noise) * len * invAspectRatio, sin(i + noise) * len);
 			vec2 sampleCoord = coord + offset;
@@ -31,9 +31,8 @@ vec3 sampleBloom(float sizeMult, inout uint rng  ARGS_OUT) {
 			//float interpValue = float(sampleLum > getColorLum(brightest)); // doesn't seem any faster?
 			//brightest = brightest * (1.0 - interpValue) + sample * interpValue;
 			
-			if (sampleLum > brightestLum) {
+			if (sampleLum > getColorLum(brightest)) {
 				brightest = sample;
-				brightestLum = sampleLum;
 			}
 			
 		}

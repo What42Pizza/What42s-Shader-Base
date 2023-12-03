@@ -1,4 +1,5 @@
 Current:
+Rename 'sunDayPercent' to 'sunDayColorPercent'
 Move 'rainReflectionStrength' calculations to fsh
 Make more example images:
 	Rain

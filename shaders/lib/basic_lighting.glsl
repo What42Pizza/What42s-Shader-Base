@@ -19,6 +19,15 @@ vec3 getBasicLighting(float blockBrightness, float ambientBrightness  ARGS_OUT) 
 		#include "/import/blockFlickerAmount.glsl"
 		blockBrightness *= blockFlickerAmount;
 	#endif
+	#if BLOCK_BRIGHTNESS_CURVE == 2
+		blockBrightness = pow2(blockBrightness);
+	#elif BLOCK_BRIGHTNESS_CURVE == 3
+		blockBrightness = pow3(blockBrightness);
+	#elif BLOCK_BRIGHTNESS_CURVE == 4
+		blockBrightness = pow4(blockBrightness);
+	#elif BLOCK_BRIGHTNESS_CURVE == 5
+		blockBrightness = pow5(blockBrightness);
+	#endif
 	vec3 blockLight = blockBrightness * BLOCK_COLOR;
 	
 	vec3 total = smoothMax(blockLight, ambientLight, LIGHT_SMOOTHING);
