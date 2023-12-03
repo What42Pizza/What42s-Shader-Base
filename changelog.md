@@ -2,6 +2,7 @@
 
 - b1.8.4 (23/12/02)
   - Improved performance (overhauled fog logic)
+  - Fixed cave brightness
   - Reworked many fog settings
   - Tweaked rain settings
 

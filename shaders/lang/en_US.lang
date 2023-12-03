@@ -31,11 +31,39 @@ option.FOG_HEIGHT_SCALE=Fog Height Scale
 option.FOG_HEIGHT_SCALE.comment=How much further you can see upwards vs forwards
 option.FOG_EXTRA_CLOUDS_DISTANCE=Extra Clouds Distance
 option.FOG_EXTRA_CLOUDS_DISTANCE.comment=How much further you can see clouds
-option.FOG_START=Fog Start
-option.FOG_WATER_DISTANCE=Fog Water Distance
-option.FOG_WATER_DISTANCE.comment=How far you can see underwater (doesn't change based on render distance)
 option.FOG_CURVE=Fog Curve
-option.FOG_WATER_CURVE=Fog Water Curve
+option.FOG_CURVE.comment= How quickly fog drops off from end to start (high values mean faster drop off)
+
+option.FOG_AIR_START=Fog Air Start
+option.FOG_AIR_START.comment=Where fog starts during normal conditions (not raining or in liquids)
+option.FOG_AIR_END=Fog Air End
+option.FOG_AIR_END.comment=Where fog ends during normal conditions (not raining or in liquids)
+option.FOG_AIR_MIN=Fog Air Minimum
+option.FOG_AIR_MIN.comment=Minimum fog amount during normal conditions (not raining or in liquids)
+option.FOG_AIR_RAIN_START=Fog Rain Start
+option.FOG_AIR_RAIN_START.comment=Where fog starts during rain
+option.FOG_AIR_RAIN_END=Fog Rain End
+option.FOG_AIR_RAIN_END.comment=Where fog ends during rain
+option.FOG_AIR_RAIN_MIN=Fog Rain Minimum
+option.FOG_AIR_RAIN_MIN.comment=Minimum fog amount during rain
+option.FOG_WATER_START=Fog Water Start
+option.FOG_WATER_START.comment=Where fog starts when underwater
+option.FOG_WATER_END=Fog Water End
+option.FOG_WATER_END.comment=Where fog ends when underwater
+option.FOG_WATER_MIN=Fog Water Minimum
+option.FOG_WATER_MIN.comment=Minimum fog amount when underwater
+option.FOG_LAVA_START=Fog Lava Start
+option.FOG_LAVA_START.comment=Where fog starts when in lava
+option.FOG_LAVA_END=Fog Lava End
+option.FOG_LAVA_END.comment=Where fog ends when in lava
+option.FOG_LAVA_MIN=Fog Lava Minimum
+option.FOG_LAVA_MIN.comment=Minimum fog amount when in lava
+option.FOG_POWDERED_SNOW_START=Fog Powdered Snow Start
+option.FOG_POWDERED_SNOW_START.comment=Where fog starts when in powdered snow
+option.FOG_POWDERED_SNOW_END=Fog Powdered Snow End
+option.FOG_POWDERED_SNOW_END.comment=Where fog ends when in powdered snow
+option.FOG_POWDERED_SNOW_MIN=Fog Powdered Snow Minimum
+option.FOG_POWDERED_SNOW_MIN.comment=Minimum fog amount when in powdered snow
 
 
 
