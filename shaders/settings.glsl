@@ -126,15 +126,16 @@ const bool shadowtex1Clear = false;
 #define SHADOWS_ENABLED -1 // [-1 0 1]
 #define EXCLUDE_FOLIAGE -1 // [-1 0 1]
 #define SHADOW_FILTERING -1 // [-1 0 1 2 3]
-#define SHADOW_DISTANCE -1 // [-1 64.0 80.0 96.0 112.0 128.0 160.0 192.0 224.0 256.0 320.0 384.0 512.0 768.0 1024.0]
-#define SHADOWMAP_RESOLUTION -1 // [-1 256 384 512 768 1024 1536 2048 3072 4096 6144 8192]
 #define SHADOW_DISTORT_ADDITION -1 // [-1 0.05 0.06 0.07 0.08 0.09 0.1 0.11 0.12 0.13 0.14 0.15 0.2 0.25 0.3]
-#define SUN_PATH_ROTATION -1 // [-1 -80.0 -75.0 -70.0 -65.0 -60.0 -55.0 -50.0 -45.0 -40.0 -35.0 -30.0 -25.0 -20.0 -15.0 -10.0 -9.0 -8.0 -7.0 -6.0 -5.0 -4.0 -3.0 -2.0 -1.0 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 10.0 15.0 20.0 25.0 30.0 35.0 40.0 45.0 50.0 55.0 60.0 65.0 70.0 75.0 80.0]
-#define AMBIENT_OCCLUSION_LEVEL -1 // [-1 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0]
 #define SIDE_SHADING -1 // [-1 0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
 #define RAIN_LIGHT_MULT -1 // [-1 0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
 #define USE_VANILLA_BRIGHTNESS -1 // [-1 0 1]
 #define BLOCKLIGHT_FLICKERING_ENABLED -1 // [-1 0 1]
+
+const int shadowMapResolution = 768; // [256 384 512 768 1024 1536 2048 3072 4096 6144 8192]
+const float shadowDistance = 112.0; // [64.0 80.0 96.0 112.0 128.0 160.0 192.0 224.0 256.0 320.0 384.0 512.0 768.0 1024.0]
+const float sunPathRotation = -30.0; // [-80.0 -75.0 -70.0 -65.0 -60.0 -55.0 -50.0 -45.0 -40.0 -35.0 -30.0 -25.0 -20.0 -15.0 -10.0 -9.0 -8.0 -7.0 -6.0 -5.0 -4.0 -3.0 -2.0 -1.0 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 10.0 15.0 20.0 25.0 30.0 35.0 40.0 45.0 50.0 55.0 60.0 65.0 70.0 75.0 80.0]
+const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0]
 
 
 
@@ -342,13 +343,6 @@ const bool shadowtex1Clear = false;
 
 
 // post-processed definitions
-
-
-
-const float shadowDistance = SHADOW_DISTANCE;
-const int shadowMapResolution = SHADOWMAP_RESOLUTION;
-const float sunPathRotation = SUN_PATH_ROTATION;
-const float ambientOcclusionLevel = AMBIENT_OCCLUSION_LEVEL;
 
 
 
