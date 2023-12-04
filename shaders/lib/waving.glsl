@@ -17,7 +17,7 @@ vec3 getWavingAddition(vec3 position  ARGS_OUT) {
 	vec3 pos3 = randomVec3FromRValue(timePosFloor + 2u);
 	vec3 pos4 = randomVec3FromRValue(timePosFloor + 3u);
 	vec3 output = cubicInterpolate(pos1, pos2, pos3, pos4, mod(timePos, 1.0)) * vec3(1.0, 0.2, 1.0) * 0.08;
-	#ifdef HEIGHT_BASED_WAVING_ENABLED
+	#if HEIGHT_BASED_WAVING_ENABLED == 1
 		const float lowY = 16.0;
 		const float lowMult = 0.0;
 		const float highY = 224.0;
@@ -43,9 +43,7 @@ void applyWaving(inout vec3 position  ARGS_OUT) {
 	#endif
 	#include "/import/betterRainStrength.glsl"
 	wavingScale *= 1.0 + betterRainStrength * (WAVING_RAIN_MULT - 1.0);
-	#include "/import/sunriseColorPercent.glsl"
-	#include "/import/sunsetColorPercent.glsl"
-	#include "/import/sunDayPercent.glsl"
-	wavingScale *= WAVING_NIGHT_MULT + (sunriseColorPercent + sunsetColorPercent + sunDayPercent) * (1.0 - WAVING_NIGHT_MULT);
+	#include "/import/ambientMoonPercent.glsl"
+	wavingScale *= 1.0 - ambientMoonPercent * (1.0 - WAVING_NIGHT_MULT);
 	position += getWavingAddition(position  ARGS_IN) * wavingScale;
 }

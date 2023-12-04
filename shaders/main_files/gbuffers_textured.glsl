@@ -47,7 +47,7 @@ void main() {
 	gl_FragData[0] = color;
 	gl_FragData[1] = vec4(normal, 1.0);
 	
-	#if defined BLOOM_ENABLED && defined RAIN_REFLECTIONS_ENABLED
+	#if RAIN_REFLECTIONS_ENABLED == 1
 		/* DRAWBUFFERS:043 */
 		gl_FragData[2] = vec4(0.0, 0.0, 0.0, 1.0);
 	#endif
@@ -62,10 +62,10 @@ void main() {
 
 #ifdef VSH
 
-#ifdef ISOMETRIC_RENDERING_ENABLED
+#if ISOMETRIC_RENDERING_ENABLED == 1
 	#include "/lib/isometric.glsl"
 #endif
-#ifdef TAA_ENABLED
+#if TAA_ENABLED == 1
 	#include "/lib/taa_jitter.glsl"
 #endif
 
@@ -75,19 +75,19 @@ void main() {
 	adjustLmcoord(lmcoord);
 	
 	
-	#ifdef ISOMETRIC_RENDERING_ENABLED
+	#if ISOMETRIC_RENDERING_ENABLED == 1
 		vec3 worldPos = endMat(gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex));
 		gl_Position = projectIsometric(worldPos  ARGS_IN);
 	#else
 		gl_Position = ftransform();
 	#endif
 	
-	#if !defined ISOMETRIC_RENDERING_ENABLED
+	#if ISOMETRIC_RENDERING_ENABLED == 0
 		if (gl_Position.z < -1.0) return; // simple but effective optimization
 	#endif
 	
 	
-	#ifdef TAA_ENABLED
+	#if TAA_ENABLED == 1
 		doTaaJitter(gl_Position.xy  ARGS_IN);
 	#endif
 	

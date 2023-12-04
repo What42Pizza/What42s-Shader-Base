@@ -93,17 +93,17 @@ void applyFog(inout vec3 color, inout vec3 colorForBloom  ARGS_OUT) {
 	
 	
 	vec3 airFogColor = getSkyColor(ARG_IN);
-	#ifdef BLOOM_ENABLED
+	#if BLOOM_ENABLED == 1
 		vec3 airBloomFogColor = airFogColor * sqrt(BLOOM_SKY_BRIGHTNESS);
 	#endif
 	
 	vec3 fogColor = getFogColor(airFogColor  ARGS_IN);
-	#ifdef BLOOM_ENABLED
+	#if BLOOM_ENABLED == 1
 		vec3 bloomFogColor = getBloomFogColor(airBloomFogColor  ARGS_IN);
 	#endif
 	
 	color.rgb = mix(color.rgb, fogColor, fogAmount);
-	#ifdef BLOOM_ENABLED
+	#if BLOOM_ENABLED == 1
 		colorForBloom.rgb = mix(colorForBloom.rgb, bloomFogColor, fogAmount);
 	#endif
 	

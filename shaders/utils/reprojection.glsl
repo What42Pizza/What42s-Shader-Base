@@ -19,7 +19,7 @@
 
 
 
-#if !defined ISOMETRIC_RENDERING_ENABLED
+#if ISOMETRIC_RENDERING_ENABLED == 0
 	
 	
 	// Previous frame reprojection from Chocapic13

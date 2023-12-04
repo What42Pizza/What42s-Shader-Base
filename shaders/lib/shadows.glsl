@@ -1,6 +1,6 @@
 #ifdef FIRST_PASS
 	
-	#ifdef SHADOWS_ENABLED
+	#if SHADOWS_ENABLED == 1
 		
 		#if SHADOW_FILTERING == 1
 			const int SHADOW_OFFSET_COUNT = 9;
@@ -140,7 +140,7 @@ float getSkyBrightness(vec3 viewPos  ARGS_OUT) {
 		float lightDot = 1.0;
 	#endif
 	
-	#ifdef SHADOWS_ENABLED
+	#if SHADOWS_ENABLED == 1
 		float skyBrightness = 0;
 		if (lightDot > 0.0) {
 			// surface is facing towards shadowLightPosition
@@ -178,7 +178,7 @@ float getSkyBrightness(vec3 viewPos  ARGS_OUT) {
 					}
 				}
 				skyBrightness /= SHADOW_OFFSET_WEIGHTS_TOTAL;
-				#ifdef TAA_ENABLED
+				#if TAA_ENABLED == 1
 					const float shadowMult1 = 1.4; // for when lightDot is 1.0 (sun is directly facing surface)
 					const float shadowMult2 = 2.2; // for when lightDot is 0.0 (sun is angled relative to surface)
 				#else

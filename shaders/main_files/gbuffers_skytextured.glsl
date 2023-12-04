@@ -21,7 +21,7 @@ void main() {
 	/* DRAWBUFFERS:0 */
 	gl_FragData[0] = color;
 	
-	#ifdef BLOOM_ENABLED
+	#if BLOOM_ENABLED == 1
 		/* DRAWBUFFERS:02 */
 		gl_FragData[1] = color;
 	#endif
@@ -34,24 +34,24 @@ void main() {
 
 #ifdef VSH
 
-#ifdef ISOMETRIC_RENDERING_ENABLED
+#if ISOMETRIC_RENDERING_ENABLED == 1
 	#include "/lib/isometric.glsl"
 #endif
-#ifdef TAA_ENABLED
+#if TAA_ENABLED == 1
 	#include "/lib/taa_jitter.glsl"
 #endif
 
 void main() {
 	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
 	
-	#ifdef ISOMETRIC_RENDERING_ENABLED
+	#if ISOMETRIC_RENDERING_ENABLED == 1
 		vec3 worldPos = endMat(gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex));
 		gl_Position = projectIsometric(worldPos  ARGS_IN);
 	#else
 		gl_Position = ftransform();
 	#endif
 	
-	#ifdef TAA_ENABLED
+	#if TAA_ENABLED == 1
 		doTaaJitter(gl_Position.xy  ARGS_IN);
 	#endif
 	

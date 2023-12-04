@@ -63,7 +63,7 @@ void doTAA(inout vec3 color, inout vec3 newPrev, float linearDepth, vec2 prevCoo
 	vec2 velocity = (texcoord - prevCoord.xy) * viewSize;
 	float velocityAmount = dot(velocity, velocity) * 10.0;
 	
-	#if !defined ISOMETRIC_RENDERING_ENABLED
+	#if ISOMETRIC_RENDERING_ENABLED == 0
 		#include "/import/far.glsl"
 		float blockDepth = linearDepth * far;
 	#else

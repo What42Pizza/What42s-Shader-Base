@@ -8,62 +8,158 @@ profile.UNPLAYABLE=§cUnplayable
 
 
 
+
+
+
+
+
+
+
+option.STYLE=Style
+option.STYLE.comment=Changes the default settings. When a setting is set to 'Use Style Value', it uses whatever default is set by this option.
+value.STYLE.0=Vanilla
+value.STYLE.1=Realistic
+
+
+
+
+
+
+
+
+
+
+
+
 screen.SKY_SETTINGS=Sky
+
+
 
 option.DARKEN_SKY_UNDERGROUND=Darken Sky Underground
 option.DARKEN_SKY_UNDERGROUND.comment=Darken the sky when underground
+value.DARKEN_SKY_UNDERGROUND.-1=Use Style Value
+value.DARKEN_SKY_UNDERGROUND.0=Off
+value.DARKEN_SKY_UNDERGROUND.1=On
+
 option.DARKEN_STARS_NEAR_BLOCKLIGHT=Darken Stars Near Blocklight
 option.DARKEN_STARS_NEAR_BLOCKLIGHT.comment=Simulates light pollution by darkening stars when you're near blocklight
+value.DARKEN_STARS_NEAR_BLOCKLIGHT.-1=Use Style Value
+value.DARKEN_STARS_NEAR_BLOCKLIGHT.0=Off
+value.DARKEN_STARS_NEAR_BLOCKLIGHT.1=On
+
 option.CLOUD_TRANSPARENCY=Cloud Transparency
+value.CLOUD_TRANSPARENCY.-1=Use Style Value
+
 option.RAIN_TRANSPARENCY=Rain Transparency
+value.RAIN_TRANSPARENCY.-1=Use Style Value
+
 option.HIDE_NEARBY_CLOUDS=Hide Nearby Clouds
 option.HIDE_NEARBY_CLOUDS.comment=Increases transparency of clouds when you're near / inside them. Has slight performance impact
+value.HIDE_NEARBY_CLOUDS.-1=Use Style Value
+value.HIDE_NEARBY_CLOUDS.0=Off
+value.HIDE_NEARBY_CLOUDS.1=On
+
+
+
 
 
 
 screen.FOG_SETTINGS=Fog
 
+
+
 option.FOG_ENABLED=Fog Enabled
 option.FOG_ENABLED.comment=(Performance cost: Low)
+value.FOG_ENABLED.-1=Use Style Value
+value.FOG_ENABLED.0=Off
+value.FOG_ENABLED.1=On
+
 option.ENTITY_FOG_ENABLED=Entity Fog Enabled
 option.ENTITY_FOG_ENABLE.comment=Enabled fog on entities. This usually isn't required because entities stop rendering before fog can effect them
+value.ENTITY_FOG_ENABLE.-1=Use Style Value
+value.ENTITY_FOG_ENABLE.0=Off
+value.ENTITY_FOG_ENABLE.1=On
+
 option.FOG_HEIGHT_SCALE=Fog Height Scale
 option.FOG_HEIGHT_SCALE.comment=How much further you can see upwards vs forwards
+value.FOG_HEIGHT_SCALE.-1=Use Style Value
+
 option.FOG_EXTRA_CLOUDS_DISTANCE=Extra Clouds Distance
 option.FOG_EXTRA_CLOUDS_DISTANCE.comment=How much further you can see clouds
+value.FOG_EXTRA_CLOUDS_DISTANCE.-1=Use Style Value
+
 option.FOG_CURVE=Fog Curve
 option.FOG_CURVE.comment= How quickly fog drops off from end to start (high values mean faster drop off)
+value.FOG_CURVE.-1=Use Style Value
+
+
 
 option.FOG_AIR_START=Fog Air Start
 option.FOG_AIR_START.comment=Where fog starts during normal conditions (not raining or in liquids)
+value.FOG_AIR_START.-1=Use Style Value
+
 option.FOG_AIR_END=Fog Air End
 option.FOG_AIR_END.comment=Where fog ends during normal conditions (not raining or in liquids)
+value.FOG_AIR_END.-1=Use Style Value
+
 option.FOG_AIR_MIN=Fog Air Minimum
 option.FOG_AIR_MIN.comment=Minimum fog amount during normal conditions (not raining or in liquids)
+value.FOG_AIR_MIN.-1=Use Style Value
+
 option.FOG_AIR_RAIN_START=Fog Rain Start
 option.FOG_AIR_RAIN_START.comment=Where fog starts during rain
+value.FOG_AIR_RAIN_START.-1=Use Style Value
+
 option.FOG_AIR_RAIN_END=Fog Rain End
 option.FOG_AIR_RAIN_END.comment=Where fog ends during rain
+value.FOG_AIR_RAIN_END.-1=Use Style Value
+
 option.FOG_AIR_RAIN_MIN=Fog Rain Minimum
 option.FOG_AIR_RAIN_MIN.comment=Minimum fog amount during rain
+value.FOG_AIR_RAIN_MIN.-1=Use Style Value
+
 option.FOG_WATER_START=Fog Water Start
 option.FOG_WATER_START.comment=Where fog starts when underwater
+value.FOG_WATER_START.-1=Use Style Value
+
 option.FOG_WATER_END=Fog Water End
 option.FOG_WATER_END.comment=Where fog ends when underwater
+value.FOG_WATER_END.-1=Use Style Value
+
 option.FOG_WATER_MIN=Fog Water Minimum
 option.FOG_WATER_MIN.comment=Minimum fog amount when underwater
+value.FOG_WATER_MIN.-1=Use Style Value
+
 option.FOG_LAVA_START=Fog Lava Start
 option.FOG_LAVA_START.comment=Where fog starts when in lava
+value.FOG_LAVA_START.-1=Use Style Value
+
 option.FOG_LAVA_END=Fog Lava End
 option.FOG_LAVA_END.comment=Where fog ends when in lava
+value.FOG_LAVA_END.-1=Use Style Value
+
 option.FOG_LAVA_MIN=Fog Lava Minimum
 option.FOG_LAVA_MIN.comment=Minimum fog amount when in lava
+value.FOG_LAVA_MIN.-1=Use Style Value
+
 option.FOG_POWDERED_SNOW_START=Fog Powdered Snow Start
 option.FOG_POWDERED_SNOW_START.comment=Where fog starts when in powdered snow
+value.FOG_POWDERED_SNOW_START.-1=Use Style Value
+
 option.FOG_POWDERED_SNOW_END=Fog Powdered Snow End
 option.FOG_POWDERED_SNOW_END.comment=Where fog ends when in powdered snow
+value.FOG_POWDERED_SNOW_END.-1=Use Style Value
+
 option.FOG_POWDERED_SNOW_MIN=Fog Powdered Snow Minimum
 option.FOG_POWDERED_SNOW_MIN.comment=Minimum fog amount when in powdered snow
+value.FOG_POWDERED_SNOW_MIN.-1=Use Style Value
+
+
+
+
+
+
+
 
 
 
@@ -73,73 +169,187 @@ screen.COLOR_SETTINGS=Colors
 
 
 
+
+
+
 screen.DAY_COLOR_SETTINGS=Day Color Settings
 
+
+
 option.SKYLIGHT_DAY_BRIGHTNESS=Skylight Day Brightness
+value.SKYLIGHT_DAY_BRIGHTNESS.-1=Use Style Value
+
 option.SKYLIGHT_DAY_RED=Skylight Day Red
+value.SKYLIGHT_DAY_RED.-1=Use Style Value
+
 option.SKYLIGHT_DAY_GREEN=Skylight Day Green
+value.SKYLIGHT_DAY_GREEN.-1=Use Style Value
+
 option.SKYLIGHT_DAY_BLUE=Skylight Day Blue
+value.SKYLIGHT_DAY_BLUE.-1=Use Style Value
+
 option.AMBIENT_DAY_BRIGHTNESS=Ambient Day Brightness
+value.AMBIENT_DAY_BRIGHTNESS.-1=Use Style Value
+
 option.AMBIENT_DAY_RED=Ambient Day Red
+value.AMBIENT_DAY_RED.-1=Use Style Value
+
 option.AMBIENT_DAY_GREEN=Ambient Day Green
+value.AMBIENT_DAY_GREEN.-1=Use Style Value
+
 option.AMBIENT_DAY_BLUE=Ambient Day Blue
+value.AMBIENT_DAY_BLUE.-1=Use Style Value
+
+
+
+
 
 
 
 screen.NIGHT_COLOR_SETTINGS=Night Color Settings
 
+
+
 option.SKYLIGHT_NIGHT_BRIGHTNESS=Skylight Night Brightness
+value.SKYLIGHT_NIGHT_BRIGHTNESS.-1=Use Style Value
+
 option.SKYLIGHT_NIGHT_RED=Skylight Night Red
+value.SKYLIGHT_NIGHT_RED.-1=Use Style Value
+
 option.SKYLIGHT_NIGHT_GREEN=Skylight Night Green
+value.SKYLIGHT_NIGHT_GREEN.-1=Use Style Value
+
 option.SKYLIGHT_NIGHT_BLUE=Skylight Night Blue
+value.SKYLIGHT_NIGHT_BLUE.-1=Use Style Value
+
 option.AMBIENT_NIGHT_BRIGHTNESS=Ambient Night Brightness
+value.AMBIENT_NIGHT_BRIGHTNESS.-1=Use Style Value
+
 option.AMBIENT_NIGHT_RED=Ambient Night Red
+value.AMBIENT_NIGHT_RED.-1=Use Style Value
+
 option.AMBIENT_NIGHT_GREEN=Ambient Night Green
+value.AMBIENT_NIGHT_GREEN.-1=Use Style Value
+
 option.AMBIENT_NIGHT_BLUE=Ambient Night Blue
+value.AMBIENT_NIGHT_BLUE.-1=Use Style Value
+
+
+
+
 
 
 
 screen.SUNRISE_COLOR_SETTINGS=Sunrise Color Settings
 
+
+
 option.SKYLIGHT_SUNRISE_BRIGHTNESS=Skylight Sunrise Brightness
+value.SKYLIGHT_SUNRISE_BRIGHTNESS.-1=Use Style Value
+
 option.SKYLIGHT_SUNRISE_RED=Skylight Sunrise Red
+value.SKYLIGHT_SUNRISE_RED.-1=Use Style Value
+
 option.SKYLIGHT_SUNRISE_GREEN=Skylight Sunrise Green
+value.SKYLIGHT_SUNRISE_GREEN.-1=Use Style Value
+
 option.SKYLIGHT_SUNRISE_BLUE=Skylight Sunrise Blue
+value.SKYLIGHT_SUNRISE_BLUE.-1=Use Style Value
+
 option.AMBIENT_SUNRISE_BRIGHTNESS=Ambient Sunrise Brightness
+value.AMBIENT_SUNRISE_BRIGHTNESS.-1=Use Style Value
+
 option.AMBIENT_SUNRISE_RED=Ambient Sunrise Red
+value.AMBIENT_SUNRISE_RED.-1=Use Style Value
+
 option.AMBIENT_SUNRISE_GREEN=Ambient Sunrise Green
+value.AMBIENT_SUNRISE_GREEN.-1=Use Style Value
+
 option.AMBIENT_SUNRISE_BLUE=Ambient Sunrise Blue
+value.AMBIENT_SUNRISE_BLUE.-1=Use Style Value
+
+
+
+
 
 
 
 screen.SUNSET_COLOR_SETTINGS=Sunset Color Settings
 
+
+
 option.SKYLIGHT_SUNSET_BRIGHTNESS=Skylight Sunset Brightness
+value.SKYLIGHT_SUNSET_BRIGHTNESS.-1=Use Style Value
+
 option.SKYLIGHT_SUNSET_RED=Skylight Sunset Red
+value.SKYLIGHT_SUNSET_RED.-1=Use Style Value
+
 option.SKYLIGHT_SUNSET_GREEN=Skylight Sunset Green
+value.SKYLIGHT_SUNSET_GREEN.-1=Use Style Value
+
 option.SKYLIGHT_SUNSET_BLUE=Skylight Sunset Blue
+value.SKYLIGHT_SUNSET_BLUE.-1=Use Style Value
+
 option.AMBIENT_SUNSET_BRIGHTNESS=Ambient Sunset Brightness
+value.AMBIENT_SUNSET_BRIGHTNESS.-1=Use Style Value
+
 option.AMBIENT_SUNSET_RED=Ambient Sunset Red
+value.AMBIENT_SUNSET_RED.-1=Use Style Value
+
 option.AMBIENT_SUNSET_GREEN=Ambient Sunset Green
+value.AMBIENT_SUNSET_GREEN.-1=Use Style Value
+
 option.AMBIENT_SUNSET_BLUE=Ambient Sunset Blue
+value.AMBIENT_SUNSET_BLUE.-1=Use Style Value
+
+
+
 
 
 
 screen.BLOCK_COLOR_SETTINGS=Block Color Settings
 
+
+
 option.BLOCK_BRIGHTNESS=Block Brightness
+value.BLOCK_BRIGHTNESS.-1=Use Style Value
+
 option.BLOCK_RED=Block Red
+value.BLOCK_RED.-1=Use Style Value
+
 option.BLOCK_GREEN=Block Green
+value.BLOCK_GREEN.-1=Use Style Value
+
 option.BLOCK_BLUE=Block Blue
+value.BLOCK_BLUE.-1=Use Style Value
+
+
+
 
 
 
 screen.CAVE_COLOR_SETTINGS=Cave Color Settings
 
+
+
 option.CAVE_AMBIENT_BRIGHTNESS=Cave Brightness
+value.CAVE_AMBIENT_BRIGHTNESS.-1=Use Style Value
+
 option.CAVE_AMBIENT_RED=Cave Red
+value.CAVE_AMBIENT_RED.-1=Use Style Value
+
 option.CAVE_AMBIENT_GREEN=Cave Green
+value.CAVE_AMBIENT_GREEN.-1=Use Style Value
+
 option.CAVE_AMBIENT_BLUE=Cave Blue
+value.CAVE_AMBIENT_BLUE.-1=Use Style Value
+
+
+
+
+
+
+
 
 
 
@@ -147,40 +357,92 @@ option.CAVE_AMBIENT_BLUE=Cave Blue
 
 screen.SHADING_SETTINGS=Shading
 
+
+
 option.SHADOWS_ENABLED=Shadows Enabled
-option.shadowMapResolution=Shadow Map Resolution
-option.shadowMapResolution.comment=Resolution of the shadow map. Higher is more accurate, lower is more performance\n\n(Performance cost: HIGH)
-option.shadowDistance=Shadow Distance
-option.shadowDistance.comment=Maximum distance that shadows are rendered\n\n(Performance cost: Unknown)
+value.SHADOWS_ENABLED.-1=Use Style Value
+value.SHADOWS_ENABLED.0=Off
+value.SHADOWS_ENABLED.1=On
+
+option.SHADOWMAP_RESOLUTION=Shadow Map Resolution
+option.SHADOWMAP_RESOLUTION.comment=Resolution of the shadow map. Higher is more accurate, lower is more performance\n\n(Performance cost: HIGH)
+value.SHADOWMAP_RESOLUTION.-1=Use Style Value
+
+option.SHADOW_DISTANCE=Shadow Distance
+option.SHADOW_DISTANCE.comment=Maximum distance that shadows are rendered\n\n(Performance cost: Unknown)
+value.SHADOW_DISTANCE.-1=Use Style Value
+
 option.SHADOW_DISTORT_ADDITION=Shadow Distortion
 option.SHADOW_DISTORT_ADDITION.comment=This controls the resolution of closer shadows. Lower values make closer shadows sharper, and vice versa\n\n(Performance cost: None)
+value.SHADOW_DISTORT_ADDITION.-1=Use Style Value
+
 option.SHADOW_FILTERING=Shadow Filtering
 option.SHADOW_FILTERING.comment=Smoothens shadow edges (works best with TAA)\n\n(Performance cost: Low)
+value.SHADOW_FILTERING.-1=Use Style Value
 value.SHADOW_FILTERING.0=Off
 value.SHADOW_FILTERING.1=Low
 value.SHADOW_FILTERING.2=Medium
 value.SHADOW_FILTERING.3=High
+
 option.EXCLUDE_FOLIAGE=Exclude Foliage
 option.EXCLUDE_FOLIAGE.comment=If true, foliage will not cast shadows\n\n(Performance cost: Low)
-option.sunPathRotation=Sun Path Rotation
-option.sunPathRotation.comment=How tilted the sun's rotation is. 0 is vanilla
-option.ambientOcclusionLevel=Vanilla AO
-option.ambientOcclusionLevel.comment=How much vanilla Ambient Occlusion should be used
+value.EXCLUDE_FOLIAGE.-1=Use Style Value
+value.EXCLUDE_FOLIAGE.0=Off
+value.EXCLUDE_FOLIAGE.1=On
+
+option.SUN_PATH_ROTATION=Sun Path Rotation
+option.SUN_PATH_ROTATION.comment=How tilted the sun's rotation is. 0 is vanilla
+value.SUN_PATH_ROTATION.-1=Use Style Value
+
+option.AMBIENT_OCCLUSION_LEVEL=Vanilla AO
+option.AMBIENT_OCCLUSION_LEVEL.comment=How much vanilla Ambient Occlusion should be used
+value.AMBIENT_OCCLUSION_LEVEL.-1=Use Style Value
+
 option.SIDE_SHADING=Side Shading
 option.SIDE_SHADING.comment=How much to increase / decrease the sides of blocks (lower is more accurate, higher is more vanilla-like)\n\n(Performance cost: None)
+value.SIDE_SHADING.-1=Use Style Value
+
 option.RAIN_LIGHT_MULT=Rain Light Multiplier
+value.RAIN_LIGHT_MULT.-1=Use Style Value
+
 option.USE_VANILLA_BRIGHTNESS=Use Vanilla Brightness
 option.USE_VANILLA_BRIGHTNESS.comment=Whether or not the vanilla brightness slider should be used
+value.USE_VANILLA_BRIGHTNESS.-1=Use Style Value
+value.USE_VANILLA_BRIGHTNESS.0=Off
+value.USE_VANILLA_BRIGHTNESS.1=On
+
 option.BLOCKLIGHT_FLICKERING_ENABLED=Blocklight Flickering
 option.BLOCKLIGHT_FLICKERING_ENABLED.comment=Makes block light flicker slightly
+value.BLOCKLIGHT_FLICKERING_ENABLED.-1=Use Style Value
+value.BLOCKLIGHT_FLICKERING_ENABLED.0=Off
+value.BLOCKLIGHT_FLICKERING_ENABLED.1=On
+
+
+
 
 
 
 screen.HANDHELD_LIGHT_SETTINGS=Handheld Light
 
+
+
 option.HANDHELD_LIGHT_ENABLED=Handheld Light Enabled
+value.HANDHELD_LIGHT_ENABLED.-1=Use Style Value
+value.HANDHELD_LIGHT_ENABLED.0=Off
+value.HANDHELD_LIGHT_ENABLED.1=On
+
 option.HANDHELD_LIGHT_DISTANCE=Handheld Light Distance
+value.HANDHELD_LIGHT_DISTANCE.-1=Use Style Value
+
 option.HANDHELD_LIGHT_BRIGHTNESS=Handheld Light Brightness
+value.HANDHELD_LIGHT_BRIGHTNESS.-1=Use Style Value
+
+
+
+
+
+
+
 
 
 
@@ -190,214 +452,462 @@ screen.POST_PROCESSING_SETTINGS=Post Processing
 
 
 
+
+
+
 screen.REFLECTION_SETTINGS=Reflections
+
+
 
 option.WATER_REFLECTIONS_ENABLED=Water Reflections Enabled
 option.WATER_REFLECTIONS_ENABLED.comment=Whether reflections appear on water\n\n(Performance cost: HIGH)
+value.WATER_REFLECTIONS_ENABLED.-1=Use Style Value
+value.WATER_REFLECTIONS_ENABLED.0=Off
+value.WATER_REFLECTIONS_ENABLED.1=On
+
 option.WATER_REFLECTION_AMOUNT=Water Reflection Strength
 option.WATER_REFLECTION_AMOUNT.comment=Max rain reflections strength
+value.WATER_REFLECTION_AMOUNT.-1=Use Style Value
+
 option.WATER_REFLECTION_FRESNEL=Water Reflection Fresnel Factor
 option.WATER_REFLECTION_FRESNEL.comment=How much the surface steepness contributes to reflection strength\n\nFor example, a Strength of 0.5 with a Fresnel Factor of 0.6 means the strength goes from 0.2 (when the surface is facing the camera) to 0.5 (when the surface is parallel to the camera)
+value.WATER_REFLECTION_FRESNEL.-1=Use Style Value
+
+
 
 option.RAIN_REFLECTIONS_ENABLED=Rain Reflections Enabled
 option.RAIN_REFLECTIONS_ENABLED.comment=Add ground reflections when raining
+value.RAIN_REFLECTIONS_ENABLED.-1=Use Style Value
+value.RAIN_REFLECTIONS_ENABLED.0=Off
+value.RAIN_REFLECTIONS_ENABLED.1=On
+
 option.RAIN_REFLECTION_AMOUNT=Rain Reflection Strength
 option.RAIN_REFLECTION_AMOUNT.comment=Max rain reflections strength
+value.RAIN_REFLECTION_AMOUNT.-1=Use Style Value
+
 option.RAIN_REFLECTION_FRESNEL=Rain Reflection Fresnel Factor
 option.RAIN_REFLECTION_FRESNEL.comment=How much the surface steepness contributes to reflection strength\n\nFor example, a Strength of 0.5 with a Fresnel Factor of 0.6 means the strength goes from 0.2 (when the surface is facing the camera) to 0.5 (when the surface is parallel to the camera)
+value.RAIN_REFLECTION_FRESNEL.-1=Use Style Value
+
 option.RAIN_REFLECTION_MIN=Rain Reflection Min
 option.RAIN_REFLECTION_MIN.comment=Minimum amount for reflection strength
+value.RAIN_REFLECTION_MIN.-1=Use Style Value
+
 option.RAIN_REFLECTION_COVERAGE=Rain Reflection Coverage
 option.RAIN_REFLECTION_COVERAGE.comment=How much terrain is at full reflection strength
+value.RAIN_REFLECTION_COVERAGE.-1=Use Style Value
+
 option.RAIN_REFLECTION_SLOPE=Rain Reflection Slope
 option.RAIN_REFLECTION_SLOPE.comment=How quickly the reflection strength drops off
+value.RAIN_REFLECTION_SLOPE.-1=Use Style Value
+
+
 
 option.REFLECTION_ITERATIONS=Reflection Iterations
 option.REFLECTION_ITERATIONS.comment=The number of steps that the pseudo-raytracer takes
+value.REFLECTION_ITERATIONS.-1=Use Style Value
+
 option.REFLECTION_STEP_INCREASE=Reflection Step Increase
 option.REFLECTION_STEP_INCREASE.comment=How much the step amount is increased per step
+value.REFLECTION_STEP_INCREASE.-1=Use Style Value
+
+
+
 
 
 
 screen.SSAO_SETTINGS=SSAO
 
+
+
 option.SSAO_ENABLED=SSAO Enabled
 option.SSAO_ENABLED.comment=Darkens corners / crevasses
+value.SSAO_ENABLED.-1=Use Style Value
+value.SSAO_ENABLED.0=Off
+value.SSAO_ENABLED.1=On
+
 option.AO_AMOUNT=AO Amount
 option.AO_AMOUNT.comment=How much to darken corners / crevasses
+value.AO_AMOUNT.-1=Use Style Value
+
 option.AO_SIZE=AO Size
 option.AO_SIZE.comment=How much the AO should spread
+value.AO_SIZE.-1=Use Style Value
+
 option.AO_QUALITY=AO Quality
 option.AO_QUALITY.comment=Controls the number of samples
+value.AO_QUALITY.-1=Use Style Value
+
 option.SSAO_APPLICATION_TYPE=AO Application Type
 option.SSAO_APPLICATION_TYPE.comment=How the SSAO is applied\n\n1: Multiply (fast)\n2: Pow (better preserves color)
+value.SSAO_APPLICATION_TYPE.-1=Use Style Value
+
+
+
 
 
 
 screen.BLOOM_SETTINGS=Bloom
 
+
+
 option.BLOOM_ENABLED=Bloom Enabled
 option.BLOOM_ENABLED.comment=Makes bright colors bleed into the surroundings\n\n(Performance cost: Low-Medium, depending on settings)
+value.BLOOM_ENABLED.-1=Use Style Value
+value.BLOOM_ENABLED.0=Off
+value.BLOOM_ENABLED.1=On
+
 option.BLOOM_AMOUNT=Bloom Amount
+value.BLOOM_AMOUNT.-1=Use Style Value
+
 option.BLOOM_SIZE=Bloom Size
+value.BLOOM_SIZE.-1=Use Style Value
+
 option.BLOOM_QUALITY=Bloom Quality
 option.BLOOM_QUALITY.comment=Controls the number of samples for bloom level
+value.BLOOM_QUALITY.-1=Use Style Value
+
 option.BLOOM_LEVELS=Bloom Levels
 option.BLOOM_LEVELS.comment=Controls the number of layers of bloom
+value.BLOOM_LEVELS.-1=Use Style Value
+
 option.BLOOM_LOW_CUTOFF=Bloom Low Cutoff
 option.BLOOM_LOW_CUTOFF.comment=The value at which all colors are treated as equally dark
+value.BLOOM_LOW_CUTOFF.-1=Use Style Value
+
 option.BLOOM_HIGH_CUTOFF=Bloom High Cutoff
 option.BLOOM_HIGH_CUTOFF.comment=The value at which all colors are treated as equally light
+value.BLOOM_HIGH_CUTOFF.-1=Use Style Value
+
 option.BLOOM_SKY_BRIGHTNESS=Bloom Sky Brightness
+value.BLOOM_SKY_BRIGHTNESS.-1=Use Style Value
+
 option.BLOOM_ENTITY_BRIGHTNESS=Bloom Entity Brightness
+value.BLOOM_ENTITY_BRIGHTNESS.-1=Use Style Value
+
 option.BLOOM_CLOUD_BRIGHTNESS=Bloom Cloud Brightness
+value.BLOOM_CLOUD_BRIGHTNESS.-1=Use Style Value
+
 option.BLOOM_HAND_BRIGHTNESS=Bloom Hand Brightness
+value.BLOOM_HAND_BRIGHTNESS.-1=Use Style Value
+
+
+
 
 
 
 screen.SUNRAYS_SETTINGS=Sunrays
 
+
+
 option.SUNRAYS_ENABLED=Sunrays Enabled
 option.SUNRAYS_ENABLED.comment=(Performance cost: Low-Medium, depending on settings)
+value.SUNRAYS_ENABLED.-1=Use Style Value
+value.SUNRAYS_ENABLED.0=Off
+value.SUNRAYS_ENABLED.1=On
+
 option.SUNRAYS_STYLE=Sunrays Style
-option.SUNRAYS_STYLE.comment=Alters how the sunrays are calculated. Option 1 is more natural, option 2 is more impressive looking.
+option.SUNRAYS_STYLE.comment=Alters how the sunrays are calculated. Option 1 is more natural, option 2 is more impressive looking
+value.SUNRAYS_STYLE.-1=Use Style Value
+
 option.SUNRAYS_SATURATION=Sunrays Saturation
 option.SUNRAYS_SATURATION.comment=The color of sun rays are the same as the sky color, saturated by this amount
+value.SUNRAYS_SATURATION.-1=Use Style Value
+
 option.SUNRAYS_QUALITY=Sunrays Quality
 option.SUNRAYS_QUALITY.comment=Controls the number of samples for each pixel
+value.SUNRAYS_QUALITY.-1=Use Style Value
+
 option.SUNRAYS_COMPUTE_COUNT=Sunrays Compute Count
 option.SUNRAYS_COMPUTE_COUNT.comment=The number of times the sunray amount is computed. Lower values give more performance, higher values give less noise
+value.SUNRAYS_COMPUTE_COUNT.-1=Use Style Value
+
 option.SUNRAYS_FLICKERING_FIX=Sunrays Flickering Fix
 option.SUNRAYS_FLICKERING_FIX.comment=Fixes a subtle bug where sunrays flicker when the sun is off-screen
+value.SUNRAYS_FLICKERING_FIX.-1=Use Style Value
+value.SUNRAYS_FLICKERING_FIX.0=Off
+value.SUNRAYS_FLICKERING_FIX.1=On
+
 option.SUNRAYS_AMOUNT_DAY=Sunrays Amount Day
+value.SUNRAYS_AMOUNT_DAY.-1=Use Style Value
+
 option.SUNRAYS_AMOUNT_NIGHT=Sunrays Amount Night
+value.SUNRAYS_AMOUNT_NIGHT.-1=Use Style Value
+
 option.SUNRAYS_AMOUNT_SUNRISE=Sunrays Amount Sunrise
+value.SUNRAYS_AMOUNT_SUNRISE.-1=Use Style Value
+
 option.SUNRAYS_AMOUNT_SUNSET=Sunrays Amount Sunset
+value.SUNRAYS_AMOUNT_SUNSET.-1=Use Style Value
+
 option.SUNRAYS_SUN_RED=Sunrays Sun Red
+value.SUNRAYS_SUN_RED.-1=Use Style Value
+
 option.SUNRAYS_SUN_GREEN=Sunrays Sun Green
+value.SUNRAYS_SUN_GREEN.-1=Use Style Value
+
 option.SUNRAYS_SUN_BLUE=Sunrays Sun Blue
+value.SUNRAYS_SUN_BLUE.-1=Use Style Value
+
 option.SUNRAYS_MOON_RED=Sunrays Moon Red
+value.SUNRAYS_MOON_RED.-1=Use Style Value
+
 option.SUNRAYS_MOON_GREEN=Sunrays Moon Green
+value.SUNRAYS_MOON_GREEN.-1=Use Style Value
+
 option.SUNRAYS_MOON_BLUE=Sunrays Moon Blue
+value.SUNRAYS_MOON_BLUE.-1=Use Style Value
+
+
+
 
 
 
 screen.DOF_SETTINGS=Depth Of Field
 
+
+
 option.DOF_ENABLED=Depth Of Field Enabled
+value.DOF_ENABLED.-1=Use Style Value
+value.DOF_ENABLED.0=Off
+value.DOF_ENABLED.1=On
+
 option.DOF_NEAR_BLUR_START=DOF Near Blur Start
+value.DOF_NEAR_BLUR_START.-1=Use Style Value
+
 option.DOF_NEAR_BLUR_SLOPE=DOF Near Blur Slope
+value.DOF_NEAR_BLUR_SLOPE.-1=Use Style Value
+
 option.DOF_NEAR_BLUR_STRENGTH=DOF Near Blur Strength
+value.DOF_NEAR_BLUR_STRENGTH.-1=Use Style Value
+
 option.DOF_NEAR_BLUR_SIZE=DOF Near Blur Size
+value.DOF_NEAR_BLUR_SIZE.-1=Use Style Value
+
 option.DOF_FAR_BLUR_START=DOF Far Blur Start
+value.DOF_FAR_BLUR_START.-1=Use Style Value
+
 option.DOF_FAR_BLUR_SLOPE=DOF Far Blur Slope
+value.DOF_FAR_BLUR_SLOPE.-1=Use Style Value
+
 option.DOF_FAR_BLUR_STRENGTH=DOF Far Blur Strength
+value.DOF_FAR_BLUR_STRENGTH.-1=Use Style Value
+
 option.DOF_FAR_BLUR_SIZE=DOF Far Blur Size
+value.DOF_FAR_BLUR_SIZE.-1=Use Style Value
+
 option.DOF_SLOPE_TYPE=DOF Slope Type
 option.DOF_SLOPE_TYPE.comment=How the 'Start' and 'Slope' settings are used\n\nDefault: 'Start' and 'Slope' settings are decreased as focal plane is decreased\nLocked: 'Start' and 'Slope' settings are static
+value.DOF_SLOPE_TYPE.-1=Use Style Value
 value.DOF_SLOPE_TYPE.1=Default
 value.DOF_SLOPE_TYPE.2=Locked
+
 option.DOF_LOCKED_FOCAL_PLANE=DOF Locked Focal Plane
 option.DOF_LOCKED_FOCAL_PLANE.comment=Uses a fixed focus distance instead of focusing on what you're looking at
+value.DOF_LOCKED_FOCAL_PLANE.-1=Use Style Value
+value.DOF_LOCKED_FOCAL_PLANE.0=Off
+value.DOF_LOCKED_FOCAL_PLANE.1=On
+
 option.DOF_FOCAL_PLANE_DISTANCE=DOF Focal Plane Distance
 option.DOF_FOCAL_PLANE_DISTANCE.comment=Sets the distance for Locked Focal Plane (which needs to be on for this to take effect)
+value.DOF_FOCAL_PLANE_DISTANCE.-1=Use Style Value
+
+
+
 
 
 
 screen.ANTI_ALIASING_SETTINGS=Anti-Aliasing
 
+
+
 option.TAA_ENABLED=TAA
 option.TAA_ENABLED.comment=Smoothens edges and makes them less pixelated while also removing flickering. (Performance cost: Low)
+value.TAA_ENABLED.-1=Use Style Value
+value.TAA_ENABLED.0=Off
+value.TAA_ENABLED.1=On
+
+
+
 
 
 
 screen.MOTION_BLUR_SETTINGS=Motion Blur
 
+
+
 option.MOTION_BLUR_ENABLED=Motion Blur Enabled
+value.MOTION_BLUR_ENABLED.-1=Use Style Value
+value.MOTION_BLUR_ENABLED.0=Off
+value.MOTION_BLUR_ENABLED.1=On
+
 option.MOTION_BLUR_AMOUNT=Motion Blur Amount
+value.MOTION_BLUR_AMOUNT.-1=Use Style Value
+
 option.MOTION_BLUR_QUALITY=Motion Blur Quality
+value.MOTION_BLUR_QUALITY.-1=Use Style Value
+
+
+
 
 
 
 screen.SHARPENING_SETTINGS=Sharpening
 
+
+
 option.SHARPENING_ENABLED=Sharpening Enabled
 option.SHARPENING_ENABLED.comment=Accentuates edges (hopefully without making them pixelated). (Performance cost: Low)
+value.SHARPENING_ENABLED.-1=Use Style Value
+value.SHARPENING_ENABLED.0=Off
+value.SHARPENING_ENABLED.1=On
+
 option.SHARPEN_AMOUNT=Sharpening Amount
+value.SHARPEN_AMOUNT.-1=Use Style Value
 
 option.SHARPEN_VEL_ADDITION=Velocity Addition
 option.SHARPEN_VEL_ADDITION.comment=How much more to sharpen when moving
+value.SHARPEN_VEL_ADDITION.-1=Use Style Value
 
 option.SHARPENING_DETECT_SIZE=Sharpening Detect Size
 option.SHARPENING_DETECT_SIZE.comment=The number of samples used for determining how to sharpen
+value.SHARPENING_DETECT_SIZE.-1=Use Style Value
 value.SHARPENING_DETECT_SIZE.3=3x3
 value.SHARPENING_DETECT_SIZE.5=5x5
 value.SHARPENING_DETECT_SIZE.7=7x7
 
 
 
+
+
+
 screen.COLOR_CORRECTION_SETTINGS=Color Correction
+
+
 
 option.GAMMA=Gamma
 option.GAMMA.comment=Gamma applied to the final image, roughly equivalent to the inverse of saturation
+value.GAMMA.-1=Use Style Value
+
 option.BRIGHTNESS=Brightness
 option.BRIGHTNESS.comment=Brightness applied to the final image
+value.BRIGHTNESS.-1=Use Style Value
+
+
 
 option.SATURATION=Saturation
 option.SATURATION.comment=Saturation applied to the final image
+value.SATURATION.-1=Use Style Value
+
 option.SATURATION_DARK=Saturation Dark
 option.SATURATION_DARK.comment=How much to saturation dark areas
+value.SATURATION_DARK.-1=Use Style Value
+
 option.SATURATION_LIGHT=Saturation Light
 option.SATURATION_LIGHT.comment=How much to saturation light areas
+value.SATURATION_LIGHT.-1=Use Style Value
+
+
 
 option.VIBRANCE=Vibrance
 option.VIBRANCE.comment=Vibrance applied to the final image. This saturates the less saturated colors more than the already saturated colors
+value.VIBRANCE.-1=Use Style Value
+
+
 
 option.CONTRAST=Contrast
 option.CONTRAST.comment=Contrast applied to the final image, making colors stick out more
+value.CONTRAST.-1=Use Style Value
+
 option.CONTRAST_DETECT_RED=Contrast Detect Red
 option.CONTRAST_DETECT_RED.comment=Contrast Detect is the color that Contrast moves away from
+value.CONTRAST_DETECT_RED.-1=Use Style Value
+
 option.CONTRAST_DETECT_GREEN=Contrast Detect Green
 option.CONTRAST_DETECT_GREEN.comment=Contrast Detect is the color that Contrast moves away from
+value.CONTRAST_DETECT_GREEN.-1=Use Style Value
+
 option.CONTRAST_DETECT_BLUE=Contrast Detect Blue
 option.CONTRAST_DETECT_BLUE.comment=Contrast Detect is the color that Contrast moves away from
+value.CONTRAST_DETECT_BLUE.-1=Use Style Value
+
+
 
 option.TONEMAPPER=Tonemapper
 option.TONEMAPPER.comment=This defines how light data is interpreted.\n\nNone: clamps the value into 0-1\nExtra simple: same as 'none' but uses a smoothened clamp function\nSimple: Custom simple tonemapper\nACES: Industry standard for good, realistic graphics
+value.TONEMAPPER.-1=Use Style Value
 value.TONEMAPPER.0=None
 value.TONEMAPPER.1=Extra Simple
 value.TONEMAPPER.2=Simple
 value.TONEMAPPER.3=ACES
+
 option.USE_GAMMA_CORRECTION=Use Gamma Correction
 option.USE_GAMMA_CORRECTION.comment=Corrects for gamma before and after color correction
+value.USE_GAMMA_CORRECTION.-1=Use Style Value
+value.USE_GAMMA_CORRECTION.0=Off
+value.USE_GAMMA_CORRECTION.1=On
+
+
+
 
 
 
 screen.COLORBLIND_CORRECTION=Colorblindness Correction
-screen.COLORBLIND_MODE.comment=Helps correct for colorblindness (supposedly)
+screen.COLORBLIND_MODE.comment=Helps correct for colorblindness (supposedly, please let me know whether it does!)
+
+
 
 option.COLORBLIND_MODE=Colorblind Mode
-option.COLORBLIND_MODE.comment=Helps correct for colorblindness (supposedly)
+option.COLORBLIND_MODE.comment=Helps correct for colorblindness (supposedly, please let me know whether it does!)
+value.COLORBLIND_MODE.-1=Use Style Value
 value.COLORBLIND_MODE.0=Off
 value.COLORBLIND_MODE.1=Protanopia
 value.COLORBLIND_MODE.2=Deuteranopia
 value.COLORBLIND_MODE.3=Tritanopia
 
+
+
 option.COLORBLIND_INTENSITY=Correction Intensity
+value.COLORBLIND_INTENSITY.-1=Use Style Value
+
+
+
 
 
 
 screen.VIGNETTE_SETTINGS=Vignette
 
+
+
 option.VIGNETTE_ENABLED=Vignette Enabled
 option.VIGNETTE_ENABLED.comment=Darkens the edges of the screen. (Performance cost: Low-None)
+value.VIGNETTE_ENABLED.-1=Use Style Value
+value.VIGNETTE_ENABLED.0=Off
+value.VIGNETTE_ENABLED.1=On
+
 option.VIGNETTE_AMOUNT_SURFACE=Vignette Amount Surface
 option.VIGNETTE_AMOUNT_SURFACE.comment=The amount of vignette when exposed to sunlight
+value.VIGNETTE_AMOUNT_SURFACE.-1=Use Style Value
+
 option.VIGNETTE_AMOUNT_UNDERGROUND=Vignette Amount Underground
 option.VIGNETTE_AMOUNT_UNDERGROUND.comment=The amount of vignette when not exposed to sunlight
+value.VIGNETTE_AMOUNT_UNDERGROUND.-1=Use Style Value
+
 option.VIGNETTE_SCALE=Vignette Scale
+value.VIGNETTE_SCALE.-1=Use Style Value
+
 option.VIGNETTE_NOISE_ENABLED=Vignette Noise Enabled
 option.VIGNETTE_NOISE_ENABLED.comment=Adds a slight amount of noise to the Vignette to prevent banding
+value.VIGNETTE_NOISE_ENABLED.-1=Use Style Value
+value.VIGNETTE_NOISE_ENABLED.0=Off
+value.VIGNETTE_NOISE_ENABLED.1=On
+
+
+
+
+
+
+
 
 
 
@@ -405,40 +915,94 @@ option.VIGNETTE_NOISE_ENABLED.comment=Adds a slight amount of noise to the Vigne
 
 screen.WAVING_SETTINGS=Waving
 
+
+
 option.WAVING_ENABLED=Waving Enabled
 option.WAVING_ENABLED.comment=(Performance cost: Low-None)
+value.WAVING_ENABLED.-1=Use Style Value
+value.WAVING_ENABLED.0=Off
+value.WAVING_ENABLED.1=On
+
 option.WAVING_SPEED=Waving Speed
+value.WAVING_SPEED.-1=Use Style Value
+
 option.WAVING_WORLD_SCALE=Waving World Scale
+value.WAVING_WORLD_SCALE.-1=Use Style Value
+
 option.WAVING_AMOUNT_1=Waving Amount 1
 option.WAVING_AMOUNT_1.comment=How much waving there is for things like cobwebs, dead bushes, sugar cane, etc
+value.WAVING_AMOUNT_1.-1=Use Style Value
+
 option.WAVING_AMOUNT_2=Waving Amount 2
 option.WAVING_AMOUNT_2.comment=How much waving there is for things like saplings, flowers, crops, etc
+value.WAVING_AMOUNT_2.-1=Use Style Value
+
 option.WAVING_AMOUNT_3=Waving Amount 3
 option.WAVING_AMOUNT_3.comment=How much waving there is for things like grass, wheat, etc
+value.WAVING_AMOUNT_3.-1=Use Style Value
+
 option.WAVING_RAIN_MULT=Waving Rain Multiplier
 option.WAVING_RAIN_MULT.comment=How much to increase / decrease the waving amount when it is raining
+value.WAVING_RAIN_MULT.-1=Use Style Value
+
 option.WAVING_NIGHT_MULT=Waving Night Multiplier
 option.WAVING_NIGHT_MULT.comment=How much to increase / decrease the waving amount when it is night
+value.WAVING_NIGHT_MULT.-1=Use Style Value
+
 option.HEIGHT_BASED_WAVING_ENABLED=Height Based Waviness Multiplier
 option.HEIGHT_BASED_WAVING_ENABLED.comment=Increases waviness when higher up
+value.HEIGHT_BASED_WAVING_ENABLED.-1=Use Style Value
+
+
+
 
 
 
 screen.WAVING_WATER_SETTINGS=Waving Water
 
+
+
 option.PHYSICALLY_WAVING_WATER_ENABLED=Physical Waving Enabled
 option.PHYSICALLY_WAVING_WATER_ENABLED.comment=Makes the water actually wave
+value.PHYSICALLY_WAVING_WATER_ENABLED.-1=Use Style Value
+value.PHYSICALLY_WAVING_WATER_ENABLED.0=Off
+value.PHYSICALLY_WAVING_WATER_ENABLED.1=On
+
 option.WAVING_WATER_NORMALS_ENABLED=Waving Normals Enabled
 option.WAVING_WATER_NORMALS_ENABLED.comment=Makes the water reflections wavy (only takes effect when water reflections are enabled)
+value.WAVING_WATER_NORMALS_ENABLED.-1=Use Style Value
+value.WAVING_WATER_NORMALS_ENABLED.0=Off
+value.WAVING_WATER_NORMALS_ENABLED.1=On
+
+
+
 
 
 
 screen.UNDERWATER_WAVINESS_SETTINGS=Underwater Waviness
 
+
+
 option.UNDERWATER_WAVINESS_ENABLED=Underwater Waviness Enabled
+value.UNDERWATER_WAVINESS_ENABLED.-1=Use Style Value
+value.UNDERWATER_WAVINESS_ENABLED.0=Off
+value.UNDERWATER_WAVINESS_ENABLED.1=On
+
 option.UNDERWATER_WAVINESS_AMOUNT=Underwater Waviness Amount
+value.UNDERWATER_WAVINESS_AMOUNT.-1=Use Style Value
+
 option.UNDERWATER_WAVINESS_SCALE=Underwater Waviness Scale
+value.UNDERWATER_WAVINESS_SCALE.-1=Use Style Value
+
 option.UNDERWATER_WAVINESS_SPEED=Underwater Waviness Speed
+value.UNDERWATER_WAVINESS_SPEED.-1=Use Style Value
+
+
+
+
+
+
+
 
 
 
@@ -446,8 +1010,20 @@ option.UNDERWATER_WAVINESS_SPEED=Underwater Waviness Speed
 
 screen.WATER_SETTINGS=Water
 
-option.WATER_RESNEL_ADDITION=Fresnel Addition
-option.WATER_RESNEL_ADDITION.comment=Makes the water lighter / darker depending on how parallel the surface is to the camera
+
+
+option.WATER_FRESNEL_ADDITION=Fresnel Addition
+option.WATER_FRESNEL_ADDITION.comment=Makes the water lighter / darker depending on how parallel the surface is to the camera
+value.WATER_FRESNEL_ADDITION.-1=Use Style Value
+value.WATER_FRESNEL_ADDITION.0=Off
+value.WATER_FRESNEL_ADDITION.1=On
+
+
+
+
+
+
+
 
 
 
@@ -455,14 +1031,32 @@ option.WATER_RESNEL_ADDITION.comment=Makes the water lighter / darker depending 
 
 screen.ISOMETRIC_SETTINGS=Isometric Settings
 
+
+
 option.ISOMETRIC_RENDERING_ENABLED=Isometric Rendering Enabled
 option.ISOMETRIC_RENDERING_ENABLED.comment=Changes the projection to Isometric
+value.ISOMETRIC_RENDERING_ENABLED.-1=Use Style Value
+value.ISOMETRIC_RENDERING_ENABLED.0=Off
+value.ISOMETRIC_RENDERING_ENABLED.1=On
+
 option.ISOMETRIC_WORLD_SCALE=Isometric World Scale
 option.ISOMETRIC_WORLD_SCALE.comment=This controls how "zoomed-out" the camera is
+value.ISOMETRIC_WORLD_SCALE.-1=Use Style Value
+
 option.ISOMETRIC_BACKWARD_VISIBILITY=Isometric Backwards Visibility
 option.ISOMETRIC_BACKWARD_VISIBILITY.comment=This controls how close the clipping plane is behind you
+value.ISOMETRIC_BACKWARD_VISIBILITY.-1=Use Style Value
+
 option.ISOMETRIC_FORWARD_VISIBILITY=Isometric Forward Visibility
 option.ISOMETRIC_FORWARD_VISIBILITY.comment=This controls how close the clipping plane is in front of you
+value.ISOMETRIC_FORWARD_VISIBILITY.-1=Use Style Value
+
+
+
+
+
+
+
 
 
 
@@ -470,25 +1064,70 @@ option.ISOMETRIC_FORWARD_VISIBILITY.comment=This controls how close the clipping
 
 screen.DEBUG_SETTINGS=Debug
 
+
+
 option.USE_BETTER_RAND=Use Better Random
 option.USE_BETTER_RAND.comment=The better random function is technically better, but the performance cost doesn't exactly make up for it
+value.USE_BETTER_RAND.-1=Use Style Value
+value.USE_BETTER_RAND.0=Off
+value.USE_BETTER_RAND.1=On
+
 option.SHOW_DANGEROUS_LIGHT=Show Dangerous Light
 option.SHOW_DANGEROUS_LIGHT.comment=Show areas where hostile mobs can spawn (has false positives)
+value.SHOW_DANGEROUS_LIGHT.-1=Use Style Value
+value.SHOW_DANGEROUS_LIGHT.0=Off
+value.SHOW_DANGEROUS_LIGHT.1=On
+
 option.USE_SIMPLE_LIGHT=Use Simple Light
 option.USE_SIMPLE_LIGHT.comment=Breaks the lighting in a strangely artistic way
+value.USE_SIMPLE_LIGHT.-1=Use Style Value
+value.USE_SIMPLE_LIGHT.0=Off
+value.USE_SIMPLE_LIGHT.1=On
+
 option.SHOW_SUNLIGHT=Show Sunlight
 option.SHOW_SUNLIGHT.comment=Shows the sunlight. Useful for seeing shadow filtering, light leaks, etc
+value.SHOW_SUNLIGHT.-1=Use Style Value
+value.SHOW_SUNLIGHT.0=Off
+value.SHOW_SUNLIGHT.1=On
+
 option.SHOW_BRIGHTNESSES=Show Brightnesses
 option.SHOW_BRIGHTNESSES.comment=Shows the block brightness (red), sky brightness (green), and ambient brightness (blue)
+value.SHOW_BRIGHTNESSES.-1=Use Style Value
+value.SHOW_BRIGHTNESSES.0=Off
+value.SHOW_BRIGHTNESSES.1=On
+
 option.SSAO_SHOW_AMOUNT=SSAO Show Amount
 option.SSAO_SHOW_AMOUNT.comment=Show the amount of ssao that is applied
+value.SSAO_SHOW_AMOUNT.-1=Use Style Value
+value.SSAO_SHOW_AMOUNT.0=Off
+value.SSAO_SHOW_AMOUNT.1=On
+
 option.BLOOM_SHOW_ADDITION=Show Bloom Addition
 option.BLOOM_SHOW_ADDITION.comment=Show the colors that bloom is adding to the screen
+value.BLOOM_SHOW_ADDITION.-1=Use Style Value
+value.BLOOM_SHOW_ADDITION.0=Off
+value.BLOOM_SHOW_ADDITION.1=On
+
 option.BLOOM_SHOW_FILTERED_TEXTURE=Show Filtered Texture
 option.BLOOM_SHOW_FILTERED_TEXTURE.comment=Show the texture that bloom samples from
+value.BLOOM_SHOW_FILTERED_TEXTURE.-1=Use Style Value
+value.BLOOM_SHOW_FILTERED_TEXTURE.0=Off
+value.BLOOM_SHOW_FILTERED_TEXTURE.1=On
+
 option.SUNRAYS_SHOW_ADDITION=Sunrays Show Addition
 option.SUNRAYS_SHOW_ADDITION.comment=Show the sunrays that are being added
+value.SUNRAYS_SHOW_ADDITION.-1=Use Style Value
+value.SUNRAYS_SHOW_ADDITION.0=Off
+value.SUNRAYS_SHOW_ADDITION.1=On
+
 option.DOF_SHOW_AMOUNTS=DOF Show Blur Amounts
 option.DOF_SHOW_AMOUNTS.comment=Shows the near blur amount in red and the far blur amount in green
+value.DOF_SHOW_AMOUNTS.-1=Use Style Value
+value.DOF_SHOW_AMOUNTS.0=Off
+value.DOF_SHOW_AMOUNTS.1=On
+
 option.REFLECTIVE_EVERYTHING=Reflective Everything
 option.REFLECTIVE_EVERYTHING.comment=Make EVERYTHING reflective
+value.REFLECTIVE_EVERYTHING.-1=Use Style Value
+value.REFLECTIVE_EVERYTHING.0=Off
+value.REFLECTIVE_EVERYTHING.1=On

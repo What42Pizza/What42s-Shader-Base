@@ -28,7 +28,7 @@ vec3 getBlurredColor(vec2 coord, float size  ARGS_OUT) {
 
 void doDOF(inout vec3 color DEBUG_ARG_OUT  ARGS_OUT) {
 	
-	#ifdef DOF_LOCKED_FOCAL_PLANE
+	#if DOF_LOCKED_FOCAL_PLANE == 1
 		float focusDepth = DOF_FOCAL_PLANE_DISTANCE * invFar;
 	#else
 		float focusDepth = centerLinearDepthSmooth;
@@ -45,7 +45,7 @@ void doDOF(inout vec3 color DEBUG_ARG_OUT  ARGS_OUT) {
 	float farBlurAmount = depthChange * (1.0 / DOF_FAR_BLUR_SLOPE) - (DOF_FAR_BLUR_START / DOF_FAR_BLUR_SLOPE);
 	farBlurAmount = clamp(farBlurAmount, 0.0, 1.0) * DOF_FAR_BLUR_STRENGTH;
 	
-	#ifdef DOF_SHOW_AMOUNTS
+	#if DOF_SHOW_AMOUNTS == 1
 		debugOutput = vec3(nearBlurAmount, farBlurAmount, 0.0);
 	#endif
 	

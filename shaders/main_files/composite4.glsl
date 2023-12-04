@@ -16,13 +16,13 @@
 #include "/utils/depth.glsl"
 #include "/utils/reprojection.glsl"
 
-#ifdef TAA_ENABLED
+#if TAA_ENABLED == 1
 	#include "/lib/taa.glsl"
 #endif
-#ifdef MOTION_BLUR_ENABLED
+#if MOTION_BLUR_ENABLED == 1
 	#include "/lib/motion_blur.glsl"
 #endif
-#ifdef SHARPENING_ENABLED
+#if SHARPENING_ENABLED == 1
 	#include "/lib/sharpening.glsl"
 #endif
 
@@ -38,7 +38,7 @@ void main() {
 	float depth = texelFetch(DEPTH_BUFFER_WO_TRANS, texelcoord, 0).r;
 	float linearDepth = toLinearDepth(depth  ARGS_IN);
 	float handFactor = 0.0;
-	#if !defined ISOMETRIC_RENDERING_ENABLED
+	#if ISOMETRIC_RENDERING_ENABLED == 0
 		if (depthIsHand(linearDepth)) {
 			depth = fromLinearDepth(HAND_DEPTH  ARGS_IN);
 			handFactor = -0.25;
@@ -55,7 +55,7 @@ void main() {
 	
 	// ======== TAA ========
 	
-	#ifdef TAA_ENABLED
+	#if TAA_ENABLED == 1
 		doTAA(color, prev, linearDepth, prevCoord, handFactor  ARGS_IN);
 	#endif
 	
@@ -63,7 +63,7 @@ void main() {
 	
 	// ======== MOTION BLUR ========
 	
-	#ifdef MOTION_BLUR_ENABLED
+	#if MOTION_BLUR_ENABLED == 1
 		if (length(texcoord - prevCoord) > 0.00001) {
 			doMotionBlur(color, prevCoord  ARGS_IN);
 		}
@@ -73,7 +73,7 @@ void main() {
 	
 	// ======== SHARPENING ========
 	
-	#ifdef SHARPENING_ENABLED
+	#if SHARPENING_ENABLED == 1
 		doSharpening(color  ARGS_IN);
 	#endif
 	

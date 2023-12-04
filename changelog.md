@@ -1,8 +1,10 @@
 <br>
 
 - b1.9.0
-  - Added feature: Style Override
+  - Added styles system
+  - Added styles: Vanilla and Realistic
   - Fixed some light-value-related bugs
+  - Started updating documentation (finally)
 
 <br>
 <br>

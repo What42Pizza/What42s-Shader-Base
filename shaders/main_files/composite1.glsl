@@ -12,10 +12,10 @@
 
 #ifdef FSH
 
-#ifdef BLOOM_ENABLED
+#if BLOOM_ENABLED == 1
 	#include "/lib/bloom.glsl"
 #endif
-#ifdef SUNRAYS_ENABLED
+#if SUNRAYS_ENABLED == 1
 	#include "/lib/sunrays.glsl"
 #endif
 
@@ -32,15 +32,15 @@ void main() {
 	
 	// ======== BLOOM CALCULATIONS ========
 	
-	#ifdef BLOOM_ENABLED
+	#if BLOOM_ENABLED == 1
 		
 		vec3 bloomAddition = getBloomAddition(rng  ARGS_IN);
 		noisyAdditions += bloomAddition;
 		
-		#ifdef BLOOM_SHOW_ADDITION
+		#if BLOOM_SHOW_ADDITION == 1
 			debugOutput += bloomAddition;
 		#endif
-		#ifdef BLOOM_SHOW_FILTERED_TEXTURE
+		#if BLOOM_SHOW_FILTERED_TEXTURE == 1
 			debugOutput += texelFetch(BLOOM_BUFFER, texelcoord, 0).rgb;
 		#endif
 		
@@ -50,7 +50,7 @@ void main() {
 	
 	// ======== SUNRAYS ========
 	
-	#ifdef SUNRAYS_ENABLED
+	#if SUNRAYS_ENABLED == 1
 		
 		float sunraysAmount = 0.0;
 		for (int i = 0; i < SUNRAYS_COMPUTE_COUNT; i ++) {
@@ -64,7 +64,7 @@ void main() {
 		
 		noisyAdditions += sunraysAddition;
 		
-		#ifdef SUNRAYS_SHOW_ADDITION
+		#if SUNRAYS_SHOW_ADDITION == 1
 			debugOutput += sunraysAddition;
 		#endif
 		
@@ -88,7 +88,7 @@ void main() {
 
 #ifdef VSH
 
-#ifdef SUNRAYS_ENABLED
+#if SUNRAYS_ENABLED == 1
 	#include "/lib/sunrays.glsl"
 #endif
 
@@ -96,7 +96,7 @@ void main() {
 	gl_Position = ftransform();
 	texcoord = gl_MultiTexCoord0.xy;
 	
-	#ifdef SUNRAYS_ENABLED
+	#if SUNRAYS_ENABLED == 1
 		calculateLightCoord(ARG_IN);
 		calculateSunraysAmount(ARG_IN);
 	#endif

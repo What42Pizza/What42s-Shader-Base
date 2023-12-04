@@ -17,7 +17,7 @@ void main() {
 	
 	vec3 color = getSkyColor(ARG_IN);
 	if (starData.a > 0.5) {
-		#ifdef DARKEN_STARS_NEAR_BLOCKLIGHT
+		#if DARKEN_STARS_NEAR_BLOCKLIGHT == 1
 			#include "/import/eyeBrightnessSmooth.glsl"
 			float blockBrightness = eyeBrightnessSmooth.x / 240.0;
 			blockBrightness = min(blockBrightness * 10.0, 1.0);
@@ -30,7 +30,7 @@ void main() {
 	
 	
 	
-	#ifdef BLOOM_ENABLED
+	#if BLOOM_ENABLED == 1
 		vec3 colorForBloom = color;
 		colorForBloom *= sqrt(BLOOM_SKY_BRIGHTNESS);
 	#endif
@@ -44,7 +44,7 @@ void main() {
 	/* DRAWBUFFERS:0 */
 	gl_FragData[0] = vec4(color, 1.0);
 	
-	#ifdef BLOOM_ENABLED
+	#if BLOOM_ENABLED == 1
 		/* DRAWBUFFERS:02 */
 		gl_FragData[1] = vec4(colorForBloom, 1.0);
 	#endif
@@ -59,7 +59,7 @@ void main() {
 
 #ifdef VSH
 
-#ifdef TAA_ENABLED
+#if TAA_ENABLED == 1
 	#include "/lib/taa_jitter.glsl"
 #endif
 
@@ -67,7 +67,7 @@ void main() {
 	
 	gl_Position = ftransform();
 	
-	#ifdef TAA_ENABLED
+	#if TAA_ENABLED == 1
 		doTaaJitter(gl_Position.xy  ARGS_IN);
 	#endif
 	

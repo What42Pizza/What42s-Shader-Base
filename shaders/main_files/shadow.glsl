@@ -18,14 +18,14 @@ void main() {
 
 #ifdef VSH
 
-#ifdef WAVING_ENABLED
+#if WAVING_ENABLED == 1
 	#include "/lib/waving.glsl"
 #endif
 
 void main() {
 	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
 	
-	#ifdef EXCLUDE_FOLIAGE
+	#if EXCLUDE_FOLIAGE == 1
 		#include "/import/mc_Entity.glsl"
 		if (mc_Entity.x >= 2000.0 && mc_Entity.x <= 2999.0) {
 			gl_Position = vec4(10.0);
@@ -33,7 +33,7 @@ void main() {
 		}
 	#endif
 	
-	#ifdef WAVING_ENABLED
+	#if WAVING_ENABLED == 1
 		#include "/import/shadowModelViewInverse.glsl"
 		#include "/import/shadowProjectionInverse.glsl"
 		vec4 position = shadowModelViewInverse * shadowProjectionInverse * ftransform();

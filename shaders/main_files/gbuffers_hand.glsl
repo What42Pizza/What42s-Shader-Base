@@ -37,7 +37,7 @@ void main() {
 	
 	// bloom value
 	
-	#ifdef BLOOM_ENABLED
+	#if BLOOM_ENABLED == 1
 		vec4 colorForBloom = color;
 		colorForBloom.rgb *= sqrt(BLOOM_HAND_BRIGHTNESS);
 	#endif
@@ -46,7 +46,7 @@ void main() {
 	
 	// outputs
 	
-	#ifdef DEBUG_OUTPUT_ENABLED
+	#if DEBUG_OUTPUT_ENABLED == 1
 		color = debugOutput;
 	#endif
 	
@@ -54,18 +54,18 @@ void main() {
 	gl_FragData[0] = color;
 	gl_FragData[1] = vec4(normal, 1.0);
 	
-	#if defined BLOOM_ENABLED && defined RAIN_REFLECTIONS_ENABLED
+	#if BLOOM_ENABLED == 1 && RAIN_REFLECTIONS_ENABLED == 1
 		/* DRAWBUFFERS:0423 */
 		gl_FragData[2] = colorForBloom;
 		gl_FragData[3] = vec4(0.0, 0.0, 0.0, 1.0);
 	#endif
 	
-	#if defined BLOOM_ENABLED && !defined RAIN_REFLECTIONS_ENABLED
+	#if BLOOM_ENABLED == 1 && RAIN_REFLECTIONS_ENABLED == 0
 		/* DRAWBUFFERS:042 */
 		gl_FragData[2] = colorForBloom;
 	#endif
 	
-	#if !defined BLOOM_ENABLED && defined RAIN_REFLECTIONS_ENABLED
+	#if BLOOM_ENABLED == 0 && RAIN_REFLECTIONS_ENABLED == 1
 		/* DRAWBUFFERS:043 */
 		gl_FragData[2] = vec4(0.0, 0.0, 0.0, 1.0);
 	#endif
@@ -80,10 +80,10 @@ void main() {
 
 #ifdef VSH
 
-#ifdef ISOMETRIC_RENDERING_ENABLED
+#if ISOMETRIC_RENDERING_ENABLED == 1
 	#include "/lib/isometric.glsl"
 #endif
-#ifdef TAA_ENABLED
+#if TAA_ENABLED == 1
 	#include "/lib/taa_jitter.glsl"
 #endif
 
@@ -93,14 +93,14 @@ void main() {
 	adjustLmcoord(lmcoord);
 	
 	
-	#ifdef ISOMETRIC_RENDERING_ENABLED
+	#if ISOMETRIC_RENDERING_ENABLED == 1
 		vec3 worldPos = endMat(gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex));
 		gl_Position = projectIsometric(worldPos);
 	#else
 		gl_Position = ftransform();
 	#endif
 	
-	#ifdef TAA_ENABLED
+	#if TAA_ENABLED == 1
 		doTaaJitter(gl_Position.xy  ARGS_IN);
 	#endif
 	

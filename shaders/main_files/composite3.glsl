@@ -12,7 +12,7 @@
 
 #ifdef FSH
 
-#ifdef DOF_ENABLED
+#if DOF_ENABLED == 1
 	#include "/lib/depth_of_field.glsl"
 #endif
 
@@ -26,7 +26,7 @@ void main() {
 	
 	// ======== DEPTH OF FIELD ========
 	
-	#ifdef DOF_ENABLED
+	#if DOF_ENABLED == 1
 		doDOF(color  ARGS_IN);
 	#endif
 	

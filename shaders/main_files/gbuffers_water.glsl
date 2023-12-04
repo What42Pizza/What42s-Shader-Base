@@ -9,10 +9,10 @@
 	
 	varying vec3 normal;
 	
-	#if defined WATER_REFLECTIONS_ENABLED || defined WATER_RESNEL_ADDITION
+	#if WATER_REFLECTIONS_ENABLED == 1 || WATER_FRESNEL_ADDITION == 1
 		varying vec3 viewPos;
 	#endif
-	#if defined WAVING_WATER_NORMALS_ENABLED
+	#if WAVING_WATER_NORMALS_ENABLED == 1
 		varying vec3 worldPos;
 	#endif
 	
@@ -22,7 +22,7 @@
 
 #include "/lib/pre_lighting.glsl"
 #include "/lib/basic_lighting.glsl"
-#ifdef FOG_ENABLED
+#if FOG_ENABLED == 1
 	#include "/lib/fog.glsl"
 #endif
 
@@ -32,10 +32,10 @@
 
 #ifdef FSH
 
-#ifdef WAVING_WATER_NORMALS_ENABLED
+#if WAVING_WATER_NORMALS_ENABLED == 1
 	#include "/lib/simplex_noise.glsl"
 #endif
-#ifdef WATER_REFLECTIONS_ENABLED
+#if WATER_REFLECTIONS_ENABLED == 1
 	#include "/lib/reflections.glsl"
 #endif
 
@@ -45,7 +45,7 @@ void main() {
 		vec4 debugOutput = vec4(0.0, 0.0, 0.0, color.a);
 	#endif
 	
-	#ifdef WAVING_WATER_NORMALS_ENABLED
+	#if WAVING_WATER_NORMALS_ENABLED == 1
 		vec3 normal = normal;
 	#endif
 	
@@ -56,7 +56,7 @@ void main() {
 		
 		
 		// waving water normals
-		#ifdef WAVING_WATER_NORMALS_ENABLED
+		#if WAVING_WATER_NORMALS_ENABLED == 1
 			const float worldPosScale = 2.0;
 			#include "/import/frameTimeCounter.glsl"
 			vec3 randomPoint = abs(simplexNoise3From4(vec4(worldPos / worldPosScale, frameTimeCounter * 0.7)));
@@ -69,11 +69,11 @@ void main() {
 		
 		
 		// fresnel addition
-		#ifdef WATER_RESNEL_ADDITION
+		#if WATER_FRESNEL_ADDITION == 1
 			const vec3 fresnelColor = vec3(1.0, 0.6, 0.5);
 			const float fresnelStrength = 0.3;
 			vec3 fresnelNormal = normal;
-			#ifdef WAVING_WATER_NORMALS_ENABLED
+			#if WAVING_WATER_NORMALS_ENABLED == 1
 				fresnelNormal = normalize(fresnelNormal + normalWavingAddition * 30);
 			#endif
 			vec3 reflectedNormal = reflect(normalize(viewPos), fresnelNormal);
@@ -88,7 +88,7 @@ void main() {
 	
 	
 	// bloom value
-	#ifdef BLOOM_ENABLED
+	#if BLOOM_ENABLED == 1
 		vec4 colorForBloom = color;
 	#endif
 	
@@ -97,7 +97,7 @@ void main() {
 	color.rgb *= glcolor;
 	color.rgb *= getBasicLighting(lmcoord.x, lmcoord.y  ARGS_IN);
 	
-	#ifdef BLOOM_ENABLED
+	#if BLOOM_ENABLED == 1
 		#ifdef OVERWORLD
 			#include "/import/ambientMoonPercent.glsl"
 			float blockLight = lmcoord.x;
@@ -109,8 +109,8 @@ void main() {
 	
 	
 	// fog
-	#ifdef FOG_ENABLED
-		#ifdef BLOOM_ENABLED
+	#if FOG_ENABLED == 1
+		#if BLOOM_ENABLED == 1
 			applyFog(color.rgb, colorForBloom.rgb  ARGS_IN);
 		#else
 			applyFog(color.rgb  ARGS_IN);
@@ -129,18 +129,18 @@ void main() {
 	gl_FragData[0] = color;
 	gl_FragData[1] = vec4(normal, 1.0);
 	
-	#if defined BLOOM_ENABLED && defined WATER_REFLECTIONS_ENABLED
+	#if BLOOM_ENABLED == 1 && WATER_REFLECTIONS_ENABLED == 1
 		/* DRAWBUFFERS:0423 */
 		gl_FragData[2] = colorForBloom;
 		gl_FragData[3] = vec4(WATER_REFLECTION_STRENGTHS, 0.0, 1.0);
 	#endif
 	
-	#if defined BLOOM_ENABLED && !defined WATER_REFLECTIONS_ENABLED
+	#if BLOOM_ENABLED == 1 && WATER_REFLECTIONS_ENABLED == 0
 		/* DRAWBUFFERS:042 */
 		gl_FragData[2] = colorForBloom;
 	#endif
 	
-	#if !defined BLOOM_ENABLED && defined WATER_REFLECTIONS_ENABLED
+	#if BLOOM_ENABLED == 0 && WATER_REFLECTIONS_ENABLED == 1
 		/* DRAWBUFFERS:043 */
 		gl_FragData[2] = vec4(WATER_REFLECTION_STRENGTHS, 0.0, 1.0);
 	#endif
@@ -155,10 +155,10 @@ void main() {
 
 #ifdef VSH
 
-#ifdef ISOMETRIC_RENDERING_ENABLED
+#if ISOMETRIC_RENDERING_ENABLED == 1
 	#include "/lib/isometric.glsl"
 #endif
-#ifdef TAA_ENABLED
+#if TAA_ENABLED == 1
 	#include "/lib/taa_jitter.glsl"
 #endif
 
@@ -174,13 +174,13 @@ void main() {
 	#include "/import/mc_Entity.glsl"
 	blockType = int(mc_Entity.x);
 	
-	#if !defined WAVING_WATER_NORMALS_ENABLED
+	#if WAVING_WATER_NORMALS_ENABLED == 0
 		vec3 worldPos;
 	#endif
 	#include "/import/gbufferModelViewInverse.glsl"
 	worldPos = endMat(gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex));
 	
-	#ifdef PHYSICALLY_WAVING_WATER_ENABLED
+	#if PHYSICALLY_WAVING_WATER_ENABLED == 1
 		if (blockType == 1007) {
 			#include "/import/cameraPosition.glsl"
 			#include "/import/frameTimeCounter.glsl"
@@ -191,40 +191,40 @@ void main() {
 		}
 	#endif
 	
-	#ifdef ISOMETRIC_RENDERING_ENABLED
+	#if ISOMETRIC_RENDERING_ENABLED == 1
 		gl_Position = projectIsometric(worldPos  ARGS_IN);
 	#else
 		#include "/import/gbufferModelView.glsl"
 		gl_Position = gl_ProjectionMatrix * gbufferModelView * startMat(worldPos);
 	#endif
 	
-	#if !defined ISOMETRIC_RENDERING_ENABLED
+	#if ISOMETRIC_RENDERING_ENABLED == 0
 		if (gl_Position.z < -1.5) return; // simple but effective optimization
 	#endif
 	
 	
-	#ifdef TAA_ENABLED
+	#if TAA_ENABLED == 1
 		doTaaJitter(gl_Position.xy  ARGS_IN);
 	#endif
 	
 	
-	#ifdef FOG_ENABLED
+	#if FOG_ENABLED == 1
 		processFogVsh(worldPos  ARGS_IN);
 	#endif
 	
 	
-	#if defined WATER_REFLECTIONS_ENABLED || defined WATER_RESNEL_ADDITION
+	#if WATER_REFLECTIONS_ENABLED == 1 || WATER_FRESNEL_ADDITION == 1
 		viewPos = (gl_ModelViewMatrix * gl_Vertex).xyz;
 	#endif
 	
-	#ifdef WAVING_WATER_NORMALS_ENABLED
+	#if WAVING_WATER_NORMALS_ENABLED == 1
 		#include "/import/cameraPosition.glsl"
 		worldPos += cameraPosition;
 	#endif
 	
 	
 	glcolor = gl_Color.rgb;
-	#ifdef USE_SIMPLE_LIGHT
+	#if USE_SIMPLE_LIGHT == 1
 		if (glcolor.r == glcolor.g && glcolor.g == glcolor.b) {
 			glcolor = vec3(1.0);
 		}

@@ -2,7 +2,7 @@
 
 void doPreLighting(ARG_OUT) {
 	
-	#ifdef HANDHELD_LIGHT_ENABLED
+	#if HANDHELD_LIGHT_ENABLED == 1
 		float depth = estimateDepthVSH();
 		if (depth <= HANDHELD_LIGHT_DISTANCE) {
 			float handLightBrightness = max(1.0 - depth / HANDHELD_LIGHT_DISTANCE, 0.0);

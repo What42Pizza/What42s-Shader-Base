@@ -22,7 +22,10 @@
 
 - **Shadows**
 - **Reflections** (water and rain puddles)
+- **Extensive Styles System**
+- **Colorblindness Correction**
 - **Anti-Aliasing**
+- **Isometric Rendering**
 - **SSAO**
 - **Sunrays**
 - **Bloom**

@@ -19,7 +19,7 @@ float fogify(float x, float w  ARGS_OUT) {
 	return w / (x * x + w);
 }
 
-#ifdef DARKEN_SKY_UNDERGROUND
+#if DARKEN_SKY_UNDERGROUND == 1
 	float getHorizonMultiplier(ARG_OUT) {
 		#ifdef OVERWORLD
 			
@@ -56,7 +56,7 @@ vec3 getSkyColor(ARG_OUT) {
 	float upDot = dot(normalize(pos.xyz), gbufferModelView[1].xyz);
 	vec3 finalSkyColor = mix(alteredSkyColor, fogColor, fogify(max(upDot, 0.0), 0.25  ARGS_IN));
 	
-	#ifdef DARKEN_SKY_UNDERGROUND
+	#if DARKEN_SKY_UNDERGROUND == 1
 		finalSkyColor *= getHorizonMultiplier(ARG_IN);
 	#endif
 	

@@ -28,7 +28,7 @@ float getSunraysAmount(inout uint rng  ARGS_OUT) {
 	
 	float total = 0.0;
 	for (int i = 1; i < SAMPLE_COUNT; i ++) {
-		#ifdef SUNRAYS_FLICKERING_FIX
+		#if SUNRAYS_FLICKERING_FIX == 1
 			if (pos.x < 0.0 || pos.x > 1.0 || pos.y < 0.0 || pos.y > 1.0) {
 				total *= float(SAMPLE_COUNT) / i;
 				break;

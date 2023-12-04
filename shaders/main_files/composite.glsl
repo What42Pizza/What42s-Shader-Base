@@ -13,11 +13,11 @@
 #ifdef FSH
 
 #include "/utils/depth.glsl"
-#ifdef RAIN_REFLECTIONS_ENABLED
+#if RAIN_REFLECTIONS_ENABLED == 1
 	#include "/utils/screen_to_view.glsl"
 	#include "/lib/reflections.glsl"
 #endif
-#ifdef SSAO_ENABLED
+#if SSAO_ENABLED == 1
 	#include "/lib/ssao.glsl"
 #endif
 
@@ -26,7 +26,7 @@ void main() {
 	#ifdef DEBUG_OUTPUT_ENABLED
 		vec3 debugOutput = texelFetch(DEBUG_BUFFER, texelcoord, 0).rgb;
 	#endif
-	#ifdef BLOOM_ENABLED
+	#if BLOOM_ENABLED == 1
 		vec3 bloomColor = texelFetch(BLOOM_BUFFER, texelcoord, 0).rgb;
 	#endif
 	
@@ -34,9 +34,9 @@ void main() {
 	
 	// ======== REFLECTIONS ========
 	
-	#ifdef RAIN_REFLECTIONS_ENABLED
+	#if RAIN_REFLECTIONS_ENABLED == 1
 		vec2 reflectionStengths = texelFetch(REFLECTION_STRENGTH_BUFFER, texelcoord, 0).rg;
-		#ifdef REFLECTIVE_EVERYTHING
+		#if REFLECTIVE_EVERYTHING == 1
 			reflectionStengths = vec2(1.0, 0.0);
 		#endif
 		if (reflectionStengths.r + reflectionStengths.g > 0.01) {
@@ -54,14 +54,14 @@ void main() {
 	
 	// ======== SSAO ========
 	
-	#ifdef SSAO_ENABLED
+	#if SSAO_ENABLED == 1
 		float aoFactor = getAoFactor(ARG_IN);
 		//#if SSAO_APPLICATION_TYPE == 1
 			color *= 1.0 - aoFactor * AO_AMOUNT;
 		//#elif SSAO_APPLICATION_TYPE == 2
 		//	color = pow(color, vec3(1.0 + aoFactor * 1.5));
 		//#endif
-		#ifdef SSAO_SHOW_AMOUNT
+		#if SSAO_SHOW_AMOUNT == 1
 			debugOutput = vec3(1.0 - aoFactor);
 		#endif
 	#endif
@@ -70,7 +70,7 @@ void main() {
 	
 	// ======== BLOOM FILTERING ========
 	
-	#ifdef BLOOM_ENABLED
+	#if BLOOM_ENABLED == 1
 		float bloomMult = getColorLum(bloomColor);
 		bloomMult = (bloomMult - BLOOM_LOW_CUTOFF) / (BLOOM_HIGH_CUTOFF - BLOOM_LOW_CUTOFF);
 		bloomMult = clamp(bloomMult, 0.0, 1.0);
@@ -86,7 +86,7 @@ void main() {
 	/* DRAWBUFFERS:0 */
 	gl_FragData[0] = vec4(color, 1.0);
 	
-	#ifdef BLOOM_ENABLED
+	#if BLOOM_ENABLED == 1
 		/* DRAWBUFFERS:02 */
 		gl_FragData[1] = vec4(bloomColor, 1.0);
 	#endif

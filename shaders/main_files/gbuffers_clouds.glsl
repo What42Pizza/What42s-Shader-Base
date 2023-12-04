@@ -5,7 +5,7 @@
 	varying vec2 texcoord;
 	flat float glcolor;
 	flat vec3 colorMult;
-	#ifdef HIDE_NEARBY_CLOUDS
+	#if HIDE_NEARBY_CLOUDS == 1
 		varying float transparency;
 	#endif
 	
@@ -28,7 +28,7 @@ void main() {
 	#endif
 	
 	
-	#ifndef HIDE_NEARBY_CLOUDS
+	#if HIDE_NEARBY_CLOUDS == 0
 		#define transparency CLOUD_TRANSPARENCY
 	#endif
 	color.a = transparency;
@@ -38,15 +38,15 @@ void main() {
 	
 	
 	// bloom
-	#ifdef BLOOM_ENABLED
+	#if BLOOM_ENABLED == 1
 		vec4 colorForBloom = color;
 		colorForBloom.rgb *= sqrt(BLOOM_CLOUD_BRIGHTNESS);
 	#endif
 	
 	
 	// fog
-	#ifdef FOG_ENABLED
-		#ifdef BLOOM_ENABLED
+	#if FOG_ENABLED == 1
+		#if BLOOM_ENABLED == 1
 			applyFog(color.rgb, colorForBloom.rgb  ARGS_IN);
 		#else
 			applyFog(color.rgb  ARGS_IN);
@@ -64,7 +64,7 @@ void main() {
 	/* DRAWBUFFERS:0 */
 	gl_FragData[0] = color;
 	
-	#if defined BLOOM_ENABLED
+	#if BLOOM_ENABLED == 1
 		/* DRAWBUFFERS:02 */
 		gl_FragData[1] = colorForBloom;
 	#endif
@@ -80,10 +80,10 @@ void main() {
 #include "/utils/getSkyLight.glsl"
 #include "/utils/getAmbientLight.glsl"
 
-#ifdef ISOMETRIC_RENDERING_ENABLED
+#if ISOMETRIC_RENDERING_ENABLED == 1
 	#include "/lib/isometric.glsl"
 #endif
-#ifdef TAA_ENABLED
+#if TAA_ENABLED == 1
 	#include "/lib/taa_jitter.glsl"
 #endif
 
@@ -96,27 +96,27 @@ void main() {
 	//colorMult = mix(vec3(getColorLum(colorMult)), colorMult, vec3(1.0));
 	colorMult = normalize(colorMult);
 	
-	#if defined ISOMETRIC_RENDERING_ENABLED || defined HIDE_NEARBY_CLOUDS
+	#if ISOMETRIC_RENDERING_ENABLED == 1 || HIDE_NEARBY_CLOUDS == 1
 		#include "/import/gbufferModelViewInverse.glsl"
 		vec3 worldPos = endMat(gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex));
 	#endif
 	
-	#ifdef ISOMETRIC_RENDERING_ENABLED
+	#if ISOMETRIC_RENDERING_ENABLED == 1
 		gl_Position = projectIsometric(worldPos  ARGS_IN);
 	#else
 		gl_Position = ftransform();
 	#endif
 	
-	#ifdef TAA_ENABLED
+	#if TAA_ENABLED == 1
 		doTaaJitter(gl_Position.xy  ARGS_IN);
 	#endif
 	
-	#ifdef FOG_ENABLED
+	#if FOG_ENABLED == 1
 		vec4 position = gl_Vertex;
 		processFogVsh(position.xyz  ARGS_IN);
 	#endif
 	
-	#ifdef HIDE_NEARBY_CLOUDS
+	#if HIDE_NEARBY_CLOUDS == 1
 		transparency = CLOUD_TRANSPARENCY * atan(length(worldPos) - 30.0) / PI + 0.5
 	#endif
 	

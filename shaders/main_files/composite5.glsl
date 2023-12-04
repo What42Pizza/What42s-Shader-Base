@@ -58,12 +58,12 @@ void main() {
 	
 	// ======== VIGNETTE ========
 	
-	#if defined VIGNETTE_ENABLED && !defined END
+	#if VIGNETTE_ENABLED == 1 && !defined END
 		#include "/import/eyeBrightnessSmooth.glsl"
 		float vignetteSkyAmount = 1.0 - eyeBrightnessSmooth.y / 240.0;
 		vignetteSkyAmount = vignetteSkyAmount * (VIGNETTE_AMOUNT_UNDERGROUND - VIGNETTE_AMOUNT_SURFACE) + VIGNETTE_AMOUNT_SURFACE;
 		float vignetteAlpha = length(texcoord - 0.5) * VIGNETTE_SCALE * 0.7;
-		#ifdef VIGNETTE_NOISE_ENABLED
+		#if VIGNETTE_NOISE_ENABLED == 1
 			#include "/utils/var_rng.glsl"
 			vignetteAlpha += randomFloat(rng) * 0.02;
 		#endif

@@ -28,7 +28,7 @@ void doColorCorrection(inout vec3 color  ARGS_OUT) {
 		color = acesFitted(color);
 	#endif
 	
-	#ifdef USE_GAMMA_CORRECTION
+	#if USE_GAMMA_CORRECTION == 1
 		color = sqrt(color);
 	#endif
 	
@@ -44,7 +44,7 @@ void doColorCorrection(inout vec3 color  ARGS_OUT) {
 	vibranceAmount *= pow10(1 - vibranceAmount * vibranceAmount) * VIBRANCE * 3.0;
 	color += lumDiff * (saturationAmount + vibranceAmount);
 	
-	#ifdef USE_GAMMA_CORRECTION
+	#if USE_GAMMA_CORRECTION == 1
 		#if GAMMA == 0
 			color = pow2(color);
 		#else
