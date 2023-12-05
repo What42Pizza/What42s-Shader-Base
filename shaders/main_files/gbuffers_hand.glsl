@@ -46,7 +46,7 @@ void main() {
 	
 	// outputs
 	
-	#if DEBUG_OUTPUT_ENABLED == 1
+	#ifdef DEBUG_OUTPUT_ENABLED
 		color = debugOutput;
 	#endif
 	

@@ -16,7 +16,7 @@ profile.UNPLAYABLE=§cUnplayable
 
 
 option.STYLE=Style
-option.STYLE.comment=Changes the default settings. When a setting is set to 'Use Style Value', it uses whatever default is set by this option.
+option.STYLE.comment=Changes the default settings. When a setting is set to 'Use Style Value', it uses whatever default is set by this option. (This does nothing on OptiFine version)
 value.STYLE.0=Vanilla
 value.STYLE.1=Realistic
 
@@ -364,13 +364,11 @@ value.SHADOWS_ENABLED.-1=Use Style Value
 value.SHADOWS_ENABLED.0=Off
 value.SHADOWS_ENABLED.1=On
 
-option.SHADOWMAP_RESOLUTION=Shadow Map Resolution
-option.SHADOWMAP_RESOLUTION.comment=Resolution of the shadow map. Higher is more accurate, lower is more performance\n\n(Performance cost: HIGH)
-value.SHADOWMAP_RESOLUTION.-1=Use Style Value
+option.shadowMapResolution=Shadow Map Resolution
+option.shadowMapResolution.comment=Resolution of the shadow map. Higher is more accurate, lower is more performance\n\n(Performance cost: HIGH)
 
-option.SHADOW_DISTANCE=Shadow Distance
-option.SHADOW_DISTANCE.comment=Maximum distance that shadows are rendered\n\n(Performance cost: Unknown)
-value.SHADOW_DISTANCE.-1=Use Style Value
+option.shadowDistance=Shadow Distance
+option.shadowDistance.comment=Maximum distance that shadows are rendered\n\n(Performance cost: Unknown)
 
 option.SHADOW_DISTORT_ADDITION=Shadow Distortion
 option.SHADOW_DISTORT_ADDITION.comment=This controls the resolution of closer shadows. Lower values make closer shadows sharper, and vice versa\n\n(Performance cost: None)
@@ -390,13 +388,11 @@ value.EXCLUDE_FOLIAGE.-1=Use Style Value
 value.EXCLUDE_FOLIAGE.0=Off
 value.EXCLUDE_FOLIAGE.1=On
 
-option.SUN_PATH_ROTATION=Sun Path Rotation
-option.SUN_PATH_ROTATION.comment=How tilted the sun's rotation is. 0 is vanilla
-value.SUN_PATH_ROTATION.-1=Use Style Value
+option.sunPathRotation=Sun Path Rotation
+option.sunPathRotation.comment=How tilted the sun's rotation is. 0 is vanilla
 
-option.AMBIENT_OCCLUSION_LEVEL=Vanilla AO
-option.AMBIENT_OCCLUSION_LEVEL.comment=How much vanilla Ambient Occlusion should be used
-value.AMBIENT_OCCLUSION_LEVEL.-1=Use Style Value
+option.ambientOcclusionLevel=Vanilla AO
+option.ambientOcclusionLevel.comment=How much vanilla Ambient Occlusion should be used
 
 option.SIDE_SHADING=Side Shading
 option.SIDE_SHADING.comment=How much to increase / decrease the sides of blocks (lower is more accurate, higher is more vanilla-like)\n\n(Performance cost: None)

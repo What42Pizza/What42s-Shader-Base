@@ -9,7 +9,6 @@ Do a round of making sure different settings combinations work
 Prevent TAA on entities?
 Fix fog on water
 Add water caustics?
-Add rust-utils feature: export OptiFine version
 Rename debug settings to have related feature as start of name
 Make only top of water wavy
 Remove texcoord from composites & deferred and replace with gl_FragCoord?

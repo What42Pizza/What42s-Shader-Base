@@ -1,10 +1,11 @@
 <br>
 
-- b1.9.0
+- **b1.9.0** (23/12/04)
   - Added styles system
   - Added styles: Vanilla and Realistic
   - Fixed some light-value-related bugs
   - Started updating documentation (finally)
+  - Updated License
 
 <br>
 <br>

@@ -6,6 +6,7 @@
 		"ivec",
 		"raytracer",
 		"skybasic",
-		"skytextured"
+		"skytextured",
+		"strs"
 	]
 }

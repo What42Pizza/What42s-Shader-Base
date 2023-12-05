@@ -78,8 +78,8 @@ pub fn function(args: &[String]) -> Result<()> {
 
 
 pub fn get_uniform_datas() -> Result<Vec<UniformData>> {
-	let mut output = Vec::with_capacity(ALL_UNIFORMS.len() / 29); // estimate final len
-	for (i, line) in ALL_UNIFORMS.lines().enumerate() {
+	let mut output = Vec::with_capacity(ALL_UNIFORMS_PATH.len() / 29); // estimate final len
+	for (i, line) in ALL_UNIFORMS_PATH.lines().enumerate() {
 		output.push(str_to_uniform_data(line, i)?);
 	}
 	Ok(output)

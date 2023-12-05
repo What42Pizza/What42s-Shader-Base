@@ -1,14 +1,17 @@
 // started: 23/11/30
+// last updated: 23/12/04
 
 
 
 #![allow(unused)]
 #![warn(unused_must_use)]
 
+#![feature(iter_advance_by)]
+
 
 
 use crate::prelude::*;
-use std::{env, process::Command, fs::File};
+use std::env;
 
 
 
@@ -63,7 +66,11 @@ pub const EXPORT_FILES: &[FileCopyData] = &[
 
 
 
-pub const ALL_UNIFORMS: &str = include_str!("../../all_uniforms.txt");
+pub const ALL_UNIFORMS_PATH: &str = include_str!("../../all_uniforms.txt");
+
+
+
+pub const DEFAULT_STYLE_PATH: &str = "style_vanilla.glsl";
 
 
 

@@ -16,6 +16,22 @@
 
 <br>
 
+## Custom Tooling:
+
+Because of the extensive and tedious usage of `#define`s, this repo contains a rust program (known as rust-utils) that automates many tasks. Using it isn't necessary for developing this shader, but you'll probably still want to use it. There's a (very simple) readme in the /rust-utils folder which can get you stated.
+
+Here's a list of the commands and why they exist:
+
+- **'export':** This takes the shader code, license, changelog, and shader readme and packages it into (broken?) zip files. It also automatically creates the OptiFine version, where it splices 'style_vanilla.glsl' with 'define_settings.glsl' (plus other fixes) to remove the styles feature, which causes the massive log file and horrendous loading time on OptiFine.
+- **'build uniform imports':** This generates all the files in the /shaders/import folder, using the data in 'all_uniforms.txt'. See 'Uniforms System' below for more details on this
+- **build world files':** This generates all the files in the /shaders/world_ folders, using data that is hard-coded into src/main.rs. Even if you don't know Rust, you should still be able to edit the values if needed
+
+As always, you can edit your repo's rust-utils to add more commands and/or tweak existing commands. If you find something you consider a bug, you can contact me and I'll try to fix it
+
+<br>
+<br>
+<br>
+
 ## Uniforms System:
 
 This shader uses a complex preprocessor system to define which uniforms are included. You only need to know how to use it, but it's also pretty interesting how it works.
@@ -53,7 +69,7 @@ In the settings menu, you can define which base style you use than override any 
 
 ### Basics:
 
-In "/shaders", you'll find "settings.glsl", "shaders.properties", "style_vanilla.glsl", "style_realistic.glsl", and so on. The "settings.glsl" file holds the initial #define-s, which are the ones modified by user settings. The "shaders.properties" file holds a ton of stuff, look elsewhere for info. The "style_..." files hold the default setting values for that style.
+In "/shaders", you'll find "settings.glsl", "define_settings.glsl", "shaders.properties", "style_vanilla.glsl", "style_realistic.glsl", and so on. The "settings.glsl" file generally controls the defining of settings. The "define_settings.glsl" file holds the `#define`s which are modified by user settings. The "shaders.properties" file holds a ton of stuff, look elsewhere for info. The "style_..." files hold the default setting values for that style.
 
 You should be able to figure this out yourself, but I'll still give some quick overviews
 
@@ -86,6 +102,23 @@ You should be able to figure this out yourself, but I'll still give some quick o
 ### Important Notes:
 
 - "On/Off" values are defined to be either -1 (use style's value), 0 (off), or 1 (on)
+
+<br>
+<br>
+<br>
+
+## OptiFine Support:
+
+With the release of b1.9.0, OptiFine is a second-class platform. I'll make sure it still works with OptiFine on 1.12.2, but Iris 1.19.4 is where I put most of my effort. The default shader code for Iris does still work on OptiFine without any modification, but the endless list of errors that OptiFine generates makes it almost unusable. The OptiFine version is generated using rust-utils, which can automatically remove the styles functionality.
+
+If you want to develop for OptiFine first, you have 2 options:
+
+- 1: Clone this repo into the shaders folder and deal with the initial loading time
+- - Pro: you can work on both versions at once, while having OptiFine be first-class
+- - Con: you have to deal with long initial loading times and huge log files
+- 2: Replace this repo's /shaders folder with the /shaders folder from the latest OptiFine export
+- - Pro: development is greatly simplified
+- - Con: you can no longer support multiple styles
 
 <br>
 <br>
@@ -177,14 +210,6 @@ Note: 'noisy additions' buffer is where things like bloom, sunrays, etc (anythin
 - **3: Probably go back to step 1**
 - **4: Mess around with the formulas to simplify and optimize without compromising quality**
 - **5: Figure out what to do next**
-
-<br>
-<br>
-<br>
-
-### Rust-Utils:
-
-You may have noticed the 'rust-utils' folder, and that contains a program that automates some simple but tedious tasks. It's not necessary for developing this shader, but you might end up wanting to use it. There's a separate readme in the rust-utils folder that can get you started. You can also edit the rust code yourself to add more features if you want
 
 <br>
 <br>
