@@ -19,6 +19,7 @@ option.STYLE=Style
 option.STYLE.comment=Changes the default settings. When a setting is set to 'Use Style Value', it uses whatever default is set by this option. (This does nothing on OptiFine version)
 value.STYLE.0=Vanilla
 value.STYLE.1=Realistic
+value.STYLE.2=Fantasy
 
 
 
@@ -41,17 +42,24 @@ value.DARKEN_SKY_UNDERGROUND.-1=Use Style Value
 value.DARKEN_SKY_UNDERGROUND.0=Off
 value.DARKEN_SKY_UNDERGROUND.1=On
 
+option.STARS_BRIGHTNESS=Stars Brightness
+value.STARS_BRIGHTNESS.-1=Use Style Value
+
 option.DARKEN_STARS_NEAR_BLOCKLIGHT=Darken Stars Near Blocklight
 option.DARKEN_STARS_NEAR_BLOCKLIGHT.comment=Simulates light pollution by darkening stars when you're near blocklight
 value.DARKEN_STARS_NEAR_BLOCKLIGHT.-1=Use Style Value
 value.DARKEN_STARS_NEAR_BLOCKLIGHT.0=Off
 value.DARKEN_STARS_NEAR_BLOCKLIGHT.1=On
 
-option.CLOUD_TRANSPARENCY=Cloud Transparency
-value.CLOUD_TRANSPARENCY.-1=Use Style Value
+option.DARKENED_STARS_BRIGHTNESS=Darkened Stars Brightness
+option.DARKENED_STARS_BRIGHTNESS.comment=Brightness of stars when darkened by blocklight. Only takes effect when 'Darken Stars Near Blocklight' is enabled
+value.DARKENED_STARS_BRIGHTNESS.-1=Use Style Value
 
 option.RAIN_TRANSPARENCY=Rain Transparency
 value.RAIN_TRANSPARENCY.-1=Use Style Value
+
+option.CLOUD_TRANSPARENCY=Cloud Transparency
+value.CLOUD_TRANSPARENCY.-1=Use Style Value
 
 option.HIDE_NEARBY_CLOUDS=Hide Nearby Clouds
 option.HIDE_NEARBY_CLOUDS.comment=Increases transparency of clouds when you're near / inside them. Has slight performance impact
@@ -1013,6 +1021,9 @@ option.WATER_FRESNEL_ADDITION.comment=Makes the water lighter / darker depending
 value.WATER_FRESNEL_ADDITION.-1=Use Style Value
 value.WATER_FRESNEL_ADDITION.0=Off
 value.WATER_FRESNEL_ADDITION.1=On
+
+option.WATER_TRANSPARENCY=Water Transparency
+value.WATER_TRANSPARENCY.-1=Use Style Value
 
 
 

@@ -84,6 +84,8 @@ void main() {
 		#endif
 		
 		
+		color.a = WATER_TRANSPARENCY;
+		
 	}
 	
 	

@@ -12,6 +12,7 @@ Add water caustics?
 Rename debug settings to have related feature as start of name
 Make only top of water wavy
 Remove texcoord from composites & deferred and replace with gl_FragCoord?
+Go through settings in shaders.properties and make sure all instances of settings are listed in the same order
 Add reflections to normal glass too?
 Add documentation for isometrics
 Increase waviness of plant tops

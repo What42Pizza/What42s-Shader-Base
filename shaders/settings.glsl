@@ -41,6 +41,9 @@ const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8
 #if STYLE == 1
 	#include "/style_realistic.glsl"
 #endif
+#if STYLE == 2
+	#include "/style_fantasy.glsl"
+#endif
 
 
 

@@ -1,11 +1,13 @@
 <br>
 
 - **b1.9.0** (23/12/04)
-  - Added styles system
+  - Added 'styles' system, allowing you to choose a base style and edit any values on top of it
   - Added styles: Vanilla and Realistic
   - Fixed some light-value-related bugs
-  - Started updating documentation (finally)
+  - Added settings: 'Stars Brightness', 'Darkened Stars Brightness', and 'Water Transparency'
+  - Started updating documentation again (finally)
   - Updated License
+  - Many small tweaks and fixes
 
 <br>
 <br>

@@ -17,14 +17,12 @@ void main() {
 	
 	vec3 color = getSkyColor(ARG_IN);
 	if (starData.a > 0.5) {
+		color = starData.rgb;
 		#if DARKEN_STARS_NEAR_BLOCKLIGHT == 1
 			#include "/import/eyeBrightnessSmooth.glsl"
 			float blockBrightness = eyeBrightnessSmooth.x / 240.0;
-			blockBrightness = min(blockBrightness * 10.0, 1.0);
-			blockBrightness = mix(1.3, 0.2, blockBrightness);
-			color = mix(color, starData.rgb, blockBrightness);
-		#else
-			color = starData.rgb;
+			blockBrightness = min(blockBrightness * 8.0, 1.0);
+			color *= blockBrightness * (DARKENED_STARS_BRIGHTNESS - 1.0) + 1.0;
 		#endif
 	}
 	
@@ -71,7 +69,8 @@ void main() {
 		doTaaJitter(gl_Position.xy  ARGS_IN);
 	#endif
 	
-	starData = vec4(gl_Color.rgb, float(gl_Color.r == gl_Color.g && gl_Color.g == gl_Color.b && gl_Color.r > 0.0));
+	bool isStar = gl_Color.r == gl_Color.g && gl_Color.g == gl_Color.b && gl_Color.r > 0.0;
+	starData = vec4(gl_Color.rgb * STARS_BRIGHTNESS, float(isStar));
 	
 }
 
