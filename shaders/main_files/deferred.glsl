@@ -42,6 +42,12 @@ void main() {
 		#else
 			const float FOG_END = 0.85;
 		#endif
+		#include "/import/gbufferModelViewInverse.glsl"
+		#if CORRECTED_LIGHTING_FOG == 1
+			// convert to playerPos so that FOG_HEIGHT_SCALE can be applied
+			viewPos = (gbufferModelViewInverse * startMat(viewPos)).xyz;
+			viewPos.y /= FOG_HEIGHT_SCALE;
+		#endif
 		color *= 1.0 + skyColor * skyBrightness * (1.0 - 0.6 * getColorLum(color)) * smoothstep(FOG_END, FOG_END - 0.1, length(viewPos) * invFar);
 	}
 	

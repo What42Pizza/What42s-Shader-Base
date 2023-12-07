@@ -83,10 +83,10 @@ value.FOG_ENABLED.0=Off
 value.FOG_ENABLED.1=On
 
 option.ENTITY_FOG_ENABLED=Entity Fog Enabled
-option.ENTITY_FOG_ENABLE.comment=Enabled fog on entities. This usually isn't required because entities stop rendering before fog can effect them
-value.ENTITY_FOG_ENABLE.-1=Use Style Value
-value.ENTITY_FOG_ENABLE.0=Off
-value.ENTITY_FOG_ENABLE.1=On
+option.ENTITY_FOG_ENABLED.comment=Enabled fog on entities. This usually isn't required because entities stop rendering before fog can effect them
+value.ENTITY_FOG_ENABLED.-1=Use Style Value
+value.ENTITY_FOG_ENABLED.0=Off
+value.ENTITY_FOG_ENABLED.1=On
 
 option.FOG_HEIGHT_SCALE=Fog Height Scale
 option.FOG_HEIGHT_SCALE.comment=How much further you can see upwards vs forwards
@@ -99,6 +99,12 @@ value.FOG_EXTRA_CLOUDS_DISTANCE.-1=Use Style Value
 option.FOG_CURVE=Fog Curve
 option.FOG_CURVE.comment= How quickly fog drops off from end to start (high values mean faster drop off)
 value.FOG_CURVE.-1=Use Style Value
+
+option.APPLY_FOG_TO_REFLECTIONS=Apply Fog To Reflections
+option.APPLY_FOG_TO_REFLECTIONS.comment=Fixes reflections being applied even when the surface is in fog
+value.APPLY_FOG_TO_REFLECTIONS.-1=Use Style Value
+value.APPLY_FOG_TO_REFLECTIONS.0=Off
+value.APPLY_FOG_TO_REFLECTIONS.1=On
 
 
 
@@ -420,6 +426,12 @@ option.BLOCKLIGHT_FLICKERING_ENABLED.comment=Makes block light flicker slightly
 value.BLOCKLIGHT_FLICKERING_ENABLED.-1=Use Style Value
 value.BLOCKLIGHT_FLICKERING_ENABLED.0=Off
 value.BLOCKLIGHT_FLICKERING_ENABLED.1=On
+
+option.CORRECTED_LIGHTING_FOG=Use Corrected Lighting Fog
+option.CORRECTED_LIGHTING_FOG.comment=Uses a slightly more complicated fog distance calculation
+value.CORRECTED_LIGHTING_FOG.-1=Use Style Value
+value.CORRECTED_LIGHTING_FOG.0=Off
+value.CORRECTED_LIGHTING_FOG.1=On
 
 
 

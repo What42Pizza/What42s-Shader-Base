@@ -50,14 +50,18 @@
 #endif
 #if FOG_CURVE == -1
 #undef FOG_CURVE
-										#define FOG_CURVE 2
+										#define FOG_CURVE 1
+#endif
+#if APPLY_FOG_TO_REFLECTIONS == -1
+#undef APPLY_FOG_TO_REFLECTIONS
+										#define APPLY_FOG_TO_REFLECTIONS 0
 #endif
 
 
 
 #if FOG_AIR_START == -1
 #undef FOG_AIR_START
-										#define FOG_AIR_START 0.3
+										#define FOG_AIR_START 0.8
 #endif
 #if FOG_AIR_END == -1
 #undef FOG_AIR_END
@@ -85,11 +89,11 @@
 #endif
 #if FOG_WATER_END == -1
 #undef FOG_WATER_END
-										#define FOG_WATER_END 60
+										#define FOG_WATER_END 150
 #endif
 #if FOG_WATER_MIN == -1
 #undef FOG_WATER_MIN
-										#define FOG_WATER_MIN 0.2
+										#define FOG_WATER_MIN 0.4
 #endif
 #if FOG_LAVA_START == -1
 #undef FOG_LAVA_START
@@ -257,7 +261,7 @@
 #endif
 #if SKYLIGHT_SUNRISE_GREEN == -1
 #undef SKYLIGHT_SUNRISE_GREEN
-										#define SKYLIGHT_SUNRISE_GREEN 0.6
+										#define SKYLIGHT_SUNRISE_GREEN 0.8
 #endif
 #if SKYLIGHT_SUNRISE_BLUE == -1
 #undef SKYLIGHT_SUNRISE_BLUE
@@ -265,7 +269,7 @@
 #endif
 #if SKYLIGHT_SUNRISE_BRIGHTNESS == -1
 #undef SKYLIGHT_SUNRISE_BRIGHTNESS
-										#define SKYLIGHT_SUNRISE_BRIGHTNESS 4.0
+										#define SKYLIGHT_SUNRISE_BRIGHTNESS 5.0
 #endif
 
 
@@ -306,7 +310,7 @@
 #endif
 #if SKYLIGHT_SUNSET_BRIGHTNESS == -1
 #undef SKYLIGHT_SUNSET_BRIGHTNESS
-										#define SKYLIGHT_SUNSET_BRIGHTNESS 4.0
+										#define SKYLIGHT_SUNSET_BRIGHTNESS 5.0
 #endif
 
 
@@ -345,7 +349,7 @@
 #endif
 #if EXCLUDE_FOLIAGE == -1
 #undef EXCLUDE_FOLIAGE
-										#define EXCLUDE_FOLIAGE 1
+										#define EXCLUDE_FOLIAGE 0
 #endif
 #if SHADOW_FILTERING == -1
 #undef SHADOW_FILTERING
@@ -370,6 +374,10 @@
 #if BLOCKLIGHT_FLICKERING_ENABLED == -1
 #undef BLOCKLIGHT_FLICKERING_ENABLED
 										#define BLOCKLIGHT_FLICKERING_ENABLED 1
+#endif
+#if CORRECTED_LIGHTING_FOG == -1
+#undef CORRECTED_LIGHTING_FOG
+										#define CORRECTED_LIGHTING_FOG 1
 #endif
 
 
@@ -407,7 +415,7 @@
 #endif
 #if WATER_REFLECTION_AMOUNT == -1
 #undef WATER_REFLECTION_AMOUNT
-										#define WATER_REFLECTION_AMOUNT 0.9
+										#define WATER_REFLECTION_AMOUNT 0.7
 #endif
 #if WATER_REFLECTION_FRESNEL == -1
 #undef WATER_REFLECTION_FRESNEL
@@ -571,11 +579,11 @@
 #endif
 #if SUNRAYS_AMOUNT_SUNRISE == -1
 #undef SUNRAYS_AMOUNT_SUNRISE
-										#define SUNRAYS_AMOUNT_SUNRISE 0.7
+										#define SUNRAYS_AMOUNT_SUNRISE 0.4
 #endif
 #if SUNRAYS_AMOUNT_SUNSET == -1
 #undef SUNRAYS_AMOUNT_SUNSET
-										#define SUNRAYS_AMOUNT_SUNSET 0.7
+										#define SUNRAYS_AMOUNT_SUNSET 0.4
 #endif
 #if SUNRAYS_SUN_RED == -1
 #undef SUNRAYS_SUN_RED
@@ -609,11 +617,11 @@
 
 #if DOF_ENABLED == -1
 #undef DOF_ENABLED
-										#define DOF_ENABLED 0
+										#define DOF_ENABLED 1
 #endif
 #if DOF_NEAR_BLUR_START == -1
 #undef DOF_NEAR_BLUR_START
-										#define DOF_NEAR_BLUR_START 0.03
+										#define DOF_NEAR_BLUR_START 0.01
 #endif
 #if DOF_NEAR_BLUR_SLOPE == -1
 #undef DOF_NEAR_BLUR_SLOPE
@@ -629,19 +637,19 @@
 #endif
 #if DOF_FAR_BLUR_START == -1
 #undef DOF_FAR_BLUR_START
-										#define DOF_FAR_BLUR_START 0.1
+										#define DOF_FAR_BLUR_START 0.01
 #endif
 #if DOF_FAR_BLUR_SLOPE == -1
 #undef DOF_FAR_BLUR_SLOPE
-										#define DOF_FAR_BLUR_SLOPE 0.3
+										#define DOF_FAR_BLUR_SLOPE 0.15
 #endif
 #if DOF_FAR_BLUR_STRENGTH == -1
 #undef DOF_FAR_BLUR_STRENGTH
-										#define DOF_FAR_BLUR_STRENGTH 0.9
+										#define DOF_FAR_BLUR_STRENGTH 0.6
 #endif
 #if DOF_FAR_BLUR_SIZE == -1
 #undef DOF_FAR_BLUR_SIZE
-										#define DOF_FAR_BLUR_SIZE 2.0
+										#define DOF_FAR_BLUR_SIZE 5.0
 #endif
 #if DOF_SLOPE_TYPE == -1
 #undef DOF_SLOPE_TYPE
@@ -895,7 +903,7 @@
 #endif
 #if WATER_TRANSPARENCY == -1
 #undef WATER_TRANSPARENCY
-										#define WATER_TRANSPARENCY 0.8
+										#define WATER_TRANSPARENCY 0.9
 #endif
 
 

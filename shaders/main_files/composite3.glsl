@@ -27,7 +27,7 @@ void main() {
 	// ======== DEPTH OF FIELD ========
 	
 	#if DOF_ENABLED == 1
-		doDOF(color  ARGS_IN);
+		doDOF(color  DEBUG_ARGS_IN  ARGS_IN);
 	#endif
 	
 	

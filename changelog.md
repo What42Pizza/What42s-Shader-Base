@@ -4,7 +4,12 @@
   - Added 'styles' system, allowing you to choose a base style and edit any values on top of it
   - Added styles: Vanilla and Realistic
   - Fixed some light-value-related bugs
-  - Added settings: 'Stars Brightness', 'Darkened Stars Brightness', and 'Water Transparency'
+  - Added settings:
+  - - Stars Brightness
+  - - Darkened Stars Brightness
+  - - Water Transparency
+  - - Use Corrected Lighting Fog
+  - - Apply Fog To Reflections
   - Started updating documentation again (finally)
   - Updated License
   - Many small tweaks and fixes

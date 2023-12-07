@@ -4,7 +4,7 @@
 #endif
 #if STARS_BRIGHTNESS == -1
 #undef STARS_BRIGHTNESS
-										#define STARS_BRIGHTNESS 1.5
+										#define STARS_BRIGHTNESS 2.5
 #endif
 #if DARKEN_STARS_NEAR_BLOCKLIGHT == -1
 #undef DARKEN_STARS_NEAR_BLOCKLIGHT
@@ -51,6 +51,10 @@
 #if FOG_CURVE == -1
 #undef FOG_CURVE
 										#define FOG_CURVE 3
+#endif
+#if APPLY_FOG_TO_REFLECTIONS == -1
+#undef APPLY_FOG_TO_REFLECTIONS
+										#define APPLY_FOG_TO_REFLECTIONS 1
 #endif
 
 
@@ -370,6 +374,10 @@
 #if BLOCKLIGHT_FLICKERING_ENABLED == -1
 #undef BLOCKLIGHT_FLICKERING_ENABLED
 										#define BLOCKLIGHT_FLICKERING_ENABLED 1
+#endif
+#if CORRECTED_LIGHTING_FOG == -1
+#undef CORRECTED_LIGHTING_FOG
+										#define CORRECTED_LIGHTING_FOG 1
 #endif
 
 

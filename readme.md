@@ -8,7 +8,7 @@
 
 <br>
 
-## Note: This has only been tested with Optifine 1.12.2 and Iris 1.19.4 & 1.20.2. I hope to support both Optifine and Iris for all versions >= 1.12, but I need more time to test and bugfix
+## Note: With the release of b1.9, OptiFine is now a second-class platform. It will still be supported, but my main focus will be Iris 1.19+
 
 <br>
 <br>

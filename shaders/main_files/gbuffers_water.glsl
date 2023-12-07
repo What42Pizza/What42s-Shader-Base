@@ -121,6 +121,21 @@ void main() {
 	
 	
 	
+	// reflection strength
+	#if FOG_ENABLED == 1 && APPLY_FOG_TO_REFLECTIONS == 1
+		#include "/import/invFar.glsl"
+		#if MC_VERSION >= 11300
+			float fogDistMult = invFar;
+		#else
+			float fogDistMult = invFar * 0.9;
+		#endif
+		#define REFLECTION_STRENGTHS (WATER_REFLECTION_STRENGTHS * percentThroughClamped(fogDistance * fogDistMult, 0.8, 0.7))
+	#else
+		#define REFLECTION_STRENGTHS WATER_REFLECTION_STRENGTHS
+	#endif
+	
+	
+	
 	// outputs
 	
 	#ifdef DEBUG_OUTPUT_ENABLED
@@ -134,7 +149,7 @@ void main() {
 	#if BLOOM_ENABLED == 1 && WATER_REFLECTIONS_ENABLED == 1
 		/* DRAWBUFFERS:0423 */
 		gl_FragData[2] = colorForBloom;
-		gl_FragData[3] = vec4(WATER_REFLECTION_STRENGTHS, 0.0, 1.0);
+		gl_FragData[3] = vec4(REFLECTION_STRENGTHS, 0.0, 1.0);
 	#endif
 	
 	#if BLOOM_ENABLED == 1 && WATER_REFLECTIONS_ENABLED == 0
@@ -144,7 +159,7 @@ void main() {
 	
 	#if BLOOM_ENABLED == 0 && WATER_REFLECTIONS_ENABLED == 1
 		/* DRAWBUFFERS:043 */
-		gl_FragData[2] = vec4(WATER_REFLECTION_STRENGTHS, 0.0, 1.0);
+		gl_FragData[2] = vec4(REFLECTION_STRENGTHS, 0.0, 1.0);
 	#endif
 	
 }
