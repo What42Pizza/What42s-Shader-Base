@@ -583,10 +583,6 @@ option.BLOOM_QUALITY=Bloom Quality
 option.BLOOM_QUALITY.comment=Controls the number of samples for bloom level
 value.BLOOM_QUALITY.-1=Use Style Value
 
-option.BLOOM_LEVELS=Bloom Levels
-option.BLOOM_LEVELS.comment=Controls the number of layers of bloom
-value.BLOOM_LEVELS.-1=Use Style Value
-
 option.BLOOM_LOW_CUTOFF=Bloom Low Cutoff
 option.BLOOM_LOW_CUTOFF.comment=The value at which all colors are treated as equally dark
 value.BLOOM_LOW_CUTOFF.-1=Use Style Value

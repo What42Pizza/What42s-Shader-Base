@@ -93,7 +93,6 @@ void main() {
 	#endif
 	
 	
-	
 	// outputs
 	
 	#ifdef DEBUG_OUTPUT_ENABLED
@@ -144,6 +143,7 @@ void main() {
 	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
 	lmcoord  = (gl_TextureMatrix[1] * gl_MultiTexCoord1).xy;
 	adjustLmcoord(lmcoord);
+	
 	
 	#if RAIN_REFLECTIONS_ENABLED == 0
 		vec3 worldPos;

@@ -519,10 +519,6 @@
 #undef BLOOM_SIZE
 										#define BLOOM_SIZE 1.0
 #endif
-#if BLOOM_LEVELS == -1
-#undef BLOOM_LEVELS
-										#define BLOOM_LEVELS 3
-#endif
 #if BLOOM_NETHER_MULT == -1
 #undef BLOOM_NETHER_MULT
 										#define BLOOM_NETHER_MULT 2.0

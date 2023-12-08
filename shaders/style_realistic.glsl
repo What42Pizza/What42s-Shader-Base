@@ -501,7 +501,7 @@
 #endif
 #if BLOOM_QUALITY == -1
 #undef BLOOM_QUALITY
-										#define BLOOM_QUALITY 4
+										#define BLOOM_QUALITY 3
 #endif
 #if BLOOM_COMPUTE_COUNT == -1
 #undef BLOOM_COMPUTE_COUNT
@@ -518,10 +518,6 @@
 #if BLOOM_SIZE == -1
 #undef BLOOM_SIZE
 										#define BLOOM_SIZE 2.0
-#endif
-#if BLOOM_LEVELS == -1
-#undef BLOOM_LEVELS
-										#define BLOOM_LEVELS 4
 #endif
 #if BLOOM_NETHER_MULT == -1
 #undef BLOOM_NETHER_MULT
@@ -629,7 +625,7 @@
 #endif
 #if DOF_NEAR_BLUR_STRENGTH == -1
 #undef DOF_NEAR_BLUR_STRENGTH
-										#define DOF_NEAR_BLUR_STRENGTH 0.8
+										#define DOF_NEAR_BLUR_STRENGTH 0.6
 #endif
 #if DOF_NEAR_BLUR_SIZE == -1
 #undef DOF_NEAR_BLUR_SIZE
@@ -645,7 +641,7 @@
 #endif
 #if DOF_FAR_BLUR_STRENGTH == -1
 #undef DOF_FAR_BLUR_STRENGTH
-										#define DOF_FAR_BLUR_STRENGTH 0.6
+										#define DOF_FAR_BLUR_STRENGTH 0.4
 #endif
 #if DOF_FAR_BLUR_SIZE == -1
 #undef DOF_FAR_BLUR_SIZE

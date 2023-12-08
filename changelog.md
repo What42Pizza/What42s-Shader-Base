@@ -10,6 +10,7 @@
   - - Water Transparency
   - - Use Corrected Lighting Fog
   - - Apply Fog To Reflections
+  - Improved bloom performance
   - Started updating documentation again (finally)
   - Updated License
   - Many small tweaks and fixes
