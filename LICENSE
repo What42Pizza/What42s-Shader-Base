@@ -1,5 +1,5 @@
-What42's Shader License 1.5
-Effective Date: 2023-12-05
+What42's Shader License 1.6
+Effective Date: 2023-12-09
 
 By using the contents packaged with this license in any way, you agree to the terms and conditions listed in this file.
 
@@ -25,9 +25,10 @@ You cannot:
 - Create shortened / indirect links to this shader (without any exceptions)
 
 Notes:
-- Making changes to the code isn't required for publishing altered versions of this shader; a significant enough change to the default settings is enough to count
+- Making changes to the code isn't required for publishing altered versions of this shader; a significant enough change to the settings is enough to count (look at 2.4.3 / 2.5.3)
 - Modpacks that include this shader can also include custom shaderpack settings
 - The rules in the license of a fork don't apply to the creators and/or owners of said fork, though the licenses of the base shader(s) do still take effect.
+- When you create a fork of this shader, you only have to follow the license of the specific version that you forked
 - This license can apply to distributions of this shader (downloaded from curseforge, modrinth, etc) and apply separately to a download of this shader's repo. That means the images, Rust code, and everything else in this shader's full repo is protected by this license.
 
 No one person holds the copyright for all of the contents of this shader. Full credits can be found in the file 'readme.md'.
@@ -75,7 +76,7 @@ The creator of What42's Shader Base goes by "What42" / "What42Pizza" online, and
 
 1.11. "What42" refers to the creator of the Shaderpack "What42's Shader Base", which can be found at "https://github.com/What42Pizza/What42s-Shader-Base".
 
-1.12. "Every Style", in the context of a Shaderpack, refers to every visual style that the creator of said Shaderpack has intentionally included in said Shaderpack.
+1.12. "Every Style", in the context of a Shaderpack, refers to the general visual presentation created by every visual style that the creator of said Shaderpack has intentionally included in said Shaderpack.
 
 
 
@@ -95,21 +96,22 @@ The creator of What42's Shader Base goes by "What42" / "What42Pizza" online, and
 	2.4.1. Every person whose Code is included in the Shaderpack is clearly credited both everywhere that the Shaderpack is distributed and in a file labeled 'readme.md' that is included in the Shaderpack.
 	2.4.2. The name of the Shaderpack is substantially different from any name that is already used by other Shaderpacks.
 	2.4.3. Every Style of the Shaderpack looks substantially differed from Every Style of This Shaderpack in most cases of Minecraft gameplay.
-	2.4.4. The Shaderpack has an apparent, substantial amount of effect put into it by the creator(s) of said Shaderpacks.
+	2.4.4. The Shaderpack has an apparent and substantial amount of effect put into it by the creator(s) of said Shaderpacks.
 	2.4.5. The Shaderpack is not monetized in any way, unless permission to do so is granted by every person whose Code is included in the Shaderpack.
 	2.4.6. The Shaderpack includes an exact copy of a license that What42 has deemed suitable for the Shaderpack (which automatically includes This License).
 	2.4.7. The license in the Shaderpack is apparent every time the contents of the Shaderpack are viewed.
 
-2.5. (Concerning public modification) You are allowed to use Small Portions of This Shaderpack in the creation, modification, and/or updating of Shaderpacks and distribute said Shaderpacks if and only if the following conditions are met for each of said Shaderpacks:
+2.5. (Concerning Shaderpack code reuse) You are allowed to use Small Portions of This Shaderpack in the creation, modification, and/or updating of Shaderpacks and distribute said Shaderpacks if and only if the following conditions are met for each of said Shaderpacks:
 	2.5.1. Every person whose Code is included in the Shaderpack is clearly credited both everywhere that the Shaderpack is distributed and in a file labeled 'readme.md' that is included in the Shaderpack.
 	2.5.2. The name of the Shaderpack is substantially different from any name that is already used by other Shaderpacks.
 	2.5.3. Every Style of the Shaderpack looks substantially differed from Every Style of This Shaderpack in most cases of Minecraft gameplay.
-	2.5.4. The Shaderpack has an apparent, substantial amount of effect put into it by the creator(s) of said Shaderpacks.
+	2.5.4. The Shaderpack has an apparent and substantial amount of effect put into it by the creator(s) of said Shaderpacks.
 	2.5.5. The Shaderpack is not monetized in any way, unless permission to do so is granted by every person whose Code is included in the Shaderpack.
 
 2.6. (Concerning other code reuse) You are allowed to use Small Portions of This Shaderpack in the creation, modification, and/or updating of non-Shaderpack projects and distribute said projects if and only if the following conditions are met for each of said projects:
 	2.6.1. This Shaderpack and all its Base Shaderpacks are clearly credited everywhere that the project is distributed.
 	2.6.2. The project is not monetized in any way, unless permission to do so is granted by every person whose Code is included in the project.
+	2.6.3. The project has an apparent and substantial amount of effect put into it by the creator(s) of said projects.
 
 2.7. You are allowed to use parts or all of the contents of This License (including, but not limited to: ideas, wording, style, etc.) in the creation, modification, and/or updating of other licenses without any restrictions.
 
@@ -123,7 +125,7 @@ The creator of What42's Shader Base goes by "What42" / "What42Pizza" online, and
 
 3.3. You are not allowed to issue licenses that override This License unless permission to do so is granted by What42.
 
-3.4. You are not allowed to redistribute any of the contents of This Shaderpack unless said action is allowed by section 2.4, section 2.5, or section 2.6.
+3.4. You are not allowed to redistribute any or all of This Shaderpack and/or its contents unless said action is allowed by section 2.4, section 2.5, or section 2.6.
 
 3.5. You are not allowed to create links that indirectly lead to a distributor of This Shaderpack.
 
