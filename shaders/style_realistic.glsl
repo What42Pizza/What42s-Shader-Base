@@ -16,7 +16,7 @@
 #endif
 #if RAIN_TRANSPARENCY == -1
 #undef RAIN_TRANSPARENCY
-										#define RAIN_TRANSPARENCY 0.9
+										#define RAIN_TRANSPARENCY 1.0
 #endif
 #if CLOUD_TRANSPARENCY == -1
 #undef CLOUD_TRANSPARENCY
@@ -52,16 +52,12 @@
 #undef FOG_CURVE
 										#define FOG_CURVE 1
 #endif
-#if APPLY_FOG_TO_REFLECTIONS == -1
-#undef APPLY_FOG_TO_REFLECTIONS
-										#define APPLY_FOG_TO_REFLECTIONS 0
-#endif
 
 
 
 #if FOG_AIR_START == -1
 #undef FOG_AIR_START
-										#define FOG_AIR_START 0.8
+										#define FOG_AIR_START 0.5
 #endif
 #if FOG_AIR_END == -1
 #undef FOG_AIR_END
@@ -69,11 +65,11 @@
 #endif
 #if FOG_AIR_MIN == -1
 #undef FOG_AIR_MIN
-										#define FOG_AIR_MIN 0.0
+										#define FOG_AIR_MIN 0.02
 #endif
 #if FOG_AIR_RAIN_START == -1
 #undef FOG_AIR_RAIN_START
-										#define FOG_AIR_RAIN_START 0.5
+										#define FOG_AIR_RAIN_START 0.0
 #endif
 #if FOG_AIR_RAIN_END == -1
 #undef FOG_AIR_RAIN_END
@@ -81,7 +77,7 @@
 #endif
 #if FOG_AIR_RAIN_MIN == -1
 #undef FOG_AIR_RAIN_MIN
-										#define FOG_AIR_RAIN_MIN 0.3
+										#define FOG_AIR_RAIN_MIN 0.2
 #endif
 #if FOG_WATER_START == -1
 #undef FOG_WATER_START
@@ -187,7 +183,7 @@
 #endif
 #if SKYLIGHT_DAY_BRIGHTNESS == -1
 #undef SKYLIGHT_DAY_BRIGHTNESS
-										#define SKYLIGHT_DAY_BRIGHTNESS 3.5
+										#define SKYLIGHT_DAY_BRIGHTNESS 4.0
 #endif
 
 
@@ -430,23 +426,23 @@
 #endif
 #if RAIN_REFLECTION_COVERAGE == -1
 #undef RAIN_REFLECTION_COVERAGE
-										#define RAIN_REFLECTION_COVERAGE 0.6
+										#define RAIN_REFLECTION_COVERAGE 0.4
 #endif
 #if RAIN_REFLECTION_MIN == -1
 #undef RAIN_REFLECTION_MIN
-										#define RAIN_REFLECTION_MIN 0.4
+										#define RAIN_REFLECTION_MIN 0.2
 #endif
 #if RAIN_REFLECTION_SLOPE == -1
 #undef RAIN_REFLECTION_SLOPE
-										#define RAIN_REFLECTION_SLOPE 1.0
+										#define RAIN_REFLECTION_SLOPE 2.0
 #endif
 #if RAIN_REFLECTION_AMOUNT == -1
 #undef RAIN_REFLECTION_AMOUNT
-										#define RAIN_REFLECTION_AMOUNT 0.5
+										#define RAIN_REFLECTION_AMOUNT 0.9
 #endif
 #if RAIN_REFLECTION_FRESNEL == -1
 #undef RAIN_REFLECTION_FRESNEL
-										#define RAIN_REFLECTION_FRESNEL 0.7
+										#define RAIN_REFLECTION_FRESNEL 0.3
 #endif
 
 
@@ -471,11 +467,11 @@
 #endif
 #if AO_AMOUNT == -1
 #undef AO_AMOUNT
-										#define AO_AMOUNT 1.3
+										#define AO_AMOUNT 1.0
 #endif
 #if AO_SIZE == -1
 #undef AO_SIZE
-										#define AO_SIZE 1.0
+										#define AO_SIZE 2.0
 #endif
 #if AO_QUALITY == -1
 #undef AO_QUALITY
@@ -497,7 +493,7 @@
 #endif
 #if BLOOM_AMOUNT == -1
 #undef BLOOM_AMOUNT
-										#define BLOOM_AMOUNT 4.0
+										#define BLOOM_AMOUNT 5.0
 #endif
 #if BLOOM_QUALITY == -1
 #undef BLOOM_QUALITY
@@ -517,7 +513,7 @@
 #endif
 #if BLOOM_SIZE == -1
 #undef BLOOM_SIZE
-										#define BLOOM_SIZE 2.0
+										#define BLOOM_SIZE 3.0
 #endif
 #if BLOOM_NETHER_MULT == -1
 #undef BLOOM_NETHER_MULT
@@ -721,7 +717,7 @@
 #endif
 #if BRIGHTNESS == -1
 #undef BRIGHTNESS
-										#define BRIGHTNESS 1.1
+										#define BRIGHTNESS 1.0
 #endif
 
 
@@ -750,7 +746,7 @@
 
 #if CONTRAST == -1
 #undef CONTRAST
-										#define CONTRAST -0.2
+										#define CONTRAST -0.1
 #endif
 #if CONTRAST_DETECT_RED == -1
 #undef CONTRAST_DETECT_RED
@@ -946,14 +942,6 @@
 #if USE_SIMPLE_LIGHT == -1
 #undef USE_SIMPLE_LIGHT
 										#define USE_SIMPLE_LIGHT 0
-#endif
-#if SHOW_SUNLIGHT == -1
-#undef SHOW_SUNLIGHT
-										#define SHOW_SUNLIGHT 0
-#endif
-#if SHOW_BRIGHTNESSES == -1
-#undef SHOW_BRIGHTNESSES
-										#define SHOW_BRIGHTNESSES 0
 #endif
 #if SSAO_SHOW_AMOUNT == -1
 #undef SSAO_SHOW_AMOUNT

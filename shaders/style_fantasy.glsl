@@ -50,11 +50,7 @@
 #endif
 #if FOG_CURVE == -1
 #undef FOG_CURVE
-										#define FOG_CURVE 3
-#endif
-#if APPLY_FOG_TO_REFLECTIONS == -1
-#undef APPLY_FOG_TO_REFLECTIONS
-										#define APPLY_FOG_TO_REFLECTIONS 1
+										#define FOG_CURVE 1
 #endif
 
 
@@ -73,7 +69,7 @@
 #endif
 #if FOG_AIR_RAIN_START == -1
 #undef FOG_AIR_RAIN_START
-										#define FOG_AIR_RAIN_START 0.5
+										#define FOG_AIR_RAIN_START 0.0
 #endif
 #if FOG_AIR_RAIN_END == -1
 #undef FOG_AIR_RAIN_END
@@ -81,7 +77,7 @@
 #endif
 #if FOG_AIR_RAIN_MIN == -1
 #undef FOG_AIR_RAIN_MIN
-										#define FOG_AIR_RAIN_MIN 0.3
+										#define FOG_AIR_RAIN_MIN 0.1
 #endif
 #if FOG_WATER_START == -1
 #undef FOG_WATER_START
@@ -434,11 +430,11 @@
 #endif
 #if RAIN_REFLECTION_MIN == -1
 #undef RAIN_REFLECTION_MIN
-										#define RAIN_REFLECTION_MIN 0.4
+										#define RAIN_REFLECTION_MIN 0.5
 #endif
 #if RAIN_REFLECTION_SLOPE == -1
 #undef RAIN_REFLECTION_SLOPE
-										#define RAIN_REFLECTION_SLOPE 1.0
+										#define RAIN_REFLECTION_SLOPE 1.5
 #endif
 #if RAIN_REFLECTION_AMOUNT == -1
 #undef RAIN_REFLECTION_AMOUNT
@@ -743,7 +739,7 @@
 
 #if VIBRANCE == -1
 #undef VIBRANCE
-										#define VIBRANCE 0.4
+										#define VIBRANCE 0.5
 #endif
 
 
@@ -946,14 +942,6 @@
 #if USE_SIMPLE_LIGHT == -1
 #undef USE_SIMPLE_LIGHT
 										#define USE_SIMPLE_LIGHT 0
-#endif
-#if SHOW_SUNLIGHT == -1
-#undef SHOW_SUNLIGHT
-										#define SHOW_SUNLIGHT 0
-#endif
-#if SHOW_BRIGHTNESSES == -1
-#undef SHOW_BRIGHTNESSES
-										#define SHOW_BRIGHTNESSES 0
 #endif
 #if SSAO_SHOW_AMOUNT == -1
 #undef SSAO_SHOW_AMOUNT

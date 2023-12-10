@@ -8,18 +8,20 @@
 	#if HIDE_NEARBY_CLOUDS == 1
 		varying float transparency;
 	#endif
+	#if FOG_ENABLED == 1
+		varying float fogDistance;
+	#endif
 	
-#endif
-
-// includes
-
-#ifdef FOG_ENABLED
-	#include "/lib/fog.glsl"
 #endif
 
 
 
 #ifdef FSH
+
+#if FOG_ENABLED == 1
+	#include "/lib/fog/getFogAmount.glsl"
+	#include "/lib/fog/applyFog.glsl"
+#endif
 
 void main() {
 	vec4 color = texture2D(MAIN_BUFFER, texcoord) * glcolor;
@@ -46,10 +48,11 @@ void main() {
 	
 	// fog
 	#if FOG_ENABLED == 1
+		float fogAmount = getFogAmount(fogDistance  ARGS_IN);
 		#if BLOOM_ENABLED == 1
-			applyFog(color.rgb, colorForBloom.rgb  ARGS_IN);
+			applyFog(color.rgb, colorForBloom.rgb, fogAmount  ARGS_IN);
 		#else
-			applyFog(color.rgb  ARGS_IN);
+			applyFog(color.rgb, fogAmount  ARGS_IN);
 		#endif
 	#endif
 	
@@ -86,6 +89,9 @@ void main() {
 #if TAA_ENABLED == 1
 	#include "/lib/taa_jitter.glsl"
 #endif
+#if FOG_ENABLED == 1
+	#include "/lib/fog/getFogDistance.glsl"
+#endif
 
 void main() {
 	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
@@ -113,7 +119,7 @@ void main() {
 	
 	#if FOG_ENABLED == 1
 		vec4 position = gl_Vertex;
-		processFogVsh(position.xyz  ARGS_IN);
+		fogDistance = getFogDistance(position.xyz  ARGS_IN);
 	#endif
 	
 	#if HIDE_NEARBY_CLOUDS == 1

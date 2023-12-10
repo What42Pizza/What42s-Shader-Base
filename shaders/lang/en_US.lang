@@ -100,12 +100,6 @@ option.FOG_CURVE=Fog Curve
 option.FOG_CURVE.comment= How quickly fog drops off from end to start (high values mean faster drop off)
 value.FOG_CURVE.-1=Use Style Value
 
-option.APPLY_FOG_TO_REFLECTIONS=Apply Fog To Reflections
-option.APPLY_FOG_TO_REFLECTIONS.comment=Fixes reflections being applied even when the surface is in fog
-value.APPLY_FOG_TO_REFLECTIONS.-1=Use Style Value
-value.APPLY_FOG_TO_REFLECTIONS.0=Off
-value.APPLY_FOG_TO_REFLECTIONS.1=On
-
 
 
 option.FOG_AIR_START=Fog Air Start
@@ -1099,31 +1093,19 @@ value.USE_SIMPLE_LIGHT.-1=Use Style Value
 value.USE_SIMPLE_LIGHT.0=Off
 value.USE_SIMPLE_LIGHT.1=On
 
-option.SHOW_SUNLIGHT=Show Sunlight
-option.SHOW_SUNLIGHT.comment=Shows the sunlight. Useful for seeing shadow filtering, light leaks, etc
-value.SHOW_SUNLIGHT.-1=Use Style Value
-value.SHOW_SUNLIGHT.0=Off
-value.SHOW_SUNLIGHT.1=On
-
-option.SHOW_BRIGHTNESSES=Show Brightnesses
-option.SHOW_BRIGHTNESSES.comment=Shows the block brightness (red), sky brightness (green), and ambient brightness (blue)
-value.SHOW_BRIGHTNESSES.-1=Use Style Value
-value.SHOW_BRIGHTNESSES.0=Off
-value.SHOW_BRIGHTNESSES.1=On
-
 option.SSAO_SHOW_AMOUNT=SSAO Show Amount
 option.SSAO_SHOW_AMOUNT.comment=Show the amount of ssao that is applied
 value.SSAO_SHOW_AMOUNT.-1=Use Style Value
 value.SSAO_SHOW_AMOUNT.0=Off
 value.SSAO_SHOW_AMOUNT.1=On
 
-option.BLOOM_SHOW_ADDITION=Show Bloom Addition
+option.BLOOM_SHOW_ADDITION=Bloom Show Addition
 option.BLOOM_SHOW_ADDITION.comment=Show the colors that bloom is adding to the screen
 value.BLOOM_SHOW_ADDITION.-1=Use Style Value
 value.BLOOM_SHOW_ADDITION.0=Off
 value.BLOOM_SHOW_ADDITION.1=On
 
-option.BLOOM_SHOW_FILTERED_TEXTURE=Show Filtered Texture
+option.BLOOM_SHOW_FILTERED_TEXTURE=Bloom Show Filtered Texture
 option.BLOOM_SHOW_FILTERED_TEXTURE.comment=Show the texture that bloom samples from
 value.BLOOM_SHOW_FILTERED_TEXTURE.-1=Use Style Value
 value.BLOOM_SHOW_FILTERED_TEXTURE.0=Off

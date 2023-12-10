@@ -129,7 +129,11 @@ vec3 getLessBiasedShadowPos(vec3 viewPos  ARGS_OUT) {
 
 
 
+#if SHADOWS_ENABLED == 1
 float getSkyBrightness(vec3 viewPos  ARGS_OUT) {
+#else
+float getSkyBrightness(ARG_OUT) {
+#endif
 	
 	#ifdef OVERWORLD
 		vec3 normal = texelFetch(NORMALS_BUFFER, texelcoord, 0).rgb;

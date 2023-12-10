@@ -4,6 +4,7 @@
 
 void doMotionBlur(inout vec3 color, vec2 prevCoord  ARGS_OUT) {
 	
+	#include "/import/invFrameTime.glsl"
 	vec2 coordStep = (prevCoord - texcoord) * invFrameTime;
 	coordStep *= MOTION_BLUR_AMOUNT * 0.01;
 	coordStep /= SAMPLE_COUNT;

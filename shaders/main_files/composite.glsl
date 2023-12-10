@@ -13,13 +13,53 @@
 #ifdef FSH
 
 #include "/utils/depth.glsl"
-#if RAIN_REFLECTIONS_ENABLED == 1
+#ifdef REFLECTIONS_ENABLED
 	#include "/utils/screen_to_view.glsl"
 	#include "/lib/reflections.glsl"
 #endif
 #if SSAO_ENABLED == 1
 	#include "/lib/ssao.glsl"
 #endif
+#if FOG_ENABLED == 1
+	#include "/lib/fog/getFogDistance.glsl"
+	#include "/lib/fog/getFogAmount.glsl"
+#endif
+
+
+
+#ifdef REFLECTIONS_ENABLED
+	void doRelfections(inout vec3 color  ARGS_OUT) {
+		
+		// skip sky and fog
+		float depth = texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r;
+		float linearDepth = toLinearDepth(depth  ARGS_IN);
+		if (depthIsSky(linearDepth) || depthIsHand(linearDepth)) {return;}
+		
+		// get strengths
+		vec2 reflectionStengths = texelFetch(REFLECTION_STRENGTH_BUFFER, texelcoord, 0).rg;
+		#if REFLECTIVE_EVERYTHING == 1
+			reflectionStengths = vec2(1.0, 0.0);
+		#endif
+		if (reflectionStengths.r + reflectionStengths.g < 0.01) {return;}
+		
+		// apply fog
+		vec3 viewPos = screenToView(vec3(texcoord, depth)  ARGS_IN);
+		#if FOG_ENABLED == 1
+			#include "/import/gbufferModelViewInverse.glsl"
+			vec3 playerPos = (gbufferModelViewInverse * startMat(viewPos)).xyz;
+			float fogDistance = getFogDistance(playerPos  ARGS_IN);
+			float fogAmount = getFogAmount(fogDistance  ARGS_IN);
+			reflectionStengths *= 1.0 - fogAmount;
+		#endif
+		if (reflectionStengths.r + reflectionStengths.g < 0.01) {return;}
+		
+		vec3 normal = texelFetch(NORMALS_BUFFER, texelcoord, 0).rgb;
+		addReflection(color, viewPos, normal, MAIN_BUFFER, reflectionStengths.r, reflectionStengths.g  ARGS_IN);
+		
+	}
+#endif
+
+
 
 void main() {
 	vec3 color = texelFetch(MAIN_BUFFER, texelcoord, 0).rgb;
@@ -34,20 +74,8 @@ void main() {
 	
 	// ======== REFLECTIONS ========
 	
-	#if RAIN_REFLECTIONS_ENABLED == 1
-		vec2 reflectionStengths = texelFetch(REFLECTION_STRENGTH_BUFFER, texelcoord, 0).rg;
-		#if REFLECTIVE_EVERYTHING == 1
-			reflectionStengths = vec2(1.0, 0.0);
-		#endif
-		if (reflectionStengths.r + reflectionStengths.g > 0.01) {
-			float depth = texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r;
-			float linearDepth = toLinearDepth(depth  ARGS_IN);
-			if (!(depthIsSky(linearDepth) || depthIsHand(linearDepth))) {
-				vec3 viewPos = screenToView(vec3(texcoord, depth)  ARGS_IN);
-				vec3 normal = texelFetch(NORMALS_BUFFER, texelcoord, 0).rgb;
-				addReflection(color, viewPos, normal, MAIN_BUFFER, reflectionStengths.r, reflectionStengths.g  ARGS_IN);
-			}
-		}
+	#ifdef REFLECTIONS_ENABLED
+		doRelfections(color  ARGS_IN);
 	#endif
 	
 	

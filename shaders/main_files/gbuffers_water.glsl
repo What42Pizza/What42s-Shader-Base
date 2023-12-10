@@ -15,16 +15,16 @@
 	#if WAVING_WATER_NORMALS_ENABLED == 1
 		varying vec3 worldPos;
 	#endif
+	#if FOG_ENABLED == 1
+		varying float fogDistance;
+	#endif
 	
 #endif
 
 // includes
 
-#include "/lib/pre_lighting.glsl"
-#include "/lib/basic_lighting.glsl"
-#if FOG_ENABLED == 1
-	#include "/lib/fog.glsl"
-#endif
+#include "/lib/lighting/pre_lighting.glsl"
+#include "/lib/lighting/basic_lighting.glsl"
 
 
 
@@ -37,6 +37,10 @@
 #endif
 #if WATER_REFLECTIONS_ENABLED == 1
 	#include "/lib/reflections.glsl"
+#endif
+#if FOG_ENABLED == 1
+	#include "/lib/fog/getFogAmount.glsl"
+	#include "/lib/fog/applyFog.glsl"
 #endif
 
 void main() {
@@ -112,26 +116,12 @@ void main() {
 	
 	// fog
 	#if FOG_ENABLED == 1
+		float fogAmount = getFogAmount(fogDistance  ARGS_IN);
 		#if BLOOM_ENABLED == 1
-			applyFog(color.rgb, colorForBloom.rgb  ARGS_IN);
+			applyFog(color.rgb, colorForBloom.rgb, fogAmount  ARGS_IN);
 		#else
-			applyFog(color.rgb  ARGS_IN);
+			applyFog(color.rgb, fogAmount  ARGS_IN);
 		#endif
-	#endif
-	
-	
-	
-	// reflection strength
-	#if FOG_ENABLED == 1 && APPLY_FOG_TO_REFLECTIONS == 1
-		#include "/import/invFar.glsl"
-		#if MC_VERSION >= 11300
-			float fogDistMult = invFar;
-		#else
-			float fogDistMult = invFar * 0.9;
-		#endif
-		#define REFLECTION_STRENGTHS (WATER_REFLECTION_STRENGTHS * percentThroughClamped(fogDistance * fogDistMult, 0.8, 0.7))
-	#else
-		#define REFLECTION_STRENGTHS WATER_REFLECTION_STRENGTHS
 	#endif
 	
 	
@@ -146,20 +136,20 @@ void main() {
 	gl_FragData[0] = color;
 	gl_FragData[1] = vec4(normal, 1.0);
 	
-	#if BLOOM_ENABLED == 1 && WATER_REFLECTIONS_ENABLED == 1
+	#if BLOOM_ENABLED == 1 && defined REFLECTIONS_ENABLED
 		/* DRAWBUFFERS:0423 */
 		gl_FragData[2] = colorForBloom;
-		gl_FragData[3] = vec4(REFLECTION_STRENGTHS, 0.0, 1.0);
+		gl_FragData[3] = vec4(WATER_REFLECTION_STRENGTHS, 0.0, 1.0);
 	#endif
 	
-	#if BLOOM_ENABLED == 1 && WATER_REFLECTIONS_ENABLED == 0
+	#if BLOOM_ENABLED == 1 && !defined REFLECTIONS_ENABLED
 		/* DRAWBUFFERS:042 */
 		gl_FragData[2] = colorForBloom;
 	#endif
 	
-	#if BLOOM_ENABLED == 0 && WATER_REFLECTIONS_ENABLED == 1
+	#if BLOOM_ENABLED == 0 && defined REFLECTIONS_ENABLED
 		/* DRAWBUFFERS:043 */
-		gl_FragData[2] = vec4(REFLECTION_STRENGTHS, 0.0, 1.0);
+		gl_FragData[2] = vec4(WATER_REFLECTION_STRENGTHS, 0.0, 1.0);
 	#endif
 	
 }
@@ -177,6 +167,9 @@ void main() {
 #endif
 #if TAA_ENABLED == 1
 	#include "/lib/taa_jitter.glsl"
+#endif
+#if FOG_ENABLED == 1
+	#include "/lib/fog/getFogDistance.glsl"
 #endif
 
 void main() {
@@ -226,7 +219,7 @@ void main() {
 	
 	
 	#if FOG_ENABLED == 1
-		processFogVsh(worldPos  ARGS_IN);
+		fogDistance = getFogDistance(worldPos  ARGS_IN);
 	#endif
 	
 	

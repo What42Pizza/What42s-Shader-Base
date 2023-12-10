@@ -183,12 +183,12 @@ uniform float betterRainStrength;
 uniform float horizonAltitudeAddend;
 #endif
 
-#ifdef import_isOtherLightSource
-uniform bool isOtherLightSource;
-#endif
-
 #ifdef import_isSun
 uniform bool isSun;
+#endif
+
+#ifdef import_isOtherLightSource
+uniform bool isOtherLightSource;
 #endif
 
 #ifdef import_centerDepthSmooth
@@ -271,8 +271,8 @@ uniform float sunriseColorPercent;
 uniform float sunsetColorPercent;
 #endif
 
-#ifdef import_sunDayPercent
-uniform float sunDayPercent;
+#ifdef import_sunDayColorPercent
+uniform float sunDayColorPercent;
 #endif
 
 #ifdef import_ambientSunPercent

@@ -12,8 +12,8 @@
 
 // includes
 
-#include "/lib/pre_lighting.glsl"
-#include "/lib/basic_lighting.glsl"
+#include "/lib/lighting/pre_lighting.glsl"
+#include "/lib/lighting/basic_lighting.glsl"
 
 
 
@@ -54,18 +54,18 @@ void main() {
 	gl_FragData[0] = color;
 	gl_FragData[1] = vec4(normal, 1.0);
 	
-	#if BLOOM_ENABLED == 1 && RAIN_REFLECTIONS_ENABLED == 1
+	#if BLOOM_ENABLED == 1 && defined REFLECTIONS_ENABLED
 		/* DRAWBUFFERS:0423 */
 		gl_FragData[2] = colorForBloom;
 		gl_FragData[3] = vec4(0.0, 0.0, 0.0, 1.0);
 	#endif
 	
-	#if BLOOM_ENABLED == 1 && RAIN_REFLECTIONS_ENABLED == 0
+	#if BLOOM_ENABLED == 1 && !defined REFLECTIONS_ENABLED
 		/* DRAWBUFFERS:042 */
 		gl_FragData[2] = colorForBloom;
 	#endif
 	
-	#if BLOOM_ENABLED == 0 && RAIN_REFLECTIONS_ENABLED == 1
+	#if BLOOM_ENABLED == 0 && defined REFLECTIONS_ENABLED
 		/* DRAWBUFFERS:043 */
 		gl_FragData[2] = vec4(0.0, 0.0, 0.0, 1.0);
 	#endif

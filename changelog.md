@@ -1,8 +1,16 @@
 <br>
 
-- **b1.9.0** (23/12/04)
+- b1.9.1 (23/12/09)
+  - Fixed lighting on fog
+  - Tweaked Realistic and Fantasy styles
+  - Removed (at least some) unused settings
+  - Fixed some setting combination crashes
+
+<br>
+
+- **b1.9.0** (23/12/07)
   - Added 'styles' system, allowing you to choose a base style and edit any values on top of it
-  - Added styles: Vanilla and Realistic
+  - Added styles: Added styles: Realistic and Fantasy (in addition to the default Vanilla style)
   - Fixed some light-value-related bugs
   - Added settings:
   - - Stars Brightness

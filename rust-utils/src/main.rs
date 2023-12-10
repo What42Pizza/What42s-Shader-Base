@@ -66,7 +66,7 @@ pub const EXPORT_FILES: &[FileCopyData] = &[
 
 
 
-pub const ALL_UNIFORMS_PATH: &str = include_str!("../../all_uniforms.txt");
+pub const ALL_UNIFORMS_PATH: &str = include_str!("all_uniforms.txt");
 
 
 

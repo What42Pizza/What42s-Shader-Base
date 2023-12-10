@@ -7,6 +7,15 @@
 ### If you want vanilla Minecraft's shader files directly ported to Optifine, you can find it [Here](https://github.com/XorDev/XorDevs-Default-Shaderpack)
 
 <br>
+
+## Additional Documentation:
+
+- [Iris' ShaderDoc](https://github.com/IrisShaders/ShaderDoc)
+- [OptiFine Shaders (general)](https://github.com/sp614x/optifine/blob/master/OptiFineDoc/doc/shaders.txt)
+- [OptiFine Shaders (.properties)](https://github.com/sp614x/optifine/blob/master/OptiFineDoc/doc/shaders.properties)
+- [ShaderLABS](https://wiki.shaderlabs.org/wiki/Main_Page)
+
+<br>
 <br>
 <br>
 <br>

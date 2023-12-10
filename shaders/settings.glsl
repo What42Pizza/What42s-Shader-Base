@@ -53,6 +53,17 @@ const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8
 
 
 
+#ifdef NETHER
+	#undef SHADOWS_ENABLED
+	#undef SUNRAYS_ENABLED
+#endif
+
+#ifdef END
+	#undef SHADOWS_ENABLED
+#endif
+
+
+
 #define BLOCK_COLOR vec3(BLOCK_RED, BLOCK_GREEN, BLOCK_BLUE)*BLOCK_BRIGHTNESS
 
 #define CAVE_AMBIENT_COLOR vec3(CAVE_AMBIENT_RED, CAVE_AMBIENT_GREEN, CAVE_AMBIENT_BLUE)*CAVE_AMBIENT_BRIGHTNESS
@@ -92,12 +103,15 @@ const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8
 
 
 
-#if SHOW_SUNLIGHT == 1
-	#define DEBUG_OUTPUT_ENABLED
+#if WATER_REFLECTIONS_ENABLED == 1
+	#define REFLECTIONS_ENABLED
 #endif
-#if SHOW_BRIGHTNESSES == 1
-	#define DEBUG_OUTPUT_ENABLED
+#if RAIN_REFLECTIONS_ENABLED == 1
+	#define REFLECTIONS_ENABLED
 #endif
+
+
+
 #if SSAO_SHOW_AMOUNT == 1
 	#define DEBUG_OUTPUT_ENABLED
 #endif
@@ -112,26 +126,6 @@ const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8
 #endif
 #if DOF_SHOW_AMOUNTS == 1
 	#define DEBUG_OUTPUT_ENABLED
-#endif
-
-
-
-#if WATER_REFLECTIONS_ENABLED == 1
-	#define REFLECTIONS_ENABLED
-#endif
-#if RAIN_REFLECTIONS_ENABLED == 1
-	#define REFLECTIONS_ENABLED
-#endif
-
-
-
-#ifdef NETHER
-	#undef SHADOWS_ENABLED
-	#undef SUNRAYS_ENABLED
-#endif
-
-#ifdef END
-	#undef SHADOWS_ENABLED
 #endif
 
 

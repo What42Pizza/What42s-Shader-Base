@@ -1,6 +1,6 @@
 ## Thank you for using my shader!
 
-Please keep in mind that this is a very work-in-progress shader, the there's a lot of room for improvement. I'm not sure how this will go, but I'm sure I'll adapt to whatever comes up. If you need to contact me, my Discord name is What42Pizza.
+Please keep in mind that this is a very work-in-progress shader, and there's a lot of room for improvement. I'm not sure how this will go, but I'm sure I'll adapt to whatever comes up. If you need to contact me, my Discord name is What42Pizza.
 
 <br>
 

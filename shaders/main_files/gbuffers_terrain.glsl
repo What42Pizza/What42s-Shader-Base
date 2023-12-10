@@ -19,11 +19,8 @@
 
 // includes
 
-#include "/lib/pre_lighting.glsl"
-#include "/lib/basic_lighting.glsl"
-#if FOG_ENABLED == 1
-	#include "/lib/fog.glsl"
-#endif
+#include "/lib/lighting/pre_lighting.glsl"
+#include "/lib/lighting/basic_lighting.glsl"
 
 
 
@@ -64,16 +61,6 @@ void main() {
 	#endif
 	
 	
-	// fog
-	#if FOG_ENABLED == 1
-		#if BLOOM_ENABLED == 1
-			applyFog(color.rgb, colorForBloom.rgb  ARGS_IN);
-		#else
-			applyFog(color.rgb  ARGS_IN);
-		#endif
-	#endif
-	
-	
 	// show dangerous light
 	#if SHOW_DANGEROUS_LIGHT == 1
 		if (isDangerousLight > 0.0) {
@@ -90,6 +77,8 @@ void main() {
 		noise = clamp(RAIN_REFLECTION_SLOPE * (noise - (1.0 - RAIN_REFLECTION_COVERAGE)) + 1.0, RAIN_REFLECTION_MIN, 1.0);
 		rainReflectionStrength *= noise;
 		rainReflectionStrength *= lmcoord.y * lmcoord.y * lmcoord.y;
+	#else
+		float rainReflectionStrength = 0.0;
 	#endif
 	
 	
@@ -103,18 +92,18 @@ void main() {
 	gl_FragData[0] = color;
 	gl_FragData[1] = vec4(normal, 1.0);
 	
-	#if BLOOM_ENABLED == 1 && RAIN_REFLECTIONS_ENABLED == 1
+	#if BLOOM_ENABLED == 1 && defined REFLECTIONS_ENABLED
 		/* DRAWBUFFERS:0423 */
 		gl_FragData[2] = colorForBloom;
 		gl_FragData[3] = vec4(RAIN_REFLECTION_STRENGTHS * rainReflectionStrength, 0.0, 1.0);
 	#endif
 	
-	#if BLOOM_ENABLED == 1 && RAIN_REFLECTIONS_ENABLED == 0
+	#if BLOOM_ENABLED == 1 && !defined REFLECTIONS_ENABLED
 		/* DRAWBUFFERS:042 */
 		gl_FragData[2] = colorForBloom;
 	#endif
 	
-	#if BLOOM_ENABLED == 0 && RAIN_REFLECTIONS_ENABLED == 1
+	#if BLOOM_ENABLED == 0 && defined REFLECTIONS_ENABLED
 		/* DRAWBUFFERS:043 */
 		gl_FragData[2] = vec4(RAIN_REFLECTION_STRENGTHS * rainReflectionStrength, 0.0, 1.0);
 	#endif
@@ -172,11 +161,6 @@ void main() {
 	
 	#if TAA_ENABLED == 1
 		doTaaJitter(gl_Position.xy  ARGS_IN);
-	#endif
-	
-	
-	#if FOG_ENABLED == 1
-		processFogVsh(worldPos  ARGS_IN);
 	#endif
 	
 	

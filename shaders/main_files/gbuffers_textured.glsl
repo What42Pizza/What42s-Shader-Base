@@ -16,8 +16,8 @@
 
 // includes
 
-#include "/lib/pre_lighting.glsl"
-#include "/lib/basic_lighting.glsl"
+#include "/lib/lighting/pre_lighting.glsl"
+#include "/lib/lighting/basic_lighting.glsl"
 
 
 

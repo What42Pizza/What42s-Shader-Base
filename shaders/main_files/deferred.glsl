@@ -14,43 +14,66 @@
 
 #ifdef FSH
 
-#include "/lib/basic_lighting.glsl"
+#include "/lib/lighting/basic_lighting.glsl"
+#include "/lib/lighting/shadows.glsl"
+#if FOG_ENABLED == 1
+	#include "/lib/fog/getFogDistance.glsl"
+	#include "/lib/fog/getFogAmount.glsl"
+	#include "/lib/fog/applyFog.glsl"
+#endif
 #include "/utils/depth.glsl"
 #include "/utils/screen_to_view.glsl"
-#include "/lib/shadows.glsl"
 #include "/utils/getSkyLight.glsl"
 
 void main() {
 	vec3 color = texelFetch(MAIN_BUFFER, texelcoord, 0).rgb;
+	vec3 colorForBloom = texelFetch(BLOOM_BUFFER, texelcoord, 0).rgb;
 	#ifdef DEBUG_OUTPUT_ENABLED
 		vec3 debugOutput = texelFetch(DEBUG_BUFFER, texelcoord, 0).rgb;
 	#endif
 	
 	
-	
 	float depth = texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r;
 	float linearDepth = toLinearDepth(depth  ARGS_IN);
+	
+	
 	if (linearDepth < 0.99) {
-		vec3 viewPos = screenToView(vec3(texcoord, depth)  ARGS_IN);
-		float skyBrightness = getSkyBrightness(viewPos  ARGS_IN);
+		
+		
+		#if FOG_ENABLED == 1 || SHADOWS_ENABLED == 1
+			vec3 viewPos = screenToView(vec3(texcoord, depth)  ARGS_IN);
+		#endif
+		
+		
+		#if FOG_ENABLED == 1
+			#include "/import/gbufferModelViewInverse.glsl"
+			vec3 playerPos = (gbufferModelViewInverse * startMat(viewPos)).xyz;
+			float fogDistance = getFogDistance(playerPos  ARGS_IN);
+			float fogAmount = getFogAmount(fogDistance  ARGS_IN);
+		#endif
+		
+		
+		#if SHADOWS_ENABLED == 1
+			float skyBrightness = getSkyBrightness(viewPos  ARGS_IN);
+		#else
+			float skyBrightness = getSkyBrightness(ARG_IN);
+		#endif
 		#include "/import/rainStrength.glsl"
 		skyBrightness *= 1.0 - rainStrength * (1.0 - RAIN_LIGHT_MULT) * 0.5;
 		vec3 skyColor = getSkyLight(ARG_IN);
-		#include "/import/invFar.glsl"
-		#if MC_VERSION >= 11300
-			const float FOG_END = 0.9;
-		#else
-			const float FOG_END = 0.85;
+		color *= 1.0 + skyColor * skyBrightness * (1.0 - 0.6 * getColorLum(color));
+		
+		
+		#if FOG_ENABLED == 1
+			#if BLOOM_ENABLED == 1
+				applyFog(color, colorForBloom, fogAmount  ARGS_IN);
+			#else
+				applyFog(color, fogAmount  ARGS_IN);
+			#endif
 		#endif
-		#include "/import/gbufferModelViewInverse.glsl"
-		#if CORRECTED_LIGHTING_FOG == 1
-			// convert to playerPos so that FOG_HEIGHT_SCALE can be applied
-			viewPos = (gbufferModelViewInverse * startMat(viewPos)).xyz;
-			viewPos.y /= FOG_HEIGHT_SCALE;
-		#endif
-		color *= 1.0 + skyColor * skyBrightness * (1.0 - 0.6 * getColorLum(color)) * smoothstep(FOG_END, FOG_END - 0.1, length(viewPos) * invFar);
+		
+		
 	}
-	
 	
 	
 	#ifdef DEBUG_OUTPUT_ENABLED
@@ -59,6 +82,11 @@ void main() {
 	
 	/* DRAWBUFFERS:0 */
 	gl_FragData[0] = vec4(color, 1.0);
+	
+	#if BLOOM_ENABLED == 1
+		/* DRAWBUFFERS:02 */
+		gl_FragData[1] = vec4(colorForBloom, 1.0);
+	#endif
 	
 }
 
