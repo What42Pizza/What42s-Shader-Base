@@ -1,5 +1,13 @@
 <br>
 
+- b1.9.2 (23/12/12)
+  - Added feature: Volumetric Sunrays
+  - Improved Fantasy style
+  - Setting changes:
+  - - Renamed 'SUNRAYS_ENABLED' to "DEPTH_SUNRAYS_ENABLED'
+
+<br>
+
 - b1.9.1 (23/12/09)
   - Fixed lighting on fog
   - Tweaked Realistic and Fantasy styles

@@ -15,8 +15,11 @@
 #if BLOOM_ENABLED == 1
 	#include "/lib/bloom.glsl"
 #endif
-#if SUNRAYS_ENABLED == 1
-	#include "/lib/sunrays.glsl"
+#if DEPTH_SUNRAYS_ENABLED == 1
+	#include "/lib/sunrays_depth.glsl"
+#endif
+#if VOL_SUNRAYS_ENABLED == 1
+	#include "/lib/sunrays_vol.glsl"
 #endif
 
 void main() {
@@ -28,13 +31,15 @@ void main() {
 	
 	#include "/utils/var_rng.glsl"
 	
+	float depth = texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r;
+	
 	
 	
 	// ======== BLOOM CALCULATIONS ========
 	
 	#if BLOOM_ENABLED == 1
 		
-		vec3 bloomAddition = getBloomAddition(rng  ARGS_IN);
+		vec3 bloomAddition = getBloomAddition(rng, depth  ARGS_IN);
 		noisyAdditions += bloomAddition;
 		
 		#if BLOOM_SHOW_ADDITION == 1
@@ -50,20 +55,21 @@ void main() {
 	
 	// ======== SUNRAYS ========
 	
-	#if SUNRAYS_ENABLED == 1
+	#if DEPTH_SUNRAYS_ENABLED == 1 || VOL_SUNRAYS_ENABLED == 1
 		
-		float sunraysAmount = 0.0;
-		for (int i = 0; i < SUNRAYS_COMPUTE_COUNT; i ++) {
-			sunraysAmount += getSunraysAmount(rng  ARGS_IN);
-		};
-		sunraysAmount /= SUNRAYS_COMPUTE_COUNT;
-		
-		#include "/import/isSun.glsl"
-		vec3 sunraysColor = isSun ? SUNRAYS_SUN_COLOR : SUNRAYS_MOON_COLOR;
-		vec3 sunraysAddition = sunraysAmount * sunraysColor;
+		vec3 sunraysAddition = vec3(0.0);
+		#if DEPTH_SUNRAYS_ENABLED == 1
+			#include "/import/isSun.glsl"
+			vec3 depthSunraysColor = isSun ? SUNRAYS_SUN_COLOR : SUNRAYS_MOON_COLOR;
+			sunraysAddition += getDepthSunraysAmount(rng  ARGS_IN) * depthSunraysColor;
+		#endif
+		#if VOL_SUNRAYS_ENABLED == 1
+			#include "/import/sunAngle.glsl"
+			vec3 volSunraysColor = sunAngle < 0.5 ? SUNRAYS_SUN_COLOR : SUNRAYS_MOON_COLOR;
+			sunraysAddition += getVolSunraysAmount(color, depth, rng  ARGS_IN) * volSunraysColor;
+		#endif
 		
 		noisyAdditions += sunraysAddition;
-		
 		#if SUNRAYS_SHOW_ADDITION == 1
 			debugOutput += sunraysAddition;
 		#endif
@@ -88,15 +94,15 @@ void main() {
 
 #ifdef VSH
 
-#if SUNRAYS_ENABLED == 1
-	#include "/lib/sunrays.glsl"
+#if DEPTH_SUNRAYS_ENABLED == 1
+	#include "/lib/sunrays_depth.glsl"
 #endif
 
 void main() {
 	gl_Position = ftransform();
 	texcoord = gl_MultiTexCoord0.xy;
 	
-	#if SUNRAYS_ENABLED == 1
+	#if DEPTH_SUNRAYS_ENABLED == 1
 		calculateLightCoord(ARG_IN);
 		calculateSunraysAmount(ARG_IN);
 	#endif

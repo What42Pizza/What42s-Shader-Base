@@ -9,7 +9,7 @@
 
 #ifdef FSH
 
-float getSunraysAmount(inout uint rng  ARGS_OUT) {
+float getDepthSunraysAmount(inout uint rng  ARGS_OUT) {
 	const int SAMPLE_COUNT = int(SUNRAYS_QUALITY * SUNRAYS_QUALITY / 2);
 	
 	

@@ -156,10 +156,10 @@
 
 
 
-#define SUNRAYS_ENABLED -1 // [-1 0 1]
+#define DEPTH_SUNRAYS_ENABLED -1 // [-1 0 1]
+#define VOL_SUNRAYS_ENABLED -1 // [-1 0 1]
 #define SUNRAYS_STYLE -1 // [-1 1 2]
 #define SUNRAYS_QUALITY -1 // [-1 3 4 5 6 7 8 9 10]
-#define SUNRAYS_COMPUTE_COUNT -1 // [-1 1 2 3 5 7 10]
 #define SUNRAYS_FLICKERING_FIX -1 // [-1 0 1]
 #define SUNRAYS_AMOUNT_DAY -1 // [-1 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0 2.25 2.5 2.75 3.0]
 #define SUNRAYS_AMOUNT_NIGHT -1 // [-1 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0 2.25 2.5 2.75 3.0]

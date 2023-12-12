@@ -541,9 +541,13 @@
 
 
 
-#if SUNRAYS_ENABLED == -1
-#undef SUNRAYS_ENABLED
-										#define SUNRAYS_ENABLED 1
+#if DEPTH_SUNRAYS_ENABLED == -1
+#undef DEPTH_SUNRAYS_ENABLED
+										#define DEPTH_SUNRAYS_ENABLED 1
+#endif
+#if VOL_SUNRAYS_ENABLED == -1
+#undef VOL_SUNRAYS_ENABLED
+										#define VOL_SUNRAYS_ENABLED 0
 #endif
 #if SUNRAYS_STYLE == -1
 #undef SUNRAYS_STYLE

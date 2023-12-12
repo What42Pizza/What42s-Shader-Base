@@ -606,11 +606,17 @@ screen.SUNRAYS_SETTINGS=Sunrays
 
 
 
-option.SUNRAYS_ENABLED=Sunrays Enabled
-option.SUNRAYS_ENABLED.comment=(Performance cost: Low-Medium, depending on settings)
-value.SUNRAYS_ENABLED.-1=Use Style Value
-value.SUNRAYS_ENABLED.0=Off
-value.SUNRAYS_ENABLED.1=On
+option.DEPTH_SUNRAYS_ENABLED=Sunrays Enabled (Depth-Based)
+option.DEPTH_SUNRAYS_ENABLED.comment=(Performance cost: Low-Medium, depending on settings)
+value.DEPTH_SUNRAYS_ENABLED.-1=Use Style Value
+value.DEPTH_SUNRAYS_ENABLED.0=Off
+value.DEPTH_SUNRAYS_ENABLED.1=On
+
+option.VOL_SUNRAYS_ENABLED=Sunrays Enabled (Volumetric)
+option.VOL_SUNRAYS_ENABLED.comment=(Performance cost: Medium, depending on settings)
+value.VOL_SUNRAYS_ENABLED.-1=Use Style Value
+value.VOL_SUNRAYS_ENABLED.0=Off
+value.VOL_SUNRAYS_ENABLED.1=On
 
 option.SUNRAYS_STYLE=Sunrays Style
 option.SUNRAYS_STYLE.comment=Alters how the sunrays are calculated. Option 1 is more natural, option 2 is more impressive looking

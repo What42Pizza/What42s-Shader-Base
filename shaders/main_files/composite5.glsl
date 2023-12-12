@@ -6,7 +6,6 @@
 
 #ifdef FIRST_PASS
 	varying vec2 texcoord;
-	uniform float sunAngle;
 #endif
 
 
@@ -19,6 +18,7 @@
 	#include "/lib/colorblindness.glsl"
 #endif
 #include "/utils/depth.glsl"
+#include "/utils/screen_to_view.glsl"
 
 void main() {
 	
@@ -72,6 +72,8 @@ void main() {
 	#endif
 	
 	//color = texelFetch(NORMALS_BUFFER, texelcoord, 0).rgb;
+	//float depth = texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r;
+	//color = mix(color, normalize(screenToView(vec3(texcoord, depth)  ARGS_IN) / 10), 0.8);
 	
 	
 	
