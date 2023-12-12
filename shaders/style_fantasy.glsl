@@ -20,7 +20,7 @@
 #endif
 #if CLOUD_TRANSPARENCY == -1
 #undef CLOUD_TRANSPARENCY
-										#define CLOUD_TRANSPARENCY 0.5
+										#define CLOUD_TRANSPARENCY 0.7
 #endif
 #if HIDE_NEARBY_CLOUDS == -1
 #undef HIDE_NEARBY_CLOUDS
@@ -190,7 +190,7 @@
 
 #if AMBIENT_DAY_RED == -1
 #undef AMBIENT_DAY_RED
-										#define AMBIENT_DAY_RED 0.98
+										#define AMBIENT_DAY_RED 0.95
 #endif
 #if AMBIENT_DAY_GREEN == -1
 #undef AMBIENT_DAY_GREEN
@@ -198,11 +198,11 @@
 #endif
 #if AMBIENT_DAY_BLUE == -1
 #undef AMBIENT_DAY_BLUE
-										#define AMBIENT_DAY_BLUE 1.05
+										#define AMBIENT_DAY_BLUE 1.0
 #endif
 #if AMBIENT_DAY_BRIGHTNESS == -1
 #undef AMBIENT_DAY_BRIGHTNESS
-										#define AMBIENT_DAY_BRIGHTNESS 0.8
+										#define AMBIENT_DAY_BRIGHTNESS 0.75
 #endif
 
 
@@ -212,11 +212,11 @@
 
 #if SKYLIGHT_NIGHT_RED == -1
 #undef SKYLIGHT_NIGHT_RED
-										#define SKYLIGHT_NIGHT_RED 0.7
+										#define SKYLIGHT_NIGHT_RED 1.0
 #endif
 #if SKYLIGHT_NIGHT_GREEN == -1
 #undef SKYLIGHT_NIGHT_GREEN
-										#define SKYLIGHT_NIGHT_GREEN 0.8
+										#define SKYLIGHT_NIGHT_GREEN 1.05
 #endif
 #if SKYLIGHT_NIGHT_BLUE == -1
 #undef SKYLIGHT_NIGHT_BLUE
@@ -224,18 +224,18 @@
 #endif
 #if SKYLIGHT_NIGHT_BRIGHTNESS == -1
 #undef SKYLIGHT_NIGHT_BRIGHTNESS
-										#define SKYLIGHT_NIGHT_BRIGHTNESS 0.5
+										#define SKYLIGHT_NIGHT_BRIGHTNESS 0.55
 #endif
 
 
 
 #if AMBIENT_NIGHT_RED == -1
 #undef AMBIENT_NIGHT_RED
-										#define AMBIENT_NIGHT_RED 0.4
+										#define AMBIENT_NIGHT_RED 0.6
 #endif
 #if AMBIENT_NIGHT_GREEN == -1
 #undef AMBIENT_NIGHT_GREEN
-										#define AMBIENT_NIGHT_GREEN 0.5
+										#define AMBIENT_NIGHT_GREEN 0.7
 #endif
 #if AMBIENT_NIGHT_BLUE == -1
 #undef AMBIENT_NIGHT_BLUE
@@ -294,15 +294,15 @@
 
 #if SKYLIGHT_SUNSET_RED == -1
 #undef SKYLIGHT_SUNSET_RED
-										#define SKYLIGHT_SUNSET_RED 1.7
+										#define SKYLIGHT_SUNSET_RED 1.5
 #endif
 #if SKYLIGHT_SUNSET_GREEN == -1
 #undef SKYLIGHT_SUNSET_GREEN
-										#define SKYLIGHT_SUNSET_GREEN 0.4
+										#define SKYLIGHT_SUNSET_GREEN 0.3
 #endif
 #if SKYLIGHT_SUNSET_BLUE == -1
 #undef SKYLIGHT_SUNSET_BLUE
-										#define SKYLIGHT_SUNSET_BLUE -0.2
+										#define SKYLIGHT_SUNSET_BLUE -0.1
 #endif
 #if SKYLIGHT_SUNSET_BRIGHTNESS == -1
 #undef SKYLIGHT_SUNSET_BRIGHTNESS
@@ -321,7 +321,7 @@
 #endif
 #if AMBIENT_SUNSET_BLUE == -1
 #undef AMBIENT_SUNSET_BLUE
-										#define AMBIENT_SUNSET_BLUE 0.5
+										#define AMBIENT_SUNSET_BLUE 0.6
 #endif
 #if AMBIENT_SUNSET_BRIGHTNESS == -1
 #undef AMBIENT_SUNSET_BRIGHTNESS
@@ -357,7 +357,7 @@
 #endif
 #if SIDE_SHADING == -1
 #undef SIDE_SHADING
-										#define SIDE_SHADING 0.2
+										#define SIDE_SHADING 0.4
 #endif
 #if RAIN_LIGHT_MULT == -1
 #undef RAIN_LIGHT_MULT
@@ -583,15 +583,15 @@
 #endif
 #if SUNRAYS_SUN_GREEN == -1
 #undef SUNRAYS_SUN_GREEN
-										#define SUNRAYS_SUN_GREEN 0.65
+										#define SUNRAYS_SUN_GREEN 0.4
 #endif
 #if SUNRAYS_SUN_BLUE == -1
 #undef SUNRAYS_SUN_BLUE
-										#define SUNRAYS_SUN_BLUE 0.4
+										#define SUNRAYS_SUN_BLUE 0.0
 #endif
 #if SUNRAYS_MOON_RED == -1
 #undef SUNRAYS_MOON_RED
-										#define SUNRAYS_MOON_RED 0.4
+										#define SUNRAYS_MOON_RED 0.0
 #endif
 #if SUNRAYS_MOON_GREEN == -1
 #undef SUNRAYS_MOON_GREEN
