@@ -1,5 +1,7 @@
 #include "/utils/screen_to_view.glsl"
 #include "/utils/depth.glsl"
+#include "/lib/fog/getFogDistance.glsl"
+#include "/lib/fog/getFogAmount.glsl"
 
 
 
@@ -50,9 +52,11 @@ float getVolSunraysAmount(inout vec3 color, float depth, inout uint rng  ARGS_OU
 	#include "/import/eyeBrightnessSmooth.glsl"
 	output = pow(output, mix(0.1, 0.7, eyeBrightnessSmooth.y / 240.0));
 	
-	if (depthIsSky(toLinearDepth(depth  ARGS_IN))) {
-		output *= 0.3;
-	}
+	#include "/import/gbufferModelViewInverse.glsl"
+	vec3 playerPos = (gbufferModelViewInverse * startMat(viewPos)).xyz;
+	float fogDistance = getFogDistance(playerPos  ARGS_IN);
+	float fogAmount = getFogAmount(fogDistance  ARGS_IN);
+	output *= 1.0 - 0.9 * fogAmount;
 	
-	return output * 0.5;
+	return output * 0.7;
 }

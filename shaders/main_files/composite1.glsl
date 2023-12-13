@@ -6,6 +6,14 @@
 
 #ifdef FIRST_PASS
 	varying vec2 texcoord;
+	
+	#if DEPTH_SUNRAYS_ENABLED == 1
+		flat vec2 lightCoord;
+		flat float depthSunraysAmountMult;
+	#endif
+	#if VOL_SUNRAYS_ENABLED == 1
+		flat float volSunraysAmountMult;
+	#endif
 #endif
 
 
@@ -61,12 +69,12 @@ void main() {
 		#if DEPTH_SUNRAYS_ENABLED == 1
 			#include "/import/isSun.glsl"
 			vec3 depthSunraysColor = isSun ? SUNRAYS_SUN_COLOR : SUNRAYS_MOON_COLOR;
-			sunraysAddition += getDepthSunraysAmount(rng  ARGS_IN) * depthSunraysColor;
+			sunraysAddition += getDepthSunraysAmount(rng  ARGS_IN) * depthSunraysColor * depthSunraysAmountMult;
 		#endif
 		#if VOL_SUNRAYS_ENABLED == 1
 			#include "/import/sunAngle.glsl"
 			vec3 volSunraysColor = sunAngle < 0.5 ? SUNRAYS_SUN_COLOR : SUNRAYS_MOON_COLOR;
-			sunraysAddition += getVolSunraysAmount(color, depth, rng  ARGS_IN) * volSunraysColor;
+			sunraysAddition += getVolSunraysAmount(color, depth, rng  ARGS_IN) * volSunraysColor * volSunraysAmountMult;
 		#endif
 		
 		noisyAdditions += sunraysAddition;
@@ -94,17 +102,48 @@ void main() {
 
 #ifdef VSH
 
-#if DEPTH_SUNRAYS_ENABLED == 1
-	#include "/lib/sunrays_depth.glsl"
-#endif
-
 void main() {
 	gl_Position = ftransform();
 	texcoord = gl_MultiTexCoord0.xy;
 	
+	#if DEPTH_SUNRAYS_ENABLED == 1 || VOL_SUNRAYS_ENABLED == 1
+		#include "/import/ambientSunPercent.glsl"
+		#include "/import/ambientMoonPercent.glsl"
+		#include "/import/ambientSunrisePercent.glsl"
+		#include "/import/ambientSunsetPercent.glsl"
+	#endif
+	
 	#if DEPTH_SUNRAYS_ENABLED == 1
-		calculateLightCoord(ARG_IN);
-		calculateSunraysAmount(ARG_IN);
+	
+		#include "/import/shadowLightPosition.glsl"
+		#include "/import/gbufferProjection.glsl"
+		vec3 lightPos = shadowLightPosition * mat3(gbufferProjection);
+		lightPos /= lightPos.z;
+		lightCoord = lightPos.xy * 0.5 + 0.5;
+		
+		#include "/import/isOtherLightSource.glsl"
+		#include "/import/isSun.glsl"
+		if (isSun) {
+			depthSunraysAmountMult = 
+				ambientSunPercent * SUNRAYS_AMOUNT_DAY +
+				ambientSunrisePercent * SUNRAYS_AMOUNT_SUNRISE +
+				ambientSunsetPercent * SUNRAYS_AMOUNT_SUNSET;
+		} else {
+			depthSunraysAmountMult = (ambientMoonPercent + (ambientSunrisePercent + ambientSunsetPercent) * 0.5) * SUNRAYS_AMOUNT_NIGHT;
+		}
+		depthSunraysAmountMult *= 0.3;
+		
+	#endif
+	
+	#if VOL_SUNRAYS_ENABLED == 1
+		#include "/import/sunLightBrightness.glsl"
+		#include "/import/moonLightBrightness.glsl"
+		volSunraysAmountMult =
+			ambientSunPercent * SUNRAYS_AMOUNT_DAY +
+			ambientSunrisePercent * SUNRAYS_AMOUNT_SUNRISE +
+			ambientSunsetPercent * SUNRAYS_AMOUNT_SUNSET +
+			ambientMoonPercent * SUNRAYS_AMOUNT_NIGHT;
+		volSunraysAmountMult *= sunLightBrightness + moonLightBrightness;
 	#endif
 	
 }

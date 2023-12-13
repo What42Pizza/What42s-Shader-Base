@@ -6,6 +6,7 @@
 
 #ifdef FIRST_PASS
 	varying vec2 texcoord;
+	flat vec3 skyLight;
 #endif
 
 
@@ -14,7 +15,7 @@
 
 #ifdef FSH
 
-#include "/lib/lighting/basic_lighting.glsl"
+//#include "/lib/lighting/basic_lighting.glsl"
 #include "/lib/lighting/shadows.glsl"
 #if FOG_ENABLED == 1
 	#include "/lib/fog/getFogDistance.glsl"
@@ -23,7 +24,6 @@
 #endif
 #include "/utils/depth.glsl"
 #include "/utils/screen_to_view.glsl"
-#include "/utils/getSkyLight.glsl"
 
 void main() {
 	vec3 color = texelFetch(MAIN_BUFFER, texelcoord, 0).rgb;
@@ -60,8 +60,8 @@ void main() {
 		#endif
 		#include "/import/rainStrength.glsl"
 		skyBrightness *= 1.0 - rainStrength * (1.0 - RAIN_LIGHT_MULT) * 0.5;
-		vec3 skyColor = getSkyLight(ARG_IN);
-		color *= 1.0 + skyColor * skyBrightness * (1.0 - 0.6 * getColorLum(color));
+		//vec3 skyLight = getSkyLight(ARG_IN);
+		color *= 1.0 + skyLight * skyBrightness * (1.0 - 0.6 * getColorLum(color));
 		
 		
 		#if FOG_ENABLED == 1
@@ -96,9 +96,12 @@ void main() {
 
 #ifdef VSH
 
+#include "/utils/getSkyLight.glsl"
+
 void main() {
 	gl_Position = ftransform();
 	texcoord = gl_MultiTexCoord0.xy;
+	skyLight = getSkyLight(ARG_IN);
 }
 
 #endif

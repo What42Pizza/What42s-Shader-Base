@@ -72,8 +72,7 @@ void main() {
 	#endif
 	
 	//color = texelFetch(NORMALS_BUFFER, texelcoord, 0).rgb;
-	//float depth = texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r;
-	//color = mix(color, normalize(screenToView(vec3(texcoord, depth)  ARGS_IN) / 10), 0.8);
+	//color = vec3(toLinearDepth(texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r  ARGS_IN));
 	
 	
 	

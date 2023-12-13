@@ -617,7 +617,7 @@
 #endif
 #if DOF_NEAR_BLUR_START == -1
 #undef DOF_NEAR_BLUR_START
-										#define DOF_NEAR_BLUR_START 0.01
+										#define DOF_NEAR_BLUR_START 0.03
 #endif
 #if DOF_NEAR_BLUR_SLOPE == -1
 #undef DOF_NEAR_BLUR_SLOPE
@@ -633,7 +633,7 @@
 #endif
 #if DOF_FAR_BLUR_START == -1
 #undef DOF_FAR_BLUR_START
-										#define DOF_FAR_BLUR_START 0.01
+										#define DOF_FAR_BLUR_START 0.03
 #endif
 #if DOF_FAR_BLUR_SLOPE == -1
 #undef DOF_FAR_BLUR_SLOPE
@@ -695,15 +695,15 @@
 
 #if SHARPENING_ENABLED == -1
 #undef SHARPENING_ENABLED
-										#define SHARPENING_ENABLED 0
+										#define SHARPENING_ENABLED 1
 #endif
 #if SHARPEN_AMOUNT == -1
 #undef SHARPEN_AMOUNT
-										#define SHARPEN_AMOUNT 1.0
+										#define SHARPEN_AMOUNT 0.8
 #endif
 #if SHARPEN_VEL_ADDITION == -1
 #undef SHARPEN_VEL_ADDITION
-										#define SHARPEN_VEL_ADDITION 1.0
+										#define SHARPEN_VEL_ADDITION 1.3
 #endif
 #if SHARPENING_DETECT_SIZE == -1
 #undef SHARPENING_DETECT_SIZE
@@ -721,7 +721,7 @@
 #endif
 #if BRIGHTNESS == -1
 #undef BRIGHTNESS
-										#define BRIGHTNESS 1.0
+										#define BRIGHTNESS 1.1
 #endif
 
 

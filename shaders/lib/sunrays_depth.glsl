@@ -1,13 +1,4 @@
-#ifdef FIRST_PASS
-	flat vec2 lightCoord;
-	flat float sunraysAmountMult;
-#endif
-
 #include "/utils/depth.glsl"
-
-
-
-#ifdef FSH
 
 float getDepthSunraysAmount(inout uint rng  ARGS_OUT) {
 	const int SAMPLE_COUNT = int(SUNRAYS_QUALITY * SUNRAYS_QUALITY / 2);
@@ -45,48 +36,8 @@ float getDepthSunraysAmount(inout uint rng  ARGS_OUT) {
 	
 	if (total > 0.0) total = max(total, 0.2);
 	
-	float output = sqrt(total) * sunraysAmountMult;
+	float output = sqrt(total);
 	output *= max(1.0 - length(lightCoord - 0.5) * 1.5, 0.0);
 	
 	return output;
 }
-
-#endif
-
-
-
-#ifdef VSH
-
-void calculateLightCoord(ARG_OUT) {
-	
-	#include "/import/shadowLightPosition.glsl"
-	#include "/import/gbufferProjection.glsl"
-	vec3 lightPos = shadowLightPosition * mat3(gbufferProjection);
-	lightPos /= lightPos.z;
-	lightCoord = lightPos.xy * 0.5 + 0.5;
-	
-}
-
-// this entire function SHOULD be computed on the cpu, but it has to be glsl code because it uses settings that are ONLY defined in glsl
-void calculateSunraysAmount(ARG_OUT) {
-	#include "/import/ambientSunPercent.glsl"
-	#include "/import/ambientMoonPercent.glsl"
-	#include "/import/ambientSunrisePercent.glsl"
-	#include "/import/ambientSunsetPercent.glsl"
-	#include "/import/isOtherLightSource.glsl"
-	#include "/import/isSun.glsl"
-	
-	if (isSun) {
-		sunraysAmountMult = 
-			ambientSunPercent * SUNRAYS_AMOUNT_DAY +
-			ambientSunrisePercent * SUNRAYS_AMOUNT_SUNRISE +
-			ambientSunsetPercent * SUNRAYS_AMOUNT_SUNSET;
-	} else {
-		sunraysAmountMult = (ambientMoonPercent + (ambientSunrisePercent + ambientSunsetPercent) * 0.5) * SUNRAYS_AMOUNT_NIGHT;
-	}
-	
-	sunraysAmountMult *= 0.3;
-	
-}
-
-#endif
