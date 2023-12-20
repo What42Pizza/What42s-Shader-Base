@@ -27,7 +27,7 @@
 - **Anti-Aliasing**
 - **Isometric Rendering**
 - **SSAO**
-- **Sunrays**
+- **Sunrays** (depth-based and volumetric)
 - **Bloom**
 - **Depth of Field**
 - **Motion Blur**

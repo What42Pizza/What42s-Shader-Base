@@ -14,9 +14,9 @@
 #undef DARKENED_STARS_BRIGHTNESS
 										#define DARKENED_STARS_BRIGHTNESS 0.2
 #endif
-#if RAIN_TRANSPARENCY == -1
-#undef RAIN_TRANSPARENCY
-										#define RAIN_TRANSPARENCY 1.0
+#if WEATHER_TRANSPARENCY == -1
+#undef WEATHER_TRANSPARENCY
+										#define WEATHER_TRANSPARENCY 0.0
 #endif
 #if CLOUD_TRANSPARENCY == -1
 #undef CLOUD_TRANSPARENCY
@@ -46,7 +46,7 @@
 #endif
 #if FOG_EXTRA_CLOUDS_DISTANCE == -1
 #undef FOG_EXTRA_CLOUDS_DISTANCE
-										#define FOG_EXTRA_CLOUDS_DISTANCE 2.5
+										#define FOG_EXTRA_CLOUDS_DISTANCE 10.0
 #endif
 #if FOG_CURVE == -1
 #undef FOG_CURVE
@@ -899,7 +899,7 @@
 #endif
 #if WATER_TRANSPARENCY == -1
 #undef WATER_TRANSPARENCY
-										#define WATER_TRANSPARENCY 0.9
+										#define WATER_TRANSPARENCY 0.1
 #endif
 
 

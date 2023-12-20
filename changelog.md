@@ -1,9 +1,22 @@
 <br>
 
+- b1.9.3 (23/12/19)
+  - Improved volumetric sunrays quality and performance
+  - Transparency settings have been inverted so they represent transparency and not opacity
+  - Many small tweaks
+  - Updated documentation
+  - Settings changes:
+  - - New 'WATER_TRANSPARENCY' is: 1.0 - old 'WATER_TRANSPARENCY'
+  - - New 'RAIN_TRANSPARENCY' is: 1.0 - old 'RAIN_TRANSPARENCY'
+  - - New 'CLOUD_TRANSPARENCY' is: 1.0 - old 'CLOUD_TRANSPARENCY'
+  - - Renamed 'RAIN_TRANSPARENCY' to 'WEATHER_TRANSPARENCY'
+
+<br>
+
 - b1.9.2 (23/12/12)
   - Added feature: Volumetric Sunrays
   - Improved Fantasy style
-  - Setting changes:
+  - Settings changes:
   - - Renamed 'SUNRAYS_ENABLED' to "DEPTH_SUNRAYS_ENABLED'
 
 <br>

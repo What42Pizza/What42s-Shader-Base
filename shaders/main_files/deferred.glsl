@@ -6,7 +6,7 @@
 
 #ifdef FIRST_PASS
 	varying vec2 texcoord;
-	flat vec3 skyLight;
+	flat_inout vec3 skyLight;
 #endif
 
 
@@ -15,8 +15,42 @@
 
 #ifdef FSH
 
-//#include "/lib/lighting/basic_lighting.glsl"
+
+
 #include "/lib/lighting/shadows.glsl"
+
+#if SHADOWS_ENABLED == 1
+float getSkyBrightness(vec3 viewPos  ARGS_OUT) {
+#else
+float getSkyBrightness(ARG_OUT) {
+#endif
+	
+	// get normal dot sun/moon pos
+	#ifdef OVERWORLD
+		vec3 normal = texelFetch(NORMALS_BUFFER, texelcoord, 0).rgb;
+		#include "/import/shadowLightPosition.glsl"
+		float lightDot = dot(normalize(shadowLightPosition), normal);
+	#else
+		float lightDot = 1.0;
+	#endif
+	
+	// sample shadow
+	#if SHADOWS_ENABLED == 1
+		float skyBrightness = sampleShadow(viewPos, lightDot  ARGS_IN);
+	#else
+		float skyBrightness = 0.95;
+	#endif
+	
+	// misc processing
+	skyBrightness *= max(lightDot, 0.0);
+	#include "/import/rainStrength.glsl"
+	skyBrightness *= 1.0 - rainStrength * (1.0 - RAIN_LIGHT_MULT) * 0.5;
+	
+	return skyBrightness;
+}
+
+
+
 #if FOG_ENABLED == 1
 	#include "/lib/fog/getFogDistance.glsl"
 	#include "/lib/fog/getFogAmount.glsl"
@@ -24,6 +58,8 @@
 #endif
 #include "/utils/depth.glsl"
 #include "/utils/screen_to_view.glsl"
+
+
 
 void main() {
 	vec3 color = texelFetch(MAIN_BUFFER, texelcoord, 0).rgb;
@@ -58,9 +94,6 @@ void main() {
 		#else
 			float skyBrightness = getSkyBrightness(ARG_IN);
 		#endif
-		#include "/import/rainStrength.glsl"
-		skyBrightness *= 1.0 - rainStrength * (1.0 - RAIN_LIGHT_MULT) * 0.5;
-		//vec3 skyLight = getSkyLight(ARG_IN);
 		color *= 1.0 + skyLight * skyBrightness * (1.0 - 0.6 * getColorLum(color));
 		
 		

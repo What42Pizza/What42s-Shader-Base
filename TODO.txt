@@ -3,8 +3,12 @@ Make more example images:
 	Styles Demonstration
 	Rain
 	Night
-Add spooky and/or creepy style(s)?
+Add sub-styles?
+	Zombies / Spooky / Creepy?
+	needs more sub-styles to justify feature
+Rework waving calculations for performance?
 Add void fog option?
+Add settings for manually disabling composite files?
 Do a round of making sure different settings combinations work
 Prevent TAA on entities?
 Add water caustics?
@@ -29,8 +33,6 @@ Do a round of replacing smoothsteps with flat line?
 Do a round of adding dynamic noise (change noise based on quality level)
 Add more TAA settings
 Fix spider and endermen eyes?
-//Find a way to make shadowLightPosition stop flickering?
-//Make sure sunrays work well at sunrise & sunset
 Add setting to fade fog into sky buffer (to make the sun and moon appear in fog) (would also need sunray depth fix)
 Do a round of general optimizations
 Take FXAA from Comp Reimagined?
@@ -41,7 +43,6 @@ Custom sky color?
 Switch to Contrast Adaptive Sharpening?
 Dither outputs?
 Fix ssao causing desaturation on sand?
-Disable unneeded shader files?
 Test glsl optimizer (https://github.com/aras-p/glsl-optimizer)
 Add support for fogStart, fogEnd, and fogMode?
 Find a way to stop sugar cane base from waving?

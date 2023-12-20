@@ -84,14 +84,6 @@
 
 
 
-//float getSkyBrightnessMult(float lightDot  ARGS_OUT) {
-//	const float curve = 3.0;
-//	const float finalFactor = 1.0 / (1.0 - 1.0 / (curve * 10.0 + 1.0));
-//	return (1.0 - 1.0 / (max(lightDot, 0.0) * curve * 10.0 + 1.0)) * finalFactor;
-//}
-
-
-
 
 
 #ifdef FSH
@@ -129,76 +121,57 @@ vec3 getLessBiasedShadowPos(vec3 viewPos  ARGS_OUT) {
 
 
 
-#if SHADOWS_ENABLED == 1
-float getSkyBrightness(vec3 viewPos  ARGS_OUT) {
-#else
-float getSkyBrightness(ARG_OUT) {
-#endif
+float sampleShadow(vec3 viewPos, float lightDot  ARGS_OUT) {
 	
-	#ifdef OVERWORLD
-		vec3 normal = texelFetch(NORMALS_BUFFER, texelcoord, 0).rgb;
+	float skyBrightness = 0;
+	if (lightDot > 0.0) {
+		// surface is facing towards shadowLightPosition
 		
-		#include "/import/shadowLightPosition.glsl"
-		float lightDot = dot(normalize(shadowLightPosition), normal);
-	#else
-		float lightDot = 1.0;
-	#endif
-	
-	#if SHADOWS_ENABLED == 1
-		float skyBrightness = 0;
-		if (lightDot > 0.0) {
-			// surface is facing towards shadowLightPosition
+		#if SHADOW_FILTERING == 0
+			vec3 shadowPos = getShadowPos(viewPos, lightDot  ARGS_IN);
+		#else
+			vec3 shadowPos = getLessBiasedShadowPos(viewPos  ARGS_IN);
+		#endif
+		float offsetMult = length(shadowPos.xy * 2.0 - 1.0);
+		offsetMult = offsetMult * SHADOW_OFFSET_INCREASE + SHADOW_OFFSET_MIN;
+		
+		vec3 offsetShadowPos = shadowPos;
+		#include "/utils/var_rng.glsl"
+		vec2 noise = randomVec2(rng);
+		offsetShadowPos.xy += noise * offsetMult * 0.2;
+		
+		#if SHADOW_FILTERING == 0
 			
-			#if SHADOW_FILTERING == 0
-				vec3 shadowPos = getShadowPos(viewPos, lightDot  ARGS_IN);
-			#else
-				vec3 shadowPos = getLessBiasedShadowPos(viewPos  ARGS_IN);
-			#endif
-			float offsetMult = length(shadowPos.xy * 2.0 - 1.0);
-			offsetMult = offsetMult * SHADOW_OFFSET_INCREASE + SHADOW_OFFSET_MIN;
+			// no filtering
+			if (texture2D(shadowtex0, offsetShadowPos.xy).r >= offsetShadowPos.z) {
+				skyBrightness += 1.0;
+			}
 			
-			vec3 offsetShadowPos = shadowPos;
-			#include "/utils/var_rng.glsl"
-			vec2 noise = randomVec2(rng);
-			offsetShadowPos.xy += noise * offsetMult * 0.2;
+		#else
 			
-			#if SHADOW_FILTERING == 0
-				
-				// no filtering
-				if (texture2D(shadowtex0, offsetShadowPos.xy).r >= offsetShadowPos.z) {
-					skyBrightness += 1.0;
+			// filtered
+			// tactic: just absorb the shadow acne and average it out, then multiply and clamp to get back to 1.0
+			// actually I don't think that's how this works
+			// the problem is that the offset pos goes inside the block half the time (especially when lightDot is low), which gets counted as 'in shadow'
+			for (int i = 0; i < SHADOW_OFFSET_COUNT; i++) {
+				if (texture2D(shadowtex0, offsetShadowPos.xy + SHADOW_OFFSETS[i].xy * offsetMult).r >= offsetShadowPos.z) {
+					float currentShadowWeight = SHADOW_OFFSETS[i].z;
+					skyBrightness += currentShadowWeight;
 				}
-				
+			}
+			skyBrightness /= SHADOW_OFFSET_WEIGHTS_TOTAL;
+			#if TAA_ENABLED == 1
+				const float shadowMult1 = 1.4; // for when lightDot is 1.0 (sun is directly facing surface)
+				const float shadowMult2 = 2.2; // for when lightDot is 0.0 (sun is angled relative to surface)
 			#else
-				
-				// filtered
-				// tactic: just absorb the shadow acne and average it out, then multiply and clamp to get back to 1.0
-				// actually I don't think that's how this works
-				// the problem is that the offset pos goes inside the block half the time (especially when lightDot is low), which gets counted as 'in shadow'
-				for (int i = 0; i < SHADOW_OFFSET_COUNT; i++) {
-					if (texture2D(shadowtex0, offsetShadowPos.xy + SHADOW_OFFSETS[i].xy * offsetMult).r >= offsetShadowPos.z) {
-						float currentShadowWeight = SHADOW_OFFSETS[i].z;
-						skyBrightness += currentShadowWeight;
-					}
-				}
-				skyBrightness /= SHADOW_OFFSET_WEIGHTS_TOTAL;
-				#if TAA_ENABLED == 1
-					const float shadowMult1 = 1.4; // for when lightDot is 1.0 (sun is directly facing surface)
-					const float shadowMult2 = 2.2; // for when lightDot is 0.0 (sun is angled relative to surface)
-				#else
-					const float shadowMult1 = 2.0; // for when lightDot is 1.0 (sun is directly facing surface)
-					const float shadowMult2 = 3.0; // for when lightDot is 0.0 (sun is angled relative to surface)
-				#endif
-				skyBrightness = min(skyBrightness * (shadowMult2 - lightDot * (shadowMult2 - shadowMult1)), 1.0);
-				
+				const float shadowMult1 = 2.0; // for when lightDot is 1.0 (sun is directly facing surface)
+				const float shadowMult2 = 3.0; // for when lightDot is 0.0 (sun is angled relative to surface)
 			#endif
+			skyBrightness = min(skyBrightness * (shadowMult2 - lightDot * (shadowMult2 - shadowMult1)), 1.0);
 			
-		}
-	#else
-		float skyBrightness = 0.95;
-	#endif
-	
-	skyBrightness *= max(lightDot, 0.0);
+		#endif
+		
+	}
 	
 	return skyBrightness;
 }

@@ -1,6 +1,6 @@
 #ifdef FIRST_PASS
 	varying vec2 texcoord;
-	flat float glcolor_alpha;
+	flat_inout float glcolor_alpha;
 #endif
 
 

@@ -5,7 +5,7 @@
 	varying vec2 texcoord;
 	varying vec2 lmcoord;
 	varying vec3 glcolor;
-	flat int blockType;
+	flat_inout int blockType;
 	
 	varying vec3 normal;
 	
@@ -88,7 +88,7 @@ void main() {
 		#endif
 		
 		
-		color.a = WATER_TRANSPARENCY;
+		color.a = (1.0 - WATER_TRANSPARENCY);
 		
 	}
 	

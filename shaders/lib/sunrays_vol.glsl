@@ -19,44 +19,44 @@ vec3 getShadowPos(vec3 viewPos  ARGS_OUT) {
 
 
 
-float getVolSunraysAmount(inout vec3 color, float depth, inout uint rng  ARGS_OUT) {
-	const int SAMPLE_COUNT = int(SUNRAYS_QUALITY * SUNRAYS_QUALITY * 2);
+float getVolSunraysAmount(float depth, inout uint rng  ARGS_OUT) {
+	const int SAMPLE_COUNT = int(SUNRAYS_QUALITY * SUNRAYS_QUALITY);
 	
-	vec3 viewPosDir = screenToView(vec3(texcoord, depth)  ARGS_IN);
+	vec3 viewPosStep = screenToView(vec3(texcoord, depth)  ARGS_IN);
 	#include "/import/far.glsl"
-	viewPosDir = normalize(viewPosDir) * far / SAMPLE_COUNT;
+	float blockDepth = min(length(viewPosStep), far);
+	viewPosStep = normalize(viewPosStep) * blockDepth / SAMPLE_COUNT;
 	vec3 viewPos = vec3(0.0);
 	
-	const float noiseAmount = 0.6;
 	float random = randomFloat(rng);
-	viewPos += viewPosDir * (1.0 + random * noiseAmount / 2.0);
+	viewPos += viewPosStep * (1.0 + random * 0.5);
 	
 	float total = 0.0;
 	for (int i = 0; i < SAMPLE_COUNT; i ++) {
-		
-		#include "/import/gbufferProjection.glsl"
-		vec3 screenPos = endMat(gbufferProjection * startMat(viewPos)) * 0.5 + 0.5;
-		if (screenPos.z > depth) {
-			break;
-		}
 		
 		vec3 shadowPos = getShadowPos(viewPos  ARGS_IN);
 		if (texture2D(shadowtex0, shadowPos.xy).r >= shadowPos.z) {
 			total += 1.0;
 		}
 		
-		viewPos += viewPosDir;
+		viewPos += viewPosStep;
 		
 	}
-	float output = total / SAMPLE_COUNT;
+	#include "/import/invFar.glsl"
+	float output = total / SAMPLE_COUNT * (blockDepth * invFar);
+	
 	#include "/import/eyeBrightnessSmooth.glsl"
-	output = pow(output, mix(0.1, 0.7, eyeBrightnessSmooth.y / 240.0));
+	float skyBrightness = eyeBrightnessSmooth.y / 240.0;
+	output = pow(output, mix(0.2, 0.6, skyBrightness));
 	
 	#include "/import/gbufferModelViewInverse.glsl"
 	vec3 playerPos = (gbufferModelViewInverse * startMat(viewPos)).xyz;
+	if (blockDepth == far) {
+		playerPos *= 10.0;
+	}
 	float fogDistance = getFogDistance(playerPos  ARGS_IN);
 	float fogAmount = getFogAmount(fogDistance  ARGS_IN);
-	output *= 1.0 - 0.9 * fogAmount;
+	output *= 1.0 - 0.7 * fogAmount;
 	
-	return output * 0.7;
+	return output * 0.6;
 }

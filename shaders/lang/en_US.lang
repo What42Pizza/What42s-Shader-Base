@@ -55,8 +55,8 @@ option.DARKENED_STARS_BRIGHTNESS=Darkened Stars Brightness
 option.DARKENED_STARS_BRIGHTNESS.comment=Brightness of stars when darkened by blocklight. Only takes effect when 'Darken Stars Near Blocklight' is enabled
 value.DARKENED_STARS_BRIGHTNESS.-1=Use Style Value
 
-option.RAIN_TRANSPARENCY=Rain Transparency
-value.RAIN_TRANSPARENCY.-1=Use Style Value
+option.WEATHER_TRANSPARENCY=Weather Transparency
+value.WEATHER_TRANSPARENCY.-1=Use Style Value
 
 option.CLOUD_TRANSPARENCY=Cloud Transparency
 value.CLOUD_TRANSPARENCY.-1=Use Style Value

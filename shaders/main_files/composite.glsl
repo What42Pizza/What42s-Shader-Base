@@ -28,7 +28,7 @@
 
 
 #ifdef REFLECTIONS_ENABLED
-	void doRelfections(inout vec3 color  ARGS_OUT) {
+	void doReflections(inout vec3 color  ARGS_OUT) {
 		
 		// skip sky and fog
 		float depth = texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r;
@@ -75,7 +75,7 @@ void main() {
 	// ======== REFLECTIONS ========
 	
 	#ifdef REFLECTIONS_ENABLED
-		doRelfections(color  ARGS_IN);
+		doReflections(color  ARGS_IN);
 	#endif
 	
 	
