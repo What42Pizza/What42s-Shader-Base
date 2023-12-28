@@ -123,7 +123,7 @@ void main() {
 	#endif
 	
 	#if HIDE_NEARBY_CLOUDS == 1
-		transparency = CLOUD_TRANSPARENCY * atan(length(worldPos) - 30.0) / PI + 0.5
+		transparency = CLOUD_TRANSPARENCY * atan(length(worldPos) - 30.0) / PI + 0.5;
 	#endif
 	
 	glcolor = gl_Color.r;

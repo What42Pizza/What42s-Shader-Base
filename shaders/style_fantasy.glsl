@@ -36,10 +36,6 @@
 #undef FOG_ENABLED
 										#define FOG_ENABLED 1
 #endif
-#if ENTITY_FOG_ENABLED == -1
-#undef ENTITY_FOG_ENABLED
-										#define ENTITY_FOG_ENABLED 1
-#endif
 #if FOG_HEIGHT_SCALE == -1
 #undef FOG_HEIGHT_SCALE
 										#define FOG_HEIGHT_SCALE 2.0

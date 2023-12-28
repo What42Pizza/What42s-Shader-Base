@@ -82,12 +82,6 @@ value.FOG_ENABLED.-1=Use Style Value
 value.FOG_ENABLED.0=Off
 value.FOG_ENABLED.1=On
 
-option.ENTITY_FOG_ENABLED=Entity Fog Enabled
-option.ENTITY_FOG_ENABLED.comment=Enabled fog on entities. This usually isn't required because entities stop rendering before fog can effect them
-value.ENTITY_FOG_ENABLED.-1=Use Style Value
-value.ENTITY_FOG_ENABLED.0=Off
-value.ENTITY_FOG_ENABLED.1=On
-
 option.FOG_HEIGHT_SCALE=Fog Height Scale
 option.FOG_HEIGHT_SCALE.comment=How much further you can see upwards vs forwards
 value.FOG_HEIGHT_SCALE.-1=Use Style Value
