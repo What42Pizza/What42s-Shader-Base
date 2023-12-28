@@ -14,13 +14,13 @@
 #undef DARKENED_STARS_BRIGHTNESS
 										#define DARKENED_STARS_BRIGHTNESS 0.5
 #endif
-#if RAIN_TRANSPARENCY == -1
-#undef RAIN_TRANSPARENCY
-										#define RAIN_TRANSPARENCY 0.75
+#if WEATHER_TRANSPARENCY == -1
+#undef WEATHER_TRANSPARENCY
+										#define WEATHER_TRANSPARENCY 0.25
 #endif
 #if CLOUD_TRANSPARENCY == -1
 #undef CLOUD_TRANSPARENCY
-										#define CLOUD_TRANSPARENCY 0.7
+										#define CLOUD_TRANSPARENCY 0.3
 #endif
 #if HIDE_NEARBY_CLOUDS == -1
 #undef HIDE_NEARBY_CLOUDS
@@ -42,7 +42,7 @@
 #endif
 #if FOG_EXTRA_CLOUDS_DISTANCE == -1
 #undef FOG_EXTRA_CLOUDS_DISTANCE
-										#define FOG_EXTRA_CLOUDS_DISTANCE 5.0
+										#define FOG_EXTRA_CLOUDS_DISTANCE 10.0
 #endif
 #if FOG_CURVE == -1
 #undef FOG_CURVE
@@ -149,11 +149,11 @@
 #endif
 #if CAVE_AMBIENT_GREEN == -1
 #undef CAVE_AMBIENT_GREEN
-										#define CAVE_AMBIENT_GREEN 0.9
+										#define CAVE_AMBIENT_GREEN 0.8
 #endif
 #if CAVE_AMBIENT_BLUE == -1
 #undef CAVE_AMBIENT_BLUE
-										#define CAVE_AMBIENT_BLUE 0.8
+										#define CAVE_AMBIENT_BLUE 0.75
 #endif
 #if CAVE_AMBIENT_BRIGHTNESS == -1
 #undef CAVE_AMBIENT_BRIGHTNESS
@@ -367,10 +367,6 @@
 #undef BLOCKLIGHT_FLICKERING_ENABLED
 										#define BLOCKLIGHT_FLICKERING_ENABLED 1
 #endif
-#if CORRECTED_LIGHTING_FOG == -1
-#undef CORRECTED_LIGHTING_FOG
-										#define CORRECTED_LIGHTING_FOG 1
-#endif
 
 
 
@@ -383,11 +379,11 @@
 #endif
 #if HANDHELD_LIGHT_DISTANCE == -1
 #undef HANDHELD_LIGHT_DISTANCE
-										#define HANDHELD_LIGHT_DISTANCE 20
+										#define HANDHELD_LIGHT_DISTANCE 18
 #endif
 #if HANDHELD_LIGHT_BRIGHTNESS == -1
 #undef HANDHELD_LIGHT_BRIGHTNESS
-										#define HANDHELD_LIGHT_BRIGHTNESS 0.9
+										#define HANDHELD_LIGHT_BRIGHTNESS 0.7
 #endif
 
 
@@ -567,7 +563,7 @@
 #endif
 #if SUNRAYS_AMOUNT_NIGHT == -1
 #undef SUNRAYS_AMOUNT_NIGHT
-										#define SUNRAYS_AMOUNT_NIGHT 0.25
+										#define SUNRAYS_AMOUNT_NIGHT 0.4
 #endif
 #if SUNRAYS_AMOUNT_SUNRISE == -1
 #undef SUNRAYS_AMOUNT_SUNRISE
@@ -591,15 +587,15 @@
 #endif
 #if SUNRAYS_MOON_RED == -1
 #undef SUNRAYS_MOON_RED
-										#define SUNRAYS_MOON_RED 0.0
+										#define SUNRAYS_MOON_RED 0.1
 #endif
 #if SUNRAYS_MOON_GREEN == -1
 #undef SUNRAYS_MOON_GREEN
-										#define SUNRAYS_MOON_GREEN 0.5
+										#define SUNRAYS_MOON_GREEN 0.55
 #endif
 #if SUNRAYS_MOON_BLUE == -1
 #undef SUNRAYS_MOON_BLUE
-										#define SUNRAYS_MOON_BLUE 1.0
+										#define SUNRAYS_MOON_BLUE 1.2
 #endif
 
 
@@ -895,7 +891,7 @@
 #endif
 #if WATER_TRANSPARENCY == -1
 #undef WATER_TRANSPARENCY
-										#define WATER_TRANSPARENCY 0.8
+										#define WATER_TRANSPARENCY 0.2
 #endif
 
 

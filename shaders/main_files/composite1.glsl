@@ -8,11 +8,11 @@
 	varying vec2 texcoord;
 	
 	#if DEPTH_SUNRAYS_ENABLED == 1
-		flat vec2 lightCoord;
-		flat float depthSunraysAmountMult;
+		flat_inout vec2 lightCoord;
+		flat_inout float depthSunraysAmountMult;
 	#endif
 	#if VOL_SUNRAYS_ENABLED == 1
-		flat float volSunraysAmountMult;
+		flat_inout float volSunraysAmountMult;
 	#endif
 #endif
 
@@ -74,7 +74,7 @@ void main() {
 		#if VOL_SUNRAYS_ENABLED == 1
 			#include "/import/sunAngle.glsl"
 			vec3 volSunraysColor = sunAngle < 0.5 ? SUNRAYS_SUN_COLOR : SUNRAYS_MOON_COLOR;
-			sunraysAddition += getVolSunraysAmount(color, depth, rng  ARGS_IN) * volSunraysColor * volSunraysAmountMult;
+			sunraysAddition += getVolSunraysAmount(depth, rng  ARGS_IN) * volSunraysColor * volSunraysAmountMult;
 		#endif
 		
 		noisyAdditions += sunraysAddition;
@@ -140,8 +140,8 @@ void main() {
 		#include "/import/moonLightBrightness.glsl"
 		volSunraysAmountMult =
 			ambientSunPercent * SUNRAYS_AMOUNT_DAY +
-			ambientSunrisePercent * SUNRAYS_AMOUNT_SUNRISE +
-			ambientSunsetPercent * SUNRAYS_AMOUNT_SUNSET +
+			sqrt(ambientSunrisePercent) * SUNRAYS_AMOUNT_SUNRISE +
+			sqrt(ambientSunsetPercent) * SUNRAYS_AMOUNT_SUNSET +
 			ambientMoonPercent * SUNRAYS_AMOUNT_NIGHT;
 		volSunraysAmountMult *= sunLightBrightness + moonLightBrightness;
 	#endif

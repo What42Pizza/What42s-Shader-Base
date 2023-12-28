@@ -1,5 +1,5 @@
 #ifdef FIRST_PASS
-	flat vec4 glcolor;
+	flat_inout vec4 glcolor;
 #endif
 
 

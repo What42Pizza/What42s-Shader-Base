@@ -51,7 +51,7 @@ void main() {
 	
 	doColorCorrection(color  ARGS_IN);
 	#if COLORBLIND_MODE != 0
-		apply_colorblindness_correction(color  ARGS_IN);
+		applyColorblindnessCorrection(color  ARGS_IN);
 	#endif
 	
 	
@@ -72,7 +72,8 @@ void main() {
 	#endif
 	
 	//color = texelFetch(NORMALS_BUFFER, texelcoord, 0).rgb;
-	//color = vec3(toLinearDepth(texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r  ARGS_IN));
+	//float depth = texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r;
+	//color = vec3(toBlockDepth(depth  ARGS_IN));
 	
 	
 	

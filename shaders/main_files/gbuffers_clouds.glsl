@@ -3,10 +3,10 @@
 #ifdef FIRST_PASS
 	
 	varying vec2 texcoord;
-	flat float glcolor;
-	flat vec3 colorMult;
+	flat_inout float glcolor;
+	flat_inout vec3 colorMult;
 	#if HIDE_NEARBY_CLOUDS == 1
-		varying float transparency;
+		varying float opacity;
 	#endif
 	#if FOG_ENABLED == 1
 		varying float fogDistance;
@@ -31,9 +31,9 @@ void main() {
 	
 	
 	#if HIDE_NEARBY_CLOUDS == 0
-		#define transparency CLOUD_TRANSPARENCY
+		#define opacity (1.0 - CLOUD_TRANSPARENCY)
 	#endif
-	color.a = transparency;
+	color.a = opacity;
 	
 	
 	color.rgb *= colorMult * 2.3;
@@ -123,7 +123,7 @@ void main() {
 	#endif
 	
 	#if HIDE_NEARBY_CLOUDS == 1
-		transparency = CLOUD_TRANSPARENCY * atan(length(worldPos) - 30.0) / PI + 0.5;
+		opacity = (1.0 - CLOUD_TRANSPARENCY) * atan(length(worldPos) - 30.0) / PI + 0.5;
 	#endif
 	
 	glcolor = gl_Color.r;

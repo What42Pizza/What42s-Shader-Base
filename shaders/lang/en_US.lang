@@ -55,8 +55,8 @@ option.DARKENED_STARS_BRIGHTNESS=Darkened Stars Brightness
 option.DARKENED_STARS_BRIGHTNESS.comment=Brightness of stars when darkened by blocklight. Only takes effect when 'Darken Stars Near Blocklight' is enabled
 value.DARKENED_STARS_BRIGHTNESS.-1=Use Style Value
 
-option.RAIN_TRANSPARENCY=Rain Transparency
-value.RAIN_TRANSPARENCY.-1=Use Style Value
+option.WEATHER_TRANSPARENCY=Weather Transparency
+value.WEATHER_TRANSPARENCY.-1=Use Style Value
 
 option.CLOUD_TRANSPARENCY=Cloud Transparency
 value.CLOUD_TRANSPARENCY.-1=Use Style Value
@@ -414,12 +414,6 @@ option.BLOCKLIGHT_FLICKERING_ENABLED.comment=Makes block light flicker slightly
 value.BLOCKLIGHT_FLICKERING_ENABLED.-1=Use Style Value
 value.BLOCKLIGHT_FLICKERING_ENABLED.0=Off
 value.BLOCKLIGHT_FLICKERING_ENABLED.1=On
-
-option.CORRECTED_LIGHTING_FOG=Use Corrected Lighting Fog
-option.CORRECTED_LIGHTING_FOG.comment=Uses a slightly more complicated fog distance calculation
-value.CORRECTED_LIGHTING_FOG.-1=Use Style Value
-value.CORRECTED_LIGHTING_FOG.0=Off
-value.CORRECTED_LIGHTING_FOG.1=On
 
 
 

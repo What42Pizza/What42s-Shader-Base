@@ -4,7 +4,7 @@
 
 <br>
 
-### If you want vanilla Minecraft's shader files directly ported to Optifine, you can find it [Here](https://github.com/XorDev/XorDevs-Default-Shaderpack)
+### If you want vanilla Minecraft's shader files directly ported to Optifine, you can use [XorDev's Default-Shaderpack](https://github.com/XorDev/XorDevs-Default-Shaderpack)
 
 <br>
 
@@ -36,6 +36,23 @@ Here's a list of the commands and why they exist:
 - **build world files':** This generates all the files in the /shaders/world_ folders, using data that is hard-coded into src/main.rs. Even if you don't know Rust, you should still be able to edit the values if needed
 
 As always, you can edit your repo's rust-utils to add more commands and/or tweak existing commands. If you find something you consider a bug, you can contact me and I'll try to fix it
+
+<br>
+<br>
+<br>
+
+## OptiFine Support:
+
+With the release of b1.9.0, OptiFine is a second-class platform. I'll make sure it still works with OptiFine on 1.12.2, but Iris 1.19.4 is where I put most of my effort. The default shader code for Iris does still work on OptiFine without any modification, but the endless list of errors that OptiFine generates makes it almost unusable. The OptiFine version is generated using rust-utils, which can automatically remove the styles functionality.
+
+If you want to develop for OptiFine first, you have 2 options:
+
+- 1: Clone this repo into the shaders folder and deal with the initial loading time
+- - Pro: you can work on both versions at once, while having OptiFine be first-class
+- - Con: you have to deal with long initial loading times and huge log files
+- 2: Replace this repo's /shaders folder with the /shaders folder from the latest OptiFine export
+- - Pro: development is greatly simplified
+- - Con: you can no longer support multiple styles
 
 <br>
 <br>
@@ -115,23 +132,6 @@ You should be able to figure this out yourself, but I'll still give some quick o
 <br>
 <br>
 <br>
-
-## OptiFine Support:
-
-With the release of b1.9.0, OptiFine is a second-class platform. I'll make sure it still works with OptiFine on 1.12.2, but Iris 1.19.4 is where I put most of my effort. The default shader code for Iris does still work on OptiFine without any modification, but the endless list of errors that OptiFine generates makes it almost unusable. The OptiFine version is generated using rust-utils, which can automatically remove the styles functionality.
-
-If you want to develop for OptiFine first, you have 2 options:
-
-- 1: Clone this repo into the shaders folder and deal with the initial loading time
-- - Pro: you can work on both versions at once, while having OptiFine be first-class
-- - Con: you have to deal with long initial loading times and huge log files
-- 2: Replace this repo's /shaders folder with the /shaders folder from the latest OptiFine export
-- - Pro: development is greatly simplified
-- - Con: you can no longer support multiple styles
-
-<br>
-<br>
-<br>
 <br>
 <br>
 
@@ -152,48 +152,52 @@ If you want to develop for OptiFine first, you have 2 options:
 
 ## Shading Effect Locations:
 
+This describes which /main_files-s handle different effects
+
 - **Shadows:**
+- - Main Processing:  /main_files/deferred.glsl  (via sampleShadow())
 - - Rendering:  /main_files/shadow.glsl
-- - Usage:  lib/lighting.glsl
 - **Reflections**
-- - Water Reflections:  /main_files/water.glsl
+- - Main Processing:  /main_files/composite.glsl  (via doReflections())
 - **Colorblindness Correction**
-- - Main Processing:  /main_files/composite5.glsl
+- - Main Processing:  /main_files/composite5.glsl  (via applyColorblindnessCorrection())
 - **Anti-Aliasing:**
-- - Main Processing:  /main_files/composite4.glsl
-- - TAA Jitter:  /lib/taa_jitter.glsl,  (almost) every VSH shader ('taaOffset' is added to 'gl_Position.xy')
+- - Main Processing:  /main_files/composite4.glsl  (via doTAA())
+- - Jitter:  /main_files/*  (via doTaaJitter())
 - **Isometric Rendering**
-- - Main Processing:  /main_files
+- - Main Processing:  /main_files/*  (via projectIsometric())
 - **SSAO**
-- - Main Processing: /main_files/composite.glsl
+- - Main Processing: /main_files/composite.glsl  (via getAoFactor())
 - **Sunrays:**
-- - Main processing:  /main_files/composite1.glsl
-- - Application:  /main_files/composite2.glsl (works the same as bloom application)
+- - Main Processing:  /main_files/composite1.glsl  (via getDepthSunraysAmount() and getVolSunraysAmount())
+- - Application:  /main_files/composite2.glsl  (calculations are written to a mip-mapped buffer that is sampled with lowered lod so that the noise is reduced)
 - **Bloom:**
-- - Main Processing:  /main_files/composite1.glsl
+- - Main Processing:  /main_files/composite1.glsl  (via getBloomAddition())
 - - Pre-Processing:  /main_files/composite.glsl
-- - Application:  /main_files/composite2.glsl (calculations are written to a mip-mapped buffer that is sampled with blur so that the noise is reduced)
+- - Application:  /main_files/composite2.glsl  (calculations are written to a mip-mapped buffer that is sampled with lowered lod so that the noise is reduced)
 - **Depth of Field**
-- - Main Processing:  /main_files/composite3.glsl
+- - Main Processing:  /main_files/composite3.glsl  (via doDOF())
 - **Motion Blur**
-- - Main Processing:  /main_files/composite4.glsl
+- - Main Processing:  /main_files/composite4.glsl  (via doMotionBlur())
 - **Sharpening:**
-- - Main Processing:  /main_files/composite5.glsl
+- - Main Processing:  /main_files/composite4.glsl  (via doSharpening())
 - **Waving Blocks**
-- - Main Processing:  /main_files/terrain.glsl,  /main_files.shadow.glsl
+- - Main Processing:  /main_files/terrain.glsl  (via applyWaving())
+- - Main Processing (for shadows):  /main_files/shadow.glsl  (via applyWaving())
 - **Fog:**
-- - Main Processing:  /main_files/terrain.glsl,  /main_files/entities.glsl,  /main_files/clouds.glsl
+- - Main Processing:  /main_files/deferred.glsl  (via getFogDistance(), getFogAmount(), and applyFog())
+- - Main Processing (transparents):  /main_files/water.glsl  (via getFogDistance(), getFogAmount(), and applyFog())
+- - Main Processing (clouds):  /main_files/clouds.glsl  (via getFogDistance(), getFogAmount(), and applyFog())
 - **Handheld Light**
-- - Main Processing:  /lib/lighting.glsl
+- - Main Processing:  /main_files/terrain.glsl,  /main_files/textured.glsl,  /main_files/water.glsl,  /main_files/entities.glsl,  /main_files/hand.glsl
 - **Underwater Waviness**
 - - Main Processing:  /main_files/composite5.glsl
 - **Vignette:**
 - - Main Processing:  /main_files/composite5.glsl
-- **Tonemapping:**
-- - Main Processing:  /main_files/composite5.glsl
+- **Color Correction and/or Tonemapping:**
+- - Main Processing:  /main_files/composite5.glsl  (via doColorCorrection())
 - **Lighting:**
-- - Main Processing:  lib/lighting.glsl
-- - Usage:  /main_files/terrain.glsl,  /main_files/textured.glsl,  /main_files/entities.glsl,  /main_files/hand.glsl
+- - Main Processing:  /main_files/terrain.glsl,  /main_files/textured.glsl,  /main_files/water.glsl,  /main_files/entities.glsl,  /main_files/hand.glsl  (via doPreLighting() and getBasicLighting())
 
 <br>
 
@@ -202,11 +206,11 @@ If you want to develop for OptiFine first, you have 2 options:
 - **texture / colortex0:  Main Image OR Debug Output** 
 - **colortex1:  TAA Texture**
 - **colortex2:  Bloom Texture**
-- **colortex3:  Reflection Strength / Noisy Additions (RS exists from gbuffers to deferred, NA exists from composite1 and on)**
+- **colortex3:  Reflection Strength / Noisy Additions (holds RS from gbuffers to deferred, then holds NA from composite1 and on)**
 - **colortex4:  Normals**
 - **colortex5 / gaux2:  Copy of colortex0, only used for water reflections**
 
-Note: 'noisy additions' buffer is where things like bloom, sunrays, etc (anything that gives noisy results) are rendered before being added to the main image using LOD-sampling as a high-perf blur
+Note: 'noisy additions' buffer is where things like bloom, sunrays, etc (anything that gives noisy results) are rendered before being added to the main image using LOD-sampling as a high-perf(?) blur
 
 <br>
 <br>
