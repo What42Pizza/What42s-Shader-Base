@@ -1,5 +1,13 @@
 <br>
 
+- b1.9.5 (23/12/30)
+  - Improved shadow filtering performance
+  - Added setting: Shadows Noise Amount
+  - Settings changes:
+  - - Setting 'SHADOW_FILTERING' now only accepts [-1 (use style value), 0 (off (pixelated)), 1 (off (smooth)), 2 (on), 3 (on (legacy version))]
+
+<br>
+
 - b1.9.4 (23/12/27)
   - Fixed setting 'Hide Nearby Clouds'
   - Settings changes:

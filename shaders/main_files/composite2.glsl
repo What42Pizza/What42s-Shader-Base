@@ -5,7 +5,13 @@
 
 
 #ifdef FIRST_PASS
+	
 	varying vec2 texcoord;
+	
+	#if BLOOM_ENABLED == 0
+		const bool colortex3MipmapEnabled = true;
+	#endif
+	
 #endif
 
 

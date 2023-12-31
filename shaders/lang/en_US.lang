@@ -379,10 +379,14 @@ value.SHADOW_DISTORT_ADDITION.-1=Use Style Value
 option.SHADOW_FILTERING=Shadow Filtering
 option.SHADOW_FILTERING.comment=Smoothens shadow edges (works best with TAA)\n\n(Performance cost: Low)
 value.SHADOW_FILTERING.-1=Use Style Value
-value.SHADOW_FILTERING.0=Off
-value.SHADOW_FILTERING.1=Low
-value.SHADOW_FILTERING.2=Medium
-value.SHADOW_FILTERING.3=High
+value.SHADOW_FILTERING.0=Off (pixelated)
+value.SHADOW_FILTERING.1=Off (smooth)
+value.SHADOW_FILTERING.2=On
+value.SHADOW_FILTERING.3=On (legacy version)
+
+option.SHADOWS_NOISE=Shadows Noise Amount
+option.SHADOWS_NOISE.comment=Amount of noise to apply to shadow filtering
+value.SHADOWS_NOISE.-1=Use Style Value
 
 option.EXCLUDE_FOLIAGE=Exclude Foliage
 option.EXCLUDE_FOLIAGE.comment=If true, foliage will not cast shadows\n\n(Performance cost: Low)
@@ -757,7 +761,7 @@ screen.SHARPENING_SETTINGS=Sharpening
 
 
 option.SHARPENING_ENABLED=Sharpening Enabled
-option.SHARPENING_ENABLED.comment=Accentuates edges (hopefully without making them pixelated). (Performance cost: Low)
+option.SHARPENING_ENABLED.comment=Accentuates edges (hopefully without making them pixelated, only recommended if using TAA). (Performance cost: Low)
 value.SHARPENING_ENABLED.-1=Use Style Value
 value.SHARPENING_ENABLED.0=Off
 value.SHARPENING_ENABLED.1=On

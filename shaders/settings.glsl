@@ -1,8 +1,6 @@
 // OptiFine Settings (DON'T DELETE)
 /*
 const bool colortex1Clear = false;
-const bool colortex0MipmapEnabled = true;
-const bool colortex3MipmapEnabled = true;
 const int colortex2Format = RGB16F;
 const int colortex4Format = RGB32F;
 const float wetnessHalflife = 50.0f;
@@ -136,5 +134,5 @@ const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8
 
 #define LIGHT_SMOOTHING 0.1
 
-const float SHADOW_OFFSET_INCREASE = 1.1 / shadowMapResolution;
+const float SHADOW_OFFSET_INCREASE = 1.3 / shadowMapResolution;
 const float SHADOW_OFFSET_MIN = 1.1 / pow(shadowMapResolution, 0.95);
