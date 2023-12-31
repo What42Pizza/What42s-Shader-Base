@@ -6,14 +6,16 @@ use crate::prelude::*;
 
 pub struct Command {
 	pub name: &'static str,
+	pub display_name: &'static str,
 	pub description: &'static str,
 	pub function: CommandFunction,
 }
 
 impl Command {
-	pub const fn new(name: &'static str, description: &'static str, function: CommandFunction) -> Self {
+	pub const fn new(name: &'static str, display_name: &'static str, description: &'static str, function: CommandFunction) -> Self {
 		Self {
 			name,
+			display_name,
 			description,
 			function,
 		}
