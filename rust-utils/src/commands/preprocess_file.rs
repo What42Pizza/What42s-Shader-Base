@@ -7,6 +7,7 @@ pub fn function(args: &[String]) -> Result<()> {
 	if args.len() != 2 {
 		return Err(Error::msg("Command 'preprocess_file' must take two args (input_path & output_path)"));
 	}
+	println!("Preprocessing file...");
 	
 	let preprocessed_file = preprocess_file(&PathBuf::from(&args[0]))?;
 	
@@ -18,12 +19,7 @@ pub fn function(args: &[String]) -> Result<()> {
 	let output_path = PathBuf::from(&args[1]);
 	fs::write(output_path, output_bytes)?;
 	
-	//println!("Preprocessed file:");
-	//println!();
-	//for line in preprocessed_file {
-	//	println!("{line}");
-	//}
-	
+	println!("Done");
 	Ok(())
 }
 

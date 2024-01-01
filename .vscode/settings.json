@@ -3,6 +3,7 @@
 		"compat",
 		"damagedblock",
 		"gbuffer",
+		"glslang",
 		"ivec",
 		"raytracer",
 		"skybasic",
