@@ -1,4 +1,5 @@
 use crate::prelude::*;
+use std::fs;
 
 
 
@@ -26,5 +27,12 @@ pub fn get_project_path() -> Result<PathBuf> {
 pub fn get_shaders_path() -> Result<PathBuf> {
 	let mut dir = get_project_path()?;
 	dir.push("shaders");
+	Ok(dir)
+}
+
+pub fn get_temp_path() -> Result<PathBuf> {
+	let mut dir = get_project_path()?;
+	dir.push("temp");
+	if !dir.exists() {fs::create_dir(&dir)?;}
 	Ok(dir)
 }

@@ -953,9 +953,11 @@ option.WAVING_NIGHT_MULT=Waving Night Multiplier
 option.WAVING_NIGHT_MULT.comment=How much to increase / decrease the waving amount when it is night
 value.WAVING_NIGHT_MULT.-1=Use Style Value
 
-option.HEIGHT_BASED_WAVING_ENABLED=Height Based Waviness Multiplier
+option.HEIGHT_BASED_WAVING_ENABLED=Height Based Waviness Enabled
 option.HEIGHT_BASED_WAVING_ENABLED.comment=Increases waviness when higher up
 value.HEIGHT_BASED_WAVING_ENABLED.-1=Use Style Value
+value.HEIGHT_BASED_WAVING_ENABLED.0=Off
+value.HEIGHT_BASED_WAVING_ENABLED.1=On
 
 
 

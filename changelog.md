@@ -1,5 +1,13 @@
 <br>
 
+- b1.9.6 (24/01/02)
+  - Fixed isometric rendering (now with working shadows!)
+  - Fixed langs for setting 'HEIGHT_BASED_WAVING_ENABLED'
+  - Settings changes:
+  - - New 'SHADOWS_NOISE' is: old 'SHADOWS_NOISE' * 1.25
+
+<br>
+
 - b1.9.5 (23/12/30)
   - Improved shadow filtering performance
   - Added setting: Shadows Noise Amount

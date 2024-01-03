@@ -1,4 +1,3 @@
-
 #version 130
 
 #define SHADER_GBUFFERS_SKYBASIC

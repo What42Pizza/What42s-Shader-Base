@@ -43,11 +43,11 @@ float getVolSunraysAmount(float depth, inout uint rng  ARGS_OUT) {
 		
 	}
 	#include "/import/invFar.glsl"
-	float output = total / SAMPLE_COUNT * (blockDepth * invFar);
+	float sunraysAmount = total / SAMPLE_COUNT * (blockDepth * invFar);
 	
 	#include "/import/eyeBrightnessSmooth.glsl"
 	float skyBrightness = eyeBrightnessSmooth.y / 240.0;
-	output = pow(output, mix(0.2, 0.6, skyBrightness));
+	sunraysAmount = pow(sunraysAmount, mix(0.2, 0.6, skyBrightness));
 	
 	#include "/import/gbufferModelViewInverse.glsl"
 	vec3 playerPos = (gbufferModelViewInverse * startMat(viewPos)).xyz;
@@ -56,7 +56,7 @@ float getVolSunraysAmount(float depth, inout uint rng  ARGS_OUT) {
 	}
 	float fogDistance = getFogDistance(playerPos  ARGS_IN);
 	float fogAmount = getFogAmount(fogDistance  ARGS_IN);
-	output *= 1.0 - 0.7 * fogAmount;
+	sunraysAmount *= 1.0 - 0.7 * fogAmount;
 	
-	return output * 0.6;
+	return sunraysAmount * 0.6;
 }

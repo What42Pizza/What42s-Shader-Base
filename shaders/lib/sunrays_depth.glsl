@@ -36,8 +36,8 @@ float getDepthSunraysAmount(inout uint rng  ARGS_OUT) {
 	
 	if (total > 0.0) total = max(total, 0.2);
 	
-	float output = sqrt(total);
-	output *= max(1.0 - length(lightCoord - 0.5) * 1.5, 0.0);
+	float sunraysAmount = sqrt(total);
+	sunraysAmount *= max(1.0 - length(lightCoord - 0.5) * 1.5, 0.0);
 	
-	return output;
+	return sunraysAmount;
 }

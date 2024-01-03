@@ -42,8 +42,11 @@ pub fn function(args: &[String]) -> Result<()> {
 
 pub fn export_shader(project_path: &Path, version: &str, is_optifine: bool, zip_options: FileOptions) -> Result<()> {
 	
+	let export_dir = project_path.push_new("export");
+	if !export_dir.exists() {fs::create_dir(&export_dir)?;}
+	
 	let output_file_name = format!("What42's Shader Base {version}{}.zip", if is_optifine {" (OptiFine)"} else {""});
-	let output_path = project_path.push_new(output_file_name);
+	let output_path = export_dir.push_new(output_file_name);
 	
 	let output_file = std::fs::File::create(output_path)?;
 	let mut output_zip = ZipWriter::new(output_file);

@@ -7,16 +7,16 @@ pub fn create_file_contents(world_name: &str, shader_name: &str, shader_type: &s
 	let shader_name_uppercase = shader_name.to_uppercase();
 	let raw_output = format!(r##"
 		#version 130
-
+		
 		#define SHADER_{shader_name_uppercase}
 		#define {world_name}
 		#define {shader_type}
-
+		
 		#include "/settings.glsl"
 		#include "/common.glsl"
-
-
-
+		
+		
+		
 		#define FIRST_PASS
 		#define ARGS_IN , false
 		#define ARGS_OUT , bool dummy
@@ -30,9 +30,9 @@ pub fn create_file_contents(world_name: &str, shader_name: &str, shader_type: &s
 		#undef ARGS_OUT
 		#undef ARG_IN
 		#undef ARG_OUT
-
+		
 		#include "/import/switchboard.glsl"
-
+		
 		#define SECOND_PASS
 		#define ARGS_IN
 		#define ARGS_OUT
@@ -41,10 +41,11 @@ pub fn create_file_contents(world_name: &str, shader_name: &str, shader_type: &s
 		#include "/main_files/{shader_name}.glsl"
 	"##);
 	let mut output = String::with_capacity(raw_output.len());
-	for curr_char in raw_output.chars() {
+	for curr_char in raw_output.trim().chars() {
 		if curr_char == '\t' {continue;}
 		output.push(curr_char);
 	}
+	output.push('\n');
 	output
 }
 

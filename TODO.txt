@@ -7,8 +7,6 @@ Add sub-styles?
 	Zombies / Spooky / Creepy?
 	needs more sub-styles to justify feature
 Rework waving calculations for performance?
-Add void fog option?
-Add settings for manually disabling composite files?
 Do a round of making sure different settings combinations work
 Prevent TAA on entities?
 Add water caustics?
@@ -18,9 +16,11 @@ Go through settings in shaders.properties and make sure all instances of setting
 Add reflections to normal glass too?
 Add documentation for isometrics
 Increase waviness of plant tops
-Add waviness to rain reflections
+Add ripples to rain reflections
+Add void fog option?
 Add shader seasons?
 Move 'rainReflectionStrength' calculations to fsh?
+Add settings for manually disabling composite files?
 Add tilted weather
 Add backwards depth check to reflections?
 Make reflections work with isometric rendering

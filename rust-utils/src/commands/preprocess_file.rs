@@ -16,7 +16,9 @@ pub fn function(args: &[String]) -> Result<()> {
 		output_bytes.append(&mut line.into_bytes());
 		output_bytes.push(b'\n');
 	}
-	let output_path = PathBuf::from(&args[1]);
+	
+	let temp_path = get_temp_path()?;
+	let output_path = temp_path.push_new(&args[1]);
 	fs::write(output_path, output_bytes)?;
 	
 	println!("Done");

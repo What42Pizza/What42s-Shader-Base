@@ -43,23 +43,22 @@
 #else
 	
 	
+	#include "/lib/isometric.glsl"
+	
 	vec2 reprojection(vec3 screenPos, vec3 cameraOffset  ARGS_OUT) {
-		#include "/import/aspectRatio.glsl"
+		
+		vec3 worldPos = screenPos * 2.0 - 1.0;
+		worldPos.z += getIsometricOffset(ARG_IN);
+		worldPos /= getIsometricScale(ARG_IN);
 		#include "/import/gbufferModelViewInverse.glsl"
+		worldPos = mat3(gbufferModelViewInverse) * worldPos;
+		
+		vec3 prevWorldPos = worldPos + cameraOffset;
+		
 		#include "/import/gbufferPreviousModelView.glsl"
-		const float scale = ISOMETRIC_WORLD_SCALE * 0.5;
-		const float forwardPlusBackward = ISOMETRIC_FORWARD_VISIBILITY * 0.5 + ISOMETRIC_BACKWARD_VISIBILITY * 0.5;
-		const float forwardMinusBackward = ISOMETRIC_FORWARD_VISIBILITY * 0.5 - ISOMETRIC_BACKWARD_VISIBILITY * 0.5;
-		vec4 scaleVec = vec4(scale * aspectRatio, scale, -forwardPlusBackward, 1);
-		const vec4 offsetVec = vec4(0, 0, forwardMinusBackward / forwardPlusBackward, 0);
-		screenPos = screenPos * 2.0 - 1.0;
-		
-		vec4 worldPos = gbufferModelViewInverse * ((vec4(screenPos, 1.0) + offsetVec) * scaleVec);
-		worldPos /= worldPos.w;
-		
-		vec4 prevWorldPos = worldPos + vec4(cameraOffset, 0.0);
-		vec4 prevCoord = (gbufferPreviousModelView * prevWorldPos) / scaleVec - offsetVec;
-		return prevCoord.xy / prevCoord.w * 0.5 + 0.5;
+		vec2 prevCoord = (mat3(gbufferPreviousModelView) * prevWorldPos).xy;
+		prevCoord.xy *= getIsometricScale(ARG_IN).xy;
+		return prevCoord.xy * 0.5 + 0.5;
 	}
 	
 	

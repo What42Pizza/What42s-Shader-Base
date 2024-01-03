@@ -45,6 +45,7 @@ void main() {
 	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
 	
 	#if ISOMETRIC_RENDERING_ENABLED == 1
+		#include "/import/gbufferModelViewInverse.glsl"
 		vec3 worldPos = endMat(gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex));
 		gl_Position = projectIsometric(worldPos  ARGS_IN);
 	#else

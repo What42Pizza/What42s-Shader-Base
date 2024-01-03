@@ -28,8 +28,10 @@ uniform sampler2D shadowtex0;
 
 #ifdef FSH
 	#define flat_inout flat in
+	//#define varying in
 #else
 	#define flat_inout flat out
+	//#define varying out
 #endif
 
 #define HAND_DEPTH 0.19 // idk what should actually be here
@@ -220,12 +222,12 @@ void adjustLmcoord(inout vec2 lmcoord) {
 }
 
 vec3 getSkyLight(vec4 skylightPercents) {
-	vec3 output = 
+	vec3 skyLight = 
 		skylightPercents.x * SKYLIGHT_DAY_COLOR +
 		skylightPercents.y * SKYLIGHT_NIGHT_COLOR +
 		skylightPercents.z * SKYLIGHT_SUNRISE_COLOR +
 		skylightPercents.w * SKYLIGHT_SUNSET_COLOR;
-	return output / 2.0;
+	return skyLight / 2.0;
 }
 
 vec3 getAmbientLight(vec4 skylightPercents, float ambientBrightness) {

@@ -72,7 +72,6 @@ void main() {
 	#endif
 	
 	//color = texelFetch(NORMALS_BUFFER, texelcoord, 0).rgb;
-	//float depth = texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r;
 	//color = vec3(toBlockDepth(depth  ARGS_IN));
 	
 	

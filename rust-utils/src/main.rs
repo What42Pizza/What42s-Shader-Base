@@ -95,7 +95,7 @@ const COMMANDS: &[data::Command] = &[
 
 pub mod prelude {
 	pub use crate::{*, data::*, utils::*, custom_impls::*};
-	pub use std::{path::{PathBuf, Path}, result::Result as StdResult};
+	pub use std::{path::{PathBuf, Path}, result::Result as StdResult, process::Output as ProcessOutput};
 	pub use anyhow::*;
 }
 
