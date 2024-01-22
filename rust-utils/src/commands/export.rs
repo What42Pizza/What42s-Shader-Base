@@ -17,17 +17,22 @@ pub fn function(args: &[String]) -> Result<()> {
 	io::stdin().read_line(&mut version)?;
 	let version = version.trim().to_string();
 	
+	let project_path = get_project_path()?;
+	let export_path = project_path.push_new("export");
+	if export_path.exists() {
+		fs::remove_dir_all(&export_path)?;
+	}
+	fs::create_dir(&export_path)?;
+	
 	let options = FileOptions::default()
 		.compression_method(zip::CompressionMethod::Deflated)
 		.unix_permissions(0o755);
 	
-	let project_path = get_project_path()?;
-	
 	println!("Exporting For Iris...");
-	export_shader(&project_path, &version, false, options)?;
+	export_shader(&project_path, &export_path, &version, false, options)?;
 	println!("Done");
 	println!("Exporting for OptiFine...");
-	export_shader(&project_path, &version, true, options)?;
+	export_shader(&project_path, &export_path, &version, true, options)?;
 	println!("Done");
 	
 	println!();
@@ -40,13 +45,10 @@ pub fn function(args: &[String]) -> Result<()> {
 
 
 
-pub fn export_shader(project_path: &Path, version: &str, is_optifine: bool, zip_options: FileOptions) -> Result<()> {
-	
-	let export_dir = project_path.push_new("export");
-	if !export_dir.exists() {fs::create_dir(&export_dir)?;}
+pub fn export_shader(project_path: &Path, export_path: &Path, version: &str, is_optifine: bool, zip_options: FileOptions) -> Result<()> {
 	
 	let output_file_name = format!("What42's Shader Base {version}{}.zip", if is_optifine {" (OptiFine)"} else {""});
-	let output_path = export_dir.push_new(output_file_name);
+	let output_path = export_path.push_new(output_file_name);
 	
 	let output_file = std::fs::File::create(output_path)?;
 	let mut output_zip = ZipWriter::new(output_file);
