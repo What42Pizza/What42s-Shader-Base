@@ -1,3 +1,11 @@
+#if SKY_BRIGHTNESS == -1
+#undef SKY_BRIGHTNESS
+										#define SKY_BRIGHTNESS 0.8
+#endif
+#if CLOUDS_BRIGHTNESS == -1
+#undef CLOUDS_BRIGHTNESS
+										#define CLOUDS_BRIGHTNESS 0.95
+#endif
 #if DARKEN_SKY_UNDERGROUND == -1
 #undef DARKEN_SKY_UNDERGROUND
 										#define DARKEN_SKY_UNDERGROUND 1
@@ -355,6 +363,10 @@
 #undef SHADOW_DISTORT_ADDITION
 										#define SHADOW_DISTORT_ADDITION 0.09
 #endif
+#if PIXELATED_SHADOWS == -1
+#undef PIXELATED_SHADOWS
+										#define PIXELATED_SHADOWS 0
+#endif
 #if SIDE_SHADING == -1
 #undef SIDE_SHADING
 										#define SIDE_SHADING 0.4
@@ -401,10 +413,13 @@
 
 
 
-#if WATER_REFLECTIONS_ENABLED == -1
-#undef WATER_REFLECTIONS_ENABLED
-										#define WATER_REFLECTIONS_ENABLED 1
+#if REFLECTIONS_ENABLED == -1
+#undef REFLECTIONS_ENABLED
+										#define REFLECTIONS_ENABLED 1
 #endif
+
+
+
 #if WATER_REFLECTION_AMOUNT == -1
 #undef WATER_REFLECTION_AMOUNT
 										#define WATER_REFLECTION_AMOUNT 0.9
@@ -416,10 +431,6 @@
 
 
 
-#if RAIN_REFLECTIONS_ENABLED == -1
-#undef RAIN_REFLECTIONS_ENABLED
-										#define RAIN_REFLECTIONS_ENABLED 1
-#endif
 #if RAIN_REFLECTION_COVERAGE == -1
 #undef RAIN_REFLECTION_COVERAGE
 										#define RAIN_REFLECTION_COVERAGE 0.6
@@ -489,7 +500,7 @@
 #endif
 #if BLOOM_AMOUNT == -1
 #undef BLOOM_AMOUNT
-										#define BLOOM_AMOUNT 2.5
+										#define BLOOM_AMOUNT 2.0
 #endif
 #if BLOOM_QUALITY == -1
 #undef BLOOM_QUALITY
@@ -501,7 +512,7 @@
 #endif
 #if BLOOM_LOW_CUTOFF == -1
 #undef BLOOM_LOW_CUTOFF
-										#define BLOOM_LOW_CUTOFF 0.6
+										#define BLOOM_LOW_CUTOFF 0.0
 #endif
 #if BLOOM_HIGH_CUTOFF == -1
 #undef BLOOM_HIGH_CUTOFF
@@ -514,22 +525,6 @@
 #if BLOOM_NETHER_MULT == -1
 #undef BLOOM_NETHER_MULT
 										#define BLOOM_NETHER_MULT 2.5
-#endif
-#if BLOOM_SKY_BRIGHTNESS == -1
-#undef BLOOM_SKY_BRIGHTNESS
-										#define BLOOM_SKY_BRIGHTNESS 0.9
-#endif
-#if BLOOM_ENTITY_BRIGHTNESS == -1
-#undef BLOOM_ENTITY_BRIGHTNESS
-										#define BLOOM_ENTITY_BRIGHTNESS 0.7
-#endif
-#if BLOOM_CLOUD_BRIGHTNESS == -1
-#undef BLOOM_CLOUD_BRIGHTNESS
-										#define BLOOM_CLOUD_BRIGHTNESS 0.6
-#endif
-#if BLOOM_HAND_BRIGHTNESS == -1
-#undef BLOOM_HAND_BRIGHTNESS
-										#define BLOOM_HAND_BRIGHTNESS 0.5
 #endif
 
 

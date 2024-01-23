@@ -1,6 +1,7 @@
 // OptiFine Settings (DON'T DELETE)
 /*
 const bool colortex1Clear = false;
+const bool colortex2Clear = false;
 const int colortex2Format = RGB16F;
 const int colortex4Format = RGB32F;
 const float wetnessHalflife = 50.0f;
@@ -98,15 +99,6 @@ const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8
 
 
 #define CONTRAST_DETECT_COLOR vec3(CONTRAST_DETECT_RED, CONTRAST_DETECT_GREEN, CONTRAST_DETECT_BLUE)
-
-
-
-#if WATER_REFLECTIONS_ENABLED == 1
-	#define REFLECTIONS_ENABLED
-#endif
-#if RAIN_REFLECTIONS_ENABLED == 1
-	#define REFLECTIONS_ENABLED
-#endif
 
 
 

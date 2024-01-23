@@ -49,6 +49,7 @@ void main() {
 		
 		vec3 bloomAddition = getBloomAddition(rng, depth  ARGS_IN);
 		noisyAdditions += bloomAddition;
+		//color = bloomAddition;
 		
 		#if BLOOM_SHOW_ADDITION == 1
 			debugOutput += bloomAddition;

@@ -9,7 +9,7 @@
 	
 	varying vec3 normal;
 	
-	#if WATER_REFLECTIONS_ENABLED == 1 || WATER_FRESNEL_ADDITION == 1
+	#if WATER_FRESNEL_ADDITION == 1
 		varying vec3 viewPos;
 	#endif
 	#if WAVING_WATER_NORMALS_ENABLED == 1
@@ -34,9 +34,6 @@
 
 #if WAVING_WATER_NORMALS_ENABLED == 1
 	#include "/lib/simplex_noise.glsl"
-#endif
-#if WATER_REFLECTIONS_ENABLED == 1
-	#include "/lib/reflections.glsl"
 #endif
 #if FOG_ENABLED == 1
 	#include "/lib/fog/getFogAmount.glsl"
@@ -93,35 +90,16 @@ void main() {
 	}
 	
 	
-	// bloom value
-	#if BLOOM_ENABLED == 1
-		vec4 colorForBloom = color;
-	#endif
-	
-	
 	// main lighting
 	color.rgb *= glcolor;
 	color.rgb *= getBasicLighting(lmcoord.x, lmcoord.y  ARGS_IN);
-	
-	#if BLOOM_ENABLED == 1
-		#ifdef OVERWORLD
-			#include "/import/ambientMoonPercent.glsl"
-			float blockLight = lmcoord.x;
-			float skyLight = lmcoord.y * (1.0 - ambientMoonPercent);
-			colorForBloom.rgb *= max(blockLight * blockLight * 1.05, skyLight * 0.75);
-		#endif
-	#endif
 	
 	
 	
 	// fog
 	#if FOG_ENABLED == 1
 		float fogAmount = getFogAmount(fogDistance  ARGS_IN);
-		#if BLOOM_ENABLED == 1
-			applyFog(color.rgb, colorForBloom.rgb, fogAmount  ARGS_IN);
-		#else
-			applyFog(color.rgb, fogAmount  ARGS_IN);
-		#endif
+		applyFog(color.rgb, fogAmount  ARGS_IN);
 	#endif
 	
 	
@@ -136,18 +114,7 @@ void main() {
 	gl_FragData[0] = color;
 	gl_FragData[1] = vec4(normal, 1.0);
 	
-	#if BLOOM_ENABLED == 1 && defined REFLECTIONS_ENABLED
-		/* DRAWBUFFERS:0423 */
-		gl_FragData[2] = colorForBloom;
-		gl_FragData[3] = vec4(WATER_REFLECTION_STRENGTHS, 0.0, 1.0);
-	#endif
-	
-	#if BLOOM_ENABLED == 1 && !defined REFLECTIONS_ENABLED
-		/* DRAWBUFFERS:042 */
-		gl_FragData[2] = colorForBloom;
-	#endif
-	
-	#if BLOOM_ENABLED == 0 && defined REFLECTIONS_ENABLED
+	#if REFLECTIONS_ENABLED == 1
 		/* DRAWBUFFERS:043 */
 		gl_FragData[2] = vec4(WATER_REFLECTION_STRENGTHS, 0.0, 1.0);
 	#endif
@@ -223,7 +190,7 @@ void main() {
 	#endif
 	
 	
-	#if WATER_REFLECTIONS_ENABLED == 1 || WATER_FRESNEL_ADDITION == 1
+	#if WATER_FRESNEL_ADDITION == 1
 		viewPos = (gl_ModelViewMatrix * gl_Vertex).xyz;
 	#endif
 	

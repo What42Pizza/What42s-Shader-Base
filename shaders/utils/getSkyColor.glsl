@@ -60,7 +60,7 @@ vec3 getSkyColor(ARG_OUT) {
 		finalSkyColor *= getHorizonMultiplier(ARG_IN);
 	#endif
 	
-	return finalSkyColor;
+	return finalSkyColor * SKY_BRIGHTNESS;
 }
 
 

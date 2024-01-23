@@ -36,24 +36,13 @@ void main() {
 	color.a = opacity;
 	
 	
-	color.rgb *= colorMult * 2.3;
-	
-	
-	// bloom
-	#if BLOOM_ENABLED == 1
-		vec4 colorForBloom = color;
-		colorForBloom.rgb *= sqrt(BLOOM_CLOUD_BRIGHTNESS);
-	#endif
+	color.rgb *= colorMult;
 	
 	
 	// fog
 	#if FOG_ENABLED == 1
 		float fogAmount = getFogAmount(fogDistance  ARGS_IN);
-		#if BLOOM_ENABLED == 1
-			applyFog(color.rgb, colorForBloom.rgb, fogAmount  ARGS_IN);
-		#else
-			applyFog(color.rgb, fogAmount  ARGS_IN);
-		#endif
+		applyFog(color.rgb, fogAmount  ARGS_IN);
 	#endif
 	
 	
@@ -66,11 +55,6 @@ void main() {
 	
 	/* DRAWBUFFERS:0 */
 	gl_FragData[0] = color;
-	
-	#if BLOOM_ENABLED == 1
-		/* DRAWBUFFERS:02 */
-		gl_FragData[1] = colorForBloom;
-	#endif
 	
 }
 
@@ -100,7 +84,7 @@ void main() {
 	vec3 ambientLight = getAmbientLight(ARG_IN);
 	colorMult = skyLight + ambientLight;
 	//colorMult = mix(vec3(getColorLum(colorMult)), colorMult, vec3(1.0));
-	colorMult = normalize(colorMult);
+	colorMult = normalize(colorMult) * 2.0 * CLOUDS_BRIGHTNESS;
 	
 	#if ISOMETRIC_RENDERING_ENABLED == 1 || HIDE_NEARBY_CLOUDS == 1
 		#include "/import/gbufferModelViewInverse.glsl"

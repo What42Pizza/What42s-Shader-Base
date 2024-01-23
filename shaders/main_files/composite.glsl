@@ -36,11 +36,11 @@
 		if (depthIsSky(linearDepth) || depthIsHand(linearDepth)) {return;}
 		
 		// get strengths
-		vec2 reflectionStengths = texelFetch(REFLECTION_STRENGTH_BUFFER, texelcoord, 0).rg;
+		vec2 reflectionStrengths = texelFetch(REFLECTION_STRENGTH_BUFFER, texelcoord, 0).rg;
 		#if REFLECTIVE_EVERYTHING == 1
-			reflectionStengths = vec2(1.0, 0.0);
+			reflectionStrengths = vec2(1.0, 0.0);
 		#endif
-		if (reflectionStengths.r + reflectionStengths.g < 0.01) {return;}
+		if (reflectionStrengths.r + reflectionStrengths.g < 0.01) {return;}
 		
 		// apply fog
 		vec3 viewPos = screenToView(vec3(texcoord, depth)  ARGS_IN);
@@ -49,12 +49,12 @@
 			vec3 playerPos = (gbufferModelViewInverse * startMat(viewPos)).xyz;
 			float fogDistance = getFogDistance(playerPos  ARGS_IN);
 			float fogAmount = getFogAmount(fogDistance  ARGS_IN);
-			reflectionStengths *= 1.0 - fogAmount;
+			reflectionStrengths *= 1.0 - fogAmount;
 		#endif
-		if (reflectionStengths.r + reflectionStengths.g < 0.01) {return;}
+		if (reflectionStrengths.r + reflectionStrengths.g < 0.01) {return;}
 		
 		vec3 normal = texelFetch(NORMALS_BUFFER, texelcoord, 0).rgb;
-		addReflection(color, viewPos, normal, MAIN_BUFFER, reflectionStengths.r, reflectionStengths.g  ARGS_IN);
+		addReflection(color, viewPos, normal, MAIN_BUFFER, reflectionStrengths.r, reflectionStrengths.g  ARGS_IN);
 		
 	}
 #endif
@@ -67,7 +67,7 @@ void main() {
 		vec3 debugOutput = texelFetch(DEBUG_BUFFER, texelcoord, 0).rgb;
 	#endif
 	#if BLOOM_ENABLED == 1
-		vec3 bloomColor = texelFetch(BLOOM_BUFFER, texelcoord, 0).rgb;
+		vec3 bloomColor = texelFetch(MAIN_BUFFER, texelcoord, 0).rgb;
 	#endif
 	
 	
@@ -99,7 +99,7 @@ void main() {
 	// ======== BLOOM FILTERING ========
 	
 	#if BLOOM_ENABLED == 1
-		float bloomMult = getColorLum(bloomColor);
+		float bloomMult = getColorLum(bloomColor * vec3(2.0, 1.0, 0.4));
 		bloomMult = (bloomMult - BLOOM_LOW_CUTOFF) / (BLOOM_HIGH_CUTOFF - BLOOM_LOW_CUTOFF);
 		bloomMult = clamp(bloomMult, 0.0, 1.0);
 		bloomColor *= bloomMult;

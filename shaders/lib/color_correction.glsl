@@ -21,7 +21,7 @@ void doColorCorrection(inout vec3 color  ARGS_OUT) {
 	#if TONEMAPPER == 0
 		color = min(color, vec3(1.0));
 	#elif TONEMAPPER == 1
-		color = smoothMin(color, vec3(1.0), 0.01);
+		color = smoothMin(color * 1.1, vec3(1.0), 0.03);
 	#elif TONEMAPPER == 2
 		color = simpleTonemap(color  ARGS_IN);
 	#elif TONEMAPPER == 3

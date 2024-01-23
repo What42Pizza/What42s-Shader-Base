@@ -1,6 +1,12 @@
 vec3 getShadowPos(vec3 viewPos, float lightDot  ARGS_OUT) {
 	#include "/import/gbufferModelViewInverse.glsl"
 	vec4 playerPos = gbufferModelViewInverse * startMat(viewPos);
+	#if PIXELATED_SHADOWS > 0
+		#include "/import/cameraPosition.glsl"
+		playerPos.xyz += cameraPosition;
+		playerPos.xyz = floor(playerPos.xyz * PIXELATED_SHADOWS + 0.001) / PIXELATED_SHADOWS;
+		playerPos.xyz -= cameraPosition;
+	#endif
 	#include "/import/shadowProjection.glsl"
 	#include "/import/shadowModelView.glsl"
 	vec3 shadowPos = (shadowProjection * (shadowModelView * playerPos)).xyz; // convert to shadow screen space
@@ -18,6 +24,12 @@ vec3 getShadowPos(vec3 viewPos, float lightDot  ARGS_OUT) {
 vec3 getLessBiasedShadowPos(vec3 viewPos  ARGS_OUT) {
 	#include "/import/gbufferModelViewInverse.glsl"
 	vec4 playerPos = gbufferModelViewInverse * startMat(viewPos);
+	#if PIXELATED_SHADOWS > 0
+		#include "/import/cameraPosition.glsl"
+		playerPos.xyz += cameraPosition;
+		playerPos.xyz = floor(playerPos.xyz * PIXELATED_SHADOWS + 0.001) / PIXELATED_SHADOWS;
+		playerPos.xyz -= cameraPosition;
+	#endif
 	#include "/import/shadowProjection.glsl"
 	#include "/import/shadowModelView.glsl"
 	vec3 shadowPos = (shadowProjection * (shadowModelView * playerPos)).xyz; // convert to shadow screen space
@@ -45,6 +57,9 @@ float sampleShadow(vec3 viewPos, float lightDot  ARGS_OUT) {
 		float noiseMult = length(floatShadowPos.xy * 2.0 - 1.0);
 		noiseMult = noiseMult * SHADOW_OFFSET_INCREASE + SHADOW_OFFSET_MIN;
 		noiseMult *= SHADOWS_NOISE * 2.0;
+		#if PIXELATED_SHADOWS > 0
+			noiseMult *= 24.0 / PIXELATED_SHADOWS;
+		#endif
 		#include "/utils/var_rng.glsl"
 		vec2 noise = randomVec2(rng);
 		noise = noise * noise * noiseMult;
@@ -69,14 +84,14 @@ float sampleShadow(vec3 viewPos, float lightDot  ARGS_OUT) {
 			vec3(1.0, -1.0, -1.0),
 			vec3(0.0, 1.0, -1.0),
 			vec3(1.0, 0.0, -1.0),
-			vec3(0.0, -1.0, 1.0),
-			vec3(1.0, -1.0, 0.0),
-			vec3(1.0, -1.0, -1.0),
-			vec3(2.0, -1.0, -1.0),
 			vec3(-1.0, 1.0, 1.0),
 			vec3(0.0, 1.0, -1.0),
 			vec3(0.0, 1.0, 0.0),
 			vec3(1.0, 1.0, -1.0),
+			vec3(0.0, -1.0, 1.0),
+			vec3(1.0, -1.0, 0.0),
+			vec3(1.0, -1.0, -1.0),
+			vec3(2.0, -1.0, -1.0),
 			vec3(0.0, 0.0, 1.0),
 			vec3(1.0, -1.0, 1.0),
 			vec3(0.0, 1.0, 1.0),
@@ -87,7 +102,7 @@ float sampleShadow(vec3 viewPos, float lightDot  ARGS_OUT) {
 		float xt = abs(fract(floatShadowPos.x) - 0.5);
 		float yt = abs(fract(floatShadowPos.y) - 0.5);
 		float shadowBrightness = calcData.x + xt * calcData.y + yt * calcData.z;
-		if (calcDatasIndex == 6 || calcDatasIndex == 9) {
+		if (calcDatasIndex == 5 || calcDatasIndex == 10) {
 			shadowBrightness = 1.0 - abs(shadowBrightness);
 		}
 		shadowBrightness = clamp(shadowBrightness, 0.0, 1.0);

@@ -7,7 +7,7 @@
 	varying vec3 glcolor;
 	varying vec3 normal;
 	
-	#if RAIN_REFLECTIONS_ENABLED == 1
+	#if REFLECTIONS_ENABLED == 1
 		varying vec3 worldPos;
 		varying float baseRainReflectionStrength;
 	#endif
@@ -28,7 +28,7 @@
 
 #ifdef FSH
 
-#if RAIN_REFLECTIONS_ENABLED == 1
+#if REFLECTIONS_ENABLED == 1
 	#include "/lib/simplex_noise.glsl"
 #endif
 
@@ -39,26 +39,8 @@ void main() {
 	#endif
 	
 	
-	// bloom value
-	#if BLOOM_ENABLED == 1
-		vec4 colorForBloom = color;
-	#endif
-	
-	
 	// main lighting
 	color.rgb *= getBasicLighting(lmcoord.x, lmcoord.y  ARGS_IN);
-	
-	#if BLOOM_ENABLED == 1
-		#ifdef OVERWORLD
-			#include "/import/ambientMoonPercent.glsl"
-			float blockLight = lmcoord.x;
-			float skyLight = lmcoord.y * (1.0 - ambientMoonPercent);
-			colorForBloom.rgb *= max(blockLight * blockLight * 1.05, skyLight * 0.75);
-		#elif defined NETHER
-			colorForBloom.rgb *= lmcoord.x;
-			colorForBloom.rgb *= dot(colorForBloom.rgb, vec3(0.92, 0.35, 0.07)) * 1.3;
-		#endif
-	#endif
 	
 	
 	// show dangerous light
@@ -70,15 +52,13 @@ void main() {
 	
 	
 	// rain reflection strength
-	#if RAIN_REFLECTIONS_ENABLED == 1
+	#if REFLECTIONS_ENABLED == 1
 		#include "/import/cameraPosition.glsl"
 		float rainReflectionStrength = baseRainReflectionStrength;
 		float noise = simplexNoise((worldPos + cameraPosition) * 0.2);
 		noise = clamp(RAIN_REFLECTION_SLOPE * (noise - (1.0 - RAIN_REFLECTION_COVERAGE)) + 1.0, RAIN_REFLECTION_MIN, 1.0);
 		rainReflectionStrength *= noise;
 		rainReflectionStrength *= lmcoord.y * lmcoord.y * lmcoord.y;
-	#else
-		float rainReflectionStrength = 0.0;
 	#endif
 	
 	
@@ -92,20 +72,9 @@ void main() {
 	gl_FragData[0] = color;
 	gl_FragData[1] = vec4(normal, 1.0);
 	
-	#if BLOOM_ENABLED == 1 && defined REFLECTIONS_ENABLED
-		/* DRAWBUFFERS:0423 */
-		gl_FragData[2] = colorForBloom;
-		gl_FragData[3] = vec4(RAIN_REFLECTION_STRENGTHS * rainReflectionStrength, 0.0, 1.0);
-	#endif
-	
-	#if BLOOM_ENABLED == 1 && !defined REFLECTIONS_ENABLED
-		/* DRAWBUFFERS:042 */
-		gl_FragData[2] = colorForBloom;
-	#endif
-	
-	#if BLOOM_ENABLED == 0 && defined REFLECTIONS_ENABLED
+	#if REFLECTIONS_ENABLED == 1
 		/* DRAWBUFFERS:043 */
-		gl_FragData[2] = vec4(RAIN_REFLECTION_STRENGTHS * rainReflectionStrength, 0.0, 1.0);
+		gl_FragData[2] = vec4(0.0, 0.0, 0.0, 1.0);
 	#endif
 	
 }
@@ -134,7 +103,7 @@ void main() {
 	adjustLmcoord(lmcoord);
 	
 	
-	#if RAIN_REFLECTIONS_ENABLED == 0
+	#if REFLECTIONS_ENABLED == 0
 		vec3 worldPos;
 	#endif
 	#include "/import/gbufferModelViewInverse.glsl"
@@ -175,7 +144,7 @@ void main() {
 	normal = gl_NormalMatrix * gl_Normal;
 	
 	
-	#if RAIN_REFLECTIONS_ENABLED == 1
+	#if REFLECTIONS_ENABLED == 1
 		#include "/import/upPosition.glsl"
 		#include "/import/rainReflectionStrength.glsl"
 		baseRainReflectionStrength = dot(normalize(upPosition), normal) * 0.5 + 0.5;

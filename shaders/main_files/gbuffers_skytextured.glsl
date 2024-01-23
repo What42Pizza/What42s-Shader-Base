@@ -21,11 +21,6 @@ void main() {
 	/* DRAWBUFFERS:0 */
 	gl_FragData[0] = color;
 	
-	#if BLOOM_ENABLED == 1
-		/* DRAWBUFFERS:02 */
-		gl_FragData[1] = color;
-	#endif
-	
 }
 
 #endif

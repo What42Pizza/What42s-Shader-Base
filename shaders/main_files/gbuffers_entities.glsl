@@ -37,13 +37,6 @@ void main() {
 	color.rgb *= getBasicLighting(lmcoord.x, lmcoord.y  ARGS_IN);
 	
 	
-	// bloom
-	#if BLOOM_ENABLED == 1
-		vec4 colorForBloom = color;
-		colorForBloom.rgb *= sqrt(BLOOM_ENTITY_BRIGHTNESS);
-	#endif
-	
-	
 	
 	// outputs
 	
@@ -55,18 +48,7 @@ void main() {
 	gl_FragData[0] = color;
 	gl_FragData[1] = vec4(normal, 1.0);
 	
-	#if BLOOM_ENABLED == 1 && defined REFLECTIONS_ENABLED
-		/* DRAWBUFFERS:0423 */
-		gl_FragData[2] = colorForBloom;
-		gl_FragData[3] = vec4(0.0, 0.0, 0.0, 1.0);
-	#endif
-	
-	#if BLOOM_ENABLED == 1 && !defined REFLECTIONS_ENABLED
-		/* DRAWBUFFERS:042 */
-		gl_FragData[2] = colorForBloom;
-	#endif
-	
-	#if BLOOM_ENABLED == 0 && defined REFLECTIONS_ENABLED
+	#if REFLECTIONS_ENABLED == 1
 		/* DRAWBUFFERS:043 */
 		gl_FragData[2] = vec4(0.0, 0.0, 0.0, 1.0);
 	#endif

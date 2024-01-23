@@ -36,6 +36,12 @@ screen.SKY_SETTINGS=Sky
 
 
 
+option.SKY_BRIGHTNESS=Sky Brightness
+value.SKY_BRIGHTNESS.-1=Use Style Value
+
+option.CLOUDS_BRIGHTNESS=Clouds Brightness
+value.CLOUDS_BRIGHTNESS.-1=Use Style Value
+
 option.DARKEN_SKY_UNDERGROUND=Darken Sky Underground
 option.DARKEN_SKY_UNDERGROUND.comment=Darken the sky when underground
 value.DARKEN_SKY_UNDERGROUND.-1=Use Style Value
@@ -388,6 +394,16 @@ option.SHADOWS_NOISE=Shadows Noise Amount
 option.SHADOWS_NOISE.comment=Amount of noise to apply to shadow filtering
 value.SHADOWS_NOISE.-1=Use Style Value
 
+option.PIXELATED_SHADOWS=Pixelated Shadows
+option.PIXELATED_SHADOWS.comment=Makes the shadows pixelated along the same grid as blocks
+value.PIXELATED_SHADOWS.-1=Use Style Value
+value.PIXELATED_SHADOWS.0=Off
+value.PIXELATED_SHADOWS.8=8x
+value.PIXELATED_SHADOWS.16=16x
+value.PIXELATED_SHADOWS.32=32x
+value.PIXELATED_SHADOWS.64=64x
+value.PIXELATED_SHADOWS.128=128x
+
 option.EXCLUDE_FOLIAGE=Exclude Foliage
 option.EXCLUDE_FOLIAGE.comment=If true, foliage will not cast shadows\n\n(Performance cost: Low)
 value.EXCLUDE_FOLIAGE.-1=Use Style Value
@@ -461,14 +477,14 @@ screen.REFLECTION_SETTINGS=Reflections
 
 
 
-option.WATER_REFLECTIONS_ENABLED=Water Reflections Enabled
-option.WATER_REFLECTIONS_ENABLED.comment=Whether reflections appear on water\n\n(Performance cost: HIGH)
-value.WATER_REFLECTIONS_ENABLED.-1=Use Style Value
-value.WATER_REFLECTIONS_ENABLED.0=Off
-value.WATER_REFLECTIONS_ENABLED.1=On
+option.REFLECTIONS_ENABLED=Reflections Enabled
+option.REFLECTIONS_ENABLED.comment=Enabled reflections. Currently, only rain puddles and translucent blocks (such as water) create reflections\n\n(Performance cost: HIGH)
+value.REFLECTIONS_ENABLED.-1=Use Style Value
+value.REFLECTIONS_ENABLED.0=Off
+value.REFLECTIONS_ENABLED.1=On
 
 option.WATER_REFLECTION_AMOUNT=Water Reflection Strength
-option.WATER_REFLECTION_AMOUNT.comment=Max rain reflections strength
+option.WATER_REFLECTION_AMOUNT.comment=Max water reflection strength (also affects reflections of transparent blocks like stained glass, ice, etc)
 value.WATER_REFLECTION_AMOUNT.-1=Use Style Value
 
 option.WATER_REFLECTION_FRESNEL=Water Reflection Fresnel Factor
@@ -476,12 +492,6 @@ option.WATER_REFLECTION_FRESNEL.comment=How much the surface steepness contribut
 value.WATER_REFLECTION_FRESNEL.-1=Use Style Value
 
 
-
-option.RAIN_REFLECTIONS_ENABLED=Rain Reflections Enabled
-option.RAIN_REFLECTIONS_ENABLED.comment=Add ground reflections when raining
-value.RAIN_REFLECTIONS_ENABLED.-1=Use Style Value
-value.RAIN_REFLECTIONS_ENABLED.0=Off
-value.RAIN_REFLECTIONS_ENABLED.1=On
 
 option.RAIN_REFLECTION_AMOUNT=Rain Reflection Strength
 option.RAIN_REFLECTION_AMOUNT.comment=Max rain reflections strength
@@ -577,17 +587,9 @@ option.BLOOM_HIGH_CUTOFF=Bloom High Cutoff
 option.BLOOM_HIGH_CUTOFF.comment=The value at which all colors are treated as equally light
 value.BLOOM_HIGH_CUTOFF.-1=Use Style Value
 
-option.BLOOM_SKY_BRIGHTNESS=Bloom Sky Brightness
-value.BLOOM_SKY_BRIGHTNESS.-1=Use Style Value
-
-option.BLOOM_ENTITY_BRIGHTNESS=Bloom Entity Brightness
-value.BLOOM_ENTITY_BRIGHTNESS.-1=Use Style Value
-
-option.BLOOM_CLOUD_BRIGHTNESS=Bloom Cloud Brightness
-value.BLOOM_CLOUD_BRIGHTNESS.-1=Use Style Value
-
-option.BLOOM_HAND_BRIGHTNESS=Bloom Hand Brightness
-value.BLOOM_HAND_BRIGHTNESS.-1=Use Style Value
+option.BLOOM_NETHER_MULT=Bloom Nether Multiplier
+option.BLOOM_NETHER_MULT.comment=How much to increase Bloom Amount when in the nether
+value.BLOOM_NETHER_MULT.-1=Use Style Value
 
 
 

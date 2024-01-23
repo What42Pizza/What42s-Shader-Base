@@ -139,6 +139,10 @@ uniform mat4 gbufferPreviousModelView;
 uniform mat3 normalMatrix;
 #endif
 
+#ifdef import_modelViewMatrix
+uniform mat4 modelViewMatrix;
+#endif
+
 #ifdef import_farPlusNear
 uniform float farPlusNear;
 #endif

@@ -28,24 +28,12 @@ void main() {
 	
 	
 	
-	#if BLOOM_ENABLED == 1
-		vec3 colorForBloom = color;
-		colorForBloom *= sqrt(BLOOM_SKY_BRIGHTNESS);
-	#endif
-	
-	
-	
 	#ifdef DEBUG_OUTPUT_ENABLED
 		color = debugOutput;
 	#endif
 	
 	/* DRAWBUFFERS:0 */
 	gl_FragData[0] = vec4(color, 1.0);
-	
-	#if BLOOM_ENABLED == 1
-		/* DRAWBUFFERS:02 */
-		gl_FragData[1] = vec4(colorForBloom, 1.0);
-	#endif
 	
 }
 

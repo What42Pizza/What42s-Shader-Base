@@ -208,7 +208,6 @@ This describes which /main_files-s handle different effects
 - **colortex2:  Bloom Texture**
 - **colortex3:  Reflection Strength / Noisy Additions (holds RS from gbuffers to deferred, then holds NA from composite1 and on)**
 - **colortex4:  Normals**
-- **colortex5 / gaux2:  Copy of colortex0, only used for water reflections**
 
 Note: 'noisy additions' buffer is where things like bloom, sunrays, etc (anything that gives noisy results) are rendered before being added to the main image using LOD-sampling as a high-perf(?) blur
 

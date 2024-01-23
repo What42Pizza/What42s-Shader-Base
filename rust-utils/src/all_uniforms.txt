@@ -33,6 +33,7 @@ mat4 gbufferProjectionInverse = mat4(0.0)
 mat4 gbufferPreviousProjection = mat4(0.0)
 mat4 gbufferPreviousModelView = mat4(0.0)
 mat3 normalMatrix = mat3(0.0)
+mat4 modelViewMatrix = mat4(0.0)
 float farPlusNear = 0.0
 float farMinusNear = 0.0
 float twoTimesNear = 0.0

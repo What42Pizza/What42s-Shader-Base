@@ -1,5 +1,26 @@
 <br>
 
+- **b1.10.0** (24/01/22)
+  - Added setting: Pixelated Shadows
+  - Improved bloom performance
+  - Fixed bug in shadow filtering
+  - Tweaked sunrise / sunset timings (and calculations)
+  - Settings changes:
+  - - Removed setting 'WATER_REFLECTIONS_ENABLED'
+  - - Removed setting 'RAIN_REFLECTIONS_ENABLED'
+  - - Added setting 'REFLECTIONS_ENABLED'
+  - - Added setting 'BLOOM_NETHER_MULT' (already existed but forgot to add to settings screen)
+  - - Removed setting 'BLOOM_SKY_BRIGHTNESS' (unused due to code changes)
+  - - Removed setting 'BLOOM_ENTITY_BRIGHTNESS' (unused due to code changes)
+  - - Removed setting 'BLOOM_CLOUD_BRIGHTNESS' (unused due to code changes)
+  - - Removed setting 'BLOOM_HAND_BRIGHTNESS' (unused due to code changes)
+  - - Added setting 'SKY_BRIGHTNESS'
+  - - Added setting 'CLOUDS_BRIGHTNESS'
+
+<br>
+<br>
+<br>
+
 - b1.9.6 (24/01/02)
   - Fixed isometric rendering (now with working shadows!)
   - Fixed langs for setting 'HEIGHT_BASED_WAVING_ENABLED'

@@ -71,7 +71,7 @@ void main() {
 		color *= 1.0 - vignetteAlpha;
 	#endif
 	
-	//color = texelFetch(NORMALS_BUFFER, texelcoord, 0).rgb;
+	//color = vec3(toLinearDepth(texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r  ARGS_IN));
 	//color = vec3(toBlockDepth(depth  ARGS_IN));
 	
 	

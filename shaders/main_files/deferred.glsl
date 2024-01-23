@@ -63,7 +63,6 @@ float getSkyBrightness(ARG_OUT) {
 
 void main() {
 	vec3 color = texelFetch(MAIN_BUFFER, texelcoord, 0).rgb;
-	vec3 colorForBloom = texelFetch(BLOOM_BUFFER, texelcoord, 0).rgb;
 	#ifdef DEBUG_OUTPUT_ENABLED
 		vec3 debugOutput = texelFetch(DEBUG_BUFFER, texelcoord, 0).rgb;
 	#endif
@@ -98,11 +97,7 @@ void main() {
 		
 		
 		#if FOG_ENABLED == 1
-			#if BLOOM_ENABLED == 1
-				applyFog(color, colorForBloom, fogAmount  ARGS_IN);
-			#else
-				applyFog(color, fogAmount  ARGS_IN);
-			#endif
+			applyFog(color, fogAmount  ARGS_IN);
 		#endif
 		
 		
@@ -115,11 +110,6 @@ void main() {
 	
 	/* DRAWBUFFERS:0 */
 	gl_FragData[0] = vec4(color, 1.0);
-	
-	#if BLOOM_ENABLED == 1
-		/* DRAWBUFFERS:02 */
-		gl_FragData[1] = vec4(colorForBloom, 1.0);
-	#endif
 	
 }
 
