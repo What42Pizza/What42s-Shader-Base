@@ -13,6 +13,14 @@ void main() {
 	#endif
 	
 	
+	#include "/import/sunPosition.glsl"
+	if (sunPosition.z < 0.0) {
+		color.rgb *= SUN_BRIGHTNESS;
+	} else {
+		color.rgb *= MOON_BRIGHTNESS;
+	}
+	
+	
 	
 	#ifdef DEBUG_OUTPUT_ENABLED
 		color = debugOutput;

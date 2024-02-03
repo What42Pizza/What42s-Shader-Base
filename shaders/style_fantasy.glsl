@@ -2,6 +2,14 @@
 #undef SKY_BRIGHTNESS
 										#define SKY_BRIGHTNESS 0.8
 #endif
+#if SUN_BRIGHTNESS == -1
+#undef SUN_BRIGHTNESS
+										#define SUN_BRIGHTNESS 1.0
+#endif
+#if MOON_BRIGHTNESS == -1
+#undef MOON_BRIGHTNESS
+										#define MOON_BRIGHTNESS 1.0
+#endif
 #if CLOUDS_BRIGHTNESS == -1
 #undef CLOUDS_BRIGHTNESS
 										#define CLOUDS_BRIGHTNESS 0.95
@@ -512,15 +520,15 @@
 #endif
 #if BLOOM_LOW_CUTOFF == -1
 #undef BLOOM_LOW_CUTOFF
-										#define BLOOM_LOW_CUTOFF 0.0
+										#define BLOOM_LOW_CUTOFF 0.2
 #endif
 #if BLOOM_HIGH_CUTOFF == -1
 #undef BLOOM_HIGH_CUTOFF
-										#define BLOOM_HIGH_CUTOFF 0.9
+										#define BLOOM_HIGH_CUTOFF 1.0
 #endif
 #if BLOOM_SIZE == -1
 #undef BLOOM_SIZE
-										#define BLOOM_SIZE 1.5
+										#define BLOOM_SIZE 2.0
 #endif
 #if BLOOM_NETHER_MULT == -1
 #undef BLOOM_NETHER_MULT
@@ -590,7 +598,7 @@
 #endif
 #if SUNRAYS_MOON_GREEN == -1
 #undef SUNRAYS_MOON_GREEN
-										#define SUNRAYS_MOON_GREEN 0.55
+										#define SUNRAYS_MOON_GREEN 0.5
 #endif
 #if SUNRAYS_MOON_BLUE == -1
 #undef SUNRAYS_MOON_BLUE

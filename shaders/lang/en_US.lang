@@ -39,6 +39,12 @@ screen.SKY_SETTINGS=Sky
 option.SKY_BRIGHTNESS=Sky Brightness
 value.SKY_BRIGHTNESS.-1=Use Style Value
 
+option.SUN_BRIGHTNESS=Sun Brightness
+value.SUN_BRIGHTNESS.-1=Use Style Value
+
+option.MOON_BRIGHTNESS=Moon Brightness
+value.MOON_BRIGHTNESS.-1=Use Style Value
+
 option.CLOUDS_BRIGHTNESS=Clouds Brightness
 value.CLOUDS_BRIGHTNESS.-1=Use Style Value
 
@@ -387,7 +393,7 @@ option.SHADOW_FILTERING.comment=Smoothens shadow edges (works best with TAA)\n\n
 value.SHADOW_FILTERING.-1=Use Style Value
 value.SHADOW_FILTERING.0=Off (pixelated)
 value.SHADOW_FILTERING.1=Off (smooth)
-value.SHADOW_FILTERING.2=On
+value.SHADOW_FILTERING.2=On (default)
 value.SHADOW_FILTERING.3=On (legacy version)
 
 option.SHADOWS_NOISE=Shadows Noise Amount
@@ -395,7 +401,7 @@ option.SHADOWS_NOISE.comment=Amount of noise to apply to shadow filtering
 value.SHADOWS_NOISE.-1=Use Style Value
 
 option.PIXELATED_SHADOWS=Pixelated Shadows
-option.PIXELATED_SHADOWS.comment=Makes the shadows pixelated along the same grid as blocks
+option.PIXELATED_SHADOWS.comment=Makes the shadows pixelated along the same grid as blocks\n\nNOTE: if the shadow filtering is set to On (default), sampling noise must be used to hide flickering
 value.PIXELATED_SHADOWS.-1=Use Style Value
 value.PIXELATED_SHADOWS.0=Off
 value.PIXELATED_SHADOWS.8=8x

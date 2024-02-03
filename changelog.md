@@ -1,10 +1,19 @@
 <br>
 
+- b1.10.1 (24/02/02)
+  - Added settings: Sun Brightness and Moon Brightness
+  - Further tweaked styles
+  - Settings changes:
+  - - New 'BLOOM_AMOUNT' is: old 'BLOOM_AMOUNT' * 0.85
+
+<br>
+
 - **b1.10.0** (24/01/22)
   - Added setting: Pixelated Shadows
   - Improved bloom performance
   - Fixed bug in shadow filtering
   - Tweaked sunrise / sunset timings (and calculations)
+  - Re-tweaked styles
   - Settings changes:
   - - Removed setting 'WATER_REFLECTIONS_ENABLED'
   - - Removed setting 'RAIN_REFLECTIONS_ENABLED'

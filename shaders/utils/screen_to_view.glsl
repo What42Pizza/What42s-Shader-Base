@@ -1,3 +1,20 @@
+#undef INCLUDE_SCREEN_TO_VIEW
+
+#if defined FIRST_PASS && !defined SCREEN_TO_VIEW_FIRST_FINISHED
+	#define INCLUDE_SCREEN_TO_VIEW
+	#define SCREEN_TO_VIEW_FIRST_FINISHED
+#endif
+#if defined SECOND_PASS && !defined SCREEN_TO_VIEW_SECOND_FINISHED
+	#define INCLUDE_SCREEN_TO_VIEW
+	#define SCREEN_TO_VIEW_SECOND_FINISHED
+#endif
+
+
+
+#ifdef INCLUDE_SCREEN_TO_VIEW
+
+
+
 #if ISOMETRIC_RENDERING_ENABLED == 0
 	
 	// CODE FROM COMPLEMENTARY REIMAGINED:
@@ -25,4 +42,8 @@
 		return pos;
 	}
 	
+#endif
+
+
+
 #endif

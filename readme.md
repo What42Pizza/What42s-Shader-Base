@@ -28,8 +28,9 @@
 - **Isometric Rendering**
 - **SSAO**
 - **Sunrays** (depth-based and volumetric)
-- **Bloom**
 - **Depth of Field**
+- **Pixelated Shadows**
+- **Bloom**
 - **Motion Blur**
 - **Sharpening**
 - **Waving blocks**

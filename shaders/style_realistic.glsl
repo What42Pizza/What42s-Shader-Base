@@ -1,10 +1,18 @@
 #if SKY_BRIGHTNESS == -1
 #undef SKY_BRIGHTNESS
-										#define SKY_BRIGHTNESS 0.8
+										#define SKY_BRIGHTNESS 0.75
+#endif
+#if SUN_BRIGHTNESS == -1
+#undef SUN_BRIGHTNESS
+										#define SUN_BRIGHTNESS 1.0
+#endif
+#if MOON_BRIGHTNESS == -1
+#undef MOON_BRIGHTNESS
+										#define MOON_BRIGHTNESS 1.0
 #endif
 #if CLOUDS_BRIGHTNESS == -1
 #undef CLOUDS_BRIGHTNESS
-										#define CLOUDS_BRIGHTNESS 0.8
+										#define CLOUDS_BRIGHTNESS 0.75
 #endif
 #if DARKEN_SKY_UNDERGROUND == -1
 #undef DARKEN_SKY_UNDERGROUND
@@ -479,7 +487,7 @@
 #endif
 #if AO_SIZE == -1
 #undef AO_SIZE
-										#define AO_SIZE 2.0
+										#define AO_SIZE 2.5
 #endif
 #if AO_QUALITY == -1
 #undef AO_QUALITY
@@ -559,7 +567,7 @@
 #endif
 #if SUNRAYS_AMOUNT_DAY == -1
 #undef SUNRAYS_AMOUNT_DAY
-										#define SUNRAYS_AMOUNT_DAY 0.5
+										#define SUNRAYS_AMOUNT_DAY 0.4
 #endif
 #if SUNRAYS_AMOUNT_NIGHT == -1
 #undef SUNRAYS_AMOUNT_NIGHT
@@ -567,11 +575,11 @@
 #endif
 #if SUNRAYS_AMOUNT_SUNRISE == -1
 #undef SUNRAYS_AMOUNT_SUNRISE
-										#define SUNRAYS_AMOUNT_SUNRISE 0.6
+										#define SUNRAYS_AMOUNT_SUNRISE 0.4
 #endif
 #if SUNRAYS_AMOUNT_SUNSET == -1
 #undef SUNRAYS_AMOUNT_SUNSET
-										#define SUNRAYS_AMOUNT_SUNSET 0.6
+										#define SUNRAYS_AMOUNT_SUNSET 0.4
 #endif
 #if SUNRAYS_SUN_RED == -1
 #undef SUNRAYS_SUN_RED
