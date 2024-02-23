@@ -47,7 +47,7 @@ float getVolSunraysAmount(float depth, inout uint rng  ARGS_OUT) {
 	
 	#include "/import/eyeBrightnessSmooth.glsl"
 	float skyBrightness = eyeBrightnessSmooth.y / 240.0;
-	sunraysAmount = pow(sunraysAmount, mix(0.2, 0.6, skyBrightness));
+	sunraysAmount = pow(sunraysAmount, mix(SUNRAYS_CURVE_UNDERGROUND, SUNRAYS_CURVE_SURFACE, skyBrightness));
 	
 	#include "/import/gbufferModelViewInverse.glsl"
 	vec3 playerPos = (gbufferModelViewInverse * startMat(viewPos)).xyz;

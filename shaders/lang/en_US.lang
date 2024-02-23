@@ -618,27 +618,33 @@ value.VOL_SUNRAYS_ENABLED.-1=Use Style Value
 value.VOL_SUNRAYS_ENABLED.0=Off
 value.VOL_SUNRAYS_ENABLED.1=On
 
-option.SUNRAYS_STYLE=Sunrays Style
-option.SUNRAYS_STYLE.comment=Alters how the sunrays are calculated. Option 1 is more natural, option 2 is more impressive looking
-value.SUNRAYS_STYLE.-1=Use Style Value
-
-option.SUNRAYS_SATURATION=Sunrays Saturation
-option.SUNRAYS_SATURATION.comment=The color of sun rays are the same as the sky color, saturated by this amount
-value.SUNRAYS_SATURATION.-1=Use Style Value
+screen.DEPTH_SUNRAYS_SETTINGS=Depth Sunrays Settings
+screen.DEPTH_SUNRAYS_SETTINGS.comment=Settings specific to depth-based sunrays
 
 option.SUNRAYS_QUALITY=Sunrays Quality
 option.SUNRAYS_QUALITY.comment=Controls the number of samples for each pixel
 value.SUNRAYS_QUALITY.-1=Use Style Value
 
-option.SUNRAYS_COMPUTE_COUNT=Sunrays Compute Count
-option.SUNRAYS_COMPUTE_COUNT.comment=The number of times the sunray amount is computed. Lower values give more performance, higher values give less noise
-value.SUNRAYS_COMPUTE_COUNT.-1=Use Style Value
+option.SUNRAYS_STYLE=Sunrays Style
+option.SUNRAYS_STYLE.comment=Alters how the sunrays are calculated. Option 1 is more natural, option 2 is more impressive looking
+value.SUNRAYS_STYLE.-1=Use Style Value
 
 option.SUNRAYS_FLICKERING_FIX=Sunrays Flickering Fix
 option.SUNRAYS_FLICKERING_FIX.comment=Fixes a subtle bug where sunrays flicker when the sun is off-screen
 value.SUNRAYS_FLICKERING_FIX.-1=Use Style Value
 value.SUNRAYS_FLICKERING_FIX.0=Off
 value.SUNRAYS_FLICKERING_FIX.1=On
+
+screen.VOL_SUNRAYS_SETTINGS=Volumetric Sunrays Settings
+screen.VOL_SUNRAYS_SETTINGS.comment=Settings specific to volumetric sunrays
+
+option.SUNRAYS_CURVE_SURFACE=Sunrays Curve Surface
+option.SUNRAYS_CURVE_SURFACE.comment=How much the output should be curved when on the surface (lower values make the intensity increase faster)
+value.SUNRAYS_CURVE_SURFACE.-1=Use Style Value
+
+option.SUNRAYS_CURVE_UNDERGROUND=Sunrays Curve Underground
+option.SUNRAYS_CURVE_UNDERGROUND.comment=How much the output should be curved when underground (lower values make the intensity increase faster)
+value.SUNRAYS_CURVE_UNDERGROUND.-1=Use Style Value
 
 option.SUNRAYS_AMOUNT_DAY=Sunrays Amount Day
 value.SUNRAYS_AMOUNT_DAY.-1=Use Style Value

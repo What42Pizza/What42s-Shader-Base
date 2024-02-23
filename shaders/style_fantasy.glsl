@@ -12,7 +12,7 @@
 #endif
 #if CLOUDS_BRIGHTNESS == -1
 #undef CLOUDS_BRIGHTNESS
-										#define CLOUDS_BRIGHTNESS 0.95
+										#define CLOUDS_BRIGHTNESS 0.90
 #endif
 #if DARKEN_SKY_UNDERGROUND == -1
 #undef DARKEN_SKY_UNDERGROUND
@@ -520,7 +520,7 @@
 #endif
 #if BLOOM_LOW_CUTOFF == -1
 #undef BLOOM_LOW_CUTOFF
-										#define BLOOM_LOW_CUTOFF 0.2
+										#define BLOOM_LOW_CUTOFF 0.0
 #endif
 #if BLOOM_HIGH_CUTOFF == -1
 #undef BLOOM_HIGH_CUTOFF
@@ -548,21 +548,25 @@
 #undef VOL_SUNRAYS_ENABLED
 										#define VOL_SUNRAYS_ENABLED 1
 #endif
-#if SUNRAYS_STYLE == -1
-#undef SUNRAYS_STYLE
-										#define SUNRAYS_STYLE 1
-#endif
 #if SUNRAYS_QUALITY == -1
 #undef SUNRAYS_QUALITY
 										#define SUNRAYS_QUALITY 4
 #endif
-#if SUNRAYS_COMPUTE_COUNT == -1
-#undef SUNRAYS_COMPUTE_COUNT
-										#define SUNRAYS_COMPUTE_COUNT 1
+#if SUNRAYS_STYLE == -1
+#undef SUNRAYS_STYLE
+										#define SUNRAYS_STYLE 1
 #endif
 #if SUNRAYS_FLICKERING_FIX == -1
 #undef SUNRAYS_FLICKERING_FIX
 										#define SUNRAYS_FLICKERING_FIX 0
+#endif
+#if SUNRAYS_CURVE_SURFACE == -1
+#undef SUNRAYS_CURVE_SURFACE
+										#define SUNRAYS_CURVE_SURFACE 0.6
+#endif
+#if SUNRAYS_CURVE_UNDERGROUND == -1
+#undef SUNRAYS_CURVE_UNDERGROUND
+										#define SUNRAYS_CURVE_UNDERGROUND 0.2
 #endif
 #if SUNRAYS_AMOUNT_DAY == -1
 #undef SUNRAYS_AMOUNT_DAY
@@ -594,15 +598,15 @@
 #endif
 #if SUNRAYS_MOON_RED == -1
 #undef SUNRAYS_MOON_RED
-										#define SUNRAYS_MOON_RED 0.1
+										#define SUNRAYS_MOON_RED 0.0
 #endif
 #if SUNRAYS_MOON_GREEN == -1
 #undef SUNRAYS_MOON_GREEN
-										#define SUNRAYS_MOON_GREEN 0.5
+										#define SUNRAYS_MOON_GREEN 0.3
 #endif
 #if SUNRAYS_MOON_BLUE == -1
 #undef SUNRAYS_MOON_BLUE
-										#define SUNRAYS_MOON_BLUE 1.2
+										#define SUNRAYS_MOON_BLUE 1.0
 #endif
 
 
@@ -702,7 +706,7 @@
 #endif
 #if SHARPEN_VEL_ADDITION == -1
 #undef SHARPEN_VEL_ADDITION
-										#define SHARPEN_VEL_ADDITION 0.7
+										#define SHARPEN_VEL_ADDITION 0.8
 #endif
 #if SHARPENING_DETECT_SIZE == -1
 #undef SHARPENING_DETECT_SIZE

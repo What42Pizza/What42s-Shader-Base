@@ -3,8 +3,12 @@
 - b1.10.1 (24/02/02)
   - Added settings: Sun Brightness and Moon Brightness
   - Further tweaked styles
+  - Fixed short_grass not waving
   - Settings changes:
+  - - Added settings 'Sunrays Curve Surface' and 'Sunrays Curve Underground'
   - - New 'BLOOM_AMOUNT' is: old 'BLOOM_AMOUNT' * 0.85
+  - - Fully removed setting 'SUNRAYS_COMPUTE_COUNT' (unused due to code changes)
+  - - Fully removed setting 'SUNRAYS_SATURATION' (unused due to code changes)
 
 <br>
 

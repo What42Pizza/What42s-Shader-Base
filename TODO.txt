@@ -6,6 +6,8 @@ Make more example images:
 Add sub-styles?
 	Zombies / Spooky / Creepy?
 	needs more sub-styles to justify feature
+Rework sky
+Add (option for) black lines on edges
 Rework waving calculations for performance?
 Do a round of making sure different settings combinations work
 Prevent TAA on entities?
