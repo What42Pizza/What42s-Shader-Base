@@ -181,6 +181,24 @@
 
 
 
+#if NETHER_BLOCKLIGHT_RED_MULT == -1
+#undef NETHER_BLOCKLIGHT_RED_MULT
+										#define NETHER_BLOCKLIGHT_RED_MULT 1.3
+#endif
+#if NETHER_BLOCKLIGHT_GREEN_MULT == -1
+#undef NETHER_BLOCKLIGHT_GREEN_MULT
+										#define NETHER_BLOCKLIGHT_GREEN_MULT 1.0
+#endif
+#if NETHER_BLOCKLIGHT_BLUE_MULT == -1
+#undef NETHER_BLOCKLIGHT_BLUE_MULT
+										#define NETHER_BLOCKLIGHT_BLUE_MULT 0.9
+#endif
+
+
+
+
+
+
 #if SKYLIGHT_DAY_RED == -1
 #undef SKYLIGHT_DAY_RED
 										#define SKYLIGHT_DAY_RED 1.05
@@ -428,7 +446,6 @@
 
 
 
-
 #if WATER_REFLECTION_AMOUNT == -1
 #undef WATER_REFLECTION_AMOUNT
 										#define WATER_REFLECTION_AMOUNT 0.7
@@ -669,9 +686,9 @@
 
 
 
-#if TAA_ENABLED == -1
-#undef TAA_ENABLED
-										#define TAA_ENABLED 1
+#if AA_STRATEGY == -1
+#undef AA_STRATEGY
+										#define AA_STRATEGY 4
 #endif
 
 
@@ -847,7 +864,7 @@
 #endif
 #if WAVING_AMOUNT_3 == -1
 #undef WAVING_AMOUNT_3
-										#define WAVING_AMOUNT_3 1.5
+										#define WAVING_AMOUNT_3 1.25
 #endif
 #if WAVING_RAIN_MULT == -1
 #undef WAVING_RAIN_MULT
@@ -933,6 +950,84 @@
 
 
 
+
+
+
+
+
+
+#if SSS_PIXELS == -1
+#undef SSS_PIXELS
+										#define SSS_PIXELS 0
+#endif
+#if SSS_DECONVERGE == -1
+#undef SSS_DECONVERGE
+										#define SSS_DECONVERGE 0
+#endif
+#if SSS_DECONVERGE_AMOUNT == -1
+#undef SSS_DECONVERGE_AMOUNT
+										#define SSS_DECONVERGE_AMOUNT 1.0
+#endif
+#if SSS_DECONVERGE_QUALITY == -1
+#undef SSS_DECONVERGE_QUALITY
+										#define SSS_DECONVERGE_QUALITY 1
+#endif
+#if SSS_FLIP == -1
+#undef SSS_FLIP
+										#define SSS_FLIP 0
+#endif
+#if SSS_POSTERIZE == -1
+#undef SSS_POSTERIZE
+										#define SSS_POSTERIZE 0
+#endif
+#if SSS_POSTERIZE_QUALITY == -1
+#undef SSS_POSTERIZE_QUALITY
+										#define SSS_POSTERIZE_QUALITY 8
+#endif
+#if SSS_NOTCH == -1
+#undef SSS_NOTCH
+										#define SSS_NOTCH 0
+#endif
+#if SSS_NOTCH_QUALITY == -1
+#undef SSS_NOTCH_QUALITY
+										#define SSS_NOTCH_QUALITY 8
+#endif
+#if SSS_BUMPY == -1
+#undef SSS_BUMPY
+										#define SSS_BUMPY 0
+#endif
+#if SSS_SCANLINES == -1
+#undef SSS_SCANLINES
+										#define SSS_SCANLINES 0
+#endif
+#if SSS_SCANLINES_AMOUNT == -1
+#undef SSS_SCANLINES_AMOUNT
+										#define SSS_SCANLINES_AMOUNT 0.6
+#endif
+#if SSS_SCANLINES_SCALE == -1
+#undef SSS_SCANLINES_SCALE
+										#define SSS_SCANLINES_SCALE 1.5
+#endif
+#if SSS_PHOSPHOR == -1
+#undef SSS_PHOSPHOR
+										#define SSS_PHOSPHOR 1
+#endif
+#if SSS_PHOSPHOR_AMOUNT == -1
+#undef SSS_PHOSPHOR_AMOUNT
+										#define SSS_PHOSPHOR_AMOUNT 0.75
+#endif
+#if SSS_PHOSPHOR_CURVE == -1
+#undef SSS_PHOSPHOR_CURVE
+										#define SSS_PHOSPHOR_CURVE 0.7
+#endif
+#if SSS_INVERT == -1
+#undef SSS_INVERT
+										#define SSS_INVERT 0
+#endif
+#if SSS_BARREL_AMOUNT == -1
+#undef SSS_BARREL_AMOUNT
+										#define SSS_BARREL_AMOUNT 0.1
+#endif
 
 
 

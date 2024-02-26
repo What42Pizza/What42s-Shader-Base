@@ -13,16 +13,8 @@
 
 void main() {
 	vec4 color = texture2D(MAIN_BUFFER, texcoord) * glcolor;
+	
 	color.a *= 1.0 - WEATHER_TRANSPARENCY;
-	#ifdef DEBUG_OUTPUT_ENABLED
-		vec4 debugOutput = vec4(0.0, 0.0, 0.0, color.a);
-	#endif
-	
-	
-	
-	#ifdef DEBUG_OUTPUT_ENABLED
-		color = debugOutput;
-	#endif
 	
 	/* DRAWBUFFERS:04 */
 	gl_FragData[0] = color;
@@ -44,7 +36,7 @@ void main() {
 #if ISOMETRIC_RENDERING_ENABLED == 1
 	#include "/lib/isometric.glsl"
 #endif
-#if TAA_ENABLED == 1
+#ifdef TAA_JITTER
 	#include "/lib/taa_jitter.glsl"
 #endif
 
@@ -59,7 +51,7 @@ void main() {
 		gl_Position = ftransform();
 	#endif
 	
-	#if TAA_ENABLED == 1
+	#ifdef TAA_JITTER
 		doTaaJitter(gl_Position.xy  ARGS_IN);
 	#endif
 	

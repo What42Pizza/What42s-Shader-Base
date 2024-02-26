@@ -8,9 +8,6 @@
 
 void main() {
 	vec4 color = texture2D(MAIN_BUFFER, texcoord);
-	#ifdef DEBUG_OUTPUT_ENABLED
-		vec4 debugOutput = vec4(0.0, 0.0, 0.0, color.a);
-	#endif
 	
 	
 	#include "/import/sunPosition.glsl"
@@ -20,11 +17,6 @@ void main() {
 		color.rgb *= MOON_BRIGHTNESS;
 	}
 	
-	
-	
-	#ifdef DEBUG_OUTPUT_ENABLED
-		color = debugOutput;
-	#endif
 	
 	/* DRAWBUFFERS:0 */
 	gl_FragData[0] = color;
@@ -40,7 +32,7 @@ void main() {
 #if ISOMETRIC_RENDERING_ENABLED == 1
 	#include "/lib/isometric.glsl"
 #endif
-#if TAA_ENABLED == 1
+#ifdef TAA_JITTER
 	#include "/lib/taa_jitter.glsl"
 #endif
 
@@ -55,7 +47,7 @@ void main() {
 		gl_Position = ftransform();
 	#endif
 	
-	#if TAA_ENABLED == 1
+	#ifdef TAA_JITTER
 		doTaaJitter(gl_Position.xy  ARGS_IN);
 	#endif
 	

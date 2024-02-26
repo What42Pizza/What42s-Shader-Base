@@ -1,9 +1,3 @@
-//--------------------------------------------------------//
-//        Post-Processing 3 (adding noisy results)        //
-//--------------------------------------------------------//
-
-
-
 #ifdef FIRST_PASS
 	
 	varying vec2 texcoord;
@@ -18,10 +12,31 @@
 
 #ifdef FSH
 
+#include "/lib/simplex_noise.glsl"
+
 void main() {
-	vec3 color = texelFetch(MAIN_BUFFER, texelcoord, 0).rgb;
+	
+	
+	
+	// ======== UNDERWATER WAVING ========
+	
+	#ifdef UNDERWATER_WAVINESS_ENABLED
+		vec2 texcoord = texcoord;
+		#include "/import/isEyeInWater.glsl"
+		if (isEyeInWater == 1) {
+			texcoord = (texcoord - 0.5) * 0.95 + 0.5;
+			#include "/import/frameTimeCounter.glsl"
+			vec3 simplexInput = vec3(
+				texcoord * 6.0 * UNDERWATER_WAVINESS_SCALE,
+				frameTimeCounter * 0.65 * UNDERWATER_WAVINESS_SPEED
+			);
+			texcoord += simplexNoise2From3(simplexInput) * 0.0015 * UNDERWATER_WAVINESS_AMOUNT;
+		}
+	#endif
+	
+	vec3 color = texture2D(MAIN_BUFFER, texcoord).rgb;
 	#ifdef DEBUG_OUTPUT_ENABLED
-		vec3 debugOutput = texelFetch(DEBUG_BUFFER, texelcoord, 0).rgb;
+		vec3 debugOutput = texture2D(DEBUG_BUFFER, texcoord).rgb;
 	#endif
 	
 	
@@ -33,6 +48,10 @@ void main() {
 	color += noisyAdditions;
 	
 	
+	
+	#ifdef DEBUG_OUTPUT_ENABLED
+		color = debugOutput;
+	#endif
 	
 	/* DRAWBUFFERS:0 */
 	gl_FragData[0] = vec4(color, 1.0);

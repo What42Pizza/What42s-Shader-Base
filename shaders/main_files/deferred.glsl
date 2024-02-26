@@ -1,9 +1,3 @@
-//-----------------------------------//
-//        BEFORE TRANSPARENTS        //
-//-----------------------------------//
-
-
-
 #ifdef FIRST_PASS
 	varying vec2 texcoord;
 	flat_inout vec3 skyLight;

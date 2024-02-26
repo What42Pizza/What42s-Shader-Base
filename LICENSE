@@ -27,9 +27,8 @@ You cannot:
 Notes:
 - Making changes to the code isn't required for publishing altered versions of this shader; a significant enough change to the settings is enough to count (look at 2.4.3 / 2.5.3)
 - Modpacks that include this shader can also include custom shaderpack settings
-- The rules in the license of a fork don't apply to the creators and/or owners of said fork, though the licenses of the base shader(s) do still take effect.
-- When you create a fork of this shader, you only have to follow the license of the specific version that you forked
-- This license can apply to distributions of this shader (downloaded from curseforge, modrinth, etc) and apply separately to a download of this shader's repo. That means the images, Rust code, and everything else in this shader's full repo is protected by this license.
+- The rules in the license of a fork don't apply to the creators and/or owners of said fork, only the license(s) of the base shader(s) take effect. Also, you only have to follow the version of the license that came with the version that you forked
+- This license can apply to distributions of this shader (downloaded from curseforge, modrinth, etc) and apply separately to a download of this shader's repo. That means the images, Rust code, and everything else in this shader's full repo is protected by this license
 - If you're sure that what you're doing is allowed by this license, there's no need to ask for permission
 
 No one person holds the copyright for all of the contents of this shader. Full credits can be found in the file 'readme.md'.

@@ -4,19 +4,18 @@ Make more example images:
 	Rain
 	Night
 Add sub-styles?
-	Zombies / Spooky / Creepy?
+	Zombies / Spooky / Creepy
+	Retro
 	needs more sub-styles to justify feature
+Add documentation for super secret settings
 Rework sky
 Add (option for) black lines on edges
 Rework waving calculations for performance?
 Do a round of making sure different settings combinations work
-Prevent TAA on entities?
 Add water caustics?
 Make only top of water wavy
-Remove texcoord from composites & deferred and replace with gl_FragCoord?
 Go through settings in shaders.properties and make sure all instances of settings are listed in the same order
 Add reflections to normal glass too?
-Add documentation for isometrics
 Increase waviness of plant tops
 Add ripples to rain reflections
 Add void fog option?
@@ -37,7 +36,6 @@ Add more TAA settings
 Fix spider and endermen eyes?
 Add setting to fade fog into sky buffer (to make the sun and moon appear in fog) (would also need sunray depth fix)
 Do a round of general optimizations
-Take FXAA from Comp Reimagined?
 Exclude sun, moon, and sunrays based on horizon multiplier
 Do a round of adding debug settings
 Do a round of adding more ways to get to options (e.g. access to light brightnesses from the 'shading' menu)
@@ -74,6 +72,9 @@ Match the vanilla look, especially in:
 
 
 Finished:
+Add FXAA
+Prevent TAA on entities
+Add documentation for isometrics
 Rename debug settings to have related feature as start of name
 Rename 'sunDayPercent' to 'sunDayColorPercent'
 Fix fog on water

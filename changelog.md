@@ -1,11 +1,25 @@
 <br>
 
-- b1.10.1 (24/02/02)
+- **b1.11.0**
+  - Added setting: Anti-Aliasing Strategy (includes FXAA, TAA, and combinations)
+  - Added 'super secret settings' easter egg from 1.8-
+  - Added settings: Nether Blocklight [Red, Green, Blue] Mult
+  - Many slight tweaks
+  - Fixed many debug settings
+  - Settings changes:
+  - - New 'SUNRAYS_AMOUNT' (for depth-based sunrays) is: old 'SUNRAYS_AMOUNT' * 0.8
+  - - Removed setting 'TAA_ENABLED' (replaced with 'AA_STRATEGY')
+
+<br>
+<br>
+<br>
+
+- b1.10.1 (24/02/23)
   - Added settings: Sun Brightness and Moon Brightness
+  - Added settings: Sunrays Curve Surface and Sunrays Curve Underground
   - Further tweaked styles
   - Fixed short_grass not waving
   - Settings changes:
-  - - Added settings 'Sunrays Curve Surface' and 'Sunrays Curve Underground'
   - - New 'BLOOM_AMOUNT' is: old 'BLOOM_AMOUNT' * 0.85
   - - Fully removed setting 'SUNRAYS_COMPUTE_COUNT' (unused due to code changes)
   - - Fully removed setting 'SUNRAYS_SATURATION' (unused due to code changes)

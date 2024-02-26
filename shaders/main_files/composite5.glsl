@@ -1,9 +1,3 @@
-//---------------------------------//
-//        Post-Processing 6        //
-//---------------------------------//
-
-
-
 #ifdef FIRST_PASS
 	varying vec2 texcoord;
 #endif
@@ -12,7 +6,10 @@
 
 #ifdef FSH
 
-#include "/lib/simplex_noise.glsl"
+#if SSS_DECONVERGE == 1
+	#include "/lib/super_secret_settings/deconverge.glsl"
+#endif
+#include "/lib/super_secret_settings/super_secret_settings.glsl"
 #include "/lib/color_correction.glsl"
 #if COLORBLIND_MODE != 0
 	#include "/lib/colorblindness.glsl"
@@ -22,28 +19,26 @@
 
 void main() {
 	
-	
-	
-	// ======== UNDERWATER WAVING ========
-	
-	#ifdef UNDERWATER_WAVINESS_ENABLED
-		vec2 texcoord = texcoord;
-		#include "/import/isEyeInWater.glsl"
-		if (isEyeInWater == 1) {
-			texcoord = (texcoord - 0.5) * 0.95 + 0.5;
-			#include "/import/frameTimeCounter.glsl"
-			vec3 simplexInput = vec3(
-				texcoord * 6.0 * UNDERWATER_WAVINESS_SCALE,
-				frameTimeCounter * 0.65 * UNDERWATER_WAVINESS_SPEED
-			);
-			texcoord += simplexNoise2From3(simplexInput) * 0.0015 * UNDERWATER_WAVINESS_AMOUNT;
-		}
+	#if SSS_DECONVERGE == 1
+		vec3 color = sss_deconverge(ARG_IN);
+	#else
+		#if SSS_FLIP == 1
+			#include "/import/viewSize.glsl"
+			vec3 color = texelFetch(MAIN_BUFFER, ivec2(viewSize) - texelcoord, 0).rgb;
+		#else
+			vec3 color = texelFetch(MAIN_BUFFER, texelcoord, 0).rgb;
+		#endif
 	#endif
 	
-	vec3 color = texture2D(MAIN_BUFFER, texcoord).rgb;
 	#ifdef DEBUG_OUTPUT_ENABLED
-		vec3 debugOutput = texture2D(DEBUG_BUFFER, texcoord).rgb;
+		vec3 debugOutput = texelFetch(DEBUG_BUFFER, texelcoord, 0).rgb;
 	#endif
+	
+	
+	
+	// ======== SUPER SECRET SETTINGS ========
+	
+	doSuperSecretSettings(color  ARGS_IN);
 	
 	
 	
@@ -71,8 +66,12 @@ void main() {
 		color *= 1.0 - vignetteAlpha;
 	#endif
 	
-	//color = vec3(toLinearDepth(texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r  ARGS_IN));
-	//color = vec3(toBlockDepth(depth  ARGS_IN));
+	
+	
+	// super secret settings
+	#if SSS_INVERT == 1
+		color = 1.0 - color;
+	#endif
 	
 	
 	

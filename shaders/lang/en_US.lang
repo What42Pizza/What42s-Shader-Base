@@ -363,6 +363,27 @@ value.CAVE_AMBIENT_BLUE.-1=Use Style Value
 
 
 
+screen.NETHER_COLOR_SETTINGS=Nether Color Settings
+
+
+
+option.NETHER_BLOCKLIGHT_RED_MULT=Nether Blocklight Red Mult
+option.NETHER_BLOCKLIGHT_RED_MULT.comment=How much to increase / decrease the red channel of blocklight when in the nether
+value.NETHER_BLOCKLIGHT_RED_MULT.-1=Use Style Value
+
+option.NETHER_BLOCKLIGHT_GREEN_MULT=Nether Blocklight GREEN Mult
+option.NETHER_BLOCKLIGHT_GREEN_MULT.comment=How much to increase / decrease the green channel of blocklight when in the nether
+value.NETHER_BLOCKLIGHT_GREEN_MULT.-1=Use Style Value
+
+option.NETHER_BLOCKLIGHT_BLUE_MULT=Nether Blocklight BLUE Mult
+option.NETHER_BLOCKLIGHT_BLUE_MULT.comment=How much to increase / decrease the blue channel of blocklight when in the nether
+value.NETHER_BLOCKLIGHT_BLUE_MULT.-1=Use Style Value
+
+
+
+
+
+
 
 
 
@@ -735,15 +756,14 @@ value.DOF_FOCAL_PLANE_DISTANCE.-1=Use Style Value
 
 
 
-screen.ANTI_ALIASING_SETTINGS=Anti-Aliasing
-
-
-
-option.TAA_ENABLED=TAA
-option.TAA_ENABLED.comment=Smoothens edges and makes them less pixelated while also removing flickering. (Performance cost: Low)
-value.TAA_ENABLED.-1=Use Style Value
-value.TAA_ENABLED.0=Off
-value.TAA_ENABLED.1=On
+option.AA_STRATEGY=Anti-Aliasing Strategy
+option.AA_STRATEGY.comment=FXAA: Use only Fxaa\nTAA: Use only Taa\nFXAA + TAA: Use both\nTAA Or FXAA: Use TAA on static objects and Fxaa on moving objects
+value.AA_STRATEGY.-1=Use Style Value
+value.AA_STRATEGY.0=Disabled
+value.AA_STRATEGY.1=FXAA
+value.AA_STRATEGY.2=TAA
+value.AA_STRATEGY.3=FXAA + TAA
+value.AA_STRATEGY.4=TAA Or FXAA
 
 
 
@@ -1086,6 +1106,106 @@ value.ISOMETRIC_FORWARD_VISIBILITY.-1=Use Style Value
 
 
 screen.DEBUG_SETTINGS=Debug
+
+
+
+
+
+
+screen.SUPER_SECRET_SETTINGS=Super Secret Settings
+screen.SUPER_SECRET_SETTINGS.comment=Recreations of easter-egg shader effects from 1.8-
+
+
+
+option.SSS_PIXELS=Pixels
+option.SSS_PIXELS.comment=Pixelates the screen
+value.SSS_PIXELS.-1=Use Style Value
+
+option.SSS_DECONVERGE=Deconverge
+option.SSS_DECONVERGE.comment=Offsets different colors
+value.SSS_DECONVERGE.-1=Use Style Value
+value.SSS_DECONVERGE.0=Off
+value.SSS_DECONVERGE.1=On
+
+option.SSS_DECONVERGE_AMOUNT=Deconverge Amount
+value.SSS_DECONVERGE_AMOUNT.-1=Use Style Value
+
+option.SSS_DECONVERGE_QUALITY=Deconverge Quality
+value.SSS_DECONVERGE_QUALITY.-1=Use Style Value
+
+option.SSS_FLIP=Flip
+option.SSS_FLIP.comment=Flips image horizontally and vertically
+value.SSS_FLIP.-1=Use Style Value
+value.SSS_FLIP.0=Off
+value.SSS_FLIP.1=On
+
+option.SSS_POSTERIZE=Posterize
+option.SSS_POSTERIZE.comment=Compresses the color quality
+value.SSS_POSTERIZE.-1=Use Style Value
+value.SSS_POSTERIZE.0=Off
+value.SSS_POSTERIZE.1=On
+
+option.SSS_POSTERIZE_QUALITY=Posterize Quality
+value.SSS_POSTERIZE_QUALITY.-1=Use Style Value
+
+option.SSS_NOTCH=Notch
+option.SSS_NOTCH.comment=One of Notch's effects
+value.SSS_NOTCH.-1=Use Style Value
+value.SSS_NOTCH.0=Off
+value.SSS_NOTCH.1=On
+
+option.SSS_NOTCH_QUALITY=Notch Quality
+value.SSS_NOTCH_QUALITY.-1=Use Style Value
+
+option.SSS_BUMPY=Bumpy
+option.SSS_BUMPY.comment=Adds outlines
+value.SSS_BUMPY.-1=Use Style Value
+value.SSS_BUMPY.0=Off
+value.SSS_BUMPY.1=On
+
+option.SSS_SCANLINES=Scanlines
+option.SSS_SCANLINES.comment=Adds scanlines
+value.SSS_SCANLINES.-1=Use Style Value
+value.SSS_SCANLINES.0=Off
+value.SSS_SCANLINES.1=On
+
+option.SSS_SCANLINES_AMOUNT=Scanlines Amount
+option.SSS_SCANLINES_AMOUNT.comment=How dark the scanlines are
+value.SSS_SCANLINES_AMOUNT.-1=Use Style Value
+
+option.SSS_SCANLINES_SCALE=Scanlines Scale
+option.SSS_SCANLINES_SCALE.comment=How big the lines are
+value.SSS_SCANLINES_SCALE.-1=Use Style Value
+
+option.SSS_PHOSPHOR=Phosphor
+option.SSS_PHOSPHOR.comment=Makes brighter pixels linger on screen longer
+value.SSS_PHOSPHOR.-1=Use Style Value
+value.SSS_PHOSPHOR.0=Off
+value.SSS_PHOSPHOR.1=On
+
+option.SSS_PHOSPHOR_AMOUNT=Phosphor Amount
+option.SSS_PHOSPHOR_AMOUNT.comment=How long brighter pixels linger
+value.SSS_PHOSPHOR_AMOUNT.-1=Use Style Value
+
+option.SSS_PHOSPHOR_CURVE=Phosphor Curve
+option.SSS_PHOSPHOR_CURVE.comment=How brighter pixels need to be to linger
+value.SSS_PHOSPHOR_CURVE.-1=Use Style Value
+
+option.SSS_INVERT=Invert
+option.SSS_INVERT.comment=Inverts color data
+value.SSS_INVERT.-1=Use Style Value
+value.SSS_INVERT.0=Off
+value.SSS_INVERT.1=On
+
+option.SSS_BARREL=Barrel
+option.SSS_BARREL.comment=Applies barrel distortion
+
+option.SSS_BARREL_AMOUNT=Barrel Amount
+option.SSS_BARREL_AMOUNT.comment=How strong the distortion is
+value.SSS_BARREL_AMOUNT.-1=Use Style Value
+
+
+
 
 
 

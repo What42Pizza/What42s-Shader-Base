@@ -9,10 +9,6 @@
 #include "/utils/getSkyColor.glsl"
 
 void main() {
-	#ifdef DEBUG_OUTPUT_ENABLED
-		vec3 debugOutput = vec3(0.0);
-	#endif
-	
 	
 	
 	vec3 color = getSkyColor(ARG_IN);
@@ -27,11 +23,6 @@ void main() {
 	}
 	
 	
-	
-	#ifdef DEBUG_OUTPUT_ENABLED
-		color = debugOutput;
-	#endif
-	
 	/* DRAWBUFFERS:0 */
 	gl_FragData[0] = vec4(color, 1.0);
 	
@@ -45,7 +36,7 @@ void main() {
 
 #ifdef VSH
 
-#if TAA_ENABLED == 1
+#ifdef TAA_JITTER
 	#include "/lib/taa_jitter.glsl"
 #endif
 
@@ -53,7 +44,7 @@ void main() {
 	
 	gl_Position = ftransform();
 	
-	#if TAA_ENABLED == 1
+	#ifdef TAA_JITTER
 		doTaaJitter(gl_Position.xy  ARGS_IN);
 	#endif
 	

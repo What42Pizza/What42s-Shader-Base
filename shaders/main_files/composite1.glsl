@@ -1,9 +1,3 @@
-//--------------------------------------------------//
-//        Post-Processing 2 (anything noisy)        //
-//--------------------------------------------------//
-
-
-
 #ifdef FIRST_PASS
 	varying vec2 texcoord;
 	
@@ -52,7 +46,7 @@ void main() {
 		//color = bloomAddition;
 		
 		#if BLOOM_SHOW_ADDITION == 1
-			debugOutput += bloomAddition;
+			debugOutput = bloomAddition;
 		#endif
 		#if BLOOM_SHOW_FILTERED_TEXTURE == 1
 			debugOutput += texelFetch(BLOOM_BUFFER, texelcoord, 0).rgb;

@@ -21,9 +21,6 @@ void main() {
 #if WAVING_ENABLED == 1
 	#include "/lib/waving.glsl"
 #endif
-#if TAA_ENABLED == 1
-	#include "/lib/taa_jitter.glsl"
-#endif
 
 void main() {
 	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
@@ -49,10 +46,6 @@ void main() {
 	#endif
 	
 	gl_Position.xyz = distort(gl_Position.xyz);
-	
-	//#if TAA_ENABLED == 1
-	//	doTaaJitter(gl_Position.xy  ARGS_IN);
-	//#endif
 	
 }
 

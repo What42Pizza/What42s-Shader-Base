@@ -1,4 +1,4 @@
-// OptiFine Settings (DON'T DELETE)
+// optifine settings (DON'T DELETE)
 /*
 const bool colortex1Clear = false;
 const bool colortex2Clear = false;
@@ -17,7 +17,7 @@ const bool shadowtex1Clear = false;
 
 
 
-// User Settings
+// user settings
 
 #define STYLE 0 // [0 1 2]
 
@@ -54,11 +54,34 @@ const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8
 
 #ifdef NETHER
 	#undef SHADOWS_ENABLED
-	#undef SUNRAYS_ENABLED
+	#define SHADOWS_ENABLED 0
+	#undef DEPTH_SUNRAYS_ENABLED
+	#define DEPTH_SUNRAYS_ENABLED 0
+	#undef VOL_SUNRAYS_ENABLED
+	#define VOL_SUNRAYS_ENABLED 0
 #endif
 
 #ifdef END
 	#undef SHADOWS_ENABLED
+	#define SHADOWS_ENABLED 0
+#endif
+
+#if SHADOWS_ENABLED == 0
+	#undef VOL_SUNRAYS_ENABLED
+	#define VOL_SUNRAYS_ENABLED 0
+#endif
+
+
+
+#if SSS_PIXELS != 0
+	#undef AA_STRATEGY
+	#define AA_STRATEGY 0
+	#undef SHARPENING_ENABLED
+	#define SHARPENING_ENABLED 0
+#endif
+
+#if AA_STRATEGY == 2 || AA_STRATEGY == 3 || AA_STRATEGY == 4
+	#define TAA_JITTER
 #endif
 
 
@@ -66,6 +89,8 @@ const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8
 #define BLOCK_COLOR vec3(BLOCK_RED, BLOCK_GREEN, BLOCK_BLUE)*BLOCK_BRIGHTNESS
 
 #define CAVE_AMBIENT_COLOR vec3(CAVE_AMBIENT_RED, CAVE_AMBIENT_GREEN, CAVE_AMBIENT_BLUE)*CAVE_AMBIENT_BRIGHTNESS
+
+#define NETHER_BLOCKLIGHT_MULT vec3(NETHER_BLOCKLIGHT_RED_MULT, NETHER_BLOCKLIGHT_GREEN_MULT, NETHER_BLOCKLIGHT_BLUE_MULT)
 
 
 
@@ -122,7 +147,7 @@ const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8
 
 
 
-// Hidden settings
+// misc
 
 #define LIGHT_SMOOTHING 0.1
 

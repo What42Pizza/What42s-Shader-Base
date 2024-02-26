@@ -1,9 +1,3 @@
-//---------------------------------//
-//        Post-Processing 4        //
-//---------------------------------//
-
-
-
 #ifdef FIRST_PASS
 	varying vec2 texcoord;
 #endif

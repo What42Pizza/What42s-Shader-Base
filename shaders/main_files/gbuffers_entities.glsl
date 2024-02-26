@@ -23,14 +23,13 @@
 
 void main() {
 	vec4 color = texture2D(MAIN_BUFFER, texcoord) * glcolor;
-	#ifdef DEBUG_OUTPUT_ENABLED
-		vec4 debugOutput = vec4(0.0, 0.0, 0.0, color.a);
-	#endif
+	
 	
 	
 	// hurt flash, creeper flash, etc
 	#include "/import/entityColor.glsl"
 	color.rgb = mix(color.rgb, entityColor.rgb, entityColor.a);
+	
 	
 	
 	// main lighting
@@ -40,17 +39,20 @@ void main() {
 	
 	// outputs
 	
-	#ifdef DEBUG_OUTPUT_ENABLED
-		color = debugOutput;
-	#endif
-	
 	/* DRAWBUFFERS:04 */
 	gl_FragData[0] = color;
 	gl_FragData[1] = vec4(normal, 1.0);
 	
-	#if REFLECTIONS_ENABLED == 1
+	#if REFLECTIONS_ENABLED == 1 && AA_STRATEGY == 4
+		/* DRAWBUFFERS:0435 */
+		gl_FragData[2] = vec4(0.0, 0.0, 0.0, 1.0);
+		gl_FragData[3] = vec4(1.0, 1.0, 1.0, 1.0);
+	#elif REFLECTIONS_ENABLED == 1 && AA_STRATEGY != 4
 		/* DRAWBUFFERS:043 */
 		gl_FragData[2] = vec4(0.0, 0.0, 0.0, 1.0);
+	#elif REFLECTIONS_ENABLED == 0 && AA_STRATEGY == 4
+		/* DRAWBUFFERS:045 */
+		gl_FragData[2] = vec4(1.0, 1.0, 1.0, 1.0);
 	#endif
 	
 }
@@ -66,7 +68,7 @@ void main() {
 #if ISOMETRIC_RENDERING_ENABLED == 1
 	#include "/lib/isometric.glsl"
 #endif
-#if TAA_ENABLED == 1
+#if defined TAA_JITTER && AA_STRATEGY != 4
 	#include "/lib/taa_jitter.glsl"
 #endif
 
@@ -89,8 +91,12 @@ void main() {
 	#endif
 	
 	
-	#if TAA_ENABLED == 1
-		doTaaJitter(gl_Position.xy  ARGS_IN);
+	#ifdef TAA_JITTER
+		#if AA_STRATEGY == 4
+			gl_Position.z -= 0.001;
+		#else
+			doTaaJitter(gl_Position.xy  ARGS_IN);
+		#endif
 	#endif
 	
 	

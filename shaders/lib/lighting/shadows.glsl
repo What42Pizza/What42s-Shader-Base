@@ -155,7 +155,7 @@ float sampleShadow(vec3 viewPos, float lightDot  ARGS_OUT) {
 			}
 		}
 		shadowBrightness /= SHADOW_OFFSET_WEIGHTS_TOTAL;
-		#if TAA_ENABLED == 1
+		#if AA_STRATEGY == 2 || AA_STRATEGY == 3 || AA_STRATEGY == 4
 			const float shadowMult1 = 1.4; // for when lightDot is 1.0 (sun is directly facing surface)
 			const float shadowMult2 = 2.2; // for when lightDot is 0.0 (sun is angled relative to surface)
 		#else

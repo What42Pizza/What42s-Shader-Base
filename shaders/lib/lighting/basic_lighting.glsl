@@ -30,6 +30,10 @@ vec3 getBasicLighting(float blockBrightness, float ambientBrightness  ARGS_OUT) 
 	#endif
 	vec3 blockLight = blockBrightness * BLOCK_COLOR;
 	
+	#ifdef NETHER
+		blockLight *= mix(vec3(1.0), NETHER_BLOCKLIGHT_MULT, blockBrightness);
+	#endif
+	
 	vec3 total = smoothMax(blockLight, ambientLight, LIGHT_SMOOTHING);
 	return total;
 }
