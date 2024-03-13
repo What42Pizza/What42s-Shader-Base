@@ -2,8 +2,6 @@
 //        REFLECTIONS        //
 //---------------------------//
 
-// This code was originally taken from Complementary v4, but it has been completely rewritten
-
 
 
 void raytrace(out vec2 reflectionPos, out int error, vec3 viewPos, vec3 normal  ARGS_OUT) {
@@ -36,7 +34,7 @@ void raytrace(out vec2 reflectionPos, out int error, vec3 viewPos, vec3 normal  
 			//error = 1;
 			//return;
 			#include "/utils/var_rng.glsl"
-			reflectionPos = mix(nextScreenPos.xy, screenPos.xy, randomFloat(rng) * 0.5 + 0.5);
+			reflectionPos = mix(nextScreenPos.xy, screenPos.xy, randomFloat(rng) * 0.4 + 0.5);
 			//screenPos -= stepVector * (randomFloat(rng) * 0.5 + 0.5);
 			//reflectionPos = screenPos.xy;
 			error = 0;
@@ -63,7 +61,7 @@ void raytrace(out vec2 reflectionPos, out int error, vec3 viewPos, vec3 normal  
 				return;
 			}
 			screenPos -= stepVector;
-			stepVector *= 0.5;
+			stepVector *= 0.25;
 		}
 		
 		stepVector *= REFLECTION_STEP_INCREASE;

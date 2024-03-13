@@ -52,6 +52,10 @@
 #undef FOG_ENABLED
 										#define FOG_ENABLED 1
 #endif
+#if FOG_CURVE == -1
+#undef FOG_CURVE
+										#define FOG_CURVE 1
+#endif
 #if FOG_HEIGHT_SCALE == -1
 #undef FOG_HEIGHT_SCALE
 										#define FOG_HEIGHT_SCALE 3.0
@@ -60,9 +64,24 @@
 #undef FOG_EXTRA_CLOUDS_DISTANCE
 										#define FOG_EXTRA_CLOUDS_DISTANCE 10.0
 #endif
-#if FOG_CURVE == -1
-#undef FOG_CURVE
-										#define FOG_CURVE 1
+
+
+
+#if GROUND_FOG_ENABLED == -1
+#undef GROUND_FOG_ENABLED
+										#define GROUND_FOG_ENABLED 1
+#endif
+#if GROUND_FOG_STRENGTH == -1
+#undef GROUND_FOG_STRENGTH
+										#define GROUND_FOG_STRENGTH 1.0
+#endif
+#if GROUND_FOG_OFFSET == -1
+#undef GROUND_FOG_OFFSET
+										#define GROUND_FOG_OFFSET 5
+#endif
+#if GROUND_FOG_SLOPE == -1
+#undef GROUND_FOG_SLOPE
+										#define GROUND_FOG_SLOPE 3.0
 #endif
 
 
@@ -165,15 +184,15 @@
 #endif
 #if CAVE_AMBIENT_GREEN == -1
 #undef CAVE_AMBIENT_GREEN
-										#define CAVE_AMBIENT_GREEN 0.8
+										#define CAVE_AMBIENT_GREEN 0.75
 #endif
 #if CAVE_AMBIENT_BLUE == -1
 #undef CAVE_AMBIENT_BLUE
-										#define CAVE_AMBIENT_BLUE 0.75
+										#define CAVE_AMBIENT_BLUE 0.7
 #endif
 #if CAVE_AMBIENT_BRIGHTNESS == -1
 #undef CAVE_AMBIENT_BRIGHTNESS
-										#define CAVE_AMBIENT_BRIGHTNESS 0.1
+										#define CAVE_AMBIENT_BRIGHTNESS 0.07
 #endif
 
 
@@ -526,7 +545,7 @@
 #endif
 #if BLOOM_AMOUNT == -1
 #undef BLOOM_AMOUNT
-										#define BLOOM_AMOUNT 2.5
+										#define BLOOM_AMOUNT 2.0
 #endif
 #if BLOOM_QUALITY == -1
 #undef BLOOM_QUALITY
@@ -743,6 +762,18 @@
 #if BRIGHTNESS == -1
 #undef BRIGHTNESS
 										#define BRIGHTNESS 1.1
+#endif
+#if AUTO_EXPOSURE_ENABLED == -1
+#undef AUTO_EXPOSURE_ENABLED
+										#define AUTO_EXPOSURE_ENABLED 1
+#endif
+#if AUTO_EXPOSURE_BRIGHT_MULT == -1
+#undef AUTO_EXPOSURE_BRIGHT_MULT
+										#define AUTO_EXPOSURE_BRIGHT_MULT 0.9
+#endif
+#if AUTO_EXPOSURE_DARK_MULT == -1
+#undef AUTO_EXPOSURE_DARK_MULT
+										#define AUTO_EXPOSURE_DARK_MULT 2.0
 #endif
 
 

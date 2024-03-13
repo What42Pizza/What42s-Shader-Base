@@ -1,6 +1,16 @@
 <br>
 
-- **b1.11.0**
+- b1.11.1 (24/03/12)
+  - Added settings: Ground Fog Enabled, Ground Fog Strength, Ground Fog Slope, aGround Fog Offset
+  - Added settings: Auto Exposure Enabled, Auto Exposure Bright Mult, Auto Exposure Dark Mult
+  - Reworked Fantasy style
+  - Settings changes:
+  - - New 'SUNRAYS_AMOUNT' (for depth-based sunrays) is: old 'SUNRAYS_AMOUNT' * 0.625
+  - - New 'SHARPENING_AMOUNT' is: old 'SHARPENING_AMOUNT' * 1.25
+
+<br>
+
+- **b1.11.0** (24/02/25)
   - Added setting: Anti-Aliasing Strategy (includes FXAA, TAA, and combinations)
   - Added 'super secret settings' easter egg from 1.8-
   - Added settings: Nether Blocklight [Red, Green, Blue] Mult

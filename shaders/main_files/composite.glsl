@@ -11,9 +11,6 @@
 	#include "/utils/screen_to_view.glsl"
 	#include "/lib/reflections.glsl"
 #endif
-#if SSAO_ENABLED == 1
-	#include "/lib/ssao.glsl"
-#endif
 #if FOG_ENABLED == 1
 	#include "/lib/fog/getFogDistance.glsl"
 	#include "/lib/fog/getFogAmount.glsl"
@@ -42,7 +39,7 @@
 			#include "/import/gbufferModelViewInverse.glsl"
 			vec3 playerPos = (gbufferModelViewInverse * startMat(viewPos)).xyz;
 			float fogDistance = getFogDistance(playerPos  ARGS_IN);
-			float fogAmount = getFogAmount(fogDistance  ARGS_IN);
+			float fogAmount = getFogAmount(fogDistance, playerPos.y  ARGS_IN);
 			reflectionStrengths *= 1.0 - fogAmount;
 		#endif
 		if (reflectionStrengths.r + reflectionStrengths.g < 0.01) {return;}
@@ -70,22 +67,6 @@ void main() {
 	
 	#ifdef REFLECTIONS_ENABLED
 		doReflections(color  ARGS_IN);
-	#endif
-	
-	
-	
-	// ======== SSAO ========
-	
-	#if SSAO_ENABLED == 1
-		float aoFactor = getAoFactor(ARG_IN);
-		//#if SSAO_APPLICATION_TYPE == 1
-			color *= 1.0 - aoFactor * AO_AMOUNT;
-		//#elif SSAO_APPLICATION_TYPE == 2
-		//	color = pow(color, vec3(1.0 + aoFactor * 1.5));
-		//#endif
-		#if SSAO_SHOW_AMOUNT == 1
-			debugOutput = vec3(1.0 - aoFactor);
-		#endif
 	#endif
 	
 	

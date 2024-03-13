@@ -45,6 +45,9 @@ float getSkyBrightness(ARG_OUT) {
 
 
 
+#if SSAO_ENABLED == 1
+	#include "/lib/ssao.glsl"
+#endif
 #if FOG_ENABLED == 1
 	#include "/lib/fog/getFogDistance.glsl"
 	#include "/lib/fog/getFogAmount.glsl"
@@ -78,7 +81,7 @@ void main() {
 			#include "/import/gbufferModelViewInverse.glsl"
 			vec3 playerPos = (gbufferModelViewInverse * startMat(viewPos)).xyz;
 			float fogDistance = getFogDistance(playerPos  ARGS_IN);
-			float fogAmount = getFogAmount(fogDistance  ARGS_IN);
+			float fogAmount = getFogAmount(fogDistance, playerPos.y  ARGS_IN);
 		#endif
 		
 		
@@ -88,6 +91,26 @@ void main() {
 			float skyBrightness = getSkyBrightness(ARG_IN);
 		#endif
 		color *= 1.0 + skyLight * skyBrightness * (1.0 - 0.6 * getColorLum(color));
+		
+		
+		#if SSAO_ENABLED == 1
+			float aoFactor = getAoFactor(ARG_IN);
+			//#if SSAO_APPLICATION_TYPE == 1
+				color *= 1.0 - aoFactor * AO_AMOUNT;
+			//#elif SSAO_APPLICATION_TYPE == 2
+			//	color = pow(color, vec3(1.0 + aoFactor * 1.5));
+			//#endif
+			#if SSAO_SHOW_AMOUNT == 1
+				debugOutput = vec3(1.0 - aoFactor);
+			#endif
+		#endif
+		
+		
+		#if AUTO_EXPOSURE_ENABLED == 1
+			#include "/import/eyeBrightnessSmooth.glsl"
+			float autoExposureAmount = dot(eyeBrightnessSmooth / 240.0, vec2(0.5, 1.0));
+			color *= mix(AUTO_EXPOSURE_DARK_MULT, AUTO_EXPOSURE_BRIGHT_MULT, autoExposureAmount);
+		#endif
 		
 		
 		#if FOG_ENABLED == 1

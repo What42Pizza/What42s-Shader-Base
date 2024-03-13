@@ -10,6 +10,7 @@
 	#endif
 	#if FOG_ENABLED == 1
 		varying float fogDistance;
+		varying float pixelY;
 	#endif
 	
 #endif
@@ -38,7 +39,7 @@ void main() {
 	
 	// fog
 	#if FOG_ENABLED == 1
-		float fogAmount = getFogAmount(fogDistance  ARGS_IN);
+		float fogAmount = getFogAmount(fogDistance, pixelY  ARGS_IN);
 		applyFog(color.rgb, fogAmount  ARGS_IN);
 	#endif
 	
@@ -94,6 +95,7 @@ void main() {
 	#if FOG_ENABLED == 1
 		vec4 position = gl_Vertex;
 		fogDistance = getFogDistance(position.xyz  ARGS_IN);
+		pixelY = position.y;
 	#endif
 	
 	#if HIDE_NEARBY_CLOUDS == 1

@@ -8,6 +8,7 @@ Add sub-styles?
 	Retro
 	needs more sub-styles to justify feature
 Add documentation for super secret settings
+Swap current FXAA with Complementary's?
 Rework sky
 Add (option for) black lines on edges
 Rework waving calculations for performance?

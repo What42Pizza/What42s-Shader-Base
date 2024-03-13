@@ -4,6 +4,7 @@ const bool colortex1Clear = false;
 const bool colortex2Clear = false;
 const int colortex2Format = RGB16F;
 const int colortex4Format = RGB32F;
+const int colortex5Format = R16F;
 const float wetnessHalflife = 50.0f;
 const float drynessHalflife = 50.0f;
 const float centerDepthHalflife = 2.5f;

@@ -26,6 +26,8 @@ void main() {
 	
 	
 	color.rgb *= getBasicLighting(lmcoord.x, lmcoord.y  ARGS_IN);
+	#include "/import/heldBlockLightValue.glsl"
+	color.rgb *= 1.0 + heldBlockLightValue / 15.0 * 0.5;
 	
 	
 	/* DRAWBUFFERS:04 */

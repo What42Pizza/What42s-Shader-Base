@@ -52,6 +52,10 @@
 #undef FOG_ENABLED
 										#define FOG_ENABLED 1
 #endif
+#if FOG_CURVE == -1
+#undef FOG_CURVE
+										#define FOG_CURVE 3
+#endif
 #if FOG_HEIGHT_SCALE == -1
 #undef FOG_HEIGHT_SCALE
 										#define FOG_HEIGHT_SCALE 3.0
@@ -60,9 +64,24 @@
 #undef FOG_EXTRA_CLOUDS_DISTANCE
 										#define FOG_EXTRA_CLOUDS_DISTANCE 10.0
 #endif
-#if FOG_CURVE == -1
-#undef FOG_CURVE
-										#define FOG_CURVE 3
+
+
+
+#if GROUND_FOG_ENABLED == -1
+#undef GROUND_FOG_ENABLED
+										#define GROUND_FOG_ENABLED 0
+#endif
+#if GROUND_FOG_STRENGTH == -1
+#undef GROUND_FOG_STRENGTH
+										#define GROUND_FOG_STRENGTH 0.7
+#endif
+#if GROUND_FOG_OFFSET == -1
+#undef GROUND_FOG_OFFSET
+										#define GROUND_FOG_OFFSET 30
+#endif
+#if GROUND_FOG_SLOPE == -1
+#undef GROUND_FOG_SLOPE
+										#define GROUND_FOG_SLOPE 1.0
 #endif
 
 
@@ -588,19 +607,19 @@
 #endif
 #if SUNRAYS_AMOUNT_DAY == -1
 #undef SUNRAYS_AMOUNT_DAY
-										#define SUNRAYS_AMOUNT_DAY 0.4
+										#define SUNRAYS_AMOUNT_DAY 0.8
 #endif
 #if SUNRAYS_AMOUNT_NIGHT == -1
 #undef SUNRAYS_AMOUNT_NIGHT
-										#define SUNRAYS_AMOUNT_NIGHT 0.15
+										#define SUNRAYS_AMOUNT_NIGHT 0.3
 #endif
 #if SUNRAYS_AMOUNT_SUNRISE == -1
 #undef SUNRAYS_AMOUNT_SUNRISE
-										#define SUNRAYS_AMOUNT_SUNRISE 0.7
+										#define SUNRAYS_AMOUNT_SUNRISE 1.2
 #endif
 #if SUNRAYS_AMOUNT_SUNSET == -1
 #undef SUNRAYS_AMOUNT_SUNSET
-										#define SUNRAYS_AMOUNT_SUNSET 0.7
+										#define SUNRAYS_AMOUNT_SUNSET 1.2
 #endif
 #if SUNRAYS_SUN_RED == -1
 #undef SUNRAYS_SUN_RED
@@ -743,6 +762,18 @@
 #if BRIGHTNESS == -1
 #undef BRIGHTNESS
 										#define BRIGHTNESS 1.05
+#endif
+#if AUTO_EXPOSURE_ENABLED == -1
+#undef AUTO_EXPOSURE_ENABLED
+										#define AUTO_EXPOSURE_ENABLED 0
+#endif
+#if AUTO_EXPOSURE_BRIGHT_MULT == -1
+#undef AUTO_EXPOSURE_BRIGHT_MULT
+										#define AUTO_EXPOSURE_BRIGHT_MULT 1.0
+#endif
+#if AUTO_EXPOSURE_DARK_MULT == -1
+#undef AUTO_EXPOSURE_DARK_MULT
+										#define AUTO_EXPOSURE_DARK_MULT 2.0
 #endif
 
 

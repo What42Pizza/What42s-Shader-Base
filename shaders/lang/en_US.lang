@@ -94,6 +94,10 @@ value.FOG_ENABLED.-1=Use Style Value
 value.FOG_ENABLED.0=Off
 value.FOG_ENABLED.1=On
 
+option.FOG_CURVE=Fog Curve
+option.FOG_CURVE.comment= How quickly fog drops off from end to start (high values mean faster drop off)
+value.FOG_CURVE.-1=Use Style Value
+
 option.FOG_HEIGHT_SCALE=Fog Height Scale
 option.FOG_HEIGHT_SCALE.comment=How much further you can see upwards vs forwards
 value.FOG_HEIGHT_SCALE.-1=Use Style Value
@@ -102,11 +106,30 @@ option.FOG_EXTRA_CLOUDS_DISTANCE=Extra Clouds Distance
 option.FOG_EXTRA_CLOUDS_DISTANCE.comment=How much further you can see clouds
 value.FOG_EXTRA_CLOUDS_DISTANCE.-1=Use Style Value
 
-option.FOG_CURVE=Fog Curve
-option.FOG_CURVE.comment= How quickly fog drops off from end to start (high values mean faster drop off)
-value.FOG_CURVE.-1=Use Style Value
 
 
+screen.GROUND_FOG_SETTINGS=Ground Fog
+
+option.GROUND_FOG_ENABLED=Ground Fog Enabled
+option.GROUND_FOG_ENABLED.comment=Adds more fog below you
+value.GROUND_FOG_ENABLED.-1=Use Style Value
+value.GROUND_FOG_ENABLED.0=Off
+value.GROUND_FOG_ENABLED.1=On
+
+option.GROUND_FOG_STRENGTH=Ground Fog Strength
+value.GROUND_FOG_STRENGTH.-1=Use Style Value
+
+option.GROUND_FOG_OFFSET=Ground Fog Offset
+option.GROUND_FOG_OFFSET.comment=Where the ground fog start
+value.GROUND_FOG_OFFSET.-1=Use Style Value
+
+option.GROUND_FOG_SLOPE=Ground Fog Slope
+option.GROUND_FOG_SLOPE.comment=How quickly the ground fog appears below you, higher values spread out the slope
+value.GROUND_FOG_SLOPE.-1=Use Style Value
+
+
+
+screen.MISC_FOG_SETTINGS=Misc Fog Settings
 
 option.FOG_AIR_START=Fog Air Start
 option.FOG_AIR_START.comment=Where fog starts during normal conditions (not raining or in liquids)
@@ -819,7 +842,7 @@ value.SHARPENING_DETECT_SIZE.7=7x7
 
 
 
-screen.COLOR_CORRECTION_SETTINGS=Color Correction
+screen.COLOR_PROCESSING_SETTINGS=Color Processing Settings
 
 
 
@@ -830,6 +853,21 @@ value.GAMMA.-1=Use Style Value
 option.BRIGHTNESS=Brightness
 option.BRIGHTNESS.comment=Brightness applied to the final image
 value.BRIGHTNESS.-1=Use Style Value
+
+option.AUTO_EXPOSURE_ENABLED=Auto Exposure Enabled
+option.AUTO_EXPOSURE_ENABLED.comment=Changes brightness based on blocklight and skylight
+value.AUTO_EXPOSURE_ENABLED.-1=Use Style Value
+value.AUTO_EXPOSURE_ENABLED.0=Off
+value.AUTO_EXPOSURE_ENABLED.1=On
+
+option.AUTO_EXPOSURE_BRIGHT_MULT=Auto Exposure Bright Mult
+option.AUTO_EXPOSURE_BRIGHT_MULT.comment=Brightness multiplier when in bright areas
+value.AUTO_EXPOSURE_BRIGHT_MULT.-1=Use Style Value
+
+option.AUTO_EXPOSURE_DARK_MULT=Auto Exposure Dark Mult
+option.AUTO_EXPOSURE_DARK_MULT.comment=Brightness multiplier when in dark areas
+value.AUTO_EXPOSURE_DARK_MULT.-1=Use Style Value
+
 
 
 

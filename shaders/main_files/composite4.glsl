@@ -77,20 +77,18 @@ void main() {
 	
 	
 	// ======== FXAA ========
-	
 	#if AA_STRATEGY == 1 || AA_STRATEGY == 3
 		doFxaa(color, MAIN_BUFFER  ARGS_IN);
 	#endif
 	
-	
-	
 	// ======== TAA ========
-	
 	#if AA_STRATEGY == 2 || AA_STRATEGY == 3
 		doTAA(color, prev, linearDepth, prevCoord, handFactor  ARGS_IN);
 	#endif
+	
+	// ======== FXAA OR TAA ========
 	#if AA_STRATEGY == 4
-		float preventTaa = texture2D(PREVENT_TAA_BUFFER, texcoord, 2).r;
+		float preventTaa = texture2D(PREVENT_TAA_BUFFER, texcoord, -2).r;
 		float opaqueDepth = texelFetch(DEPTH_BUFFER_WO_TRANS, texelcoord, 0).r;
 		bool isTransparent = opaqueDepth - depth > 0.001;
 		if (preventTaa > 0.1) {
