@@ -16,7 +16,7 @@ profile.UNPLAYABLE=§cUnplayable
 
 
 option.STYLE=Style
-option.STYLE.comment=Changes the default settings. When a setting is set to 'Use Style Value', it uses whatever default is set by this option. (This does nothing on OptiFine version)
+option.STYLE.comment=Changes the default settings. When a setting is set to 'Use Style Value', it uses whatever default is set by this option. (This does nothing on OptiFine version)\n\nIf you want to see the default settings for a style, you can download the OptiFine version which already has the style settings set.
 value.STYLE.0=Vanilla
 value.STYLE.1=Realistic
 value.STYLE.2=Fantasy
@@ -360,6 +360,14 @@ value.BLOCK_GREEN.-1=Use Style Value
 option.BLOCK_BLUE=Block Blue
 value.BLOCK_BLUE.-1=Use Style Value
 
+option.BLOCK_BRIGHTNESS_CURVE=Block Brightness Curve
+option.BLOCK_BRIGHTNESS_CURVE.comment=Take the calculated block brightness to the power of [this settings]
+value.BLOCK_BRIGHTNESS_CURVE.-1=Use Style Value
+
+option.BLOCK_NIGHT_BRIGHTNESS_INCREASE=Block Night Brightness Increase
+option.BLOCK_NIGHT_BRIGHTNESS_INCREASE.comment=How much to increase the block brightness while outside at night
+value.BLOCK_NIGHT_BRIGHTNESS_INCREASE.-1=Use Style Value
+
 
 
 
@@ -682,13 +690,13 @@ value.SUNRAYS_FLICKERING_FIX.1=On
 screen.VOL_SUNRAYS_SETTINGS=Volumetric Sunrays Settings
 screen.VOL_SUNRAYS_SETTINGS.comment=Settings specific to volumetric sunrays
 
-option.SUNRAYS_CURVE_SURFACE=Sunrays Curve Surface
-option.SUNRAYS_CURVE_SURFACE.comment=How much the output should be curved when on the surface (lower values make the intensity increase faster)
-value.SUNRAYS_CURVE_SURFACE.-1=Use Style Value
+option.SUNRAYS_MIN_SURFACE=Sunrays Min Surface
+option.SUNRAYS_MIN_SURFACE.comment=How much is added to the detected sunrays amount while on the surface, measured in 'blocks in sun' (adds nothing to pixels with no sunrays)
+value.SUNRAYS_MIN_SURFACE.-1=Use Style Value
 
-option.SUNRAYS_CURVE_UNDERGROUND=Sunrays Curve Underground
-option.SUNRAYS_CURVE_UNDERGROUND.comment=How much the output should be curved when underground (lower values make the intensity increase faster)
-value.SUNRAYS_CURVE_UNDERGROUND.-1=Use Style Value
+option.SUNRAYS_MIN_UNDERGROUND=Sunrays Min Underground
+option.SUNRAYS_MIN_UNDERGROUND.comment=How much is added to the detected sunrays amount while underground, measured in 'blocks in sun' (adds nothing to pixels with no sunrays)
+value.SUNRAYS_MIN_UNDERGROUND.-1=Use Style Value
 
 option.SUNRAYS_AMOUNT_DAY=Sunrays Amount Day
 value.SUNRAYS_AMOUNT_DAY.-1=Use Style Value

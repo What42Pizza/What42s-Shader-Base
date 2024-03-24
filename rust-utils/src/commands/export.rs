@@ -29,11 +29,13 @@ pub fn function(args: &[String]) -> Result<()> {
 		.unix_permissions(0o755);
 	
 	println!("Exporting For Iris...");
-	export_shader(&project_path, &export_path, &version, false, options)?;
+	export_shader(&project_path, &export_path, &version, false, "", options)?;
 	println!("Done");
-	println!("Exporting for OptiFine...");
-	export_shader(&project_path, &export_path, &version, true, options)?;
-	println!("Done");
+	for style in STYLES {
+		println!("Exporting for OptiFine... ({style} style)");
+		export_shader(&project_path, &export_path, &version, true, style, options)?;
+		println!("Done");
+	}
 	
 	println!();
 	println!("======== WARNING: ========");
@@ -45,9 +47,13 @@ pub fn function(args: &[String]) -> Result<()> {
 
 
 
-pub fn export_shader(project_path: &Path, export_path: &Path, version: &str, is_optifine: bool, zip_options: FileOptions) -> Result<()> {
+pub fn export_shader(project_path: &Path, export_path: &Path, version: &str, is_optifine: bool, style_name: &str, zip_options: FileOptions) -> Result<()> {
 	
-	let output_file_name = format!("What42's Shader Base {version}{}.zip", if is_optifine {" (OptiFine)"} else {""});
+	let output_file_name = if is_optifine {
+		format!("What42's Shader Base {version} (Optifine, {style_name} style).zip")
+	} else {
+		format!("What42's Shader Base {version}.zip")
+	};
 	let output_path = export_path.push_new(output_file_name);
 	
 	let output_file = std::fs::File::create(output_path)?;
@@ -94,7 +100,7 @@ pub fn export_shader(project_path: &Path, export_path: &Path, version: &str, is_
 					if let Some(Some(file_name)) = entry_path.file_name().map(OsStr::to_str) {
 						match file_name {
 							"define_settings.glsl" => {
-								file_contents = process_define_settings(&file_contents, &project_path)?;
+								file_contents = process_define_settings(&file_contents, &project_path, style_name)?;
 							}
 							"settings.glsl" => {
 								file_contents = process_settings(&file_contents)?;
@@ -123,10 +129,10 @@ pub fn export_shader(project_path: &Path, export_path: &Path, version: &str, is_
 
 
 
-pub fn process_define_settings(file_contents: &[u8], project_path: &Path) -> Result<Vec<u8>> {
+pub fn process_define_settings(file_contents: &[u8], project_path: &Path, style_name: &str) -> Result<Vec<u8>> {
 	
 	// get setting values
-	let style_file_path = project_path.push_new("shaders").push_new(DEFAULT_STYLE_PATH);
+	let style_file_path = project_path.push_new("shaders").push_new(format!("style_{style_name}.glsl"));
 	let default_settings_contents = fs::read_to_string(&style_file_path)?;
 	let mut default_settings = HashMap::new();
 	for (i, line) in default_settings_contents.lines().enumerate() {

@@ -25,7 +25,7 @@ float getVolSunraysAmount(float depth, inout uint rng  ARGS_OUT) {
 	vec3 viewPosStep = screenToView(vec3(texcoord, depth)  ARGS_IN);
 	#include "/import/far.glsl"
 	float blockDepth = min(length(viewPosStep), far);
-	viewPosStep = normalize(viewPosStep) * blockDepth / SAMPLE_COUNT;
+	viewPosStep = normalize(viewPosStep) * (blockDepth / SAMPLE_COUNT);
 	vec3 viewPos = vec3(0.0);
 	
 	float random = randomFloat(rng);
@@ -42,21 +42,21 @@ float getVolSunraysAmount(float depth, inout uint rng  ARGS_OUT) {
 		viewPos += viewPosStep;
 		
 	}
-	#include "/import/invFar.glsl"
-	float sunraysAmount = total / SAMPLE_COUNT * (blockDepth * invFar);
+	float sunraysAmount = total / SAMPLE_COUNT * blockDepth;
 	
 	#include "/import/eyeBrightnessSmooth.glsl"
 	float skyBrightness = eyeBrightnessSmooth.y / 240.0;
-	sunraysAmount = pow(sunraysAmount, mix(SUNRAYS_CURVE_UNDERGROUND, SUNRAYS_CURVE_SURFACE, skyBrightness));
+	sunraysAmount += (sunraysAmount > 0.0 ? 1.0 : 0.0) * mix(SUNRAYS_MIN_UNDERGROUND, SUNRAYS_MIN_SURFACE, skyBrightness);
+	sunraysAmount *= 0.008;
 	
 	#include "/import/gbufferModelViewInverse.glsl"
 	vec3 playerPos = (gbufferModelViewInverse * startMat(viewPos)).xyz;
 	if (blockDepth == far) {
 		playerPos *= 10.0;
 	}
-	//float fogDistance = getFogDistance(playerPos  ARGS_IN);
-	//float fogAmount = getFogAmount(fogDistance, playerPos.y  ARGS_IN);
-	//sunraysAmount *= 1.0 - 0.7 * fogAmount;
+	float fogDistance = getFogDistance(playerPos  ARGS_IN);
+	float fogAmount = getFogAmount(fogDistance, playerPos.y  ARGS_IN);
+	sunraysAmount *= 1.0 - 0.7 * fogAmount;
 	
-	return sunraysAmount * 0.6;
+	return sunraysAmount;
 }

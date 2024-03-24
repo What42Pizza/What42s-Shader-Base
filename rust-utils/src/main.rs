@@ -71,7 +71,7 @@ pub const ALL_UNIFORMS_PATH: &str = include_str!("all_uniforms.txt");
 
 
 
-pub const DEFAULT_STYLE_PATH: &str = "style_vanilla.glsl";
+pub const STYLES: &[&str] = &["vanilla", "realistic", "fantasy"];
 
 
 
@@ -83,6 +83,7 @@ pub const DEFAULT_STYLE_PATH: &str = "style_vanilla.glsl";
 
 const COMMANDS: &[data::Command] = &[
 	data::Command::new("help", "help", "Shows the help screen", commands::help::function),
+	data::Command::new("count_sloc", "count_sloc", "Counts the significant lines of code", commands::count_sloc::function),
 	data::Command::new("build_world_files", "build_world_files", "Generates the '/world_' files using hard-coded data", commands::build_world_files::function),
 	data::Command::new("build_uniform_imports", "build_uniform_imports", "Generates the '/import' files using hard-coded data", commands::build_uniform_imports::function),
 	data::Command::new("export", "export", "Exports the shader with only shader files included", commands::export::function),

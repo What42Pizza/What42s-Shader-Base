@@ -93,14 +93,6 @@ void main() {
 	color.rgb *= getBasicLighting(lmcoord.x, lmcoord.y  ARGS_IN);
 	
 	
-	// auto exposure
-	#if AUTO_EXPOSURE_ENABLED == 1
-		#include "/import/eyeBrightnessSmooth.glsl"
-		float autoExposureAmount = dot(eyeBrightnessSmooth / 240.0, vec2(0.5, 1.0));
-		color *= mix(AUTO_EXPOSURE_DARK_MULT, AUTO_EXPOSURE_BRIGHT_MULT, autoExposureAmount);
-	#endif
-	
-	
 	// fog
 	#if FOG_ENABLED == 1
 		float fogAmount = getFogAmount(fogDistance, pixelY  ARGS_IN);

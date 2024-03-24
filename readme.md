@@ -4,7 +4,7 @@
 
 ### This is a base shaderpack that can be easily used to create your own shaders.
 
-## Warning: There are probably many features / fixes that I'm still working on
+## Note: This is still somewhat early in development, so there are probably many features / fixes that I'm still working on
 
 <br>
 

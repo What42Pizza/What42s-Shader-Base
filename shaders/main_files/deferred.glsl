@@ -106,13 +106,6 @@ void main() {
 		#endif
 		
 		
-		#if AUTO_EXPOSURE_ENABLED == 1
-			#include "/import/eyeBrightnessSmooth.glsl"
-			float autoExposureAmount = dot(eyeBrightnessSmooth / 240.0, vec2(0.5, 1.0));
-			color *= mix(AUTO_EXPOSURE_DARK_MULT, AUTO_EXPOSURE_BRIGHT_MULT, autoExposureAmount);
-		#endif
-		
-		
 		#if FOG_ENABLED == 1
 			applyFog(color, fogAmount  ARGS_IN);
 		#endif

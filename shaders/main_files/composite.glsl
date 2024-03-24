@@ -71,6 +71,18 @@ void main() {
 	
 	
 	
+	// ======== AUTO EXPOSURE ========
+	
+	#if AUTO_EXPOSURE_ENABLED == 1
+		#include "/import/eyeBrightnessSmooth.glsl"
+		vec2 normalizedBrightness = eyeBrightnessSmooth / 240.0;
+		normalizedBrightness *= vec2(0.5, 1.0); // weights
+		float autoExposureAmount = max(normalizedBrightness.x, normalizedBrightness.y);
+		color *= mix(AUTO_EXPOSURE_DARK_MULT, AUTO_EXPOSURE_BRIGHT_MULT, autoExposureAmount);
+	#endif
+	
+	
+	
 	// ======== BLOOM FILTERING ========
 	
 	#if BLOOM_ENABLED == 1

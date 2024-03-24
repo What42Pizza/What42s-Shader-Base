@@ -1,9 +1,21 @@
 <br>
 
+- b1.11.2 (23/03/24)
+  - Reworked volumetric sunrays (also affects depth sunrays)
+  - Added setting Block Night Brightness Increase
+  - Added setting Block Brightness Curve (already in code, just forgot to add to menu)
+  - Tweaked Fantasy style
+  - Fixed auto exposure calculations
+  - Settings changes:
+  - - Removed 'SUNRAYS_CURVE_SURFACE', alternative is 'SUNRAYS_MIN_SURFACE'
+  - - Removed 'SUNRAYS_CURVE_UNDERGROUND', alternative is 'SUNRAYS_MIN_UNDERGROUND'
+
+<br>
+
 - b1.11.1 (24/03/12)
   - Added settings: Ground Fog Enabled, Ground Fog Strength, Ground Fog Slope, aGround Fog Offset
   - Added settings: Auto Exposure Enabled, Auto Exposure Bright Mult, Auto Exposure Dark Mult
-  - Reworked Fantasy style
+  - Reworked Fantasy style and tweaked Realistic style
   - Settings changes:
   - - New 'SUNRAYS_AMOUNT' (for depth-based sunrays) is: old 'SUNRAYS_AMOUNT' * 0.625
   - - New 'SHARPENING_AMOUNT' is: old 'SHARPENING_AMOUNT' * 1.25

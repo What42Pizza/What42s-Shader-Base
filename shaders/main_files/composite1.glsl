@@ -60,21 +60,23 @@ void main() {
 	
 	#if DEPTH_SUNRAYS_ENABLED == 1 || VOL_SUNRAYS_ENABLED == 1
 		
-		vec3 sunraysAddition = vec3(0.0);
 		#if DEPTH_SUNRAYS_ENABLED == 1
 			#include "/import/isSun.glsl"
 			vec3 depthSunraysColor = isSun ? SUNRAYS_SUN_COLOR : SUNRAYS_MOON_COLOR;
-			sunraysAddition += getDepthSunraysAmount(rng  ARGS_IN) * depthSunraysColor * depthSunraysAmountMult;
+			float depthSunraysAmount = getDepthSunraysAmount(rng  ARGS_IN) * depthSunraysAmountMult;
+			color = mix(depthSunraysColor * 1.25, color, 1.0 / (depthSunraysAmount + 1.0));
+			#if SUNRAYS_SHOW_ADDITION == 1
+				debugOutput.r += 1.0 / (depthSunraysAmount + 1.0);
+			#endif
 		#endif
 		#if VOL_SUNRAYS_ENABLED == 1
 			#include "/import/sunAngle.glsl"
 			vec3 volSunraysColor = sunAngle < 0.5 ? SUNRAYS_SUN_COLOR : SUNRAYS_MOON_COLOR;
-			sunraysAddition += getVolSunraysAmount(depth, rng  ARGS_IN) * volSunraysColor * volSunraysAmountMult;
-		#endif
-		
-		noisyAdditions += sunraysAddition;
-		#if SUNRAYS_SHOW_ADDITION == 1
-			debugOutput += sunraysAddition;
+			float volSunraysAmount = getVolSunraysAmount(depth, rng  ARGS_IN) * volSunraysAmountMult;
+			color = mix(volSunraysColor * 1.25, color, 1.0 / (volSunraysAmount + 1.0));
+			#if SUNRAYS_SHOW_ADDITION == 1
+				debugOutput.g += 1.0 / (volSunraysAmount + 1.0);
+			#endif
 		#endif
 		
 	#endif

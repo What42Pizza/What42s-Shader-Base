@@ -28,6 +28,9 @@ vec3 getBasicLighting(float blockBrightness, float ambientBrightness  ARGS_OUT) 
 	#elif BLOCK_BRIGHTNESS_CURVE == 5
 		blockBrightness = pow5(blockBrightness);
 	#endif
+	#include "/import/eyeBrightness.glsl"
+	#include "/import/moonLightBrightness.glsl"
+	blockBrightness += (eyeBrightness.y / 240.0) * moonLightBrightness * BLOCK_NIGHT_BRIGHTNESS_INCREASE;
 	vec3 blockLight = blockBrightness * BLOCK_COLOR;
 	
 	#ifdef NETHER
