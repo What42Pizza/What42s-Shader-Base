@@ -591,7 +591,7 @@
 #endif
 #if SUNRAYS_QUALITY == -1
 #undef SUNRAYS_QUALITY
-										#define SUNRAYS_QUALITY 3
+										#define SUNRAYS_QUALITY 4
 #endif
 #if SUNRAYS_STYLE == -1
 #undef SUNRAYS_STYLE
@@ -611,7 +611,7 @@
 #endif
 #if SUNRAYS_AMOUNT_DAY == -1
 #undef SUNRAYS_AMOUNT_DAY
-										#define SUNRAYS_AMOUNT_DAY 0.0
+										#define SUNRAYS_AMOUNT_DAY 0.8
 #endif
 #if SUNRAYS_AMOUNT_NIGHT == -1
 #undef SUNRAYS_AMOUNT_NIGHT
@@ -619,11 +619,11 @@
 #endif
 #if SUNRAYS_AMOUNT_SUNRISE == -1
 #undef SUNRAYS_AMOUNT_SUNRISE
-										#define SUNRAYS_AMOUNT_SUNRISE 1.0
+										#define SUNRAYS_AMOUNT_SUNRISE 1.2
 #endif
 #if SUNRAYS_AMOUNT_SUNSET == -1
 #undef SUNRAYS_AMOUNT_SUNSET
-										#define SUNRAYS_AMOUNT_SUNSET 1.0
+										#define SUNRAYS_AMOUNT_SUNSET 1.2
 #endif
 #if SUNRAYS_SUN_RED == -1
 #undef SUNRAYS_SUN_RED

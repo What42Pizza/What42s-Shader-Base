@@ -43,7 +43,6 @@ void main() {
 		
 		vec3 bloomAddition = getBloomAddition(rng, depth  ARGS_IN);
 		noisyAdditions += bloomAddition;
-		//color = bloomAddition;
 		
 		#if BLOOM_SHOW_ADDITION == 1
 			debugOutput = bloomAddition;
@@ -63,10 +62,10 @@ void main() {
 		#if DEPTH_SUNRAYS_ENABLED == 1
 			#include "/import/isSun.glsl"
 			vec3 depthSunraysColor = isSun ? SUNRAYS_SUN_COLOR : SUNRAYS_MOON_COLOR;
-			float depthSunraysAmount = getDepthSunraysAmount(rng  ARGS_IN) * depthSunraysAmountMult;
-			color = mix(depthSunraysColor * 1.25, color, 1.0 / (depthSunraysAmount + 1.0));
+			vec3 depthSunraysAddition = getDepthSunraysAmount(rng  ARGS_IN) * depthSunraysAmountMult * depthSunraysColor;
+			noisyAdditions += depthSunraysAddition;
 			#if SUNRAYS_SHOW_ADDITION == 1
-				debugOutput.r += 1.0 / (depthSunraysAmount + 1.0);
+				debugOutput.r += depthSunraysAddition;
 			#endif
 		#endif
 		#if VOL_SUNRAYS_ENABLED == 1

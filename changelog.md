@@ -1,6 +1,6 @@
 <br>
 
-- b1.11.2 (23/03/24)
+- b1.11.2 (24/03/24)
   - Reworked volumetric sunrays (also affects depth sunrays)
   - Added setting Block Night Brightness Increase
   - Added setting Block Brightness Curve (already in code, just forgot to add to menu)
@@ -9,6 +9,9 @@
   - Settings changes:
   - - Removed 'SUNRAYS_CURVE_SURFACE', alternative is 'SUNRAYS_MIN_SURFACE'
   - - Removed 'SUNRAYS_CURVE_UNDERGROUND', alternative is 'SUNRAYS_MIN_UNDERGROUND'
+
+- b1.11.2a (24/03/25)
+  - Reverted depth sunrays
 
 <br>
 
