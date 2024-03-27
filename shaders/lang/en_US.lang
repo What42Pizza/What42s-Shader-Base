@@ -364,9 +364,9 @@ option.BLOCK_BRIGHTNESS_CURVE=Block Brightness Curve
 option.BLOCK_BRIGHTNESS_CURVE.comment=Take the calculated block brightness to the power of [this settings]
 value.BLOCK_BRIGHTNESS_CURVE.-1=Use Style Value
 
-option.BLOCK_NIGHT_BRIGHTNESS_INCREASE=Block Night Brightness Increase
-option.BLOCK_NIGHT_BRIGHTNESS_INCREASE.comment=How much to increase the block brightness while outside at night
-value.BLOCK_NIGHT_BRIGHTNESS_INCREASE.-1=Use Style Value
+option.BLOCK_BRIGHTNESS_NIGHT_MULT=Block Brightness Night Multiplier
+option.BLOCK_BRIGHTNESS_NIGHT_MULT.comment=How much to increase the block brightness while outside at night
+value.BLOCK_BRIGHTNESS_NIGHT_MULT.-1=Use Style Value
 
 
 
@@ -487,11 +487,15 @@ value.USE_VANILLA_BRIGHTNESS.-1=Use Style Value
 value.USE_VANILLA_BRIGHTNESS.0=Off
 value.USE_VANILLA_BRIGHTNESS.1=On
 
-option.BLOCKLIGHT_FLICKERING_ENABLED=Blocklight Flickering
+option.BLOCKLIGHT_FLICKERING_ENABLED=Blocklight Flickering Enabled
 option.BLOCKLIGHT_FLICKERING_ENABLED.comment=Makes block light flicker slightly
 value.BLOCKLIGHT_FLICKERING_ENABLED.-1=Use Style Value
 value.BLOCKLIGHT_FLICKERING_ENABLED.0=Off
 value.BLOCKLIGHT_FLICKERING_ENABLED.1=On
+
+option.BLOCKLIGHT_FLICKERING_AMOUNT=Blocklight Flickering Amount
+option.BLOCKLIGHT_FLICKERING_ENABLED.comment=Makes block light flicker slightly
+value.BLOCKLIGHT_FLICKERING_AMOUNT.-1=Use Style Value
 
 
 
@@ -697,6 +701,10 @@ value.SUNRAYS_MIN_SURFACE.-1=Use Style Value
 option.SUNRAYS_MIN_UNDERGROUND=Sunrays Min Underground
 option.SUNRAYS_MIN_UNDERGROUND.comment=How much is added to the detected sunrays amount while underground, measured in 'blocks in sun' (adds nothing to pixels with no sunrays)
 value.SUNRAYS_MIN_UNDERGROUND.-1=Use Style Value
+
+option.SUNRAYS_BRIGHTNESS_INCREASE=Sunrays Brightness Increase
+option.SUNRAYS_BRIGHTNESS_INCREASE.comment=How much sunrays should increase / decrease the brightness of pixels before application
+value.SUNRAYS_BRIGHTNESS_INCREASE.-1=Use Style Value
 
 option.SUNRAYS_AMOUNT_DAY=Sunrays Amount Day
 value.SUNRAYS_AMOUNT_DAY.-1=Use Style Value
@@ -1059,6 +1067,23 @@ option.WAVING_WATER_NORMALS_ENABLED.comment=Makes the water reflections wavy (on
 value.WAVING_WATER_NORMALS_ENABLED.-1=Use Style Value
 value.WAVING_WATER_NORMALS_ENABLED.0=Off
 value.WAVING_WATER_NORMALS_ENABLED.1=On
+
+option.PHYSICALLY_WAVING_WATER_AMOUNT_SURFACE=Physical Waving Amount Surface
+option.PHYSICALLY_WAVING_WATER_AMOUNT_SURFACE.comment=How much waving to apply when under skylight
+value.PHYSICALLY_WAVING_WATER_AMOUNT_SURFACE.-1=Use Style Value
+
+option.PHYSICALLY_WAVING_WATER_AMOUNT_UNDERGROUND=Physical Waving Amount Underground
+option.PHYSICALLY_WAVING_WATER_AMOUNT_UNDERGROUND.comment=How much waving to apply when not under skylight
+value.PHYSICALLY_WAVING_WATER_AMOUNT_UNDERGROUND.-1=Use Style Value
+
+option.WAVING_WATER_NORMALS_AMOUNT_SURFACE=Normals Waving Amount Surface
+option.WAVING_WATER_NORMALS_AMOUNT_SURFACE.comment=How much waving to apply when under skylight
+value.WAVING_WATER_NORMALS_AMOUNT_SURFACE.-1=Use Style Value
+
+option.WAVING_WATER_NORMALS_AMOUNT_UNDERGROUND=Normals Waving Amount Underground
+option.WAVING_WATER_NORMALS_AMOUNT_UNDERGROUND.comment=How much waving to apply when not under skylight
+value.WAVING_WATER_NORMALS_AMOUNT_UNDERGROUND.-1=Use Style Value
+
 
 
 

@@ -51,7 +51,7 @@ float getFogAmount(float fogDistance, float pixelY  ARGS_OUT) {
 		float groundFogAmount = min(pixelY + GROUND_FOG_OFFSET, -0.01) - CONSTANT;
 		groundFogAmount = 1.0 / (groundFogAmount * SLOPE);
 		groundFogAmount = (groundFogAmount + CONSTANT) / CONSTANT;
-		groundFogAmount *= GROUND_FOG_STRENGTH * 0.5;
+		groundFogAmount *= GROUND_FOG_STRENGTH * 0.15;
 		fogAmount = 1.0 - (1.0 - fogAmount) * (1.0 - groundFogAmount);
 	#endif
 	

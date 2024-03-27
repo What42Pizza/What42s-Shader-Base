@@ -17,7 +17,7 @@ vec3 getBasicLighting(float blockBrightness, float ambientBrightness  ARGS_OUT) 
 	
 	#if BLOCKLIGHT_FLICKERING_ENABLED == 1
 		#include "/import/blockFlickerAmount.glsl"
-		blockBrightness *= blockFlickerAmount;
+		blockBrightness *= 1.0 + (blockFlickerAmount - 1.0) * BLOCKLIGHT_FLICKERING_AMOUNT;
 	#endif
 	#if BLOCK_BRIGHTNESS_CURVE == 2
 		blockBrightness = pow2(blockBrightness);
@@ -30,7 +30,7 @@ vec3 getBasicLighting(float blockBrightness, float ambientBrightness  ARGS_OUT) 
 	#endif
 	#include "/import/eyeBrightness.glsl"
 	#include "/import/moonLightBrightness.glsl"
-	blockBrightness += (eyeBrightness.y / 240.0) * moonLightBrightness * BLOCK_NIGHT_BRIGHTNESS_INCREASE;
+	blockBrightness *= 1.0 + (eyeBrightness.y / 240.0) * moonLightBrightness * (BLOCK_BRIGHTNESS_NIGHT_MULT - 1.0);
 	vec3 blockLight = blockBrightness * BLOCK_COLOR;
 	
 	#ifdef NETHER

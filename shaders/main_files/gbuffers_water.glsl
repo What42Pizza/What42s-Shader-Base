@@ -62,6 +62,7 @@ void main() {
 			randomPoint = normalize(randomPoint);
 			vec3 normalWavingAddition = randomPoint * 0.15;
 			normalWavingAddition *= abs(dot(normal, normalize(viewPos)));
+			normalWavingAddition *= mix(WAVING_WATER_NORMALS_AMOUNT_UNDERGROUND, WAVING_WATER_NORMALS_AMOUNT_SURFACE, lmcoord.y);
 			normal += normalWavingAddition;
 			normal = normalize(normal);
 		#endif
@@ -151,11 +152,12 @@ void main() {
 	
 	#if PHYSICALLY_WAVING_WATER_ENABLED == 1
 		if (blockType == 1007) {
+			float wavingAmount = mix(PHYSICALLY_WAVING_WATER_AMOUNT_UNDERGROUND, PHYSICALLY_WAVING_WATER_AMOUNT_SURFACE, lmcoord.y);
 			#include "/import/cameraPosition.glsl"
 			#include "/import/frameTimeCounter.glsl"
 			worldPos += cameraPosition;
-			worldPos.y += sin(worldPos.x * 0.6 + worldPos.z * 1.4 + frameTimeCounter * 3.0) * 0.03;
-			worldPos.y += sin(worldPos.x * 0.9 + worldPos.z * 0.6 + frameTimeCounter * 2.5) * 0.02;
+			worldPos.y += sin(worldPos.x * 0.6 + worldPos.z * 1.4 + frameTimeCounter * 3.0) * 0.03 * wavingAmount;
+			worldPos.y += sin(worldPos.x * 0.9 + worldPos.z * 0.6 + frameTimeCounter * 2.5) * 0.02 * wavingAmount;
 			worldPos -= cameraPosition;
 		}
 	#endif

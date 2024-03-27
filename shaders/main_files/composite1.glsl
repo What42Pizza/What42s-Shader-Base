@@ -71,8 +71,10 @@ void main() {
 		#if VOL_SUNRAYS_ENABLED == 1
 			#include "/import/sunAngle.glsl"
 			vec3 volSunraysColor = sunAngle < 0.5 ? SUNRAYS_SUN_COLOR : SUNRAYS_MOON_COLOR;
-			float volSunraysAmount = getVolSunraysAmount(depth, rng  ARGS_IN) * volSunraysAmountMult;
-			color = mix(volSunraysColor * 1.25, color, 1.0 / (volSunraysAmount + 1.0));
+			float rawVolSunraysAmount = getVolSunraysAmount(depth, rng  ARGS_IN) * volSunraysAmountMult;
+			float volSunraysAmount = 1.0 / (rawVolSunraysAmount + 1.0);
+			color *= 1.0 + (1.0 - volSunraysAmount) * SUNRAYS_BRIGHTNESS_INCREASE * 2.0;
+			color = mix(volSunraysColor * 1.25, color, volSunraysAmount);
 			#if SUNRAYS_SHOW_ADDITION == 1
 				debugOutput.g += 1.0 / (volSunraysAmount + 1.0);
 			#endif

@@ -1,5 +1,17 @@
 <br>
 
+- b1.11.3 (24/03/26)
+  - Added settings to control water waviness for both surface and underground
+  - Added setting: Sunrays Brightness Increase
+  - Added setting: Blocklight Flicker Amount
+  - Fixed blocklight night brightness
+  - Tweaked Realistic and Fantasy styles
+  - Settings changes:
+  - - New 'GROUND_FOG_STRENGTH' is: old 'GROUND_FOG_STRENGTH' * 0.3
+  - - Replaced 'BLOCK_NIGHT_BRIGHTNESS_INCREASE' with 'BLOCK_BRIGHTNESS_NIGHT_MULT'
+
+<br>
+
 - b1.11.2 (24/03/24)
   - Reworked volumetric sunrays (also affects depth sunrays)
   - Added setting Block Night Brightness Increase
