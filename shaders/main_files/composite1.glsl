@@ -129,6 +129,8 @@ void main() {
 		} else {
 			depthSunraysAmountMult = (ambientMoonPercent + (ambientSunrisePercent + ambientSunsetPercent) * 0.5) * SUNRAYS_AMOUNT_NIGHT;
 		}
+		#include "/import/rainStrength.glsl"
+		depthSunraysAmountMult *= 1.0 - rainStrength * (1.0 - SUNRAYS_WEATHER_MULT);
 		depthSunraysAmountMult *= 0.3;
 		
 	#endif
@@ -142,6 +144,8 @@ void main() {
 			sqrt(ambientSunsetPercent) * SUNRAYS_AMOUNT_SUNSET +
 			ambientMoonPercent * SUNRAYS_AMOUNT_NIGHT;
 		volSunraysAmountMult *= sunLightBrightness + moonLightBrightness;
+		#include "/import/rainStrength.glsl"
+		volSunraysAmountMult *= 1.0 - rainStrength * (1.0 - SUNRAYS_WEATHER_MULT);
 	#endif
 	
 }

@@ -42,7 +42,6 @@ Do a round of adding debug settings
 Do a round of adding more ways to get to options (e.g. access to light brightnesses from the 'shading' menu)
 Custom sky color?
 Switch to Contrast Adaptive Sharpening?
-Dither outputs?
 Fix ssao causing desaturation on sand?
 Test glsl optimizer (https://github.com/aras-p/glsl-optimizer)
 Add support for fogStart, fogEnd, and fogMode?

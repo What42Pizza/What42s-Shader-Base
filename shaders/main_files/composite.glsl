@@ -7,48 +7,6 @@
 #ifdef FSH
 
 #include "/utils/depth.glsl"
-#ifdef REFLECTIONS_ENABLED
-	#include "/utils/screen_to_view.glsl"
-	#include "/lib/reflections.glsl"
-#endif
-#if FOG_ENABLED == 1
-	#include "/lib/fog/getFogDistance.glsl"
-	#include "/lib/fog/getFogAmount.glsl"
-#endif
-
-
-
-#ifdef REFLECTIONS_ENABLED
-	void doReflections(inout vec3 color  ARGS_OUT) {
-		
-		// skip sky and fog
-		float depth = texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r;
-		float linearDepth = toLinearDepth(depth  ARGS_IN);
-		if (depthIsSky(linearDepth) || depthIsHand(linearDepth)) {return;}
-		
-		// get strengths
-		vec2 reflectionStrengths = texelFetch(REFLECTION_STRENGTH_BUFFER, texelcoord, 0).rg;
-		#if REFLECTIVE_EVERYTHING == 1
-			reflectionStrengths = vec2(1.0, 0.0);
-		#endif
-		if (reflectionStrengths.r + reflectionStrengths.g < 0.01) {return;}
-		
-		// apply fog
-		vec3 viewPos = screenToView(vec3(texcoord, depth)  ARGS_IN);
-		#if FOG_ENABLED == 1
-			#include "/import/gbufferModelViewInverse.glsl"
-			vec3 playerPos = (gbufferModelViewInverse * startMat(viewPos)).xyz;
-			float fogDistance = getFogDistance(playerPos  ARGS_IN);
-			float fogAmount = getFogAmount(fogDistance, playerPos.y  ARGS_IN);
-			reflectionStrengths *= 1.0 - fogAmount;
-		#endif
-		if (reflectionStrengths.r + reflectionStrengths.g < 0.01) {return;}
-		
-		vec3 normal = texelFetch(NORMALS_BUFFER, texelcoord, 0).rgb;
-		addReflection(color, viewPos, normal, MAIN_BUFFER, reflectionStrengths.r, reflectionStrengths.g  ARGS_IN);
-		
-	}
-#endif
 
 
 
@@ -58,15 +16,7 @@ void main() {
 		vec3 debugOutput = texelFetch(DEBUG_BUFFER, texelcoord, 0).rgb;
 	#endif
 	#if BLOOM_ENABLED == 1
-		vec3 bloomColor = texelFetch(MAIN_BUFFER, texelcoord, 0).rgb;
-	#endif
-	
-	
-	
-	// ======== REFLECTIONS ========
-	
-	#ifdef REFLECTIONS_ENABLED
-		doReflections(color  ARGS_IN);
+		vec3 bloomColor = color;
 	#endif
 	
 	

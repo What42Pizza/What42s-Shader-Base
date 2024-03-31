@@ -70,6 +70,10 @@ value.DARKENED_STARS_BRIGHTNESS.-1=Use Style Value
 option.WEATHER_TRANSPARENCY=Weather Transparency
 value.WEATHER_TRANSPARENCY.-1=Use Style Value
 
+option.WEATHER_HORIZONTAL_AMOUNT=Weather Horizontal Amount
+option.WEATHER_HORIZONTAL_AMOUNT.comment=Makes rain, snow, etc diagonal
+value.WEATHER_HORIZONTAL_AMOUNT.-1=Use Style Value
+
 option.CLOUD_TRANSPARENCY=Cloud Transparency
 value.CLOUD_TRANSPARENCY.-1=Use Style Value
 
@@ -717,6 +721,10 @@ value.SUNRAYS_AMOUNT_SUNRISE.-1=Use Style Value
 
 option.SUNRAYS_AMOUNT_SUNSET=Sunrays Amount Sunset
 value.SUNRAYS_AMOUNT_SUNSET.-1=Use Style Value
+
+option.SUNRAYS_WEATHER_MULT=Sunrays Amount Weather Mult
+option.SUNRAYS_WEATHER_MULT.comment=How much to increase / decrease the sunrays during rain / snow
+value.SUNRAYS_WEATHER_MULT.-1=Use Style Value
 
 option.SUNRAYS_SUN_RED=Sunrays Sun Red
 value.SUNRAYS_SUN_RED.-1=Use Style Value

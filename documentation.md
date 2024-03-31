@@ -4,7 +4,7 @@
 
 <br>
 
-### If you want vanilla Minecraft's shader files directly ported to Optifine, you can use [XorDev's Default-Shaderpack](https://github.com/XorDev/XorDevs-Default-Shaderpack)
+### Note: If you want vanilla Minecraft's shader files directly ported to Optifine, you can use [XorDev's Default-Shaderpack](https://github.com/XorDev/XorDevs-Default-Shaderpack)
 
 <br>
 
@@ -27,13 +27,14 @@
 
 ## Custom Tooling:
 
-Because of the extensive and tedious usage of `#define`s, this repo contains a rust program (known as rust-utils) that automates many tasks. Using it isn't necessary for developing this shader, but you'll probably still want to use it. There's a (very simple) readme in the /rust-utils folder which can get you stated.
+Because of the extensive and tedious usage of `#define`s, this repo contains a rust program (named rust-utils) that automates many tasks. Using it isn't necessary for developing this shader, but you'll probably still want to use it. There's a (very simple) readme in the /rust-utils folder which can get you stated.
 
 Here's a list of the commands and why they exist:
 
 - **'export':** This takes the shader code, license, changelog, and shader readme and packages it into (broken?) zip files. It also automatically creates the OptiFine version, where it splices 'style_vanilla.glsl' with 'define_settings.glsl' (plus other fixes) to remove the styles feature, which causes the massive log file and horrendous loading time on OptiFine.
 - **'build uniform imports':** This generates all the files in the /shaders/import folder, using the data in 'all_uniforms.txt'. See 'Uniforms System' below for more details on this
 - **build world files':** This generates all the files in the /shaders/world_ folders, using data that is hard-coded into src/main.rs. Even if you don't know Rust, you should still be able to edit the values if needed
+- **count_sloc:** Counts the significant lines of code. May not be accurate, idk. It only counts .glsl files, since the .vsh and .fsh files don't contain anything meaningful.
 
 As always, you can edit your repo's rust-utils to add more commands and/or tweak existing commands. If you find something you consider a bug, you can contact me and I'll try to fix it
 
@@ -43,7 +44,7 @@ As always, you can edit your repo's rust-utils to add more commands and/or tweak
 
 ## OptiFine Support:
 
-With the release of b1.9.0, OptiFine is a second-class platform. I'll make sure it still works with OptiFine on 1.12.2, but Iris 1.19.4 is where I put most of my effort. The default shader code for Iris does still work on OptiFine without any modification, but the endless list of errors that OptiFine generates makes it almost unusable. The OptiFine version is generated using rust-utils, which can automatically remove the styles functionality.
+With the release of b1.9.0, OptiFine is treated as a second-class platform. I'll make sure it still works with OptiFine on 1.12.2, but Iris 1.20.4 is where I currently put most of my effort. The default shader code for Iris does still work on OptiFine without any modification, but the endless list of errors that OptiFine generates makes it almost unusable. The OptiFine version is generated using rust-utils, which can automatically remove the styles functionality.
 
 If you want to develop for OptiFine first, you have 2 options:
 
@@ -138,14 +139,15 @@ You should be able to figure this out yourself, but I'll still give some quick o
 ## File Structure:
 
 ### /main_files: &nbsp; Main shader code
-### /lib: &nbsp; Basic code used by multiple files
+### /lib: &nbsp; More complex, standalone code
 ### /world_: &nbsp; The files that are actually loaded by OptiFine / Iris. These files just use `#include` to copy-paste other files into them
 ### /import: &nbsp; See 'Uniforms System' above
 ### /utils: &nbsp; Holds common functions that use uniforms (see 'Uniforms System' above for why)
-### /lang: &nbsp; Shown names of setting options and setting values
-### settings.glsl: &nbsp; Holds every setting's GLSL name and allowed values, plus some other misc setting data
-### common.glsl: &nbsp; Holds most commonly used code and macros for easier programming
-### shaders.properties: &nbsp; Defines the settings menu and other details about the shader internals
+### /lang: &nbsp; Holds shown names of setting options and setting values
+### define_settings.glsl: &nbsp; Holds every setting's GLSL name and allowed values
+### settings.glsl: &nbsp; Miscellaneous settings stuff
+### common.glsl: &nbsp; Holds commonly used code and macros for easier programming (cannot use uniforms, see 'Uniforms System' above for why)
+### shaders.properties: &nbsp; Defines the settings menu plus many other details about the shader internals
 ### blocks.properties: &nbsp; Defines what different blocks are mapped to. The shaders retrieve these value from `mc_Entity.x`
 
 <br>
@@ -161,24 +163,28 @@ This describes which /main_files-s handle different effects
 - - Main Processing:  /main_files/composite.glsl  (via doReflections())
 - **Colorblindness Correction**
 - - Main Processing:  /main_files/composite5.glsl  (via applyColorblindnessCorrection())
-- **Anti-Aliasing:**
+- **TAA:**
 - - Main Processing:  /main_files/composite4.glsl  (via doTAA())
 - - Jitter:  /main_files/*  (via doTaaJitter())
+- **FXAA:**
+- - Main Processing:  /main_files/composite4.glsl  (view doFxaa())
 - **Isometric Rendering**
 - - Main Processing:  /main_files/*  (via projectIsometric())
 - **SSAO**
-- - Main Processing: /main_files/composite.glsl  (via getAoFactor())
+- - Main Processing: /main_files/deferred.glsl  (via getAoFactor())
 - **Sunrays:**
 - - Main Processing:  /main_files/composite1.glsl  (via getDepthSunraysAmount() and getVolSunraysAmount())
-- - Application:  /main_files/composite2.glsl  (calculations are written to a mip-mapped buffer that is sampled with lowered lod so that the noise is reduced)
+- - Application:  /main_files/composite2.glsl  (calculations are written to a mip-mapped buffer that is sampled with higher lod so that the noise is reduced)
 - **Bloom:**
 - - Main Processing:  /main_files/composite1.glsl  (via getBloomAddition())
 - - Pre-Processing:  /main_files/composite.glsl
-- - Application:  /main_files/composite2.glsl  (calculations are written to a mip-mapped buffer that is sampled with lowered lod so that the noise is reduced)
+- - Application:  /main_files/composite2.glsl  (calculations are written to a mip-mapped buffer that is sampled with higher lod so that the noise is reduced)
 - **Depth of Field**
 - - Main Processing:  /main_files/composite3.glsl  (via doDOF())
 - **Motion Blur**
 - - Main Processing:  /main_files/composite4.glsl  (via doMotionBlur())
+- **Auto Exposure**
+- - Main Processing:  /main_files.composite.glsl
 - **Sharpening:**
 - - Main Processing:  /main_files/composite4.glsl  (via doSharpening())
 - **Waving Blocks**
@@ -189,9 +195,9 @@ This describes which /main_files-s handle different effects
 - - Main Processing (transparents):  /main_files/water.glsl  (via getFogDistance(), getFogAmount(), and applyFog())
 - - Main Processing (clouds):  /main_files/clouds.glsl  (via getFogDistance(), getFogAmount(), and applyFog())
 - **Handheld Light**
-- - Main Processing:  /main_files/terrain.glsl,  /main_files/textured.glsl,  /main_files/water.glsl,  /main_files/entities.glsl,  /main_files/hand.glsl
+- - Main Processing:  /lib/lighting/basic_lighting.glsl
 - **Underwater Waviness**
-- - Main Processing:  /main_files/composite5.glsl
+- - Main Processing:  /main_files/composite2.glsl
 - **Vignette:**
 - - Main Processing:  /main_files/composite5.glsl
 - **Color Correction and/or Tonemapping:**
@@ -206,9 +212,10 @@ This describes which /main_files-s handle different effects
 - **texture / colortex0:  Main Image OR Debug Output** 
 - **colortex1:  TAA Texture**
 - **colortex2:  Bloom Texture**
-- **colortex3:  Reflection Strength / Noisy Additions (holds RS from gbuffers to deferred, then holds NA from composite1 and on)**
+- **colortex3:  Noisy Additions**
 - **colortex4:  Normals**
 - **colortex5:  TAA Exclusion**
+- **colortex6:  Reflection Strength**
 
 Note: 'noisy additions' buffer is where things like bloom, sunrays, etc (anything that gives noisy results) are rendered before being added to the main image using LOD-sampling as a high-perf(?) blur
 

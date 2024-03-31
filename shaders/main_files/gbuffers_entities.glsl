@@ -44,11 +44,11 @@ void main() {
 	gl_FragData[1] = vec4(normal, 1.0);
 	
 	#if REFLECTIONS_ENABLED == 1 && AA_STRATEGY == 4
-		/* DRAWBUFFERS:0435 */
+		/* DRAWBUFFERS:0465 */
 		gl_FragData[2] = vec4(0.0, 0.0, 0.0, 1.0);
 		gl_FragData[3] = vec4(1.0, 1.0, 1.0, 1.0);
 	#elif REFLECTIONS_ENABLED == 1 && AA_STRATEGY != 4
-		/* DRAWBUFFERS:043 */
+		/* DRAWBUFFERS:046 */
 		gl_FragData[2] = vec4(0.0, 0.0, 0.0, 1.0);
 	#elif REFLECTIONS_ENABLED == 0 && AA_STRATEGY == 4
 		/* DRAWBUFFERS:045 */

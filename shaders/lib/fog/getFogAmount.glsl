@@ -35,9 +35,10 @@ float getFogAmount(float fogDistance, float pixelY  ARGS_OUT) {
 	float fogAmount = fogDistance * getFogDistanceMult(ARG_IN);
 	
 	#include "/import/betterRainStrength.glsl"
+	#include "/import/invFar.glsl"
 	float airFogStart = mix(FOG_AIR_START, FOG_AIR_RAIN_START, betterRainStrength);
-	float airFogEnd = mix(FOG_AIR_END, FOG_AIR_RAIN_END, betterRainStrength);
 	float fogStart = getFogStart(airFogStart  ARGS_IN);
+	float airFogEnd = mix(FOG_AIR_END, FOG_AIR_RAIN_END, betterRainStrength);
 	float fogEnd = getFogEnd(airFogEnd  ARGS_IN);
 	fogAmount = percentThroughClamped(fogAmount, fogStart, fogEnd);
 	

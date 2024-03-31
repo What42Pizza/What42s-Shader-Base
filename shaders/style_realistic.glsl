@@ -1,6 +1,6 @@
 #if SKY_BRIGHTNESS == -1
 #undef SKY_BRIGHTNESS
-										#define SKY_BRIGHTNESS 0.75
+										#define SKY_BRIGHTNESS 1.0
 #endif
 #if SUN_BRIGHTNESS == -1
 #undef SUN_BRIGHTNESS
@@ -12,7 +12,7 @@
 #endif
 #if CLOUDS_BRIGHTNESS == -1
 #undef CLOUDS_BRIGHTNESS
-										#define CLOUDS_BRIGHTNESS 0.75
+										#define CLOUDS_BRIGHTNESS 0.85
 #endif
 #if DARKEN_SKY_UNDERGROUND == -1
 #undef DARKEN_SKY_UNDERGROUND
@@ -33,6 +33,10 @@
 #if WEATHER_TRANSPARENCY == -1
 #undef WEATHER_TRANSPARENCY
 										#define WEATHER_TRANSPARENCY 0.0
+#endif
+#if WEATHER_HORIZONTAL_AMOUNT == -1
+#undef WEATHER_HORIZONTAL_AMOUNT
+										#define WEATHER_HORIZONTAL_AMOUNT 0.5
 #endif
 #if CLOUD_TRANSPARENCY == -1
 #undef CLOUD_TRANSPARENCY
@@ -236,7 +240,7 @@
 #endif
 #if SKYLIGHT_DAY_BRIGHTNESS == -1
 #undef SKYLIGHT_DAY_BRIGHTNESS
-										#define SKYLIGHT_DAY_BRIGHTNESS 4.0
+										#define SKYLIGHT_DAY_BRIGHTNESS 4.5
 #endif
 
 
@@ -475,11 +479,11 @@
 
 #if WATER_REFLECTION_AMOUNT == -1
 #undef WATER_REFLECTION_AMOUNT
-										#define WATER_REFLECTION_AMOUNT 0.7
+										#define WATER_REFLECTION_AMOUNT 0.6
 #endif
 #if WATER_REFLECTION_FRESNEL == -1
 #undef WATER_REFLECTION_FRESNEL
-										#define WATER_REFLECTION_FRESNEL 0.8
+										#define WATER_REFLECTION_FRESNEL 0.9
 #endif
 
 
@@ -565,7 +569,7 @@
 #endif
 #if BLOOM_LOW_CUTOFF == -1
 #undef BLOOM_LOW_CUTOFF
-										#define BLOOM_LOW_CUTOFF 0.0
+										#define BLOOM_LOW_CUTOFF 0.4
 #endif
 #if BLOOM_HIGH_CUTOFF == -1
 #undef BLOOM_HIGH_CUTOFF
@@ -633,6 +637,10 @@
 #undef SUNRAYS_AMOUNT_SUNSET
 										#define SUNRAYS_AMOUNT_SUNSET 0.3
 #endif
+#if SUNRAYS_WEATHER_MULT == -1
+#undef SUNRAYS_WEATHER_MULT
+										#define SUNRAYS_WEATHER_MULT 0.5
+#endif
 #if SUNRAYS_SUN_RED == -1
 #undef SUNRAYS_SUN_RED
 										#define SUNRAYS_SUN_RED 1.0
@@ -643,7 +651,7 @@
 #endif
 #if SUNRAYS_SUN_BLUE == -1
 #undef SUNRAYS_SUN_BLUE
-										#define SUNRAYS_SUN_BLUE 0.3
+										#define SUNRAYS_SUN_BLUE 0.5
 #endif
 #if SUNRAYS_MOON_RED == -1
 #undef SUNRAYS_MOON_RED
@@ -669,7 +677,7 @@
 #endif
 #if DOF_NEAR_BLUR_START == -1
 #undef DOF_NEAR_BLUR_START
-										#define DOF_NEAR_BLUR_START 0.03
+										#define DOF_NEAR_BLUR_START 0.00
 #endif
 #if DOF_NEAR_BLUR_SLOPE == -1
 #undef DOF_NEAR_BLUR_SLOPE
@@ -751,7 +759,7 @@
 #endif
 #if SHARPEN_AMOUNT == -1
 #undef SHARPEN_AMOUNT
-										#define SHARPEN_AMOUNT 0.5
+										#define SHARPEN_AMOUNT 0.8
 #endif
 #if SHARPEN_VEL_ADDITION == -1
 #undef SHARPEN_VEL_ADDITION
@@ -773,7 +781,7 @@
 #endif
 #if BRIGHTNESS == -1
 #undef BRIGHTNESS
-										#define BRIGHTNESS 1.1
+										#define BRIGHTNESS 1.25
 #endif
 #if AUTO_EXPOSURE_ENABLED == -1
 #undef AUTO_EXPOSURE_ENABLED

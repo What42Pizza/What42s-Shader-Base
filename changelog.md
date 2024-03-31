@@ -1,5 +1,13 @@
 <br>
 
+- b1.11.4 (24/03/30)
+  - Added setting: Weather Horizontal Amount
+  - Added setting: Sunrays Amount Weather Mult
+  - Further tweaked Realistic and Fantasy styles
+  - Added fog to particles
+
+<br>
+
 - b1.11.3 (24/03/26)
   - Added settings to control water waviness for both surface and underground
   - Added setting: Sunrays Brightness Increase

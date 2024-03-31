@@ -1,6 +1,6 @@
 #if SKY_BRIGHTNESS == -1
 #undef SKY_BRIGHTNESS
-										#define SKY_BRIGHTNESS 0.85
+										#define SKY_BRIGHTNESS 0.9
 #endif
 #if SUN_BRIGHTNESS == -1
 #undef SUN_BRIGHTNESS
@@ -33,6 +33,10 @@
 #if WEATHER_TRANSPARENCY == -1
 #undef WEATHER_TRANSPARENCY
 										#define WEATHER_TRANSPARENCY 0.25
+#endif
+#if WEATHER_HORIZONTAL_AMOUNT == -1
+#undef WEATHER_HORIZONTAL_AMOUNT
+										#define WEATHER_HORIZONTAL_AMOUNT 0.5
 #endif
 #if CLOUD_TRANSPARENCY == -1
 #undef CLOUD_TRANSPARENCY
@@ -108,7 +112,7 @@
 #endif
 #if FOG_AIR_RAIN_MIN == -1
 #undef FOG_AIR_RAIN_MIN
-										#define FOG_AIR_RAIN_MIN 0.1
+										#define FOG_AIR_RAIN_MIN 0.3
 #endif
 #if FOG_WATER_START == -1
 #undef FOG_WATER_START
@@ -422,7 +426,7 @@
 #endif
 #if RAIN_LIGHT_MULT == -1
 #undef RAIN_LIGHT_MULT
-										#define RAIN_LIGHT_MULT 0.8
+										#define RAIN_LIGHT_MULT 0.5
 #endif
 #if USE_VANILLA_BRIGHTNESS == -1
 #undef USE_VANILLA_BRIGHTNESS
@@ -632,6 +636,10 @@
 #if SUNRAYS_AMOUNT_SUNSET == -1
 #undef SUNRAYS_AMOUNT_SUNSET
 										#define SUNRAYS_AMOUNT_SUNSET 0.8
+#endif
+#if SUNRAYS_WEATHER_MULT == -1
+#undef SUNRAYS_WEATHER_MULT
+										#define SUNRAYS_WEATHER_MULT 0.2
 #endif
 #if SUNRAYS_SUN_RED == -1
 #undef SUNRAYS_SUN_RED
@@ -891,7 +899,7 @@
 #endif
 #if WAVING_SPEED == -1
 #undef WAVING_SPEED
-										#define WAVING_SPEED 1.0
+										#define WAVING_SPEED 1.2
 #endif
 #if WAVING_WORLD_SCALE == -1
 #undef WAVING_WORLD_SCALE

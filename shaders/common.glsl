@@ -13,6 +13,7 @@ uniform sampler2D colortex2;
 uniform sampler2D colortex3;
 uniform sampler2D colortex4;
 uniform sampler2D colortex5;
+uniform sampler2D colortex6;
 uniform sampler2D depthtex0;
 uniform sampler2D depthtex1;
 uniform sampler2D depthtex2;
@@ -51,10 +52,10 @@ uniform sampler2D shadowtex0;
 #define MAIN_BUFFER                 colortex0
 #define TAA_PREV_BUFFER             colortex1
 #define BLOOM_BUFFER                colortex2
-#define REFLECTION_STRENGTH_BUFFER  colortex3
 #define NOISY_ADDITIONS_BUFFER      colortex3
 #define NORMALS_BUFFER              colortex4
 #define PREVENT_TAA_BUFFER          colortex5
+#define REFLECTION_STRENGTH_BUFFER  colortex6
 #define MAIN_BUFFER_COPY            gaux2
 #define DEBUG_BUFFER                colortex0
 
