@@ -6,5 +6,5 @@ Please keep in mind that this is a very work-in-progress shader, and there's a l
 
 - **[Repository](https://github.com/What42Pizza/What42s-Shader-Base)** &nbsp; (includes (probably bad) documentation)
 - **[Official Download](https://modrinth.com/shader/what42s-shader-base)** &nbsp; (Modrinth)
-- **[Official Download](https://www.curseforge.com/members/what42pizza/projects)** &nbsp; (CurseForge, coming soon)
+- **[Official Download](https://legacy.curseforge.com/minecraft/shaders/what42s-shader-base)** &nbsp; (CurseForge)
 - **[License](LICENSE)**

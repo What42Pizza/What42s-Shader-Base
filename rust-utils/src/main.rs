@@ -7,6 +7,7 @@
 #![warn(unused_must_use)]
 
 #![feature(iter_advance_by)]
+#![feature(map_try_insert)]
 
 
 
@@ -86,6 +87,7 @@ const COMMANDS: &[data::Command] = &[
 	data::Command::new("count_sloc", "count_sloc", "Counts the significant lines of code", commands::count_sloc::function),
 	data::Command::new("build_world_files", "build_world_files", "Generates the '/world_' files using hard-coded data", commands::build_world_files::function),
 	data::Command::new("build_uniform_imports", "build_uniform_imports", "Generates the '/import' files using hard-coded data", commands::build_uniform_imports::function),
+	data::Command::new("build_property_ids", "build_property_ids", "Converts the data in .property files (currently, just block.properties) from `block = num` to `num = block, ...`", commands::build_property_ids::function),
 	data::Command::new("export", "export", "Exports the shader with only shader files included", commands::export::function),
 	data::Command::new("preprocess_file", "preprocess_file [file_path] [input_path]", "Preprocesses `#include`s of a shader file. The input_path is assumed to be in /shaders", commands::preprocess_file::function),
 	data::Command::new("compile_file", "compile_file [file_path] [input_path]", "Compiles a shader file. The input_path is assumed to be in /shaders, and only .fsh and .vsh can be compiled", commands::compile_file::function),
@@ -97,7 +99,7 @@ const COMMANDS: &[data::Command] = &[
 
 pub mod prelude {
 	pub use crate::{*, data::*, utils::*, custom_impls::*};
-	pub use std::{path::{PathBuf, Path}, result::Result as StdResult, process::Output as ProcessOutput};
+	pub use std::{path::{PathBuf, Path}, result::Result as StdResult, process::Output as ProcessOutput, collections::HashMap};
 	pub use anyhow::*;
 }
 
@@ -106,6 +108,7 @@ pub mod prelude {
 pub mod commands;
 
 pub mod data;
+#[macro_use]
 pub mod utils;
 pub mod custom_impls;
 

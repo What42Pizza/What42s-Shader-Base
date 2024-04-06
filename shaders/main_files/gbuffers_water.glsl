@@ -5,7 +5,7 @@
 	varying vec2 texcoord;
 	varying vec2 lmcoord;
 	varying vec3 glcolor;
-	flat_inout int blockType;
+	flat_inout int blockData;
 	
 	varying vec3 normal;
 	
@@ -49,7 +49,7 @@ void main() {
 	#endif
 	
 	
-	if (blockType == 1007) {
+	if (blockData == 1007) {
 		
 		color.rgb = mix(vec3(getColorLum(color.rgb)), color.rgb, 0.8);
 		
@@ -101,6 +101,12 @@ void main() {
 	#endif
 	
 	
+	// block reflection strengths
+	float blockReflectionAmount = (blockData % 1000 - blockData % 100) / 100 * 0.15 * mix(BLOCKS_REFLECTION_AMOUNT_MULT_UNDERGROUND, BLOCKS_REFLECTION_AMOUNT_MULT_SURFACE, lmcoord.y);
+	vec2 blockReflectionStrengths = vec2(blockReflectionAmount * (1.0 - BLOCKS_REFLECTION_FRESNEL), blockReflectionAmount * BLOCKS_REFLECTION_FRESNEL);
+	vec2 reflectionStrengths = blockData == 1007 ? WATER_REFLECTION_STRENGTHS : blockReflectionStrengths;
+	
+	
 	// outputs
 	
 	/* DRAWBUFFERS:04 */
@@ -109,7 +115,7 @@ void main() {
 	
 	#if REFLECTIONS_ENABLED == 1
 		/* DRAWBUFFERS:046 */
-		gl_FragData[2] = vec4(WATER_REFLECTION_STRENGTHS, 0.0, 1.0);
+		gl_FragData[2] = vec4(reflectionStrengths, 0.0, 1.0);
 	#endif
 	
 }
@@ -142,7 +148,8 @@ void main() {
 	
 	
 	#include "/import/mc_Entity.glsl"
-	blockType = int(mc_Entity.x);
+	blockData = int(mc_Entity.x);
+	if (blockData < 1000) blockData = 0;
 	
 	#if WAVING_WATER_NORMALS_ENABLED == 0
 		vec3 worldPos;
@@ -151,7 +158,7 @@ void main() {
 	worldPos = endMat(gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex));
 	
 	#if PHYSICALLY_WAVING_WATER_ENABLED == 1
-		if (blockType == 1007) {
+		if (blockData == 1007) {
 			float wavingAmount = mix(PHYSICALLY_WAVING_WATER_AMOUNT_UNDERGROUND, PHYSICALLY_WAVING_WATER_AMOUNT_SURFACE, lmcoord.y);
 			#include "/import/cameraPosition.glsl"
 			#include "/import/frameTimeCounter.glsl"

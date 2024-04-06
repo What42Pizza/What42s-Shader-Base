@@ -1,5 +1,12 @@
 <br>
 
+- b1.11.5 (24/04/05)
+  - Added block reflections (included settings: 'Blocks Ref Amount Surface', 'Blocks Ref Amount Underground', and 'Blocks Reflection Fresnel')
+  - Disabled shadows for fire
+  - Fixed Sharpening-related bugs
+
+<br>
+
 - b1.11.4 (24/03/30)
   - Added setting: Weather Horizontal Amount
   - Added setting: Sunrays Amount Weather Mult

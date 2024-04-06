@@ -1,12 +1,7 @@
 Current:
 Make more example images:
-	Styles Demonstration
 	Rain
 	Night
-Add sub-styles?
-	Zombies / Spooky / Creepy
-	Retro
-	needs more sub-styles to justify feature
 Add documentation for super secret settings
 Swap current FXAA with Complementary's?
 Rework sky
@@ -72,6 +67,7 @@ Match the vanilla look, especially in:
 
 
 Finished:
+Add images for styles demonstration
 Add FXAA
 Prevent TAA on entities
 Add documentation for isometrics

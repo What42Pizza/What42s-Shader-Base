@@ -75,7 +75,7 @@ pub fn export_shader(project_path: &Path, export_path: &Path, version: &str, is_
 			let entry_path = match entry {
 				Result::Ok(v) => v.into_path(),
 				Result::Err(err) => {
-					return Err(Error::msg(format!("Could not copy file: {err}")));
+					return error!("Could not copy file: {err}");
 				}
 			};
 			
@@ -139,7 +139,7 @@ pub fn process_define_settings(file_contents: &[u8], project_path: &Path, style_
 		let line = line.trim();
 		if !line.starts_with("#define ") {continue;}
 		let line_parts = line.split(" ").collect::<Vec<&str>>();
-		if line_parts.len() != 3 {return Err(Error::msg(format!("Invalid line in default style file: file {style_file_path:?} line {}: Expected 3 space-separated-values, but found {}", i + 1, line_parts.len())));}
+		if line_parts.len() != 3 {return error!("Invalid line in default style file: file {style_file_path:?} line {}: Expected 3 space-separated-values, but found {}", i + 1, line_parts.len());}
 		let setting_name = line_parts[1].to_string();
 		let setting_value = line_parts[2].to_string();
 		default_settings.insert(setting_name, setting_value);
@@ -155,19 +155,19 @@ pub fn process_define_settings(file_contents: &[u8], project_path: &Path, style_
 		if !line.starts_with("#define ") {continue;}
 		
 		let line_parts = line.split(" ").filter(|line| !line.is_empty()).collect::<Vec<&str>>();
-		if line_parts.len() < 6 {return Err(Error::msg(format!("Invalid line in define_settings line {}: Expected at least 6 space-separated-tokens, but found {}", line_num, line_parts.len())));}
+		if line_parts.len() < 6 {return error!("Invalid line in define_settings line {}: Expected at least 6 space-separated-tokens, but found {}", line_num, line_parts.len());}
 		
 		let mut output_line = String::from("#define ");
 		let setting_name = line_parts[1];
 		output_line += setting_name;
 		output_line.push(' ');
 		
-		if line_parts[2] != "-1" {return Err(Error::msg(format!("Invalid line in define_settings line {}: Expect setting set be -1, but found {}", line_num, line_parts[2])));}
-		let Some(setting_value) = default_settings.get(setting_name) else {return Err(Error::msg(format!("Invalid line in define_settings line {}: Could not find default value for setting {}", line_num, setting_name)));};
+		if line_parts[2] != "-1" {return error!("Invalid line in define_settings line {}: Expect setting set be -1, but found {}", line_num, line_parts[2]);}
+		let Some(setting_value) = default_settings.get(setting_name) else {return error!("Invalid line in define_settings line {}: Could not find default value for setting {}", line_num, setting_name);};
 		output_line += setting_value;
 		output_line += " // ";
 		
-		if line_parts[3] != "//" {return Err(Error::msg(format!("Invalid line in define_settings line {}: Expect comment start (\" // \") after value -1, but found {}", line_num, line_parts[3])));}
+		if line_parts[3] != "//" {return error!("Invalid line in define_settings line {}: Expect comment start (\" // \") after value -1, but found {}", line_num, line_parts[3]);}
 		
 		let new_setting_values = process_setting_values(&line_parts[4..], line_num)?;
 		output_line += &new_setting_values;
@@ -183,9 +183,9 @@ pub fn process_define_settings(file_contents: &[u8], project_path: &Path, style_
 pub fn process_setting_values(value_strs: &[&str], line_num: usize) -> Result<String> {
 	let mut output = String::new();
 	
-	if !value_strs[0].starts_with("[") {return Err(Error::msg(format!("Invalid line in define_settings line {}: Expected setting values (starting with '[') after comment start, but found {}", line_num, value_strs[0])));}
-	if value_strs.len() < 3 {return Err(Error::msg(format!("Invalid line in define_settings line {}: Expected at least 3 valid values but found {}", line_num, value_strs.len())));}
-	if !value_strs.last().unwrap().ends_with("]") {return Err(Error::msg(format!("Invalid line in define_settings line {}: Expected ']' at end of setting values, but found {}", line_num, value_strs.last().unwrap())));}
+	if !value_strs[0].starts_with("[") {return error!("Invalid line in define_settings line {}: Expected setting values (starting with '[') after comment start, but found {}", line_num, value_strs[0]);}
+	if value_strs.len() < 3 {return error!("Invalid line in define_settings line {}: Expected at least 3 valid values but found {}", line_num, value_strs.len());}
+	if !value_strs.last().unwrap().ends_with("]") {return error!("Invalid line in define_settings line {}: Expected ']' at end of setting values, but found {}", line_num, value_strs.last().unwrap());}
 	
 	output.push('[');
 	output += value_strs[1];

@@ -9,6 +9,9 @@
 #if SSS_DECONVERGE == 1
 	#include "/lib/super_secret_settings/deconverge.glsl"
 #endif
+#if SHARPENING_ENABLED == 1
+	#include "/lib/sharpening.glsl"
+#endif
 #include "/lib/super_secret_settings/super_secret_settings.glsl"
 #include "/lib/color_correction.glsl"
 #if COLORBLIND_MODE != 0
@@ -32,6 +35,14 @@ void main() {
 	
 	#ifdef DEBUG_OUTPUT_ENABLED
 		vec3 debugOutput = texelFetch(DEBUG_BUFFER, texelcoord, 0).rgb;
+	#endif
+	
+	
+	
+	// ======== SHARPENING ========
+	
+	#if SHARPENING_ENABLED == 1
+		doSharpening(color  ARGS_IN);
 	#endif
 	
 	

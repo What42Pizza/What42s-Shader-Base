@@ -4,7 +4,8 @@ use std::fs;
 
 
 pub fn get_program_path() -> PathBuf {
-	let mut output = std::env::current_exe()
+	let mut output =
+		std::env::current_exe()
 		.expect("Could not retrieve the path for the current exe.");
 	output.pop();
 	output
@@ -35,4 +36,13 @@ pub fn get_temp_path() -> Result<PathBuf> {
 	dir.push("temp");
 	if !dir.exists() {fs::create_dir(&dir)?;}
 	Ok(dir)
+}
+
+
+
+#[macro_export]
+macro_rules! error {
+	($($arg:tt)*) => {
+		Err(Error::msg(format!($($arg)*)))
+	};
 }

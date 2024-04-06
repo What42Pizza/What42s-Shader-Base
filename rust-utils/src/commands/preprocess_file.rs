@@ -5,7 +5,7 @@ use std::fs;
 
 pub fn function(args: &[String]) -> Result<()> {
 	if args.len() != 2 {
-		return Err(Error::msg("Command 'preprocess_file' must take two args (input_path & output_path)"));
+		return error!("Command 'preprocess_file' must take two args (input_path & output_path)");
 	}
 	println!("Preprocessing file...");
 	

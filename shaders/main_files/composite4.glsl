@@ -35,9 +35,6 @@
 #if MOTION_BLUR_ENABLED == 1
 	#include "/lib/motion_blur.glsl"
 #endif
-#if SHARPENING_ENABLED == 1
-	#include "/lib/sharpening.glsl"
-#endif
 
 
 
@@ -157,14 +154,6 @@ void main() {
 		if (length(texcoord - prevCoord) > 0.00001) {
 			doMotionBlur(color, prevCoord  ARGS_IN);
 		}
-	#endif
-	
-	
-	
-	// ======== SHARPENING ========
-	
-	#if SHARPENING_ENABLED == 1
-		doSharpening(color  ARGS_IN);
 	#endif
 	
 	

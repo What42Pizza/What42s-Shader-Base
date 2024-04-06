@@ -36,7 +36,7 @@ void doSharpening(inout vec3 color  ARGS_OUT) {
 		colorTotal += texelFetch(MAIN_BUFFER, texelcoord + ivec2(-1,  2), 0).rgb * 0.574;
 		colorTotal += texelFetch(MAIN_BUFFER, texelcoord + ivec2( 0,  2), 0).rgb * 0.641;
 		colorTotal += texelFetch(MAIN_BUFFER, texelcoord + ivec2( 1,  2), 0).rgb * 0.574;
-		vec3 blur = colorTotal / 13.94; // value is pre-calculated total of weights + 1 (weights are gaussian of (offset length over 3))
+		vec3 blur = colorTotal / 14.94; // value is pre-calculated total of weights + 1 (weights are gaussian of (offset length over 3))
 		
 	#elif SHARPENING_DETECT_SIZE == 7
 		

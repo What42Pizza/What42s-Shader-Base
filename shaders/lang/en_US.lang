@@ -549,6 +549,22 @@ value.REFLECTIONS_ENABLED.-1=Use Style Value
 value.REFLECTIONS_ENABLED.0=Off
 value.REFLECTIONS_ENABLED.1=On
 
+
+option.BLOCKS_REFLECTION_AMOUNT_MULT_SURFACE=Blocks Ref Amount Surface
+option.BLOCKS_REFLECTION_AMOUNT_MULT_SURFACE.comment=How reflective misc blocks are when in sunlight
+value.BLOCKS_REFLECTION_AMOUNT_MULT_SURFACE.-1=Use Style Value
+
+option.BLOCKS_REFLECTION_AMOUNT_MULT_UNDERGROUND=Blocks Ref Amount Underground
+option.BLOCKS_REFLECTION_AMOUNT_MULT_UNDERGROUND.comment=How reflective misc blocks are when not in sunlight
+value.BLOCKS_REFLECTION_AMOUNT_MULT_UNDERGROUND.-1=Use Style Value
+
+option.BLOCKS_REFLECTION_FRESNEL=Blocks Reflection Fresnel
+option.BLOCKS_REFLECTION_FRESNEL.comment=How much the surface steepness contributes to reflection strength\n\nFor example, a Strength of 0.5 with a Fresnel Factor of 0.6 means the strength goes from 0.2 (when the surface is facing the camera) to 0.5 (when the surface is parallel to the camera)
+value.BLOCKS_REFLECTION_FRESNEL.-1=Use Style Value
+
+
+
+
 option.WATER_REFLECTION_AMOUNT=Water Reflection Strength
 option.WATER_REFLECTION_AMOUNT.comment=Max water reflection strength (also affects reflections of transparent blocks like stained glass, ice, etc)
 value.WATER_REFLECTION_AMOUNT.-1=Use Style Value

@@ -6,6 +6,7 @@
 	varying vec2 lmcoord;
 	varying vec3 glcolor;
 	varying vec3 normal;
+	flat_inout int blockData;
 	
 	#if REFLECTIONS_ENABLED == 1
 		varying vec3 worldPos;
@@ -48,6 +49,12 @@ void main() {
 	#endif
 	
 	
+	// block reflection strengths
+	float blockReflectionAmount = (blockData % 1000 - blockData % 100) / 100 * 0.15 * mix(BLOCKS_REFLECTION_AMOUNT_MULT_UNDERGROUND, BLOCKS_REFLECTION_AMOUNT_MULT_SURFACE, lmcoord.y);
+	vec2 reflectionStrengths = vec2(blockReflectionAmount * (1.0 - BLOCKS_REFLECTION_FRESNEL), blockReflectionAmount * BLOCKS_REFLECTION_FRESNEL);
+	
+	
+	
 	// rain reflection strength
 	#if REFLECTIONS_ENABLED == 1
 		#include "/import/cameraPosition.glsl"
@@ -56,6 +63,8 @@ void main() {
 		noise = clamp(RAIN_REFLECTION_SLOPE * (noise - (1.0 - RAIN_REFLECTION_COVERAGE)) + 1.0, RAIN_REFLECTION_MIN, 1.0);
 		rainReflectionStrength *= noise;
 		rainReflectionStrength *= lmcoord.y * lmcoord.y * lmcoord.y;
+		vec2 rainReflectionStrengths = RAIN_REFLECTION_STRENGTHS * rainReflectionStrength;
+		reflectionStrengths = mix(reflectionStrengths, vec2(1.0), rainReflectionStrengths);
 	#endif
 	
 	
@@ -67,7 +76,7 @@ void main() {
 	
 	#if REFLECTIONS_ENABLED == 1
 		/* DRAWBUFFERS:046 */
-		gl_FragData[2] = vec4(0.0, 0.0, 0.0, 1.0);
+		gl_FragData[2] = vec4(reflectionStrengths, 0.0, 1.0);
 	#endif
 	
 }
@@ -94,6 +103,11 @@ void main() {
 	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
 	lmcoord  = (gl_TextureMatrix[1] * gl_MultiTexCoord1).xy;
 	adjustLmcoord(lmcoord);
+	
+	
+	#include "/import/mc_Entity.glsl"
+	blockData = int(mc_Entity.x);
+	if (blockData < 1000) blockData = 0;
 	
 	
 	#if REFLECTIONS_ENABLED == 0

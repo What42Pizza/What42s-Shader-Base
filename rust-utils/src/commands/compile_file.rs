@@ -5,7 +5,7 @@ use std::{fs, ffi::OsStr};
 
 pub fn function(args: &[String]) -> Result<()> {
 	if args.len() != 2 {
-		return Err(Error::msg("Command 'compile_file' must take two args (input_path & output_path)"));
+		return error!("Command 'compile_file' must take two args (input_path & output_path)");
 	}
 	println!("Compiling file...");
 	
@@ -51,15 +51,15 @@ pub fn compile_file(file_path: impl Into<PathBuf>) -> Result<ProcessOutput> {
 	let temp_path = get_temp_path()?;
 	let validator_path = project_path.push_new("glslangValidator.exe");
 	if !validator_path.exists() {
-		return Err(Error::msg("glslangValidator.exe was not found. Please download it and put it in the main folder\n(download link: https://github.com/KhronosGroup/glslang/releases/tag/main-tot)"));
+		return error!("glslangValidator.exe was not found. Please download it and put it in the main folder\n(download link: https://github.com/KhronosGroup/glslang/releases/tag/main-tot)");
 	}
 	
-	let Some(extension) = file_path.extension() else {return Err(Error::msg("Could not get extension of input file path"));};
-	let Some(extension) = extension.to_str() else {return Err(Error::msg("Could not decode extension of input file path"));};
+	let Some(extension) = file_path.extension() else {return error!("Could not get extension of input file path");};
+	let Some(extension) = extension.to_str() else {return error!("Could not decode extension of input file path");};
 	let compile_ready_extension = match extension {
 		"fsh" => "frag",
 		"vsh" => "vert",
-		_ => return Err(Error::msg(format!("Cannot compile file of type '{extension}' (only .fsh and .vsh are allowed)"))),
+		_ => return error!("Cannot compile file of type '{extension}' (only .fsh and .vsh are allowed)"),
 	};
 	
 	let mut preprocessed_file = super::preprocess_file::preprocess_file(&file_path)?;

@@ -96,7 +96,7 @@ pub fn str_to_uniform_data(input: &'static str, line: usize) -> Result<UniformDa
 	};
 	
 	let parts = &raw_parts[if is_attribute {1} else {0} ..];
-	if parts.len() != 4 {return Err(Error::msg(format!("Invalid uniform at line {} ('{input}'): expected 4 items ('[data type] [uniform name] = [dummy value]') or 5 if item is attribute, but found {}", line + 1, parts.len())));}
+	if parts.len() != 4 {return error!("Invalid uniform at line {} ('{input}'): expected 4 items ('[data type] [uniform name] = [dummy value]') or 5 if item is attribute, but found {}", line + 1, parts.len());}
 	
 	Ok(UniformData {
 		name: parts[1],
