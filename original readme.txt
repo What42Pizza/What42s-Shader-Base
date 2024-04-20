@@ -89,7 +89,7 @@ What is shadow distortion?
 	There's just not enough detail available to make good-looking shadows.
 	Now, you could increase the resolution, and therefore the lag too,
 	but even the maximum resolution will only get you up to about 20 pixels per block.
-	By comparason, if you have your face pressed up against a block in-game,
+	By comparison, if you have your face pressed up against a block in-game,
 	it could be hundreds or even thousands of pixels wide, depending on your window resolution.
 
 	The solution: shadow distortion.

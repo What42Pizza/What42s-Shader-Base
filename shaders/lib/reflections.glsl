@@ -9,6 +9,7 @@ void raytrace(out vec2 reflectionPos, out int error, vec3 viewPos, vec3 normal  
 	#include "/import/gbufferProjection.glsl"
 	vec3 screenPos = endMat(gbufferProjection * startMat(viewPos)) * 0.5 + 0.5;
 	vec3 viewStepVector = reflect(normalize(viewPos), normalize(normal));
+	//viewStepVector /= dot(viewStepVector.xy, viewStepVector.xy);
 	vec3 nextScreenPos = endMat(gbufferProjection * startMat(viewPos + viewStepVector)) * 0.5 + 0.5;
 	vec3 stepVector = nextScreenPos - screenPos;
 	//stepVector *= 0.5;
@@ -16,7 +17,7 @@ void raytrace(out vec2 reflectionPos, out int error, vec3 viewPos, vec3 normal  
 	//screenPos += stepVector;
 	
 	#include "/utils/var_rng.glsl"
-	screenPos = mix(screenPos, nextScreenPos, (randomFloat(rng) + 1.0) * 0.6);
+	screenPos = mix(screenPos, nextScreenPos, (randomFloat(rng) + 1.5) * 0.6);
 	
 	int hitCount = 0;
 	
@@ -55,13 +56,13 @@ void raytrace(out vec2 reflectionPos, out int error, vec3 viewPos, vec3 normal  
 		//}
 		if (realToScreen > 0.0) {
 			hitCount ++;
-			if (hitCount >= 6) { // converged on point
+			if (hitCount >= 10) { // converged on point
 				reflectionPos = screenPos.xy;
 				error = 0;
 				return;
 			}
 			screenPos -= stepVector;
-			stepVector *= 0.25;
+			stepVector *= 0.5;
 		}
 		
 		stepVector *= REFLECTION_STEP_INCREASE;

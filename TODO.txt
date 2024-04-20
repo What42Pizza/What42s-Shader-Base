@@ -2,8 +2,9 @@ Current:
 Make more example images:
 	Rain
 	Night
+	Reflections
+Improve TAA on moving entities
 Add documentation for super secret settings
-Swap current FXAA with Complementary's?
 Rework sky
 Add (option for) black lines on edges
 Rework waving calculations for performance?
@@ -11,7 +12,6 @@ Do a round of making sure different settings combinations work
 Add water caustics?
 Make only top of water wavy
 Go through settings in shaders.properties and make sure all instances of settings are listed in the same order
-Add reflections to normal glass too?
 Increase waviness of plant tops
 Add ripples to rain reflections
 Add void fog option?
@@ -21,10 +21,6 @@ Add settings for manually disabling composite files?
 Add tilted weather
 Add backwards depth check to reflections?
 Make reflections work with isometric rendering
-Add post-processing effects like the super secret settings
-	ascii art
-	vhs?
-	inverted x and y
 Move advanced options to 'advanced options' menus
 Do a round of replacing smoothsteps with flat line?
 Do a round of adding dynamic noise (change noise based on quality level)
@@ -41,10 +37,8 @@ Fix ssao causing desaturation on sand?
 Test glsl optimizer (https://github.com/aras-p/glsl-optimizer)
 Add support for fogStart, fogEnd, and fogMode?
 Find a way to stop sugar cane base from waving?
-Find ways to render things at lower resolutions?
 Determine performance costs
 Potion effects?
-Colorblind aids?
 Custom sun / moon?
 
 
@@ -67,7 +61,13 @@ Match the vanilla look, especially in:
 
 
 Finished:
+Swap current FXAA with Complementary's?
+Add reflections to normal glass too
+Colorblind aids (done a while ago)
 Add images for styles demonstration
+Add post-processing effects like the super secret settings
+	vhs?
+	inverted x and y
 Add FXAA
 Prevent TAA on entities
 Add documentation for isometrics

@@ -5,6 +5,7 @@ const bool colortex2Clear = false;
 const int colortex2Format = RGB16F;
 const int colortex4Format = RGB32F;
 const int colortex5Format = R16F;
+const int colortex6Format = RG16F;
 const float wetnessHalflife = 50.0f;
 const float drynessHalflife = 50.0f;
 const float centerDepthHalflife = 2.5f;
@@ -20,7 +21,7 @@ const bool shadowtex1Clear = false;
 
 // user settings
 
-#define STYLE 0 // [0 1 2]
+#define STYLE 0 // [0 1 2 3]
 
 #include "/define_settings.glsl"
 
@@ -43,6 +44,9 @@ const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8
 #endif
 #if STYLE == 2
 	#include "/style_fantasy.glsl"
+#endif
+#if STYLE == 3
+	#include "/style_cartoon.glsl"
 #endif
 
 
@@ -125,6 +129,10 @@ const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8
 
 
 #define CONTRAST_DETECT_COLOR vec3(CONTRAST_DETECT_RED, CONTRAST_DETECT_GREEN, CONTRAST_DETECT_BLUE)
+
+
+
+#define HSV_POSTERIZE_QUALITY vec3(HSV_POSTERIZE_HUE_QUALITY, HSV_POSTERIZE_SATURATION_QUALITY, HSV_POSTERIZE_BRIGHTNESS_QUALITY)
 
 
 

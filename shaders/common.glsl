@@ -101,10 +101,6 @@ vec3 pow3(vec3 v) {
 	return v * v * v;
 }
 
-float getColorLum(vec3 color) {
-	return dot(color, vec3(0.2125, 0.7154, 0.0721));
-}
-
 float maxAbs(vec2 v) {
 	float r = abs(v.r);
 	float g = abs(v.g);
@@ -121,6 +117,10 @@ float maxAbs(vec3 v) {
 float percentThroughClamped(float value, float low, float high) {
 	float percentThrough = (value - low) / (high - low);
 	return clamp(percentThrough, 0.0, 1.0);
+}
+
+float getColorLum(vec3 color) {
+	return dot(color, vec3(0.2125, 0.7154, 0.0721));
 }
 
 // all these smooth functions seem the same for speed

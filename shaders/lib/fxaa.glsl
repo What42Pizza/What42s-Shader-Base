@@ -1,56 +1,159 @@
-#define FXAA_REDUCE_MIN (1.0 / 128.0)
-#define FXAA_REDUCE_MUL (1.0 / 8.0)
-#define FXAA_SPAN_MAX 8.0
+// This was taken from Complementary Reimagined
 
-void doFxaa(inout vec3 rgbM, sampler2D tex  ARGS_OUT) {
+
+
+//FXAA 3.11 from http://blog.simonrodriguez.fr/articles/30-07-2016_implementing_fxaa.html
+#ifdef FIRST_PASS
+	float quality[12] = float[12] (1.0, 1.0, 1.0, 1.0, 1.0, 1.5, 2.0, 2.0, 2.0, 2.0, 4.0, 8.0);
+#endif
+
+void doFxaa(inout vec3 color, sampler2D tex  ARGS_OUT) {
+	float edgeThresholdMin = 0.03125;
+	float edgeThresholdMax = 0.0625;
+	float subpixelQuality = 0.75;
+	int iterations = 12;
 	
-	vec3 rgbNW = texelFetch(tex, texelcoord + ivec2(0, 0), 0).xyz;
-	vec3 rgbNE = texelFetch(tex, texelcoord + ivec2(1, 0), 0).xyz;
-	vec3 rgbSW = texelFetch(tex, texelcoord + ivec2(0, 1), 0).xyz;
-	vec3 rgbSE = texelFetch(tex, texelcoord + ivec2(1, 1), 0).xyz;
+	float lumaCenter = getColorLum(color);
+	float lumaDown  = getColorLum(texelFetch(MAIN_BUFFER, texelcoord + ivec2( 0, -1), 0).rgb);
+	float lumaUp    = getColorLum(texelFetch(MAIN_BUFFER, texelcoord + ivec2( 0,  1), 0).rgb);
+	float lumaLeft  = getColorLum(texelFetch(MAIN_BUFFER, texelcoord + ivec2(-1,  0), 0).rgb);
+	float lumaRight = getColorLum(texelFetch(MAIN_BUFFER, texelcoord + ivec2( 1,  0), 0).rgb);
 	
-	vec3 luma = vec3(0.299, 0.587, 0.114);
-	float lumaNW = dot(rgbNW, luma);
-	float lumaNE = dot(rgbNE, luma);
-	float lumaSW = dot(rgbSW, luma);
-	float lumaSE = dot(rgbSE, luma);
-	float lumaM  = dot(rgbM,  luma);
+	float lumaMin = min(lumaCenter, min(min(lumaDown, lumaUp), min(lumaLeft, lumaRight)));
+	float lumaMax = max(lumaCenter, max(max(lumaDown, lumaUp), max(lumaLeft, lumaRight)));
 	
-	float lumaMin = min(lumaM, min(min(lumaNW, lumaNE), min(lumaSW, lumaSE)));
-	float lumaMax = max(lumaM, max(max(lumaNW, lumaNE), max(lumaSW, lumaSE)));
+	float lumaRange = lumaMax - lumaMin;
 	
-	vec2 dir;
-	dir.x = -((lumaNW + lumaNE) - (lumaSW + lumaSE));
-	dir.y =  ((lumaNW + lumaSW) - (lumaNE + lumaSE));
-	
-	float dirReduce = max(
-		(lumaNW + lumaNE + lumaSW + lumaSE) * (0.25 * FXAA_REDUCE_MUL),
-		FXAA_REDUCE_MIN
-	);
-	float rcpDirMin = 1.0/(min(abs(dir.x), abs(dir.y)) + dirReduce);
-	
-	#include "/import/pixelSize.glsl"
-	dir = min(
-		vec2( FXAA_SPAN_MAX,  FXAA_SPAN_MAX),
-		max(
-			vec2(-FXAA_SPAN_MAX, -FXAA_SPAN_MAX),
-			dir * rcpDirMin
-		)
-	) * pixelSize;
-	
-	vec3 rgbA = (1.0/2.0) * (
-		textureLod(tex, texcoord + dir * (1.0/3.0 - 0.5), 0.0).xyz +
-		textureLod(tex, texcoord + dir * (2.0/3.0 - 0.5), 0.0).xyz);
-	vec3 rgbB = rgbA * (1.0/2.0) + (1.0/4.0) * (
-		textureLod(tex, texcoord + dir * (0.0/3.0 - 0.5), 0.0).xyz +
-		textureLod(tex, texcoord + dir * (3.0/3.0 - 0.5), 0.0).xyz);
-	
-	float lumaB = dot(rgbB, luma);
-	
-	if((lumaB < lumaMin) || (lumaB > lumaMax)) {
-		rgbM = rgbA;
-		return;
+	if (lumaRange > max(edgeThresholdMin, lumaMax * edgeThresholdMax)) {
+		float lumaDownLeft  = getColorLum(texelFetch(MAIN_BUFFER, texelcoord + ivec2(-1, -1), 0).rgb);
+		float lumaUpRight   = getColorLum(texelFetch(MAIN_BUFFER, texelcoord + ivec2( 1,  1), 0).rgb);
+		float lumaUpLeft    = getColorLum(texelFetch(MAIN_BUFFER, texelcoord + ivec2(-1,  1), 0).rgb);
+		float lumaDownRight = getColorLum(texelFetch(MAIN_BUFFER, texelcoord + ivec2( 1, -1), 0).rgb);
+		
+		float lumaDownUp    = lumaDown + lumaUp;
+		float lumaLeftRight = lumaLeft + lumaRight;
+		
+		float lumaLeftCorners  = lumaDownLeft  + lumaUpLeft;
+		float lumaDownCorners  = lumaDownLeft  + lumaDownRight;
+		float lumaRightCorners = lumaDownRight + lumaUpRight;
+		float lumaUpCorners    = lumaUpRight   + lumaUpLeft;
+		
+		float edgeHorizontal =
+			abs(-2.0 * lumaLeft + lumaLeftCorners)
+			+ abs(-2.0 * lumaCenter + lumaDownUp) * 2.0
+			+ abs(-2.0 * lumaRight + lumaRightCorners);
+		float edgeVertical =
+			abs(-2.0 * lumaUp + lumaUpCorners)
+			+ abs(-2.0 * lumaCenter + lumaLeftRight) * 2.0
+			+ abs(-2.0 * lumaDown + lumaDownCorners);
+		
+		bool isHorizontal = (edgeHorizontal >= edgeVertical);
+		
+		float luma1 = isHorizontal ? lumaDown : lumaLeft;
+		float luma2 = isHorizontal ? lumaUp : lumaRight;
+		float gradient1 = luma1 - lumaCenter;
+		float gradient2 = luma2 - lumaCenter;
+		
+		bool is1Steepest = abs(gradient1) >= abs(gradient2);
+		float gradientScaled = 0.25 * max(abs(gradient1), abs(gradient2));
+		
+		#include "/import/invViewSize.glsl"
+		float stepLength = isHorizontal ? invViewSize.y : invViewSize.x;
+		
+		float lumaLocalAverage = 0.0;
+		
+		if (is1Steepest) {
+			stepLength = - stepLength;
+			lumaLocalAverage = 0.5 * (luma1 + lumaCenter);
+		} else {
+			lumaLocalAverage = 0.5 * (luma2 + lumaCenter);
+		}
+		
+		vec2 currentUv = texcoord;
+		if (isHorizontal) {
+			currentUv.y += stepLength * 0.5;
+		} else {
+			currentUv.x += stepLength * 0.5;
+		}
+		
+		vec2 offset = isHorizontal ? vec2(invViewSize.x, 0.0) : vec2(0.0, invViewSize.y);
+		
+		vec2 uv1 = currentUv - offset;
+		vec2 uv2 = currentUv + offset;
+		
+		float lumaEnd1 = getColorLum(texture2D(MAIN_BUFFER, uv1).rgb);
+		float lumaEnd2 = getColorLum(texture2D(MAIN_BUFFER, uv2).rgb);
+		lumaEnd1 -= lumaLocalAverage;
+		lumaEnd2 -= lumaLocalAverage;
+		
+		bool reached1 = abs(lumaEnd1) >= gradientScaled;
+		bool reached2 = abs(lumaEnd2) >= gradientScaled;
+		bool reachedBoth = reached1 && reached2;
+		
+		if (!reached1) {
+			uv1 -= offset;
+		}
+		if (!reached2) {
+			uv2 += offset;
+		}
+		
+		if (!reachedBoth) {
+			for (int i = 2; i < iterations; i++) {
+				if (!reached1) {
+					lumaEnd1 = getColorLum(texture2D(MAIN_BUFFER, uv1).rgb);
+					lumaEnd1 = lumaEnd1 - lumaLocalAverage;
+				}
+				if (!reached2) {
+					lumaEnd2 = getColorLum(texture2D(MAIN_BUFFER, uv2).rgb);
+					lumaEnd2 = lumaEnd2 - lumaLocalAverage;
+				}
+				
+				reached1 = abs(lumaEnd1) >= gradientScaled;
+				reached2 = abs(lumaEnd2) >= gradientScaled;
+				reachedBoth = reached1 && reached2;
+				
+				if (!reached1) {
+					uv1 -= offset * quality[i];
+				}
+				if (!reached2) {
+					uv2 += offset * quality[i];
+				}
+				
+				if (reachedBoth) break;
+			}
+		}
+		
+		float distance1 = isHorizontal ? (texcoord.x - uv1.x) : (texcoord.y - uv1.y);
+		float distance2 = isHorizontal ? (uv2.x - texcoord.x) : (uv2.y - texcoord.y);
+		
+		bool isDirection1 = distance1 < distance2;
+		float distanceFinal = min(distance1, distance2);
+		
+		float edgeThickness = (distance1 + distance2);
+		
+		float pixelOffset = - distanceFinal / edgeThickness + 0.5;
+		
+		bool isLumaCenterSmaller = lumaCenter < lumaLocalAverage;
+		
+		bool correctVariation = ((isDirection1 ? lumaEnd1 : lumaEnd2) < 0.0) != isLumaCenterSmaller;
+		
+		float finalOffset = correctVariation ? pixelOffset : 0.0;
+		
+		float lumaAverage = (1.0 / 12.0) * (2.0 * (lumaDownUp + lumaLeftRight) + lumaLeftCorners + lumaRightCorners);
+		float subPixelOffset1 = clamp(abs(lumaAverage - lumaCenter) / lumaRange, 0.0, 1.0);
+		float subPixelOffset2 = (-2.0 * subPixelOffset1 + 3.0) * subPixelOffset1 * subPixelOffset1;
+		float subPixelOffsetFinal = subPixelOffset2 * subPixelOffset2 * subpixelQuality;
+		
+		finalOffset = max(finalOffset, subPixelOffsetFinal);
+		
+		// Compute the final UV coordinates
+		vec2 finalUv = texcoord;
+		if (isHorizontal) {
+			finalUv.y += finalOffset * stepLength;
+		} else {
+			finalUv.x += finalOffset * stepLength;
+		}
+		
+		color = texture2D(MAIN_BUFFER, finalUv).rgb;
 	}
-	
-	rgbM = rgbB;
 }

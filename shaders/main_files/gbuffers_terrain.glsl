@@ -54,7 +54,6 @@ void main() {
 	vec2 reflectionStrengths = vec2(blockReflectionAmount * (1.0 - BLOCKS_REFLECTION_FRESNEL), blockReflectionAmount * BLOCKS_REFLECTION_FRESNEL);
 	
 	
-	
 	// rain reflection strength
 	#if REFLECTIONS_ENABLED == 1
 		#include "/import/cameraPosition.glsl"

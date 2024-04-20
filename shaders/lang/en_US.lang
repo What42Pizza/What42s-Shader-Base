@@ -20,6 +20,7 @@ option.STYLE.comment=Changes the default settings. When a setting is set to 'Use
 value.STYLE.0=Vanilla
 value.STYLE.1=Realistic
 value.STYLE.2=Fantasy
+value.STYLE.3=Cartoon
 
 
 
@@ -472,6 +473,12 @@ value.EXCLUDE_FOLIAGE.-1=Use Style Value
 value.EXCLUDE_FOLIAGE.0=Off
 value.EXCLUDE_FOLIAGE.1=On
 
+option.CEL_SHADING_ENABLED=Cel Shading
+option.CEL_SHADING_ENABLED.comment=Mostly affects blocklight, makes light fully bright or no brightness (well kinda, it's more complicated so that it looks better)\nThis is similar to (and pairs well with) Posterize is super-secret-settings
+value.CEL_SHADING_ENABLED.-1=Use Style Value
+value.CEL_SHADING_ENABLED.0=Off
+value.CEL_SHADING_ENABLED.1=On
+
 option.sunPathRotation=Sun Path Rotation
 option.sunPathRotation.comment=How tilted the sun's rotation is. 0 is vanilla
 
@@ -533,6 +540,14 @@ value.HANDHELD_LIGHT_BRIGHTNESS.-1=Use Style Value
 
 
 screen.POST_PROCESSING_SETTINGS=Post Processing
+
+
+
+option.OUTLINES_ENABLED=Outlines
+option.OUTLINES_ENABLED.comment=Adds black outlines over everything
+value.OUTLINES_ENABLED.-1=Use Style Value
+value.OUTLINES_ENABLED.0=Off
+value.OUTLINES_ENABLED.1=On
 
 
 
@@ -1017,6 +1032,40 @@ option.VIGNETTE_NOISE_ENABLED.comment=Adds a slight amount of noise to the Vigne
 value.VIGNETTE_NOISE_ENABLED.-1=Use Style Value
 value.VIGNETTE_NOISE_ENABLED.0=Off
 value.VIGNETTE_NOISE_ENABLED.1=On
+
+
+
+
+
+
+screen.HSV_POSTERIZE_SETTINGS=HSV Posterize
+
+
+
+option.HSV_POSTERIZE_ENABLED=HSV Posterize Enabled
+option.HSV_POSTERIZE_ENABLED.comment=Similar to Posterize in super-secret-settings, but works with HSV instead of RGB
+value.HSV_POSTERIZE_ENABLED.-1=Use Style Value
+value.HSV_POSTERIZE_ENABLED.0=Off
+value.HSV_POSTERIZE_ENABLED.1=On
+
+option.HSV_POSTERIZE_HUE_QUALITY=Posterize Hue Quality
+option.HSV_POSTERIZE_HUE_QUALITY.comment=How much to compress the Hue data
+value.HSV_POSTERIZE_HUE_QUALITY.-1=Use Style Value
+value.HSV_POSTERIZE_HUE_QUALITY.0=None
+
+option.HSV_POSTERIZE_SATURATION_QUALITY=Posterize Saturation Quality
+option.HSV_POSTERIZE_SATURATION_QUALITY.comment=How much to compress the Saturation data
+value.HSV_POSTERIZE_SATURATION_QUALITY.-1=Use Style Value
+value.HSV_POSTERIZE_SATURATION_QUALITY.0=None
+
+option.HSV_POSTERIZE_BRIGHTNESS_QUALITY=Posterize Brightness Quality
+option.HSV_POSTERIZE_BRIGHTNESS_QUALITY.comment=How much to compress the Brightness data
+value.HSV_POSTERIZE_BRIGHTNESS_QUALITY.-1=Use Style Value
+value.HSV_POSTERIZE_BRIGHTNESS_QUALITY.0=None
+
+option.HSV_POSTERIZE_STEP_SLOPE=Step Slope
+option.HSV_POSTERIZE_STEP_SLOPE.comment=How quickly it changes from one step to another
+value.HSV_POSTERIZE_STEP_SLOPE.-1=Use Style Value
 
 
 

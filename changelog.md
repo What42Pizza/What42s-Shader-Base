@@ -1,7 +1,21 @@
 <br>
 
+- **b1.12.0** (24/04/20)
+  - Added style: Cartoon (made to work with Bare Bones)
+  - Added feature: black outlines
+  - Added feature: cel shading
+  - Added feature: hsv posterization
+  - Improved Reflections
+  - Swapped FXAA with Complementary's
+  - Tweaked existing styles
+
+<br>
+<br>
+<br>
+
 - b1.11.5 (24/04/05)
   - Added block reflections (included settings: 'Blocks Ref Amount Surface', 'Blocks Ref Amount Underground', and 'Blocks Reflection Fresnel')
+  - Fixed rain reflections
   - Disabled shadows for fire
   - Fixed Sharpening-related bugs
 

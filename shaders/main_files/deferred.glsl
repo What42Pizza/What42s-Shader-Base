@@ -56,6 +56,10 @@ float getSkyBrightness(ARG_OUT) {
 #include "/utils/depth.glsl"
 #include "/utils/screen_to_view.glsl"
 
+#if OUTLINES_ENABLED == 1
+	#include "/lib/outlines.glsl"
+#endif
+
 
 
 void main() {
@@ -67,6 +71,15 @@ void main() {
 	
 	float depth = texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r;
 	float linearDepth = toLinearDepth(depth  ARGS_IN);
+	
+	
+	
+	// ======== OUTLINES ========
+	
+	#if OUTLINES_ENABLED == 1
+		color *= 1.0 - getOutlineAmount(ARG_IN);
+	#endif
+	
 	
 	
 	if (linearDepth < 0.99) {
@@ -112,6 +125,7 @@ void main() {
 		
 		
 	}
+	
 	
 	
 	#ifdef DEBUG_OUTPUT_ENABLED

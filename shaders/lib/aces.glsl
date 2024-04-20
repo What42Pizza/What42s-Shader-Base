@@ -35,9 +35,12 @@ vec3 rttAndOdtFit(vec3 v) {
 }
 
 vec3 acesFitted(vec3 v) {
+	v *= 1.5;
 	v = matrixMult(ACES_INPUT_MATRIX, v);
 	v = rttAndOdtFit(v);
-	return matrixMult(ACES_OUTPUT_MATRIX, v);
+	v = matrixMult(ACES_OUTPUT_MATRIX, v);
+	v *= 1.3;
+	return v;
 }
 
 #endif

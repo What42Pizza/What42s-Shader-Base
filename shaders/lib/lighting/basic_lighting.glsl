@@ -7,10 +7,13 @@
 
 
 vec3 getBasicLighting(float blockBrightness, float ambientBrightness  ARGS_OUT) {
-	// cel shading experiments
-	//blockBrightness = round(blockBrightness * 5) / 5;
-	//skyBrightness = round(skyBrightness * 5) / 5;
-	//ambientBrightness = round(ambientBrightness * 5) / 5;
+	
+	#if CEL_SHADING_ENABLED == 1
+		blockBrightness =
+			sqrt(blockBrightness) * 0.8
+			+ step(0.2, blockBrightness) * 0.2;
+		ambientBrightness = smoothstep(0.0, 1.0, ambientBrightness);
+	#endif
 	
 	vec3 ambientLight = getAmbientLight(ARG_IN);
 	ambientLight = mix(CAVE_AMBIENT_COLOR, ambientLight, ambientBrightness);
