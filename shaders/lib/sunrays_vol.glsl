@@ -32,11 +32,16 @@ float getVolSunraysAmount(float depth, inout uint rng  ARGS_OUT) {
 	viewPos += viewPosStep * (1.0 + random * 0.5);
 	
 	float total = 0.0;
+	bool prevInShadowcaster = false;
 	for (int i = 0; i < SAMPLE_COUNT; i ++) {
 		
 		vec3 shadowPos = getShadowPos(viewPos  ARGS_IN);
 		if (texture2D(shadowtex0, shadowPos.xy).r >= shadowPos.z) {
-			total += 1.0;
+			total += SUNRAYS_INC_AMOUNT;
+			if (!prevInShadowcaster) total += SUNRAYS_ENTER_AMOUNT;
+			prevInShadowcaster = true;
+		} else {
+			prevInShadowcaster = false;
 		}
 		
 		viewPos += viewPosStep;
@@ -47,7 +52,7 @@ float getVolSunraysAmount(float depth, inout uint rng  ARGS_OUT) {
 	#include "/import/eyeBrightnessSmooth.glsl"
 	float skyBrightness = eyeBrightnessSmooth.y / 240.0;
 	sunraysAmount += (sunraysAmount > 0.0 ? 1.0 : 0.0) * mix(SUNRAYS_MIN_UNDERGROUND, SUNRAYS_MIN_SURFACE, skyBrightness);
-	sunraysAmount *= 0.008;
+	sunraysAmount *= 0.005;
 	
 	#include "/import/gbufferModelViewInverse.glsl"
 	vec3 playerPos = (gbufferModelViewInverse * startMat(viewPos)).xyz;

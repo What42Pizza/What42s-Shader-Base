@@ -228,7 +228,7 @@
 
 #if SKYLIGHT_DAY_RED == -1
 #undef SKYLIGHT_DAY_RED
-										#define SKYLIGHT_DAY_RED 1.1
+										#define SKYLIGHT_DAY_RED 1.0
 #endif
 #if SKYLIGHT_DAY_GREEN == -1
 #undef SKYLIGHT_DAY_GREEN
@@ -236,7 +236,7 @@
 #endif
 #if SKYLIGHT_DAY_BLUE == -1
 #undef SKYLIGHT_DAY_BLUE
-										#define SKYLIGHT_DAY_BLUE 0.9
+										#define SKYLIGHT_DAY_BLUE 1.0
 #endif
 #if SKYLIGHT_DAY_BRIGHTNESS == -1
 #undef SKYLIGHT_DAY_BRIGHTNESS
@@ -640,7 +640,7 @@
 #endif
 #if SUNRAYS_MIN_SURFACE == -1
 #undef SUNRAYS_MIN_SURFACE
-										#define SUNRAYS_MIN_SURFACE 5
+										#define SUNRAYS_MIN_SURFACE 10
 #endif
 #if SUNRAYS_MIN_UNDERGROUND == -1
 #undef SUNRAYS_MIN_UNDERGROUND
@@ -652,7 +652,7 @@
 #endif
 #if SUNRAYS_AMOUNT_DAY == -1
 #undef SUNRAYS_AMOUNT_DAY
-										#define SUNRAYS_AMOUNT_DAY 0.1
+										#define SUNRAYS_AMOUNT_DAY 0.15
 #endif
 #if SUNRAYS_AMOUNT_NIGHT == -1
 #undef SUNRAYS_AMOUNT_NIGHT
@@ -676,7 +676,7 @@
 #endif
 #if SUNRAYS_SUN_GREEN == -1
 #undef SUNRAYS_SUN_GREEN
-										#define SUNRAYS_SUN_GREEN 0.2
+										#define SUNRAYS_SUN_GREEN 0.15
 #endif
 #if SUNRAYS_SUN_BLUE == -1
 #undef SUNRAYS_SUN_BLUE
@@ -693,6 +693,14 @@
 #if SUNRAYS_MOON_BLUE == -1
 #undef SUNRAYS_MOON_BLUE
 										#define SUNRAYS_MOON_BLUE 1.0
+#endif
+#if SUNRAYS_INC_AMOUNT == -1
+#undef SUNRAYS_INC_AMOUNT
+										#define SUNRAYS_INC_AMOUNT 1.0
+#endif
+#if SUNRAYS_ENTER_AMOUNT == -1
+#undef SUNRAYS_ENTER_AMOUNT
+										#define SUNRAYS_ENTER_AMOUNT 5.0
 #endif
 
 

@@ -694,6 +694,14 @@
 #undef SUNRAYS_MOON_BLUE
 										#define SUNRAYS_MOON_BLUE 1.0
 #endif
+#if SUNRAYS_INC_AMOUNT == -1
+#undef SUNRAYS_INC_AMOUNT
+										#define SUNRAYS_INC_AMOUNT 1.0
+#endif
+#if SUNRAYS_ENTER_AMOUNT == -1
+#undef SUNRAYS_ENTER_AMOUNT
+										#define SUNRAYS_ENTER_AMOUNT 5.0
+#endif
 
 
 

@@ -660,11 +660,11 @@
 #endif
 #if SUNRAYS_AMOUNT_SUNRISE == -1
 #undef SUNRAYS_AMOUNT_SUNRISE
-										#define SUNRAYS_AMOUNT_SUNRISE 1.2
+										#define SUNRAYS_AMOUNT_SUNRISE 0.8
 #endif
 #if SUNRAYS_AMOUNT_SUNSET == -1
 #undef SUNRAYS_AMOUNT_SUNSET
-										#define SUNRAYS_AMOUNT_SUNSET 1.2
+										#define SUNRAYS_AMOUNT_SUNSET 0.8
 #endif
 #if SUNRAYS_WEATHER_MULT == -1
 #undef SUNRAYS_WEATHER_MULT
@@ -693,6 +693,14 @@
 #if SUNRAYS_MOON_BLUE == -1
 #undef SUNRAYS_MOON_BLUE
 										#define SUNRAYS_MOON_BLUE 0.8
+#endif
+#if SUNRAYS_INC_AMOUNT == -1
+#undef SUNRAYS_INC_AMOUNT
+										#define SUNRAYS_INC_AMOUNT 1.0
+#endif
+#if SUNRAYS_ENTER_AMOUNT == -1
+#undef SUNRAYS_ENTER_AMOUNT
+										#define SUNRAYS_ENTER_AMOUNT 5.0
 #endif
 
 
