@@ -39,7 +39,7 @@ void neighbourhoodClamping(vec3 color, inout vec3 prevColor  ARGS_OUT) {
 
 
 
-void doTAA(inout vec3 color, inout vec3 newPrev, float linearDepth, vec2 prevCoord, float handFactor  ARGS_OUT) {
+void doTAA(inout vec3 color, inout vec3 newPrev, float linearDepth, vec2 prevCoord  ARGS_OUT) {
 	
 	if (
 		prevCoord.x < 0.0 || prevCoord.x > 1.0 ||
@@ -70,9 +70,7 @@ void doTAA(inout vec3 color, inout vec3 newPrev, float linearDepth, vec2 prevCoo
 		float blockDepth = 0;
 	#endif
 	
-	float blendAmount = blendConstant
-		+ exp(-velocityAmount) * (blendVariable + sqrt(blockDepth) * depthFactor)
-		+ handFactor;
+	float blendAmount = blendConstant + exp(-velocityAmount) * (blendVariable + sqrt(blockDepth) * depthFactor);
 	blendAmount = clamp(blendAmount, blendMin, blendMax);
 	
 	color = mix(color, prevColor, blendAmount);

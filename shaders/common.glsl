@@ -35,7 +35,7 @@ uniform sampler2D shadowtex0;
 	//#define varying out
 #endif
 
-#define HAND_DEPTH 0.19 // idk what should actually be here
+//#define HAND_DEPTH 0.19 // idk what should actually be here
 
 #ifdef DEBUG_OUTPUT_ENABLED
 	#define DEBUG_ARGS_IN , debugOutput

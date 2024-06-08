@@ -23,8 +23,9 @@ pub fn function(args: &[String]) -> Result<()> {
 
 pub fn get_file_sloc(path: &Path) -> Result<usize> {
 	
-	// must be .glsl & not in /import
+	// must be .glsl, not in /import, and not a style define
 	if path.components().find(|s| s.as_os_str().to_string_lossy() == "import").is_some() {return Ok(0);}
+	if let Some(Some(name)) = path.file_name().map(OsStr::to_str) && name.starts_with("style_") {return Ok(0);}
 	let Some(extension) = path.extension() else {return Ok(0);};
 	let Some(extension) = extension.to_str() else {return Ok(0);};
 	if extension != "glsl" {return Ok(0);}

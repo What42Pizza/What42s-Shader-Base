@@ -774,7 +774,7 @@
 #endif
 #if MOTION_BLUR_QUALITY == -1
 #undef MOTION_BLUR_QUALITY
-										#define MOTION_BLUR_QUALITY 3
+										#define MOTION_BLUR_QUALITY 4
 #endif
 
 

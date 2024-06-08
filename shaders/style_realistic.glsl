@@ -766,15 +766,15 @@
 
 #if MOTION_BLUR_ENABLED == -1
 #undef MOTION_BLUR_ENABLED
-										#define MOTION_BLUR_ENABLED 0
+										#define MOTION_BLUR_ENABLED 1
 #endif
 #if MOTION_BLUR_AMOUNT == -1
 #undef MOTION_BLUR_AMOUNT
-										#define MOTION_BLUR_AMOUNT 0.5
+										#define MOTION_BLUR_AMOUNT 0.25
 #endif
 #if MOTION_BLUR_QUALITY == -1
 #undef MOTION_BLUR_QUALITY
-										#define MOTION_BLUR_QUALITY 3
+										#define MOTION_BLUR_QUALITY 4
 #endif
 
 
@@ -829,15 +829,15 @@
 
 #if SATURATION == -1
 #undef SATURATION
-										#define SATURATION 0.0
+										#define SATURATION -0.1
 #endif
 #if SATURATION_DARK == -1
 #undef SATURATION_DARK
-										#define SATURATION_DARK 0.1
+										#define SATURATION_DARK 0.0
 #endif
 #if SATURATION_LIGHT == -1
 #undef SATURATION_LIGHT
-										#define SATURATION_LIGHT -0.3
+										#define SATURATION_LIGHT -0.2
 #endif
 
 

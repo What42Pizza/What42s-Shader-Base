@@ -1,7 +1,9 @@
 // started: 23/11/30
-// last updated: 23/12/04
+// last updated: 24/05/14
 
 
+
+#![feature(let_chains)]
 
 #![allow(unused)]
 #![warn(unused_must_use)]
@@ -72,7 +74,7 @@ pub const ALL_UNIFORMS_PATH: &str = include_str!("all_uniforms.txt");
 
 
 
-pub const STYLES: &[&str] = &["vanilla", "realistic", "fantasy"];
+pub const STYLES: &[&str] = &["vanilla", "realistic", "fantasy", "cartoon"];
 
 
 

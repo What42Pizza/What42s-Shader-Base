@@ -1,5 +1,13 @@
 <br>
 
+- b1.12.1 (24/06/07)
+  - Improved reflection fading
+  - Tweaked styles
+  - Improved motion blur
+  - Fixed hand jitter
+
+<br>
+
 - **b1.12.0** (24/04/20)
   - Added style: Cartoon (made to work with Bare Bones)
   - Added feature: black outlines

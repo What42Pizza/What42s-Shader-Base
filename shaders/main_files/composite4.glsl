@@ -107,13 +107,6 @@ void main() {
 	
 	float depth = texelFetch(DEPTH_BUFFER_WO_TRANS, texelcoord, 0).r;
 	float linearDepth = toLinearDepth(depth  ARGS_IN);
-	float handFactor = 0.0;
-	#if ISOMETRIC_RENDERING_ENABLED == 0
-		if (depthIsHand(linearDepth)) {
-			depth = fromLinearDepth(HAND_DEPTH  ARGS_IN);
-			handFactor = -0.25;
-		}
-	#endif
 	
 	vec3 pos = vec3(texcoord, depth);
 	#include "/import/cameraPosition.glsl"
@@ -130,7 +123,7 @@ void main() {
 	
 	// ======== TAA ========
 	#if AA_STRATEGY == 2 || AA_STRATEGY == 3
-		doTAA(color, prev, linearDepth, prevCoord, handFactor  ARGS_IN);
+		doTAA(color, prev, linearDepth, prevCoord  ARGS_IN);
 	#endif
 	
 	// ======== FXAA OR TAA ========
@@ -142,7 +135,7 @@ void main() {
 			doFxaa(color, MAIN_BUFFER  ARGS_IN);
 		}
 		if (preventTaa < 0.5 || isTransparent) {
-			doTAA(color, prev, linearDepth, prevCoord, handFactor  ARGS_IN);
+			doTAA(color, prev, linearDepth, prevCoord  ARGS_IN);
 		}
 	#endif
 	
@@ -151,9 +144,9 @@ void main() {
 	// ======== MOTION BLUR ========
 	
 	#if MOTION_BLUR_ENABLED == 1
-		if (length(texcoord - prevCoord) > 0.00001) {
-			doMotionBlur(color, prevCoord  ARGS_IN);
-		}
+		//if (length(texcoord - prevCoord) > 0.00001) {
+			doMotionBlur(color, prevCoord, depth  ARGS_IN);
+		//}
 	#endif
 	
 	

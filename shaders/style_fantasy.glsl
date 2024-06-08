@@ -178,7 +178,7 @@
 #endif
 #if BLOCK_BRIGHTNESS_NIGHT_MULT == -1
 #undef BLOCK_BRIGHTNESS_NIGHT_MULT
-										#define BLOCK_BRIGHTNESS_NIGHT_MULT 1.5
+										#define BLOCK_BRIGHTNESS_NIGHT_MULT 1.4
 #endif
 
 
@@ -656,7 +656,7 @@
 #endif
 #if SUNRAYS_AMOUNT_NIGHT == -1
 #undef SUNRAYS_AMOUNT_NIGHT
-										#define SUNRAYS_AMOUNT_NIGHT 0.3
+										#define SUNRAYS_AMOUNT_NIGHT 0.25
 #endif
 #if SUNRAYS_AMOUNT_SUNRISE == -1
 #undef SUNRAYS_AMOUNT_SUNRISE
@@ -774,7 +774,7 @@
 #endif
 #if MOTION_BLUR_QUALITY == -1
 #undef MOTION_BLUR_QUALITY
-										#define MOTION_BLUR_QUALITY 3
+										#define MOTION_BLUR_QUALITY 4
 #endif
 
 

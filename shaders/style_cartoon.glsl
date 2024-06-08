@@ -628,7 +628,7 @@
 #endif
 #if SUNRAYS_QUALITY == -1
 #undef SUNRAYS_QUALITY
-										#define SUNRAYS_QUALITY 4
+										#define SUNRAYS_QUALITY 5
 #endif
 #if SUNRAYS_STYLE == -1
 #undef SUNRAYS_STYLE
@@ -652,19 +652,19 @@
 #endif
 #if SUNRAYS_AMOUNT_DAY == -1
 #undef SUNRAYS_AMOUNT_DAY
-										#define SUNRAYS_AMOUNT_DAY 0.8
+										#define SUNRAYS_AMOUNT_DAY 1.5
 #endif
 #if SUNRAYS_AMOUNT_NIGHT == -1
 #undef SUNRAYS_AMOUNT_NIGHT
-										#define SUNRAYS_AMOUNT_NIGHT 0.3
+										#define SUNRAYS_AMOUNT_NIGHT 0.5
 #endif
 #if SUNRAYS_AMOUNT_SUNRISE == -1
 #undef SUNRAYS_AMOUNT_SUNRISE
-										#define SUNRAYS_AMOUNT_SUNRISE 1.2
+										#define SUNRAYS_AMOUNT_SUNRISE 1.5
 #endif
 #if SUNRAYS_AMOUNT_SUNSET == -1
 #undef SUNRAYS_AMOUNT_SUNSET
-										#define SUNRAYS_AMOUNT_SUNSET 1.2
+										#define SUNRAYS_AMOUNT_SUNSET 1.5
 #endif
 #if SUNRAYS_WEATHER_MULT == -1
 #undef SUNRAYS_WEATHER_MULT
@@ -676,11 +676,11 @@
 #endif
 #if SUNRAYS_SUN_GREEN == -1
 #undef SUNRAYS_SUN_GREEN
-										#define SUNRAYS_SUN_GREEN 0.4
+										#define SUNRAYS_SUN_GREEN 0.5
 #endif
 #if SUNRAYS_SUN_BLUE == -1
 #undef SUNRAYS_SUN_BLUE
-										#define SUNRAYS_SUN_BLUE 0.0
+										#define SUNRAYS_SUN_BLUE 0.2
 #endif
 #if SUNRAYS_MOON_RED == -1
 #undef SUNRAYS_MOON_RED
@@ -774,7 +774,7 @@
 #endif
 #if MOTION_BLUR_QUALITY == -1
 #undef MOTION_BLUR_QUALITY
-										#define MOTION_BLUR_QUALITY 3
+										#define MOTION_BLUR_QUALITY 4
 #endif
 
 
@@ -829,7 +829,7 @@
 
 #if SATURATION == -1
 #undef SATURATION
-										#define SATURATION -0.1
+										#define SATURATION 0.0
 #endif
 #if SATURATION_DARK == -1
 #undef SATURATION_DARK
@@ -844,7 +844,7 @@
 
 #if VIBRANCE == -1
 #undef VIBRANCE
-										#define VIBRANCE 0.5
+										#define VIBRANCE 1.0
 #endif
 
 
