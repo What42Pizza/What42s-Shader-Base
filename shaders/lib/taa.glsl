@@ -61,6 +61,8 @@ void doTAA(inout vec3 color, inout vec3 newPrev, float linearDepth, vec2 prevCoo
 	
 	#include "/import/viewSize.glsl"
 	vec2 velocity = (texcoord - prevCoord.xy) * viewSize;
+	//#include "/import/sharpenVelocityFactor.glsl"
+	//if (linearDepth > 0.99) velocity = vec2(sharpenVelocityFactor);
 	float velocityAmount = dot(velocity, velocity) * 10.0;
 	
 	#if ISOMETRIC_RENDERING_ENABLED == 0
@@ -71,6 +73,9 @@ void doTAA(inout vec3 color, inout vec3 newPrev, float linearDepth, vec2 prevCoo
 	#endif
 	
 	float blendAmount = blendConstant + exp(-velocityAmount) * (blendVariable + sqrt(blockDepth) * depthFactor);
+	#ifdef END
+		if (linearDepth > 0.99) blendAmount = 0.0;
+	#endif
 	blendAmount = clamp(blendAmount, blendMin, blendMax);
 	
 	color = mix(color, prevColor, blendAmount);

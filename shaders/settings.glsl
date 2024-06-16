@@ -69,6 +69,10 @@ const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8
 #ifdef END
 	#undef SHADOWS_ENABLED
 	#define SHADOWS_ENABLED 0
+	#undef DEPTH_SUNRAYS_ENABLED
+	#define DEPTH_SUNRAYS_ENABLED 0
+	#undef VOL_SUNRAYS_ENABLED
+	#define VOL_SUNRAYS_ENABLED 0
 #endif
 
 #if SHADOWS_ENABLED == 0

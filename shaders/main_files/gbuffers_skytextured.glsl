@@ -1,5 +1,8 @@
 #ifdef FIRST_PASS
 	varying vec2 texcoord;
+	#ifdef END
+		varying vec3 glcolor;
+	#endif
 #endif
 
 
@@ -10,12 +13,18 @@ void main() {
 	vec4 color = texture2D(MAIN_BUFFER, texcoord);
 	
 	
-	#include "/import/sunPosition.glsl"
-	if (sunPosition.z < 0.0) {
-		color.rgb *= SUN_BRIGHTNESS;
-	} else {
-		color.rgb *= MOON_BRIGHTNESS;
-	}
+	#if !defined END
+		#include "/import/sunPosition.glsl"
+		if (sunPosition.z < 0.0) {
+			color.rgb *= SUN_BRIGHTNESS;
+		} else {
+			color.rgb *= MOON_BRIGHTNESS;
+		}
+	#endif
+	
+	#ifdef END
+		color.rgb *= glcolor;
+	#endif
 	
 	
 	/* DRAWBUFFERS:0 */
@@ -38,6 +47,9 @@ void main() {
 
 void main() {
 	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
+	#ifdef END
+		glcolor = gl_Color.rgb;
+	#endif
 	
 	#if ISOMETRIC_RENDERING_ENABLED == 1
 		#include "/import/gbufferModelViewInverse.glsl"
@@ -47,7 +59,7 @@ void main() {
 		gl_Position = ftransform();
 	#endif
 	
-	#ifdef TAA_JITTER
+	#if defined TAA_JITTER && !defined END
 		doTaaJitter(gl_Position.xy  ARGS_IN);
 	#endif
 	

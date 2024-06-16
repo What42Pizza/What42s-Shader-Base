@@ -12,6 +12,11 @@ void doPreLighting(ARG_OUT) {
 		}
 	#endif
 	
+	#ifdef END
+		lmcoord.x *= 0.9;
+		lmcoord.y += 0.1;
+	#endif
+	
 	vec3 shadingNormals = vec3(abs(gl_Normal.x), gl_Normal.y, abs(gl_Normal.z));
 	float sideShading = dot(shadingNormals, vec3(-0.3, 0.5, 0.3));
 	sideShading = sideShading * SIDE_SHADING * 0.5 + 1.0;

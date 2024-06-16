@@ -2,6 +2,7 @@
 
 - b1.12.1 (24/06/07)
   - Added settings for volumetric sunrays: 'Increment Amount' and 'Enter Amount'
+  - Fixed end sky
   - Improved reflection fading
   - Tweaked styles
   - Improved motion blur

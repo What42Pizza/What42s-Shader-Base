@@ -3,6 +3,7 @@ Make more example images:
 	Rain
 	Night
 	Reflections
+Move the moonLightBrightness calculation in basic_lighting to its own uniform
 Improve TAA on moving entities
 Add documentation for super secret settings
 Rework sky

@@ -33,7 +33,9 @@ vec3 getBasicLighting(float blockBrightness, float ambientBrightness  ARGS_OUT) 
 	#endif
 	#include "/import/eyeBrightness.glsl"
 	#include "/import/moonLightBrightness.glsl"
-	blockBrightness *= 1.0 + (eyeBrightness.y / 240.0) * moonLightBrightness * (BLOCK_BRIGHTNESS_NIGHT_MULT - 1.0);
+	#ifdef OVERWORLD
+		blockBrightness *= 1.0 + (eyeBrightness.y / 240.0) * moonLightBrightness * (BLOCK_BRIGHTNESS_NIGHT_MULT - 1.0);
+	#endif
 	vec3 blockLight = blockBrightness * BLOCK_COLOR;
 	
 	#ifdef NETHER

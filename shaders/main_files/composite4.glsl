@@ -144,9 +144,9 @@ void main() {
 	// ======== MOTION BLUR ========
 	
 	#if MOTION_BLUR_ENABLED == 1
-		//if (length(texcoord - prevCoord) > 0.00001) {
+		if (length(texcoord - prevCoord) > 0.00001) {
 			doMotionBlur(color, prevCoord, depth  ARGS_IN);
-		//}
+		}
 	#endif
 	
 	
