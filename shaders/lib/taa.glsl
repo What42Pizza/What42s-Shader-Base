@@ -39,13 +39,12 @@ void neighbourhoodClamping(vec3 color, inout vec3 prevColor  ARGS_OUT) {
 
 
 
-void doTAA(inout vec3 color, inout vec3 newPrev, float linearDepth, vec2 prevCoord  ARGS_OUT) {
+void doTAA(inout vec3 color, float linearDepth, vec2 prevCoord  ARGS_OUT) {
 	
 	if (
 		prevCoord.x < 0.0 || prevCoord.x > 1.0 ||
 		prevCoord.y < 0.0 || prevCoord.y > 1.0
 	) {
-		newPrev = color;
 		return;
 	}
 	
@@ -79,6 +78,5 @@ void doTAA(inout vec3 color, inout vec3 newPrev, float linearDepth, vec2 prevCoo
 	blendAmount = clamp(blendAmount, blendMin, blendMax);
 	
 	color = mix(color, prevColor, blendAmount);
-	newPrev = color;
 	
 }

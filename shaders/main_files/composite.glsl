@@ -26,6 +26,11 @@ void main() {
 	#if AUTO_EXPOSURE_ENABLED == 1
 		#include "/import/eyeBrightnessSmooth.glsl"
 		vec2 normalizedBrightness = eyeBrightnessSmooth / 240.0;
+		#ifdef NETHER
+			normalizedBrightness.y = 0.5;
+		#elif defined END
+			normalizedBrightness.y = 1.0;
+		#endif
 		normalizedBrightness *= vec2(0.5, 1.0); // weights
 		float autoExposureAmount = max(normalizedBrightness.x, normalizedBrightness.y);
 		color *= mix(AUTO_EXPOSURE_DARK_MULT, AUTO_EXPOSURE_BRIGHT_MULT, autoExposureAmount);

@@ -2,11 +2,14 @@
 
 - b1.12.1 (24/06/07)
   - Added settings for volumetric sunrays: 'Increment Amount' and 'Enter Amount'
+  - Added settings: Nether Ambient Brightness, End Ambient Brightness, and Nether Blocklight Brightness Mult
   - Fixed end sky
   - Improved reflection fading
   - Tweaked styles
   - Improved motion blur
   - Fixed hand jitter
+  - Fixed many setting values
+  - Maybe fixed phosphor (idk when it broke, it might've worked in b1.12.0)
 
 <br>
 

@@ -12,9 +12,10 @@ void doPreLighting(ARG_OUT) {
 		}
 	#endif
 	
-	#ifdef END
-		lmcoord.x *= 0.9;
-		lmcoord.y += 0.1;
+	#ifdef NETHER
+		lmcoord.y = NETHER_AMBIENT_BRIGHTNESS * 1.3;
+	#elif defined END
+		lmcoord.y = END_AMBIENT_BRIGHTNESS;
 	#endif
 	
 	vec3 shadingNormals = vec3(abs(gl_Normal.x), gl_Normal.y, abs(gl_Normal.z));

@@ -3,7 +3,9 @@ Make more example images:
 	Rain
 	Night
 	Reflections
+Distant horizons support
 Move the moonLightBrightness calculation in basic_lighting to its own uniform
+Turn uniforms into "static" vars?
 Improve TAA on moving entities
 Add documentation for super secret settings
 Rework sky

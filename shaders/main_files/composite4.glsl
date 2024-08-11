@@ -82,7 +82,6 @@ void main() {
 	#endif
 	
 	vec3 color = texelFetch(MAIN_BUFFER, sampleCoord, 0).rgb;
-	vec3 prev = vec3(0.0);
 	#ifdef DEBUG_OUTPUT_ENABLED
 		vec3 debugOutput = texelFetch(DEBUG_BUFFER, texelcoord, 0).rgb;
 	#endif
@@ -123,7 +122,7 @@ void main() {
 	
 	// ======== TAA ========
 	#if AA_STRATEGY == 2 || AA_STRATEGY == 3
-		doTAA(color, prev, linearDepth, prevCoord  ARGS_IN);
+		doTAA(color, linearDepth, prevCoord  ARGS_IN);
 	#endif
 	
 	// ======== FXAA OR TAA ========
@@ -135,7 +134,7 @@ void main() {
 			doFxaa(color, MAIN_BUFFER  ARGS_IN);
 		}
 		if (preventTaa < 0.5 || isTransparent) {
-			doTAA(color, prev, linearDepth, prevCoord  ARGS_IN);
+			doTAA(color, linearDepth, prevCoord  ARGS_IN);
 		}
 	#endif
 	
@@ -155,9 +154,12 @@ void main() {
 		color = debugOutput;
 	#endif
 	
-	/* DRAWBUFFERS:01 */
+	/* DRAWBUFFERS:0 */
 	gl_FragData[0] = vec4(color, 1.0);
-	gl_FragData[1] = vec4(prev, 1.0);
+	#if (AA_STRATEGY == 2 || AA_STRATEGY == 3 || AA_STRATEGY == 4) || SSS_PHOSPHOR == 1
+		/* DRAWBUFFERS:01 */
+		gl_FragData[1] = vec4(color, 1.0);
+	#endif
 	
 }
 

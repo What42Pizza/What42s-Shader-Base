@@ -17,6 +17,9 @@ vec3 getBasicLighting(float blockBrightness, float ambientBrightness  ARGS_OUT) 
 	
 	vec3 ambientLight = getAmbientLight(ARG_IN);
 	ambientLight = mix(CAVE_AMBIENT_COLOR, ambientLight, ambientBrightness);
+	#ifdef NETHER
+		ambientLight *= vec3(1.0, 0.5, 0.3);
+	#endif
 	
 	#if BLOCKLIGHT_FLICKERING_ENABLED == 1
 		#include "/import/blockFlickerAmount.glsl"

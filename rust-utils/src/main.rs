@@ -123,7 +123,9 @@ fn main() -> Result<()> {
 	args.next().expect("could not get program");
 	
 	let Some(first_arg) = args.next() else {
-		return Err(Error::msg("At least one argument is expected. Run with 'cargo run -- help' for all commands"));
+		println!("Error: no arguments given.");
+		commands::help::print_help();
+		return Ok(());
 	};
 	let command_args = args.collect::<Vec<String>>();
 	

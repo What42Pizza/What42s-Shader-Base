@@ -16,7 +16,7 @@ profile.UNPLAYABLE=§cUnplayable
 
 
 option.STYLE=Style
-option.STYLE.comment=Changes the default settings. When a setting is set to 'Use Style Value', it uses whatever default is set by this option. (This does nothing on OptiFine version)\n\nIf you want to see the default settings for a style, you can download the OptiFine version which already has the style settings set.
+option.STYLE.comment=Changes the default settings. When a setting is set to 'Use Style Value', it uses whatever default is set by this option. (This does nothing on OptiFine version)\nNote: 'Cartoon' is meant to work with Bare Bones\n\nIf you want to see the default values are for each style, you can download the corresponding OptiFine version.
 value.STYLE.0=Vanilla
 value.STYLE.1=Realistic
 value.STYLE.2=Fantasy
@@ -207,7 +207,7 @@ value.FOG_POWDERED_SNOW_MIN.-1=Use Style Value
 
 
 
-screen.COLOR_SETTINGS=Colors
+screen.COLOR_SETTINGS=Lights and Colors
 
 
 
@@ -403,17 +403,34 @@ screen.NETHER_COLOR_SETTINGS=Nether Color Settings
 
 
 
+option.NETHER_AMBIENT_BRIGHTNESS=Nether Ambient Brightness
+option.NETHER_AMBIENT_BRIGHTNESS.comment=Base brightness level
+value.NETHER_AMBIENT_BRIGHTNESS.-1=Use Style Value
+
 option.NETHER_BLOCKLIGHT_RED_MULT=Nether Blocklight Red Mult
 option.NETHER_BLOCKLIGHT_RED_MULT.comment=How much to increase / decrease the red channel of blocklight when in the nether
 value.NETHER_BLOCKLIGHT_RED_MULT.-1=Use Style Value
 
-option.NETHER_BLOCKLIGHT_GREEN_MULT=Nether Blocklight GREEN Mult
+option.NETHER_BLOCKLIGHT_GREEN_MULT=Nether Blocklight Green Mult
 option.NETHER_BLOCKLIGHT_GREEN_MULT.comment=How much to increase / decrease the green channel of blocklight when in the nether
 value.NETHER_BLOCKLIGHT_GREEN_MULT.-1=Use Style Value
 
-option.NETHER_BLOCKLIGHT_BLUE_MULT=Nether Blocklight BLUE Mult
+option.NETHER_BLOCKLIGHT_BLUE_MULT=Nether Blocklight Blue Mult
 option.NETHER_BLOCKLIGHT_BLUE_MULT.comment=How much to increase / decrease the blue channel of blocklight when in the nether
 value.NETHER_BLOCKLIGHT_BLUE_MULT.-1=Use Style Value
+
+option.NETHER_BLOCKLIGHT_BRIGHTNESS_MULT=Nether Blocklight Brightness Mult
+option.NETHER_BLOCKLIGHT_BRIGHTNESS_MULT.comment=How much to increase / decrease the blue channel of blocklight when in the nether
+value.NETHER_BLOCKLIGHT_BRIGHTNESS_MULT.-1=Use Style Value
+
+
+
+
+
+
+option.END_AMBIENT_BRIGHTNESS=End Ambient Brightness
+option.END_AMBIENT_BRIGHTNESS=Base brightness level
+value.END_AMBIENT_BRIGHTNESS.-1=Use Style Value
 
 
 

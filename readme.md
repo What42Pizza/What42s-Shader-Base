@@ -45,7 +45,7 @@
 ### Other Features:
 - **Good Code Structuring**
 - **Vanilla-Like Graphics and Style**
-- **Thorough Settings Menu**
+- **Thorough Settings Menu** (200+ settings)
 
 <br>
 <br>

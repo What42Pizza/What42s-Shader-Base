@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use std::{fs, io::{self, Write}, ffi::OsStr, collections::HashMap};
 use walkdir::WalkDir;
-use zip::{write::FileOptions, ZipWriter};
+use zip::{write::{FileOptionExtension, FileOptions}, ZipWriter};
 
 
 
@@ -24,9 +24,7 @@ pub fn function(args: &[String]) -> Result<()> {
 	}
 	fs::create_dir(&export_path)?;
 	
-	let options = FileOptions::default()
-		.compression_method(zip::CompressionMethod::Deflated)
-		.unix_permissions(0o755);
+	let options: FileOptions<()> = FileOptions::default();
 	
 	println!("Exporting For Iris...");
 	export_shader(&project_path, &export_path, &version, false, "", options)?;
@@ -47,7 +45,7 @@ pub fn function(args: &[String]) -> Result<()> {
 
 
 
-pub fn export_shader(project_path: &Path, export_path: &Path, version: &str, is_optifine: bool, style_name: &str, zip_options: FileOptions) -> Result<()> {
+pub fn export_shader<T: FileOptionExtension + Clone>(project_path: &Path, export_path: &Path, version: &str, is_optifine: bool, style_name: &str, zip_options: FileOptions<T>) -> Result<()> {
 	
 	let output_file_name = if is_optifine {
 		format!("What42's Shader Base {version} (Optifine, {style_name} style).zip")
@@ -62,7 +60,7 @@ pub fn export_shader(project_path: &Path, export_path: &Path, version: &str, is_
 	
 	
 	for file_data in EXPORT_FILES {
-		output_zip.start_file(file_data.get_copy_name(), zip_options)?;
+		output_zip.start_file(file_data.get_copy_name(), zip_options.clone())?;
 		let file_contents = fs::read(project_path.push_new(file_data.file_name))?;
 		output_zip.write_all(&file_contents)?;
 	}
@@ -88,12 +86,12 @@ pub fn export_shader(project_path: &Path, export_path: &Path, version: &str, is_
 				)?;
 			
 			if entry_path.is_dir() {
-				output_zip.add_directory(entry_zip_path, zip_options)?;
+				output_zip.add_directory(entry_zip_path, zip_options.clone())?;
 				continue;
 			}
 			
 			if entry_path.is_file() {
-				output_zip.start_file(entry_zip_path, zip_options)?;
+				output_zip.start_file(entry_zip_path, zip_options.clone())?;
 				let mut file_contents = fs::read(&entry_path)?;
 				
 				if is_optifine {
