@@ -7,7 +7,12 @@
 vec3 getFogColor(vec3 airFogColor  ARGS_OUT) {
 	#include "/import/isEyeInWater.glsl"
 	vec3[4] allFogColors = vec3[4] (airFogColor, FOG_WATER_COLOR, FOG_LAVA_COLOR, FOG_POWDERED_SNOW_COLOR);
-	return allFogColors[isEyeInWater];
+	vec3 fogColor = allFogColors[isEyeInWater];
+	#include "/import/ambientSunPercent.glsl"
+	#include "/import/ambientSunrisePercent.glsl"
+	#include "/import/ambientSunsetPercent.glsl"
+	if (isEyeInWater > 0) fogColor *= 0.3 + 0.7 * (ambientSunPercent + ambientSunrisePercent + ambientSunsetPercent);
+	return fogColor;
 }
 
 

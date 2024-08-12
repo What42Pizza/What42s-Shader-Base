@@ -100,7 +100,7 @@
 #endif
 #if FOG_AIR_MIN == -1
 #undef FOG_AIR_MIN
-										#define FOG_AIR_MIN 0.02
+										#define FOG_AIR_MIN 0.0
 #endif
 #if FOG_AIR_RAIN_START == -1
 #undef FOG_AIR_RAIN_START
@@ -178,7 +178,7 @@
 #endif
 #if BLOCK_BRIGHTNESS_NIGHT_MULT == -1
 #undef BLOCK_BRIGHTNESS_NIGHT_MULT
-										#define BLOCK_BRIGHTNESS_NIGHT_MULT 1.3
+										#define BLOCK_BRIGHTNESS_NIGHT_MULT 1.5
 #endif
 
 
@@ -200,7 +200,7 @@
 #endif
 #if CAVE_AMBIENT_BRIGHTNESS == -1
 #undef CAVE_AMBIENT_BRIGHTNESS
-										#define CAVE_AMBIENT_BRIGHTNESS 0.07
+										#define CAVE_AMBIENT_BRIGHTNESS 0.03
 #endif
 
 
@@ -258,7 +258,7 @@
 #endif
 #if SKYLIGHT_DAY_BRIGHTNESS == -1
 #undef SKYLIGHT_DAY_BRIGHTNESS
-										#define SKYLIGHT_DAY_BRIGHTNESS 4.5
+										#define SKYLIGHT_DAY_BRIGHTNESS 5.0
 #endif
 
 
@@ -277,7 +277,7 @@
 #endif
 #if AMBIENT_DAY_BRIGHTNESS == -1
 #undef AMBIENT_DAY_BRIGHTNESS
-										#define AMBIENT_DAY_BRIGHTNESS 0.5
+										#define AMBIENT_DAY_BRIGHTNESS 0.3
 #endif
 
 
@@ -299,7 +299,7 @@
 #endif
 #if SKYLIGHT_NIGHT_BRIGHTNESS == -1
 #undef SKYLIGHT_NIGHT_BRIGHTNESS
-										#define SKYLIGHT_NIGHT_BRIGHTNESS 0.3
+										#define SKYLIGHT_NIGHT_BRIGHTNESS 0.2
 #endif
 
 
@@ -318,7 +318,7 @@
 #endif
 #if AMBIENT_NIGHT_BRIGHTNESS == -1
 #undef AMBIENT_NIGHT_BRIGHTNESS
-										#define AMBIENT_NIGHT_BRIGHTNESS 0.2
+										#define AMBIENT_NIGHT_BRIGHTNESS 0.15
 #endif
 
 
@@ -474,11 +474,11 @@
 #endif
 #if HANDHELD_LIGHT_DISTANCE == -1
 #undef HANDHELD_LIGHT_DISTANCE
-										#define HANDHELD_LIGHT_DISTANCE 25
+										#define HANDHELD_LIGHT_DISTANCE 20
 #endif
 #if HANDHELD_LIGHT_BRIGHTNESS == -1
 #undef HANDHELD_LIGHT_BRIGHTNESS
-										#define HANDHELD_LIGHT_BRIGHTNESS 1.0
+										#define HANDHELD_LIGHT_BRIGHTNESS 0.8
 #endif
 
 
@@ -670,11 +670,11 @@
 #endif
 #if SUNRAYS_AMOUNT_DAY == -1
 #undef SUNRAYS_AMOUNT_DAY
-										#define SUNRAYS_AMOUNT_DAY 0.3
+										#define SUNRAYS_AMOUNT_DAY 0.2
 #endif
 #if SUNRAYS_AMOUNT_NIGHT == -1
 #undef SUNRAYS_AMOUNT_NIGHT
-										#define SUNRAYS_AMOUNT_NIGHT 0.3
+										#define SUNRAYS_AMOUNT_NIGHT 0.1
 #endif
 #if SUNRAYS_MULT_SUNRISE == -1
 #undef SUNRAYS_MULT_SUNRISE
@@ -694,7 +694,7 @@
 #endif
 #if SUNRAYS_AMOUNT_MAX_NIGHT == -1
 #undef SUNRAYS_AMOUNT_MAX_NIGHT
-										#define SUNRAYS_AMOUNT_MAX_NIGHT 0.4
+										#define SUNRAYS_AMOUNT_MAX_NIGHT 0.1
 #endif
 #if SUNRAYS_SUN_RED == -1
 #undef SUNRAYS_SUN_RED
@@ -722,11 +722,11 @@
 #endif
 #if SUNRAYS_INC_AMOUNT == -1
 #undef SUNRAYS_INC_AMOUNT
-										#define SUNRAYS_INC_AMOUNT 1.0
+										#define SUNRAYS_INC_AMOUNT 1.5
 #endif
 #if SUNRAYS_ENTER_AMOUNT == -1
 #undef SUNRAYS_ENTER_AMOUNT
-										#define SUNRAYS_ENTER_AMOUNT 5.0
+										#define SUNRAYS_ENTER_AMOUNT 3.0
 #endif
 
 
@@ -818,7 +818,7 @@
 
 #if SHARPENING_ENABLED == -1
 #undef SHARPENING_ENABLED
-										#define SHARPENING_ENABLED 1
+										#define SHARPENING_ENABLED 0
 #endif
 #if SHARPEN_AMOUNT == -1
 #undef SHARPEN_AMOUNT
@@ -844,7 +844,7 @@
 #endif
 #if BRIGHTNESS == -1
 #undef BRIGHTNESS
-										#define BRIGHTNESS 1.25
+										#define BRIGHTNESS 1.4
 #endif
 #if AUTO_EXPOSURE_ENABLED == -1
 #undef AUTO_EXPOSURE_ENABLED
@@ -856,7 +856,7 @@
 #endif
 #if AUTO_EXPOSURE_DARK_MULT == -1
 #undef AUTO_EXPOSURE_DARK_MULT
-										#define AUTO_EXPOSURE_DARK_MULT 2.0
+										#define AUTO_EXPOSURE_DARK_MULT 2.5
 #endif
 
 

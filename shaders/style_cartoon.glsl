@@ -670,7 +670,7 @@
 #endif
 #if SUNRAYS_AMOUNT_DAY == -1
 #undef SUNRAYS_AMOUNT_DAY
-										#define SUNRAYS_AMOUNT_DAY 1.5
+										#define SUNRAYS_AMOUNT_DAY 0.5
 #endif
 #if SUNRAYS_AMOUNT_NIGHT == -1
 #undef SUNRAYS_AMOUNT_NIGHT
@@ -678,11 +678,11 @@
 #endif
 #if SUNRAYS_MULT_SUNRISE == -1
 #undef SUNRAYS_MULT_SUNRISE
-										#define SUNRAYS_MULT_SUNRISE 2.5
+										#define SUNRAYS_MULT_SUNRISE 0.3
 #endif
 #if SUNRAYS_MULT_SUNSET == -1
 #undef SUNRAYS_MULT_SUNSET
-										#define SUNRAYS_MULT_SUNSET 2.5
+										#define SUNRAYS_MULT_SUNSET 0.3
 #endif
 #if SUNRAYS_WEATHER_MULT == -1
 #undef SUNRAYS_WEATHER_MULT
@@ -722,11 +722,11 @@
 #endif
 #if SUNRAYS_INC_AMOUNT == -1
 #undef SUNRAYS_INC_AMOUNT
-										#define SUNRAYS_INC_AMOUNT 1.0
+										#define SUNRAYS_INC_AMOUNT 1.5
 #endif
 #if SUNRAYS_ENTER_AMOUNT == -1
 #undef SUNRAYS_ENTER_AMOUNT
-										#define SUNRAYS_ENTER_AMOUNT 5.0
+										#define SUNRAYS_ENTER_AMOUNT 3.0
 #endif
 
 
@@ -1076,7 +1076,7 @@
 #endif
 #if WATER_TRANSPARENCY == -1
 #undef WATER_TRANSPARENCY
-										#define WATER_TRANSPARENCY 0.35
+										#define WATER_TRANSPARENCY 0.2
 #endif
 
 
