@@ -85,7 +85,7 @@
 #endif
 #if GROUND_FOG_SLOPE == -1
 #undef GROUND_FOG_SLOPE
-										#define GROUND_FOG_SLOPE 6.0
+										#define GROUND_FOG_SLOPE 16.0
 #endif
 
 
@@ -676,17 +676,25 @@
 #undef SUNRAYS_AMOUNT_NIGHT
 										#define SUNRAYS_AMOUNT_NIGHT 0.3
 #endif
-#if SUNRAYS_AMOUNT_SUNRISE == -1
-#undef SUNRAYS_AMOUNT_SUNRISE
-										#define SUNRAYS_AMOUNT_SUNRISE 0.3
+#if SUNRAYS_MULT_SUNRISE == -1
+#undef SUNRAYS_MULT_SUNRISE
+										#define SUNRAYS_MULT_SUNRISE 0.3
 #endif
-#if SUNRAYS_AMOUNT_SUNSET == -1
-#undef SUNRAYS_AMOUNT_SUNSET
-										#define SUNRAYS_AMOUNT_SUNSET 0.3
+#if SUNRAYS_MULT_SUNSET == -1
+#undef SUNRAYS_MULT_SUNSET
+										#define SUNRAYS_MULT_SUNSET 0.3
 #endif
 #if SUNRAYS_WEATHER_MULT == -1
 #undef SUNRAYS_WEATHER_MULT
 										#define SUNRAYS_WEATHER_MULT 0.5
+#endif
+#if SUNRAYS_AMOUNT_MAX_DAY == -1
+#undef SUNRAYS_AMOUNT_MAX_DAY
+										#define SUNRAYS_AMOUNT_MAX_DAY 1.0
+#endif
+#if SUNRAYS_AMOUNT_MAX_NIGHT == -1
+#undef SUNRAYS_AMOUNT_MAX_NIGHT
+										#define SUNRAYS_AMOUNT_MAX_NIGHT 0.4
 #endif
 #if SUNRAYS_SUN_RED == -1
 #undef SUNRAYS_SUN_RED

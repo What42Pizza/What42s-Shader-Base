@@ -143,6 +143,7 @@ void main() {
 	// ======== MOTION BLUR ========
 	
 	#if MOTION_BLUR_ENABLED == 1
+		vec3 prevColor = color;
 		if (length(texcoord - prevCoord) > 0.00001) {
 			doMotionBlur(color, prevCoord, depth  ARGS_IN);
 		}
@@ -158,7 +159,11 @@ void main() {
 	gl_FragData[0] = vec4(color, 1.0);
 	#if (AA_STRATEGY == 2 || AA_STRATEGY == 3 || AA_STRATEGY == 4) || SSS_PHOSPHOR == 1
 		/* DRAWBUFFERS:01 */
-		gl_FragData[1] = vec4(color, 1.0);
+		#if MOTION_BLUR_ENABLED == 1
+			gl_FragData[1] = vec4(prevColor, 1.0);
+		#else
+			gl_FragData[1] = vec4(color, 1.0);
+		#endif
 	#endif
 	
 }

@@ -1,8 +1,10 @@
 <br>
 
-- b1.12.1 (24/06/07)
+- **b1.13.0** (24/08/11)
   - Added settings for volumetric sunrays: 'Increment Amount' and 'Enter Amount'
-  - Added settings: Nether Ambient Brightness, End Ambient Brightness, and Nether Blocklight Brightness Mult
+  - Added settings: 'Nether Ambient Brightness', 'End Ambient Brightness', and Nether Blocklight Brightness Mult'
+  - Added settings: 'Sunrays Amount Max Day' and 'Sunrays Amount Max Night' (only for volumetric sunrays)
+  - Moved settings: 'Sunrays Amount Sunrise' and 'Sunrays Amount Sunset' are now 'Sunrays Mult Sunrise' and 'Sunrays Mult Sunset'
   - Fixed end sky
   - Improved reflection fading
   - Tweaked styles
@@ -10,6 +12,7 @@
   - Fixed hand jitter
   - Fixed many setting values
   - Maybe fixed phosphor (idk when it broke, it might've worked in b1.12.0)
+  - Tweaked sunrays amount calculations
 
 <br>
 

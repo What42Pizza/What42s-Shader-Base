@@ -670,23 +670,31 @@
 #endif
 #if SUNRAYS_AMOUNT_DAY == -1
 #undef SUNRAYS_AMOUNT_DAY
-										#define SUNRAYS_AMOUNT_DAY 0.8
+										#define SUNRAYS_AMOUNT_DAY 0.25
 #endif
 #if SUNRAYS_AMOUNT_NIGHT == -1
 #undef SUNRAYS_AMOUNT_NIGHT
-										#define SUNRAYS_AMOUNT_NIGHT 0.3
+										#define SUNRAYS_AMOUNT_NIGHT 0.1
 #endif
-#if SUNRAYS_AMOUNT_SUNRISE == -1
-#undef SUNRAYS_AMOUNT_SUNRISE
-										#define SUNRAYS_AMOUNT_SUNRISE 0.8
+#if SUNRAYS_MULT_SUNRISE == -1
+#undef SUNRAYS_MULT_SUNRISE
+										#define SUNRAYS_MULT_SUNRISE 3.0
 #endif
-#if SUNRAYS_AMOUNT_SUNSET == -1
-#undef SUNRAYS_AMOUNT_SUNSET
-										#define SUNRAYS_AMOUNT_SUNSET 0.8
+#if SUNRAYS_MULT_SUNSET == -1
+#undef SUNRAYS_MULT_SUNSET
+										#define SUNRAYS_MULT_SUNSET 3.0
 #endif
 #if SUNRAYS_WEATHER_MULT == -1
 #undef SUNRAYS_WEATHER_MULT
 										#define SUNRAYS_WEATHER_MULT 0.2
+#endif
+#if SUNRAYS_AMOUNT_MAX_DAY == -1
+#undef SUNRAYS_AMOUNT_MAX_DAY
+										#define SUNRAYS_AMOUNT_MAX_DAY 0.7
+#endif
+#if SUNRAYS_AMOUNT_MAX_NIGHT == -1
+#undef SUNRAYS_AMOUNT_MAX_NIGHT
+										#define SUNRAYS_AMOUNT_MAX_NIGHT 0.3
 #endif
 #if SUNRAYS_SUN_RED == -1
 #undef SUNRAYS_SUN_RED
@@ -702,7 +710,7 @@
 #endif
 #if SUNRAYS_MOON_RED == -1
 #undef SUNRAYS_MOON_RED
-										#define SUNRAYS_MOON_RED 0.4
+										#define SUNRAYS_MOON_RED 0.3
 #endif
 #if SUNRAYS_MOON_GREEN == -1
 #undef SUNRAYS_MOON_GREEN
@@ -710,7 +718,7 @@
 #endif
 #if SUNRAYS_MOON_BLUE == -1
 #undef SUNRAYS_MOON_BLUE
-										#define SUNRAYS_MOON_BLUE 0.8
+										#define SUNRAYS_MOON_BLUE 1.0
 #endif
 #if SUNRAYS_INC_AMOUNT == -1
 #undef SUNRAYS_INC_AMOUNT

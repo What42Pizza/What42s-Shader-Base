@@ -69,12 +69,14 @@ void main() {
 			#endif
 		#endif
 		#if VOL_SUNRAYS_ENABLED == 1
+			#include "/import/sunLightBrightness.glsl"
 			#include "/import/sunAngle.glsl"
 			vec3 volSunraysColor = sunAngle < 0.5 ? SUNRAYS_SUN_COLOR : SUNRAYS_MOON_COLOR;
 			float rawVolSunraysAmount = getVolSunraysAmount(depth, rng  ARGS_IN) * volSunraysAmountMult;
 			float volSunraysAmount = 1.0 / (rawVolSunraysAmount + 1.0);
 			color *= 1.0 + (1.0 - volSunraysAmount) * SUNRAYS_BRIGHTNESS_INCREASE * 2.0;
-			color = mix(volSunraysColor * 1.25, color, volSunraysAmount);
+			float volSunraysAmountMax = 1.0 - 0.4 * (sunAngle < 0.5 ? SUNRAYS_AMOUNT_MAX_DAY : SUNRAYS_AMOUNT_MAX_NIGHT);
+			color = mix(volSunraysColor * 1.25, color, max(volSunraysAmount, volSunraysAmountMax));
 			#if SUNRAYS_SHOW_ADDITION == 1
 				debugOutput.g += 1.0 / (volSunraysAmount + 1.0);
 			#endif
@@ -119,31 +121,26 @@ void main() {
 		lightPos /= lightPos.z;
 		lightCoord = lightPos.xy * 0.5 + 0.5;
 		
-		#include "/import/isOtherLightSource.glsl"
 		#include "/import/isSun.glsl"
 		if (isSun) {
-			depthSunraysAmountMult = 
-				ambientSunPercent * SUNRAYS_AMOUNT_DAY +
-				ambientSunrisePercent * SUNRAYS_AMOUNT_SUNRISE +
-				ambientSunsetPercent * SUNRAYS_AMOUNT_SUNSET;
+			depthSunraysAmountMult = (ambientSunPercent + ambientSunrisePercent + ambientSunsetPercent) * SUNRAYS_AMOUNT_DAY;
+			depthSunraysAmountMult *= 1.0 + ambientSunrisePercent * SUNRAYS_MULT_SUNRISE + ambientSunsetPercent * SUNRAYS_MULT_SUNSET;
 		} else {
 			depthSunraysAmountMult = (ambientMoonPercent + (ambientSunrisePercent + ambientSunsetPercent) * 0.5) * SUNRAYS_AMOUNT_NIGHT;
 		}
 		#include "/import/rainStrength.glsl"
 		depthSunraysAmountMult *= 1.0 - rainStrength * (1.0 - SUNRAYS_WEATHER_MULT);
-		depthSunraysAmountMult *= 0.3;
+		//depthSunraysAmountMult *= 0.5;
 		
 	#endif
 	
 	#if VOL_SUNRAYS_ENABLED == 1
 		#include "/import/sunLightBrightness.glsl"
 		#include "/import/moonLightBrightness.glsl"
-		volSunraysAmountMult =
-			ambientSunPercent * SUNRAYS_AMOUNT_DAY +
-			sqrt(ambientSunrisePercent) * SUNRAYS_AMOUNT_SUNRISE +
-			sqrt(ambientSunsetPercent) * SUNRAYS_AMOUNT_SUNSET +
-			ambientMoonPercent * SUNRAYS_AMOUNT_NIGHT;
-		volSunraysAmountMult *= sunLightBrightness + moonLightBrightness;
+		#include "/import/sunAngle.glsl"
+		volSunraysAmountMult = sunAngle < 0.5 ? SUNRAYS_AMOUNT_DAY : SUNRAYS_AMOUNT_NIGHT;
+		volSunraysAmountMult *= sqrt(sunLightBrightness + moonLightBrightness);
+		volSunraysAmountMult *= 1.0 + ambientSunrisePercent * SUNRAYS_MULT_SUNRISE + ambientSunsetPercent * SUNRAYS_MULT_SUNSET;
 		#include "/import/rainStrength.glsl"
 		volSunraysAmountMult *= 1.0 - rainStrength * (1.0 - SUNRAYS_WEATHER_MULT);
 	#endif
