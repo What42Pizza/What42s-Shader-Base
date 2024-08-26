@@ -3,6 +3,8 @@ Make more example images:
 	Rain
 	Night
 	Reflections
+Brighter day in fantasy style
+Make synrays cave increase ignore sunrays max
 Distant horizons support
 Move the moonLightBrightness calculation in basic_lighting to its own uniform
 Turn uniforms into "static" vars?
