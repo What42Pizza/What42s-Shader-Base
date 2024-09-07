@@ -73,3 +73,4 @@ float ambientMoonPercent = 0.0
 float ambientSunrisePercent = 0.0
 float ambientSunsetPercent = 0.0
 float sunAngle = 0.0
+float nightVision = 0.0

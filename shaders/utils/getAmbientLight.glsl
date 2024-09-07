@@ -15,7 +15,7 @@
 
 
 
-vec3 getAmbientLight(ARG_OUT) {
+vec3 getAmbientLight(float ambientBrightness  ARGS_OUT) {
 	
 	#include "/import/ambientSunPercent.glsl"
 	#include "/import/ambientMoonPercent.glsl"
@@ -30,11 +30,29 @@ vec3 getAmbientLight(ARG_OUT) {
 	#include "/import/rainStrength.glsl"
 	float lightMult = 1.0 - rainStrength * (1.0 - RAIN_LIGHT_MULT);
 	
-	return
+	vec3 ambientLight =
 		ambientSunLight * lightMult
 		+ ambientMoonLight
 		+ ambientSunriseLight * lightMult
 		+ ambientSunsetLight * lightMult;
+	
+	#include "/import/screenBrightness.glsl"
+	ambientLight = mix(CAVE_AMBIENT_COLOR * (0.8 + 0.4 * screenBrightness), ambientLight, ambientBrightness);
+	#ifdef NETHER
+		ambientLight *= vec3(1.0, 0.5, 0.3);
+	#endif
+	
+	#include "/import/nightVision.glsl"
+	float betterNightVision = nightVision;
+	if (betterNightVision > 0.0) {
+		betterNightVision = 0.6 + 0.2 * betterNightVision;
+		betterNightVision *= NIGHT_VISION_BRIGHTNESS;
+	}
+	vec3 lightVisionMin = vec3(betterNightVision);
+	lightVisionMin.rb *= 1.0 - NIGHT_VISION_GREEN_AMOUNT;
+	ambientLight = max(ambientLight, lightVisionMin);
+	
+	return ambientLight;
 }
 
 

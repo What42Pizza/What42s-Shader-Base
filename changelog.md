@@ -1,5 +1,13 @@
 <br>
 
+- b1.13.1 (25/09/07)
+  - Fixed night vision
+  - Added settings 'Night Vision Brightness' and 'Night Vision Green Amount'
+  - Fixed vanilla brightness slider
+  - Fixed name of setting 'End Ambient Brightness'
+
+<br>
+
 - **b1.13.0** (24/08/11)
   - Added settings for volumetric sunrays: 'Increment Amount' and 'Enter Amount'
   - Added settings: 'Nether Ambient Brightness', 'End Ambient Brightness', and Nether Blocklight Brightness Mult'
@@ -14,6 +22,8 @@
   - Maybe fixed phosphor (idk when it broke, it might've worked in b1.12.0)
   - Tweaked sunrays amount calculations
 
+<br>
+<br>
 <br>
 
 - **b1.12.0** (24/04/20)

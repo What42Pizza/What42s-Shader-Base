@@ -429,8 +429,17 @@ value.NETHER_BLOCKLIGHT_BRIGHTNESS_MULT.-1=Use Style Value
 
 
 option.END_AMBIENT_BRIGHTNESS=End Ambient Brightness
-option.END_AMBIENT_BRIGHTNESS=Base brightness level
+option.END_AMBIENT_BRIGHTNESS.comment=Base brightness level
 value.END_AMBIENT_BRIGHTNESS.-1=Use Style Value
+
+option.NIGHT_VISION_GREEN_BRIGHTNESS=Night Vision Brightness
+value.NIGHT_VISION_GREEN_BRIGHTNESS.-1=Use Style Value
+
+option.NIGHT_VISION_GREEN_AMOUNT=Night Vision Green Amount
+option.NIGHT_VISION_GREEN_AMOUNT.comment=How much of a green tint to apply when night vision is active. 0.0 means no green tint, and 1.0 means only green light
+value.NIGHT_VISION_GREEN_AMOUNT.-1=Use Style Value
+
+
 
 
 

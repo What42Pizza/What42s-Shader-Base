@@ -4,24 +4,21 @@ Make more example images:
 	Night
 	Reflections
 Distant horizons support
+Rework waving calculations for performance?
+Add water caustics?
+Increase waviness of plant tops
 Move the moonLightBrightness calculation in basic_lighting to its own uniform
 Turn uniforms into "static" vars?
+Do a round of making sure different settings combinations work
 Improve TAA on moving entities
 Add documentation for super secret settings
 Rework sky
-Add (option for) black lines on edges
-Rework waving calculations for performance?
-Do a round of making sure different settings combinations work
-Add water caustics?
 Make only top of water wavy
-Go through settings in shaders.properties and make sure all instances of settings are listed in the same order
-Increase waviness of plant tops
 Add ripples to rain reflections
 Add void fog option?
 Add shader seasons?
 Move 'rainReflectionStrength' calculations to fsh?
 Add settings for manually disabling composite files?
-Add tilted weather
 Add backwards depth check to reflections?
 Make reflections work with isometric rendering
 Move advanced options to 'advanced options' menus
@@ -32,6 +29,7 @@ Fix spider and endermen eyes?
 Add setting to fade fog into sky buffer (to make the sun and moon appear in fog) (would also need sunray depth fix)
 Do a round of general optimizations
 Exclude sun, moon, and sunrays based on horizon multiplier
+Go through settings in shaders.properties and make sure all instances of settings are listed in the same order
 Do a round of adding debug settings
 Do a round of adding more ways to get to options (e.g. access to light brightnesses from the 'shading' menu)
 Custom sky color?
@@ -64,6 +62,8 @@ Match the vanilla look, especially in:
 
 
 Finished:
+Add tilted weather
+Add (option for) black lines on edges
 Swap current FXAA with Complementary's?
 Add reflections to normal glass too
 Colorblind aids (done a while ago)
