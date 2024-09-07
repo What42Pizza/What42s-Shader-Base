@@ -3,6 +3,8 @@ Make more example images:
 	Rain
 	Night
 	Reflections
+Brighter day in fantasy style
+Make synrays cave increase ignore sunrays max
 Distant horizons support
 Rework waving calculations for performance?
 Add water caustics?
