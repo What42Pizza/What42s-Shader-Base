@@ -1,9 +1,8 @@
 #version 130
 
-#define SHADER_GBUFFERS_TERRAIN
-#define SHADER_DH_TERRAIN
+#define SHADER_DH_WATER
 #define OVERWORLD
-#define FSH
+#define VSH
 
 #include "/settings.glsl"
 #include "/common.glsl"
@@ -16,7 +15,7 @@
 #define ARG_IN false
 #define ARG_OUT bool dummy
 #define main dummy_main
-#include "/main_files/gbuffers_terrain.glsl"
+#include "/main_files/dh_water.glsl"
 #undef main
 #undef FIRST_PASS
 #undef ARGS_IN
@@ -31,4 +30,4 @@
 #define ARGS_OUT
 #define ARG_IN
 #define ARG_OUT
-#include "/main_files/gbuffers_terrain.glsl"
+#include "/main_files/dh_water.glsl"

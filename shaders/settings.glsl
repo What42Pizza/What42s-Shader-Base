@@ -81,6 +81,11 @@ const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8
 	#define VOL_SUNRAYS_ENABLED 0
 #endif
 
+#ifdef DISTANT_HORIZONS
+	#undef FOG_ENABLED
+	#define FOG_ENABLED 0
+#endif
+
 
 
 #if SSS_PIXELS != 0
