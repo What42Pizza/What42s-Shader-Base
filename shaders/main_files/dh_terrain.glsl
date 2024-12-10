@@ -4,12 +4,7 @@
 	
 	varying vec2 lmcoord;
 	varying vec4 glcolor;
-	varying vec3 normal;
 	flat_inout int dhBlock;
-	
-	#if SHOW_DANGEROUS_LIGHT == 1
-		varying float isDangerousLight;
-	#endif
 	
 #endif
 
@@ -24,9 +19,7 @@
 
 #ifdef FSH
 
-#if REFLECTIONS_ENABLED == 1
-	#include "/lib/simplex_noise.glsl"
-#endif
+#include "/utils/getSkyLight.glsl"
 
 void main() {
 	vec4 color = glcolor;
@@ -34,6 +27,8 @@ void main() {
 	
 	// main lighting
 	color.rgb *= getBasicLighting(lmcoord.x, lmcoord.y  ARGS_IN);
+	vec3 skyLight = getSkyLight(ARG_IN);
+	color.rgb *= 1.0 + skyLight * 0.8 * (1.0 - 0.6 * getColorLum(color.rgb));
 	
 	
 	// show dangerous light
@@ -86,33 +81,12 @@ void main() {
 	#endif
 	
 	
-	#if ISOMETRIC_RENDERING_ENABLED == 0
-		if (gl_Position.z < -1.5) return; // simple but effective optimization
-	#endif
-	
-	
 	#ifdef TAA_JITTER
 		doTaaJitter(gl_Position.xy  ARGS_IN);
 	#endif
 	
 	
 	glcolor = gl_Color;
-	#if USE_SIMPLE_LIGHT == 1
-		if (glcolor.r == glcolor.g && glcolor.g == glcolor.b) {
-			glcolor = vec3(1.0);
-		}
-	#endif
-	
-	
-	normal = gl_NormalMatrix * gl_Normal;
-	
-	
-	#if SHOW_DANGEROUS_LIGHT == 1
-		isDangerousLight = float(
-			lmcoord.x < 0.51
-			&& dot(normal, normalize(upPosition)) > 0.9
-		);
-	#endif
 	
 	
 	doPreLighting(ARG_IN);

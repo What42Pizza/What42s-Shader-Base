@@ -19,8 +19,13 @@ void doPreLighting(ARG_OUT) {
 	#endif
 	
 	vec3 shadingNormals = vec3(abs(gl_Normal.x), gl_Normal.y, abs(gl_Normal.z));
-	float sideShading = dot(shadingNormals, vec3(-0.3, 0.5, 0.3));
-	sideShading = sideShading * SIDE_SHADING * 0.5 + 1.0;
+	float sideShading = dot(shadingNormals, vec3(-0.5, 0.3, -0.4));
+	#ifdef SHADER_DH_TERRAIN
+		sideShading *= 5;
+		sideShading = sideShading * SIDE_SHADING * 0.5 + 0.8;
+	#else
+		sideShading = sideShading * SIDE_SHADING * 0.5 + 1.0;
+	#endif
 	lmcoord *= sideShading;
 	
 }

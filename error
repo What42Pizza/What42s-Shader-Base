@@ -1,2 +1,0 @@
-dh_water.fsh: dh_water.fsh: 0(378) : error C1503: undefined variable "viewWidth"
-0(378) : error C1503: undefined variable "viewHeight"

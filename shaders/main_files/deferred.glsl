@@ -31,6 +31,11 @@ float getSkyBrightness(ARG_OUT) {
 	// sample shadow
 	#if SHADOWS_ENABLED == 1
 		float skyBrightness = sampleShadow(viewPos, lightDot  ARGS_IN);
+		#ifdef DISTANT_HORIZONS
+			#include "/import/far.glsl"
+			float len = max(length(viewPos) / far, 0.8);
+			skyBrightness = mix(skyBrightness, 0.95, smoothstep(len, 0.75, 0.8));
+		#endif
 	#else
 		float skyBrightness = 0.95;
 	#endif

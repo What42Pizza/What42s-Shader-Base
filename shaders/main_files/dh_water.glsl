@@ -139,10 +139,6 @@ void main() {
 		gl_Position = gl_ProjectionMatrix * gbufferModelView * startMat(worldPos);
 	#endif
 	
-	#if ISOMETRIC_RENDERING_ENABLED == 0
-		if (gl_Position.z < -1.5) return; // simple but effective optimization
-	#endif
-	
 	
 	#ifdef TAA_JITTER
 		doTaaJitter(gl_Position.xy  ARGS_IN);
