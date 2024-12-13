@@ -4,15 +4,13 @@
 	
 	varying vec2 lmcoord;
 	varying vec4 glcolor;
+	varying vec3 worldPos;
 	flat_inout int dhBlock;
 	
 	varying vec3 normal;
 	
 	#if WATER_FRESNEL_ADDITION == 1
 		varying vec3 viewPos;
-	#endif
-	#if WAVING_WATER_NORMALS_ENABLED == 1
-		varying vec3 worldPos;
 	#endif
 	
 #endif
@@ -37,17 +35,25 @@
 #endif
 
 void main() {
+	
+	float dither = bayer64(gl_FragCoord.xy);
+	#if AA_STRATEGY == 2 || AA_STRATEGY == 3 || AA_STRATEGY == 4
+		#include "/import/frameCounter.glsl"
+		dither = fract(dither + 1.61803398875 * mod(float(frameCounter), 3600.0));
+	#endif
+	float lengthCylinder = max(length(worldPos.xz), abs(worldPos.y));
+	#include "/import/far.glsl"
+	if (lengthCylinder < far - 4 - 0 * dither) discard;
+	
+	if (texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r < 1.0) discard;
+	
+	
 	vec4 color = glcolor;
+	vec2 reflectionStrengths = vec2(0.0);
 	
 	#if WAVING_WATER_NORMALS_ENABLED == 1
 		vec3 normal = normal;
 	#endif
-	
-	
-	#include "/import/viewWidth.glsl"
-	#include "/import/viewHeight.glsl"
-    vec3 screenPos = vec3(gl_FragCoord.xy / vec2(viewWidth, viewHeight), gl_FragCoord.z);
-    if (texture2D(depthtex1, screenPos.xy).r < 1.0) discard;
 	
 	
 	if (dhBlock == DH_BLOCK_WATER) {
@@ -59,7 +65,8 @@ void main() {
 		#if WAVING_WATER_NORMALS_ENABLED == 1
 			const float worldPosScale = 2.0;
 			#include "/import/frameTimeCounter.glsl"
-			vec3 randomPoint = abs(simplexNoise3From4(vec4(worldPos / worldPosScale, frameTimeCounter * 0.7)));
+			#include "/import/cameraPosition.glsl"
+			vec3 randomPoint = abs(simplexNoise3From4(vec4((worldPos + cameraPosition) / worldPosScale, frameTimeCounter * 0.7)));
 			randomPoint = normalize(randomPoint);
 			vec3 normalWavingAddition = randomPoint * 0.15;
 			normalWavingAddition *= abs(dot(normal, normalize(viewPos)));
@@ -86,6 +93,7 @@ void main() {
 		
 		
 		color.a = (1.0 - WATER_TRANSPARENCY);
+		reflectionStrengths = WATER_REFLECTION_STRENGTHS;
 		
 	}
 	
@@ -98,6 +106,12 @@ void main() {
 	
 	/* DRAWBUFFERS:04 */
 	gl_FragData[0] = color;
+	gl_FragData[1] = vec4(normal, 1.0);
+	
+	#if REFLECTIONS_ENABLED == 1
+		/* DRAWBUFFERS:046 */
+		gl_FragData[2] = vec4(reflectionStrengths, 0.0, 1.0);
+	#endif
 	
 }
 
@@ -117,20 +131,21 @@ void main() {
 #endif
 
 void main() {
+	
 	lmcoord  = (gl_TextureMatrix[1] * gl_MultiTexCoord1).xy;
 	adjustLmcoord(lmcoord);
-	
-	
 	normal = gl_NormalMatrix * gl_Normal;
-	
-	
 	dhBlock = dhMaterialId;
 	
-	#if WAVING_WATER_NORMALS_ENABLED == 0
-		vec3 worldPos;
-	#endif
+	
 	#include "/import/gbufferModelViewInverse.glsl"
 	worldPos = endMat(gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex));
+	
+	
+	if (dhBlock == DH_BLOCK_WATER) {
+		worldPos.y -= 0.11213;
+	}
+	
 	
 	#if ISOMETRIC_RENDERING_ENABLED == 1
 		gl_Position = projectIsometric(worldPos  ARGS_IN);
@@ -147,11 +162,6 @@ void main() {
 	
 	#if WATER_FRESNEL_ADDITION == 1
 		viewPos = (gl_ModelViewMatrix * gl_Vertex).xyz;
-	#endif
-	
-	#if WAVING_WATER_NORMALS_ENABLED == 1
-		#include "/import/cameraPosition.glsl"
-		worldPos += cameraPosition;
 	#endif
 	
 	

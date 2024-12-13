@@ -44,7 +44,14 @@
 		// skip sky and fog
 		float depth = texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r;
 		float linearDepth = toLinearDepth(depth  ARGS_IN);
-		if (depthIsSky(linearDepth) || depthIsHand(linearDepth)) {return;}
+		if (depthIsHand(linearDepth)) return;
+		#ifdef DISTANT_HORIZONS
+			float dhDepth = texelFetch(DH_DEPTH_BUFFER_ALL, texelcoord, 0).r;
+			float linearDhDepth = toLinearDhDepth(dhDepth  ARGS_IN);
+			if (depthIsSky(linearDepth) && depthIsSky(linearDhDepth)) return;
+		#else
+			if (depthIsSky(linearDepth)) return;
+		#endif
 		
 		// get strengths
 		vec2 reflectionStrengths = texelFetch(REFLECTION_STRENGTH_BUFFER, texelcoord, 0).rg;
@@ -55,6 +62,10 @@
 		
 		// apply fog
 		vec3 viewPos = screenToView(vec3(texcoord, depth)  ARGS_IN);
+		#ifdef DISTANT_HORIZONS
+			vec3 dhViewPos = screenToViewDh(vec3(texcoord, dhDepth)  ARGS_IN);
+			if (length(dhViewPos) < length(viewPos)) viewPos = dhViewPos;
+		#endif
 		#if FOG_ENABLED == 1
 			#include "/import/gbufferModelViewInverse.glsl"
 			vec3 playerPos = (gbufferModelViewInverse * startMat(viewPos)).xyz;

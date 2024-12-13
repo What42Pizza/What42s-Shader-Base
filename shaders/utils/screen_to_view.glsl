@@ -31,6 +31,18 @@
 	}
 	// END OF COMPLEMENTARY REIMAGINED'S CODE
 	
+	vec3 screenToViewDh(vec3 pos  ARGS_OUT) {
+		#include "/import/dhProjectionInverse.glsl"
+		vec4 iProjDiag = vec4(
+			dhProjectionInverse[0].x,
+			dhProjectionInverse[1].y,
+			dhProjectionInverse[2].zw
+		);
+		vec3 p3 = pos * 2.0 - 1.0;
+		vec4 viewPos = iProjDiag * p3.xyzz + dhProjectionInverse[3];
+		return viewPos.xyz / viewPos.w;
+	}
+	
 #else
 	
 	#include "/lib/isometric.glsl"

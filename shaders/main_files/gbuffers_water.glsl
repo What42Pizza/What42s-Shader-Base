@@ -12,7 +12,7 @@
 	#if WATER_FRESNEL_ADDITION == 1
 		varying vec3 viewPos;
 	#endif
-	#if WAVING_WATER_NORMALS_ENABLED == 1
+	#if WAVING_WATER_NORMALS_ENABLED == 1 || defined DISTANT_HORIZONS
 		varying vec3 worldPos;
 	#endif
 	#if FOG_ENABLED == 1
@@ -42,6 +42,19 @@
 #endif
 
 void main() {
+	
+	#ifdef DISTANT_HORIZONS
+		float dither = bayer64(gl_FragCoord.xy);
+		#if AA_STRATEGY == 2 || AA_STRATEGY == 3 || AA_STRATEGY == 4
+			#include "/import/frameCounter.glsl"
+			dither = fract(dither + 1.61803398875 * mod(float(frameCounter), 3600.0));
+		#endif
+		float lengthCylinder = max(length(worldPos.xz), abs(worldPos.y));
+		#include "/import/far.glsl"
+		if (lengthCylinder >= far - 4 - 0 * dither) discard;
+	#endif
+	
+	
 	vec4 color = texture2D(MAIN_BUFFER, texcoord);
 	
 	#if WAVING_WATER_NORMALS_ENABLED == 1
@@ -58,7 +71,8 @@ void main() {
 		#if WAVING_WATER_NORMALS_ENABLED == 1
 			const float worldPosScale = 2.0;
 			#include "/import/frameTimeCounter.glsl"
-			vec3 randomPoint = abs(simplexNoise3From4(vec4(worldPos / worldPosScale, frameTimeCounter * 0.7)));
+			#include "/import/cameraPosition.glsl"
+			vec3 randomPoint = abs(simplexNoise3From4(vec4((worldPos + cameraPosition) / worldPosScale, frameTimeCounter * 0.7)));
 			randomPoint = normalize(randomPoint);
 			vec3 normalWavingAddition = randomPoint * 0.15;
 			normalWavingAddition *= abs(dot(normal, normalize(viewPos)));
@@ -151,7 +165,7 @@ void main() {
 	blockData = int(mc_Entity.x);
 	if (blockData < 1000) blockData = 0;
 	
-	#if WAVING_WATER_NORMALS_ENABLED == 0
+	#if !(WAVING_WATER_NORMALS_ENABLED == 0 || defined DISTANT_HORIZONS)
 		vec3 worldPos;
 	#endif
 	#include "/import/gbufferModelViewInverse.glsl"
@@ -160,6 +174,11 @@ void main() {
 	#if PHYSICALLY_WAVING_WATER_ENABLED == 1
 		if (blockData == 1007) {
 			float wavingAmount = mix(PHYSICALLY_WAVING_WATER_AMOUNT_UNDERGROUND, PHYSICALLY_WAVING_WATER_AMOUNT_SURFACE, lmcoord.y);
+			#ifdef DISTANT_HORIZONS
+				#include "/import/far.glsl"
+				float lengthCylinder = max(length(worldPos.xz), abs(worldPos.y));
+				wavingAmount *= smoothstep(far * 0.95 - 4, far * 0.9 - 4, lengthCylinder);
+			#endif
 			#include "/import/cameraPosition.glsl"
 			#include "/import/frameTimeCounter.glsl"
 			worldPos += cameraPosition;
@@ -194,11 +213,6 @@ void main() {
 	
 	#if WATER_FRESNEL_ADDITION == 1
 		viewPos = (gl_ModelViewMatrix * gl_Vertex).xyz;
-	#endif
-	
-	#if WAVING_WATER_NORMALS_ENABLED == 1
-		#include "/import/cameraPosition.glsl"
-		worldPos += cameraPosition;
 	#endif
 	
 	

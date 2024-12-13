@@ -91,9 +91,9 @@ void main() {
 	
 	
 	#ifdef DISTANT_HORIZONS
-		bool isNonSky = linearDepth < 0.99 || linearDhDepth < 0.99;
+		bool isNonSky = !depthIsSky(linearDepth) || !depthIsSky(linearDhDepth);
 	#else
-		bool isNonSky = linearDepth < 0.99;
+		bool isNonSky = !depthIsSky(linearDepth);
 	#endif
 	if (isNonSky) {
 		

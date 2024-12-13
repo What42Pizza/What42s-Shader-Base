@@ -35,7 +35,7 @@ void main() {
 	
 	float lengthCylinder = max(length(worldPos.xz), abs(worldPos.y));
 	#include "/import/far.glsl"
-	if (lengthCylinder < far - 12) discard;
+	if (lengthCylinder < far - 16) discard;
 	
 	vec3 color = glcolor;
 	
@@ -93,11 +93,13 @@ void main() {
 #endif
 
 void main() {
+	
+	normal = gl_NormalMatrix * gl_Normal;
 	lmcoord = gl_MultiTexCoord2.xy;
 	adjustLmcoord(lmcoord);
-	
-	
 	dhBlock = dhMaterialId;
+	
+	if (dhMaterialId == DH_BLOCK_LEAVES) glcolor.rgb *= 1.3;
 	
 	
 	#include "/import/gbufferModelViewInverse.glsl"
@@ -128,13 +130,6 @@ void main() {
 			glcolor = vec3(1.0);
 		}
 	#endif
-	
-	#ifdef DISTANT_HORIZONS
-		if (dhMaterialId == DH_BLOCK_LEAVES) glcolor.rgb *= 1.3;
-	#endif
-	
-	
-	normal = normalize(gl_NormalMatrix * gl_Normal);
 	
 	
 	#if REFLECTIONS_ENABLED == 1
