@@ -32,21 +32,19 @@ float getVolSunraysAmount(float depth, inout uint rng  ARGS_OUT) {
 	viewPos += viewPosStep * (1.0 + random * 0.5);
 	
 	float total = 0.0;
-	bool prevInShadowcaster = false;
 	for (int i = 0; i < SAMPLE_COUNT; i ++) {
 		
 		vec3 shadowPos = getShadowPos(viewPos  ARGS_IN);
 		if (texture2D(shadowtex0, shadowPos.xy).r >= shadowPos.z) {
 			total += SUNRAYS_INC_AMOUNT;
-			if (!prevInShadowcaster) total += SUNRAYS_ENTER_AMOUNT;
-			prevInShadowcaster = true;
 		} else {
-			prevInShadowcaster = false;
+			total -= 0.5;
 		}
 		
 		viewPos += viewPosStep;
 		
 	}
+	total = max(total, 0);
 	float sunraysAmount = total / SAMPLE_COUNT * blockDepth;
 	
 	#include "/import/eyeBrightnessSmooth.glsl"

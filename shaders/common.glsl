@@ -18,6 +18,10 @@ uniform sampler2D depthtex0;
 uniform sampler2D depthtex1;
 uniform sampler2D depthtex2;
 uniform sampler2D shadowtex0;
+#ifdef DISTANT_HORIZONS
+	uniform sampler2D dhDepthTex0;
+	uniform sampler2D dhDepthTex1;
+#endif
 //uniform sampler2D noisetex;
 
 //uniform float centerDepth;
@@ -62,6 +66,10 @@ uniform sampler2D shadowtex0;
 #define DEPTH_BUFFER_ALL                   depthtex0
 #define DEPTH_BUFFER_WO_TRANS              depthtex1
 #define DEPTH_BUFFER_WO_TRANS_OR_HANDHELD  depthtex2
+#ifdef DISTANT_HORIZONS
+	#define DH_DEPTH_BUFFER_ALL                   dhDepthTex0
+	#define DH_DEPTH_BUFFER_WO_TRANS              dhDepthTex1
+#endif
 
 
 
@@ -186,6 +194,17 @@ vec3 cubicInterpolate(vec3 edge0, vec3 edge1, vec3 edge2, vec3 edge3, float valu
 	return vec3(x, y, z);
 }
 
+float bayer2(vec2 a) {
+	a = floor(a);
+	return fract(dot(a, vec2(0.5, a.y * 0.75)));
+}
+float bayer4  (const vec2 a) {return bayer2 (0.5   * a) * 0.25     + bayer2(a); }
+float bayer8  (const vec2 a) {return bayer4 (0.5   * a) * 0.25     + bayer2(a); }
+float bayer16 (const vec2 a) {return bayer4 (0.25  * a) * 0.0625   + bayer4(a); }
+float bayer32 (const vec2 a) {return bayer8 (0.25  * a) * 0.0625   + bayer4(a); }
+float bayer64 (const vec2 a) {return bayer8 (0.125 * a) * 0.015625 + bayer8(a); }
+float bayer128(const vec2 a) {return bayer16(0.125 * a) * 0.015625 + bayer8(a); }
+
 
 
 vec4 startMat(vec3 pos) {
@@ -245,15 +264,10 @@ vec3 getAmbientLight(vec4 skylightPercents, float ambientBrightness) {
 
 #ifdef USE_BETTER_RAND
 	// taken from: https://www.reedbeta.com/blog/hash-functions-for-gpu-rendering/
-	float randomFloat(inout uint rng) {
+	uint randomizeUint(inout uint rng) {
 		rng = rng * 747796405u + 2891336453u;
 		uint v = ((rng >> ((rng >> 28u) + 4u)) ^ rng) * 277803737u;
-		v = (v >> 22u) ^ v;
-		//float f = float(v % 1000000u);
-		//return f / 500000.0 - 1.0;
-		const uint BIT_MASK = (2u << 16u) - 1u;
-		float normalizedValue = float(v & BIT_MASK) / float(BIT_MASK);
-		return normalizedValue * 2.0 - 1.0;
+		return (v >> 22u) ^ v;
 	}
 	/*
 	// maybe switch to this:
@@ -271,18 +285,21 @@ vec3 getAmbientLight(vec4 skylightPercents, float ambientBrightness) {
 	uint rotateRight(uint value, uint shift) {
 		return (value >> shift) | (value << (32u - shift));
 	}
-	float randomFloat(inout uint rng) {
+	uint randomizeUint(inout uint rng) {
 		rng = rng * 747796405u + 2891336453u;
 		rng ^= rotateRight(rng, 11u);
 		rng ^= rotateRight(rng, 17u);
 		rng ^= rotateRight(rng, 23u);
-		//float f = float(rng % 1000000u);
-		//return f / 500000.0 - 1.0;
-		const uint BIT_MASK = (2u << 16u) - 1u;
-		float normalizedValue = float(rng & BIT_MASK) / float(BIT_MASK);
-		return normalizedValue * 2.0 - 1.0;
+		return rng;
 	}
 #endif
+
+float randomFloat(inout uint rng) {
+	uint v = randomizeUint(rng);
+	const uint BIT_MASK = (2u << 16u) - 1u;
+	float normalizedValue = float(v & BIT_MASK) / float(BIT_MASK);
+	return normalizedValue * 2.0 - 1.0;
+}
 
 vec2 randomVec2(inout uint rng) {
 	float x = randomFloat(rng);

@@ -33,12 +33,27 @@ float toBlockDepth(float depth  ARGS_OUT) {
 	#include "/import/twoTimesNearTimesFar.glsl"
 	#include "/import/farPlusNear.glsl"
 	#include "/import/farMinusNear.glsl"
+	#include "/import/far.glsl"
 	return twoTimesNearTimesFar / (farPlusNear - depth * farMinusNear);
-	//#include "/import/near.glsl"
-	//#include "/import/far.glsl"
-	//float linearDepth = toLinearDepth(depth  ARGS_IN);
-	//return mix(near, far * 0.5, linearDepth);
 }
+
+
+
+#ifdef DISTANT_HORIZONS
+	
+	float toLinearDhDepth(float depth  ARGS_OUT) {
+		#include "/import/dhNearPlane.glsl"
+		#include "/import/dhFarPlane.glsl"
+		return 2.0 * dhNearPlane / (dhFarPlane + dhNearPlane - depth * (dhFarPlane - dhNearPlane));
+	}
+	
+	float toBlockDhDepth(float depth  ARGS_OUT) {
+		#include "/import/dhNearPlane.glsl"
+		#include "/import/dhFarPlane.glsl"
+		return 2.0 * dhNearPlane * dhFarPlane / (dhFarPlane + dhNearPlane - depth * (dhFarPlane - dhNearPlane));
+	}
+	
+#endif
 
 
 

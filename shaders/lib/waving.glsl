@@ -17,6 +17,11 @@ vec3 getWavingAddition(vec3 position  ARGS_OUT) {
 	vec3 pos3 = randomVec3FromRValue(timePosFloor + 2u);
 	vec3 pos4 = randomVec3FromRValue(timePosFloor + 3u);
 	vec3 wavingAmount = cubicInterpolate(pos1, pos2, pos3, pos4, mod(timePos, 1.0)) * vec3(1.0, 0.2, 1.0) * 0.08;
+	//timePos *= WAVING_SPEED * 0.4;
+	//float x = simplexNoise(vec2(timePos, 0));
+	//float y = simplexNoise(vec2(timePos, 10)) * 0.5;
+	//float z = simplexNoise(vec2(timePos, 20));
+	//vec3 wavingAmount = vec3(x, y, z) * 0.05;
 	#if HEIGHT_BASED_WAVING_ENABLED == 1
 		const float lowY = 16.0;
 		const float lowMult = 0.0;

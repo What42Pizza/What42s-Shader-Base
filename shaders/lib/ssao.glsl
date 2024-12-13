@@ -6,6 +6,10 @@ float getAoInfluence(float centerDepth, vec2 offset  ARGS_OUT) {
 	
 	float depth1 = toBlockDepth(texture2D(DEPTH_BUFFER_WO_TRANS, texcoord + offset).r  ARGS_IN);
 	float depth2 = toBlockDepth(texture2D(DEPTH_BUFFER_WO_TRANS, texcoord - offset).r  ARGS_IN);
+	//#ifdef DISTANT_HORIZONS
+	//	depth1 = max(depth1, toBlockDhDepth(texture2D(DH_DEPTH_BUFFER_WO_TRANS, texcoord + offset).r  ARGS_IN));
+	//	depth2 = max(depth2, toBlockDhDepth(texture2D(DH_DEPTH_BUFFER_WO_TRANS, texcoord - offset).r  ARGS_IN));
+	//#endif
 	float diff1 = centerDepth - depth1;
 	float diff2 = centerDepth - depth2;
 	
@@ -19,6 +23,9 @@ float getAoInfluence(float centerDepth, vec2 offset  ARGS_OUT) {
 float getAoFactor(ARG_OUT) {
 	
 	float depth = toBlockDepth(texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r  ARGS_IN);
+	//#ifdef DISTANT_HORIZONS
+	//	depth = max(depth, toBlockDhDepth(texelFetch(DH_DEPTH_BUFFER_ALL, texelcoord, 0).r  ARGS_IN));
+	//#endif
 	#include "/utils/var_rng.glsl"
 	float noise = normalizeNoiseAround1(randomFloat(rng), 0.3);
 	float scale = AO_SIZE * 0.17 / depth;

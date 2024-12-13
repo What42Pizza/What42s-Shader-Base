@@ -732,9 +732,9 @@
 #undef SUNRAYS_INC_AMOUNT
 										#define SUNRAYS_INC_AMOUNT 1.5
 #endif
-#if SUNRAYS_ENTER_AMOUNT == -1
-#undef SUNRAYS_ENTER_AMOUNT
-										#define SUNRAYS_ENTER_AMOUNT 3.0
+#if SUNRAYS_DEC_AMOUNT == -1
+#undef SUNRAYS_DEC_AMOUNT
+										#define SUNRAYS_DEC_AMOUNT 0.5
 #endif
 
 
@@ -1000,7 +1000,7 @@
 #endif
 #if WAVING_WORLD_SCALE == -1
 #undef WAVING_WORLD_SCALE
-										#define WAVING_WORLD_SCALE 0.15
+										#define WAVING_WORLD_SCALE 0.25
 #endif
 #if WAVING_AMOUNT_1 == -1
 #undef WAVING_AMOUNT_1

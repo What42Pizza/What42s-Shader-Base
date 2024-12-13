@@ -74,3 +74,6 @@ float ambientSunrisePercent = 0.0
 float ambientSunsetPercent = 0.0
 float sunAngle = 0.0
 float nightVision = 0.0
+float dhNearPlane = 0.0
+float dhFarPlane = 0.0
+mat4 dhProjectionInverse = mat4(0.0)

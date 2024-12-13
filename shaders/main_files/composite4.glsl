@@ -105,7 +105,12 @@ void main() {
 	
 	
 	float depth = texelFetch(DEPTH_BUFFER_WO_TRANS, texelcoord, 0).r;
-	float linearDepth = toLinearDepth(depth  ARGS_IN);
+	float blockDepth = toBlockDepth(depth  ARGS_IN);
+	#ifdef DISTANT_HORIZONS
+		float dhDepth = texelFetch(DH_DEPTH_BUFFER_WO_TRANS, texelcoord, 0).r;
+		float blockDhDepth = toBlockDhDepth(dhDepth  ARGS_IN);
+		blockDepth = min(blockDepth, blockDhDepth);
+	#endif
 	
 	vec3 pos = vec3(texcoord, depth);
 	#include "/import/cameraPosition.glsl"
@@ -122,7 +127,7 @@ void main() {
 	
 	// ======== TAA ========
 	#if AA_STRATEGY == 2 || AA_STRATEGY == 3
-		doTAA(color, linearDepth, prevCoord  ARGS_IN);
+		doTAA(color, blockDepth, prevCoord  ARGS_IN);
 	#endif
 	
 	// ======== FXAA OR TAA ========
@@ -134,7 +139,7 @@ void main() {
 			doFxaa(color, MAIN_BUFFER  ARGS_IN);
 		}
 		if (preventTaa < 0.5 || isTransparent) {
-			doTAA(color, linearDepth, prevCoord  ARGS_IN);
+			doTAA(color, blockDepth, prevCoord  ARGS_IN);
 		}
 	#endif
 	

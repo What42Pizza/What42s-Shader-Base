@@ -95,6 +95,13 @@ void main() {
 	#endif
 	
 	
+	//float dhDepth = texelFetch(DH_DEPTH_BUFFER_WO_TRANS, texelcoord, 0).r;
+	//#include "/import/dhProjectionInverse.glsl"
+	//#include "/import/gbufferModelViewInverse.glsl"
+	//vec4 dhWorldpos = gbufferModelViewInverse * dhProjectionInverse * (vec4(texcoord, dhDepth, 1) * 2.0 - 1.0);
+	//dhWorldpos.xyz /= dhWorldpos.w;
+	//color = dhWorldpos.xyz / 200;
+	
 	
 	#ifdef DEBUG_OUTPUT_ENABLED
 		color = debugOutput;

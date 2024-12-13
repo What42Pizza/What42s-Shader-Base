@@ -302,3 +302,15 @@ uniform float sunAngle;
 #ifdef import_nightVision
 uniform float nightVision;
 #endif
+
+#ifdef import_dhNearPlane
+uniform float dhNearPlane;
+#endif
+
+#ifdef import_dhFarPlane
+uniform float dhFarPlane;
+#endif
+
+#ifdef import_dhProjectionInverse
+uniform mat4 dhProjectionInverse;
+#endif

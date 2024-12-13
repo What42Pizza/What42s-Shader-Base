@@ -1,6 +1,12 @@
 <br>
 
-- b1.13.1 (25/09/07)
+- b1.13.2
+  - Added Distant Horizons support
+  - Slightly improved volumetric sunrays
+
+<br>
+
+- b1.13.1 (24/09/07)
   - Fixed night vision
   - Added settings 'Night Vision Brightness' and 'Night Vision Green Amount'
   - Fixed vanilla brightness slider

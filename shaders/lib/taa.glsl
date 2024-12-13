@@ -23,7 +23,7 @@
 
 
 
-void neighbourhoodClamping(vec3 color, inout vec3 prevColor  ARGS_OUT) {
+void neighborhoodClamping(vec3 color, inout vec3 prevColor  ARGS_OUT) {
 	vec3 minColor = color;
 	vec3 maxColor = color;
 	
@@ -39,7 +39,7 @@ void neighbourhoodClamping(vec3 color, inout vec3 prevColor  ARGS_OUT) {
 
 
 
-void doTAA(inout vec3 color, float linearDepth, vec2 prevCoord  ARGS_OUT) {
+void doTAA(inout vec3 color, float blockDepth, vec2 prevCoord  ARGS_OUT) {
 	
 	if (
 		prevCoord.x < 0.0 || prevCoord.x > 1.0 ||
@@ -50,7 +50,7 @@ void doTAA(inout vec3 color, float linearDepth, vec2 prevCoord  ARGS_OUT) {
 	
 	vec3 prevColor = texture2D(TAA_PREV_BUFFER, prevCoord).rgb;
 	
-	neighbourhoodClamping(color, prevColor  ARGS_IN);
+	neighborhoodClamping(color, prevColor  ARGS_IN);
 	
 	const float blendMin = 0.3;
 	const float blendMax = 0.98;
@@ -60,20 +60,11 @@ void doTAA(inout vec3 color, float linearDepth, vec2 prevCoord  ARGS_OUT) {
 	
 	#include "/import/viewSize.glsl"
 	vec2 velocity = (texcoord - prevCoord.xy) * viewSize;
-	//#include "/import/sharpenVelocityFactor.glsl"
-	//if (linearDepth > 0.99) velocity = vec2(sharpenVelocityFactor);
 	float velocityAmount = dot(velocity, velocity) * 10.0;
-	
-	#if ISOMETRIC_RENDERING_ENABLED == 0
-		#include "/import/far.glsl"
-		float blockDepth = linearDepth * far;
-	#else
-		float blockDepth = 0;
-	#endif
 	
 	float blendAmount = blendConstant + exp(-velocityAmount) * (blendVariable + sqrt(blockDepth) * depthFactor);
 	#ifdef END
-		if (linearDepth > 0.99) blendAmount = 0.0;
+		if (blockDepth == 1000000) blendAmount = 0.0;
 	#endif
 	blendAmount = clamp(blendAmount, blendMin, blendMax);
 	

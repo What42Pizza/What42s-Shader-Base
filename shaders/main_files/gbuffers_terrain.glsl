@@ -8,8 +8,10 @@
 	varying vec3 normal;
 	flat_inout int blockData;
 	
-	#if REFLECTIONS_ENABLED == 1
+	#if REFLECTIONS_ENABLED == 1 || defined DISTANT_HORIZONS
 		varying vec3 worldPos;
+	#endif
+	#if REFLECTIONS_ENABLED == 1
 		varying float baseRainReflectionStrength;
 	#endif
 	#if SHOW_DANGEROUS_LIGHT == 1
@@ -33,7 +35,23 @@
 	#include "/lib/simplex_noise.glsl"
 #endif
 
+#ifdef DISTANT_HORIZONS
+	#include "/utils/depth.glsl"
+#endif
+
 void main() {
+	
+	#ifdef DISTANT_HORIZONS
+		float dither = bayer64(gl_FragCoord.xy);
+		#if AA_STRATEGY == 2 || AA_STRATEGY == 3 || AA_STRATEGY == 4
+			#include "/import/frameCounter.glsl"
+			dither = fract(dither + 1.61803398875 * mod(float(frameCounter), 3600.0));
+		#endif
+		float lengthCylinder = max(length(worldPos.xz), abs(worldPos.y));
+		#include "/import/far.glsl"
+		if (lengthCylinder >= far - 4 - 4 * dither) discard;
+	#endif
+	
 	vec4 color = texture2D(MAIN_BUFFER, texcoord) * vec4(glcolor, 1.0);
 	
 	
@@ -109,7 +127,7 @@ void main() {
 	if (blockData < 1000) blockData = 0;
 	
 	
-	#if REFLECTIONS_ENABLED == 0
+	#if !(REFLECTIONS_ENABLED == 0 || defined DISTANT_HORIZONS)
 		vec3 worldPos;
 	#endif
 	#include "/import/gbufferModelViewInverse.glsl"

@@ -326,7 +326,7 @@
 #endif
 #if AMBIENT_NIGHT_BRIGHTNESS == -1
 #undef AMBIENT_NIGHT_BRIGHTNESS
-										#define AMBIENT_NIGHT_BRIGHTNESS 0.2
+										#define AMBIENT_NIGHT_BRIGHTNESS 0.3
 #endif
 
 
@@ -612,7 +612,7 @@
 #endif
 #if BLOOM_AMOUNT == -1
 #undef BLOOM_AMOUNT
-										#define BLOOM_AMOUNT 2.0
+										#define BLOOM_AMOUNT 3.0
 #endif
 #if BLOOM_QUALITY == -1
 #undef BLOOM_QUALITY
@@ -624,7 +624,7 @@
 #endif
 #if BLOOM_LOW_CUTOFF == -1
 #undef BLOOM_LOW_CUTOFF
-										#define BLOOM_LOW_CUTOFF 0.4
+										#define BLOOM_LOW_CUTOFF 0.2
 #endif
 #if BLOOM_HIGH_CUTOFF == -1
 #undef BLOOM_HIGH_CUTOFF
@@ -632,7 +632,7 @@
 #endif
 #if BLOOM_SIZE == -1
 #undef BLOOM_SIZE
-										#define BLOOM_SIZE 2.0
+										#define BLOOM_SIZE 3.0
 #endif
 #if BLOOM_NETHER_MULT == -1
 #undef BLOOM_NETHER_MULT
@@ -732,9 +732,9 @@
 #undef SUNRAYS_INC_AMOUNT
 										#define SUNRAYS_INC_AMOUNT 1.5
 #endif
-#if SUNRAYS_ENTER_AMOUNT == -1
-#undef SUNRAYS_ENTER_AMOUNT
-										#define SUNRAYS_ENTER_AMOUNT 3.0
+#if SUNRAYS_DEC_AMOUNT == -1
+#undef SUNRAYS_DEC_AMOUNT
+										#define SUNRAYS_DEC_AMOUNT 0.5
 #endif
 
 
