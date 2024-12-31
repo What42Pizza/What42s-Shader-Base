@@ -45,6 +45,7 @@
 ### Other Features:
 - **Good Code Structuring**
 - **Vanilla-Like Graphics and Style**
+- **Distant Horizons Support**
 - **Thorough Settings Menu** (200+ settings)
 
 <br>
