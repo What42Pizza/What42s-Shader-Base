@@ -771,10 +771,6 @@ option.SUNRAYS_INC_AMOUNT=Increment Amount
 option.SUNRAYS_INC_AMOUNT.comment=How much the sunrays amount should increase per in-sun sample
 value.SUNRAYS_INC_AMOUNT.-1=Use Style Value
 
-option.SUNRAYS_ENTER_AMOUNT=Enter Amount
-option.SUNRAYS_ENTER_AMOUNT.comment=How much the sunrays amount should increase when entering in-sun areas
-value.SUNRAYS_ENTER_AMOUNT.-1=Use Style Value
-
 option.SUNRAYS_AMOUNT_DAY=Sunrays Amount Day
 value.SUNRAYS_AMOUNT_DAY.-1=Use Style Value
 
