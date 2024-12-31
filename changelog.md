@@ -1,6 +1,6 @@
 <br>
 
-- b1.13.2
+- b1.13.2 (24/12/31)
   - Added Distant Horizons support
   - Slightly improved volumetric sunrays
 

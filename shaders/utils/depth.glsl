@@ -41,13 +41,13 @@ float toBlockDepth(float depth  ARGS_OUT) {
 
 #ifdef DISTANT_HORIZONS
 	
-	float toLinearDhDepth(float depth  ARGS_OUT) {
+	float toLinearDepthDh(float depth  ARGS_OUT) {
 		#include "/import/dhNearPlane.glsl"
 		#include "/import/dhFarPlane.glsl"
 		return 2.0 * dhNearPlane / (dhFarPlane + dhNearPlane - depth * (dhFarPlane - dhNearPlane));
 	}
 	
-	float toBlockDhDepth(float depth  ARGS_OUT) {
+	float toBlockDepthDh(float depth  ARGS_OUT) {
 		#include "/import/dhNearPlane.glsl"
 		#include "/import/dhFarPlane.glsl"
 		return 2.0 * dhNearPlane * dhFarPlane / (dhFarPlane + dhNearPlane - depth * (dhFarPlane - dhNearPlane));

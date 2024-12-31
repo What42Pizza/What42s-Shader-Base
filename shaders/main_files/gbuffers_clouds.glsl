@@ -29,7 +29,7 @@ void main() {
 	
 	
 	#if HIDE_NEARBY_CLOUDS == 0
-		#define opacity (1.0 - CLOUD_TRANSPARENCY)
+		const float opacity = (1.0 - CLOUD_TRANSPARENCY);
 	#endif
 	color.a = opacity;
 	
@@ -69,6 +69,12 @@ void main() {
 #endif
 
 void main() {
+	
+	//#ifdef DISTANT_HORIZONS
+	//	gl_Position = vec4(10);
+	//	return;
+	//#endif
+	
 	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
 	
 	vec3 skyLight = getSkyLight(ARG_IN);

@@ -1,6 +1,6 @@
 #if SKY_BRIGHTNESS == -1
 #undef SKY_BRIGHTNESS
-										#define SKY_BRIGHTNESS 0.95
+										#define SKY_BRIGHTNESS 0.9
 #endif
 #if SUN_BRIGHTNESS == -1
 #undef SUN_BRIGHTNESS
@@ -258,11 +258,11 @@
 #endif
 #if SKYLIGHT_DAY_GREEN == -1
 #undef SKYLIGHT_DAY_GREEN
-										#define SKYLIGHT_DAY_GREEN 1.0
+										#define SKYLIGHT_DAY_GREEN 0.95
 #endif
 #if SKYLIGHT_DAY_BLUE == -1
 #undef SKYLIGHT_DAY_BLUE
-										#define SKYLIGHT_DAY_BLUE 1.0
+										#define SKYLIGHT_DAY_BLUE 0.85
 #endif
 #if SKYLIGHT_DAY_BRIGHTNESS == -1
 #undef SKYLIGHT_DAY_BRIGHTNESS
@@ -273,7 +273,7 @@
 
 #if AMBIENT_DAY_RED == -1
 #undef AMBIENT_DAY_RED
-										#define AMBIENT_DAY_RED 0.9
+										#define AMBIENT_DAY_RED 0.95
 #endif
 #if AMBIENT_DAY_GREEN == -1
 #undef AMBIENT_DAY_GREEN
@@ -285,7 +285,7 @@
 #endif
 #if AMBIENT_DAY_BRIGHTNESS == -1
 #undef AMBIENT_DAY_BRIGHTNESS
-										#define AMBIENT_DAY_BRIGHTNESS 0.6
+										#define AMBIENT_DAY_BRIGHTNESS 0.65
 #endif
 
 
@@ -682,7 +682,7 @@
 #endif
 #if SUNRAYS_AMOUNT_NIGHT == -1
 #undef SUNRAYS_AMOUNT_NIGHT
-										#define SUNRAYS_AMOUNT_NIGHT 0.2
+										#define SUNRAYS_AMOUNT_NIGHT 0.1
 #endif
 #if SUNRAYS_MULT_SUNRISE == -1
 #undef SUNRAYS_MULT_SUNRISE

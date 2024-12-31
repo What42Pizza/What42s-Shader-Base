@@ -49,7 +49,7 @@ void main() {
 		#endif
 		float lengthCylinder = max(length(worldPos.xz), abs(worldPos.y));
 		#include "/import/far.glsl"
-		if (lengthCylinder >= far - 4 - 8 * dither) discard;
+		if (lengthCylinder >= far - 4 - 12 * dither) discard;
 	#endif
 	
 	vec4 color = texture2D(MAIN_BUFFER, texcoord) * vec4(glcolor, 1.0);

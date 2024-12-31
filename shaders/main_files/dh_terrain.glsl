@@ -33,9 +33,20 @@
 
 void main() {
 	
+	// clouds idk
+	//if (dot(glcolor, vec3(1.0)) > 2.9999) {
+	//	vec3 skyLight = getSkyLight(ARG_IN);
+	//	vec3 ambientLight = getAmbientLight(1.0  ARGS_IN);
+	//	vec3 color = skyLight + ambientLight;
+	//	color = normalize(color) * 2.0 * CLOUDS_BRIGHTNESS;
+	//	color *= getBasicLighting(lmcoord.x, lmcoord.y  ARGS_IN);
+	//	//gl_FragData[0] = vec4(color, 1.0 - CLOUD_TRANSPARENCY);
+	//	return;
+	//}
+	
 	float lengthCylinder = max(length(worldPos.xz), abs(worldPos.y));
 	#include "/import/far.glsl"
-	if (lengthCylinder < far - 16) discard;
+	if (lengthCylinder < far - 20) discard;
 	
 	vec3 color = glcolor;
 	
@@ -111,11 +122,6 @@ void main() {
 	#else
 		#include "/import/gbufferModelView.glsl"
 		gl_Position = gl_ProjectionMatrix * gbufferModelView * startMat(worldPos);
-	#endif
-	
-	
-	#if ISOMETRIC_RENDERING_ENABLED == 0
-		if (gl_Position.z < -1.5) return; // simple but effective optimization
 	#endif
 	
 	

@@ -47,7 +47,7 @@
 		if (depthIsHand(linearDepth)) return;
 		#ifdef DISTANT_HORIZONS
 			float dhDepth = texelFetch(DH_DEPTH_BUFFER_ALL, texelcoord, 0).r;
-			float linearDhDepth = toLinearDhDepth(dhDepth  ARGS_IN);
+			float linearDhDepth = toLinearDepthDh(dhDepth  ARGS_IN);
 			if (depthIsSky(linearDepth) && depthIsSky(linearDhDepth)) return;
 		#else
 			if (depthIsSky(linearDepth)) return;
@@ -63,8 +63,7 @@
 		// apply fog
 		vec3 viewPos = screenToView(vec3(texcoord, depth)  ARGS_IN);
 		#ifdef DISTANT_HORIZONS
-			vec3 dhViewPos = screenToViewDh(vec3(texcoord, dhDepth)  ARGS_IN);
-			if (length(dhViewPos) < length(viewPos)) viewPos = dhViewPos;
+			if (depthIsSky(linearDepth)) viewPos = screenToViewDh(vec3(texcoord, dhDepth)  ARGS_IN);
 		#endif
 		#if FOG_ENABLED == 1
 			#include "/import/gbufferModelViewInverse.glsl"
@@ -119,7 +118,7 @@ void main() {
 	float blockDepth = toBlockDepth(depth  ARGS_IN);
 	#ifdef DISTANT_HORIZONS
 		float dhDepth = texelFetch(DH_DEPTH_BUFFER_WO_TRANS, texelcoord, 0).r;
-		float blockDhDepth = toBlockDhDepth(dhDepth  ARGS_IN);
+		float blockDhDepth = toBlockDepthDh(dhDepth  ARGS_IN);
 		blockDepth = min(blockDepth, blockDhDepth);
 	#endif
 	

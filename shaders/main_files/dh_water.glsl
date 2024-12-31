@@ -26,6 +26,7 @@
 
 #ifdef FSH
 
+#include "/utils/screen_to_view.glsl"
 #if WAVING_WATER_NORMALS_ENABLED == 1
 	#include "/lib/simplex_noise.glsl"
 #endif
@@ -43,9 +44,12 @@ void main() {
 	#endif
 	float lengthCylinder = max(length(worldPos.xz), abs(worldPos.y));
 	#include "/import/far.glsl"
-	if (lengthCylinder < far - 4 - 0 * dither) discard;
+	if (lengthCylinder < far - 10 - 8 * dither) discard;
 	
-	if (texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r < 1.0) discard;
+	float realDepth = texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r;
+	#include "/import/invViewSize.glsl"
+	vec3 realPos = screenToView(vec3(gl_FragCoord.xy * invViewSize, realDepth)  ARGS_IN);
+	if (realDepth < 1.0 && length(realPos) < length(worldPos)) discard;
 	
 	
 	vec4 color = glcolor;

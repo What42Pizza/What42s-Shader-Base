@@ -49,9 +49,9 @@ void main() {
 			#include "/import/frameCounter.glsl"
 			dither = fract(dither + 1.61803398875 * mod(float(frameCounter), 3600.0));
 		#endif
-		float lengthCylinder = max(length(worldPos.xz), abs(worldPos.y));
+		float lengthCylinder = max(length(worldPos.xz), abs(worldPos.y)) * 0.95;
 		#include "/import/far.glsl"
-		if (lengthCylinder >= far - 4 - 0 * dither) discard;
+		if (lengthCylinder >= far - 10 - 8 * dither) discard;
 	#endif
 	
 	
@@ -177,7 +177,7 @@ void main() {
 			#ifdef DISTANT_HORIZONS
 				#include "/import/far.glsl"
 				float lengthCylinder = max(length(worldPos.xz), abs(worldPos.y));
-				wavingAmount *= smoothstep(far * 0.95 - 4, far * 0.9 - 4, lengthCylinder);
+				wavingAmount *= smoothstep(far * 0.95 - 10, far * 0.9 - 10, lengthCylinder);
 			#endif
 			#include "/import/cameraPosition.glsl"
 			#include "/import/frameTimeCounter.glsl"

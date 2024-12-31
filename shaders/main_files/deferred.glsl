@@ -78,7 +78,7 @@ void main() {
 	float linearDepth = toLinearDepth(depth  ARGS_IN);
 	#ifdef DISTANT_HORIZONS
 		float dhDepth = texelFetch(DH_DEPTH_BUFFER_ALL, texelcoord, 0).r;
-		float linearDhDepth = toLinearDhDepth(dhDepth  ARGS_IN);
+		float linearDhDepth = toLinearDepthDh(dhDepth  ARGS_IN);
 	#endif
 	
 	
