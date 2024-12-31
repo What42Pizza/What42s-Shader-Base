@@ -73,8 +73,7 @@ void main() {
 			#include "/import/frameTimeCounter.glsl"
 			#include "/import/cameraPosition.glsl"
 			vec3 randomPoint = abs(simplexNoise3From4(vec4((worldPos + cameraPosition) / worldPosScale, frameTimeCounter * 0.7)));
-			randomPoint = normalize(randomPoint);
-			vec3 normalWavingAddition = randomPoint * 0.15;
+			vec3 normalWavingAddition = normalize(randomPoint) * 0.15;
 			normalWavingAddition *= abs(dot(normal, normalize(viewPos)));
 			normalWavingAddition *= mix(WAVING_WATER_NORMALS_AMOUNT_UNDERGROUND, WAVING_WATER_NORMALS_AMOUNT_SURFACE, lmcoord.y);
 			normal += normalWavingAddition;
@@ -165,7 +164,7 @@ void main() {
 	blockData = int(mc_Entity.x);
 	if (blockData < 1000) blockData = 0;
 	
-	#if !(WAVING_WATER_NORMALS_ENABLED == 0 || defined DISTANT_HORIZONS)
+	#if !(WAVING_WATER_NORMALS_ENABLED == 1 || defined DISTANT_HORIZONS)
 		vec3 worldPos;
 	#endif
 	#include "/import/gbufferModelViewInverse.glsl"

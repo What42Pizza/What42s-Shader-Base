@@ -452,7 +452,7 @@
 #endif
 #if SIDE_SHADING == -1
 #undef SIDE_SHADING
-										#define SIDE_SHADING 0.25
+										#define SIDE_SHADING 0.15
 #endif
 #if RAIN_LIGHT_MULT == -1
 #undef RAIN_LIGHT_MULT

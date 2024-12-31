@@ -35,7 +35,7 @@ void raytrace(out vec2 reflectionPos, out int error, vec3 viewPos, vec3 normal  
 		#endif
 		float realToScreen = screenPos.z - realDepth;
 		
-		if (realToScreen > pow(stepVector.z, 0.3) * 0.15) {
+		if (realToScreen > pow(stepVector.z, 0.3) * 0.15) { // went behind object
 			#include "/utils/var_rng.glsl"
 			reflectionPos = mix(nextScreenPos.xy, screenPos.xy, randomFloat(rng) * 0.4 + 0.5);
 			error = 0;
@@ -62,7 +62,6 @@ void raytrace(out vec2 reflectionPos, out int error, vec3 viewPos, vec3 normal  
 	
 	error = 2;
 }
-
 
 
 
