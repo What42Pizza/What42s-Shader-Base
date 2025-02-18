@@ -1,3 +1,9 @@
+- **1.0.0** (25/02/18)
+  - Removed many settings
+  - Major performance improvements from massive internal rewrites
+
+<br>
+<br>
 <br>
 
 - b1.13.2 (24/12/31)

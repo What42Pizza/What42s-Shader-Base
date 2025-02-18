@@ -84,7 +84,6 @@ Make sun / moon / sunrise / sunset detection based on sun angle
 Smoothen rain puddles strength
 Add example image to readme
 Add setting for cloud transparency
-Add settings for water reflection base and fresnel
 Make waving stronger the higher you are?
 Add lang support for profiles
 Change cloud color based on day time

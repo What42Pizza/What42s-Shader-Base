@@ -48,7 +48,6 @@ void main() {
 	
 	/* DRAWBUFFERS:1 */
 	gl_FragData[0] = vec4(color, 1.0);
-	
 	#if BLOOM_ENABLED == 1
 		/* DRAWBUFFERS:15 */
 		gl_FragData[1] = vec4(bloomColor, 1.0);

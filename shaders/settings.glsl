@@ -1,14 +1,15 @@
 // optifine settings (DON'T DELETE)
 /*
-const int colortex2Format = RGBA32F;
-const int colortex3Format = RGBA32F;
-const float wetnessHalflife = 50.0f;
-const float drynessHalflife = 50.0f;
-const float centerDepthHalflife = 2.5f;
+const int colortex2Format = RGB32F;
+const int colortex3Format = RGB32F;
+const bool colortex4Clear = false;
 const bool shadowtex0Mipmap = false;
 const bool shadowtex1Mipmap = false;
 const bool shadowtex0Clear = false;
 const bool shadowtex1Clear = false;
+const float wetnessHalflife = 50.0f;
+const float drynessHalflife = 50.0f;
+const float centerDepthHalflife = 2.5f;
 */
 
 
@@ -116,16 +117,6 @@ const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8
 
 #define SKYLIGHT_SUNSET_COLOR vec3(SKYLIGHT_SUNSET_RED, SKYLIGHT_SUNSET_GREEN, SKYLIGHT_SUNSET_BLUE)*SKYLIGHT_SUNSET_BRIGHTNESS
 #define AMBIENT_SUNSET_COLOR vec3(AMBIENT_SUNSET_RED, AMBIENT_SUNSET_GREEN, AMBIENT_SUNSET_BLUE)*AMBIENT_SUNSET_BRIGHTNESS
-
-
-
-#define WATER_REFLECTION_CONSTANT (WATER_REFLECTION_AMOUNT * (1.0 - WATER_REFLECTION_FRESNEL))
-#define WATER_REFLECTION_VARIABLE (WATER_REFLECTION_AMOUNT * WATER_REFLECTION_FRESNEL)
-#define WATER_REFLECTION_STRENGTHS vec2(WATER_REFLECTION_CONSTANT, WATER_REFLECTION_VARIABLE)
-
-#define RAIN_REFLECTION_CONSTANT (RAIN_REFLECTION_AMOUNT * (1.0 - RAIN_REFLECTION_FRESNEL))
-#define RAIN_REFLECTION_VARIABLE (RAIN_REFLECTION_AMOUNT * RAIN_REFLECTION_FRESNEL)
-#define RAIN_REFLECTION_STRENGTHS vec2(RAIN_REFLECTION_CONSTANT, RAIN_REFLECTION_VARIABLE)
 
 
 

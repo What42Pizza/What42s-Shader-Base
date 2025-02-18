@@ -214,30 +214,16 @@ This describes which /main_files-s handle different effects
 - **colortex2:  Opaque Data**
 - - x: lmcoord.x & lmcoord.y
 - - y: normal x & normal y
-- - z: gl_Color brightness (squared 'length' of gl_Color) * 0.25 & reflection fresnel percent
-- - w: material id
+- - z: gl_Color brightness (squared 'length' of gl_Color) * 0.25 & material id / 1024.0
 - **colortex3:  Transparent Data**
 - - x: lmcoord.x & lmcoord.y
 - - y: normal x & normal y
-- - z: gl_Color brightness (squared 'length' of gl_Color) * 0.25 & reflection fresnel percent
-- - w: material id
+- - z: gl_Color brightness (squared 'length' of gl_Color) * 0.25 & material id / 1024.0
 - **colortex4:  Prev Texture**
 - **colortex5:  Bloom Texture**
 - **colortex6:  Noisy Texture**
 
 Note: the 'noisy texture' buffer is where things like bloom, sunrays, etc (anything that gives noisy results) are rendered before being added to the main image using LOD-sampling as a high-perf(?) blur
-
-<br>
-<br>
-<br>
-
-## How to add / improve an effect:
-
-- **1: Accept that what you have is kinda trash**
-- **2: Try something different (whether or not it seems like a good idea)**
-- **3: Probably go back to step 1**
-- **4: Mess around with the formulas to simplify and optimize without compromising quality**
-- **5: Figure out what to do next**
 
 <br>
 <br>

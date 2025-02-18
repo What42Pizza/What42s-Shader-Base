@@ -63,7 +63,7 @@ void main() {
 		
 		vec3 viewPos = screenToView(vec3(texcoord, depth)  ARGS_IN);
 		doFshLighting(color, lmcoord.x, lmcoord.y, viewPos, normal  ARGS_IN);
-		color *= sqrt(data.z * 4.0);
+		color *= sqrt(unpackVec2(data.z).x * 4.0);
 		
 		
 		#if FOG_ENABLED == 1

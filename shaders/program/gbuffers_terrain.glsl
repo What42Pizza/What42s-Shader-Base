@@ -32,8 +32,11 @@ void main() {
 	#endif
 	
 	
-	vec4 albedo = texture2D(MAIN_TEXTURE, texcoord) * vec4(normalize(glcolor), 1.0);
+	vec4 albedo = texture2D(MAIN_TEXTURE, texcoord) * vec4(normalize(glcolor), 1.0); // multiply in the color of glcolor but don't multiply in the brightness yet
 	if (albedo.a < 0.1) discard;
+	
+	
+	float reflectiveness = ((materialId - materialId % 100) / 100) * 0.15;
 	
 	
 	/* DRAWBUFFERS:02 */
@@ -41,8 +44,8 @@ void main() {
 	gl_FragData[1] = vec4(
 		packVec2(lmcoord.x, lmcoord.y),
 		packVec2(normal.x, normal.y),
-		dot(glcolor, glcolor) * 0.25,
-		materialId / 65535.0
+		packVec2(dot(glcolor, glcolor) * 0.25, reflectiveness),
+		1.0
 	);
 	
 }
@@ -75,6 +78,7 @@ void main() {
 	#include "/import/mc_Entity.glsl"
 	materialId = int(mc_Entity.x);
 	if (materialId < 1000) materialId = 0;
+	materialId %= 1000;
 	
 	
 	#ifndef DISTANT_HORIZONS

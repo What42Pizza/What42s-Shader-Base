@@ -98,7 +98,6 @@ void main() {
 		
 		
 		color.a = (1.0 - WATER_TRANSPARENCY);
-		reflectionStrengths = WATER_REFLECTION_STRENGTHS;
 		
 	}
 	
@@ -111,8 +110,8 @@ void main() {
 	gl_FragData[0] = color;
 	gl_FragData[1] = vec4(
 		packVec2(lmcoord.x, lmcoord.y),
-		packVec2(normal.x, normal.y),
-		dot(glcolor, glcolor) * 0.5, // glcolor is substantially different here so a multiplier (on top of *0.25) is needed to compensate
+		packVec2(encodeNormal(normal)),
+		packVec2(dot(glcolor, glcolor) * 0.5, 0.0), // glcolor is substantially different here so a multiplier (on top of *0.25) is needed to compensate
 		0.0
 	);
 	

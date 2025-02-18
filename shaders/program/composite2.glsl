@@ -3,7 +3,7 @@
 	varying vec2 texcoord;
 	
 	#if BLOOM_ENABLED == 0
-		const bool colortex3MipmapEnabled = true;
+		const bool colortex6MipmapEnabled = true;
 	#endif
 	
 #endif

@@ -49,7 +49,7 @@ uniform sampler2D shadowtex0;
 #define MAIN_TEXTURE_COPY          colortex1
 #define OPAQUE_DATA_TEXTURE        colortex2
 #define TRANSPARENT_DATA_TEXTURE   colortex3
-#define PREV_TEXTURE                colortex4
+#define PREV_TEXTURE               colortex4
 #define BLOOM_TEXTURE              colortex5
 #define NOISY_TEXTURE              colortex6
 

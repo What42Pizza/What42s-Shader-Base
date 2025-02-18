@@ -35,10 +35,9 @@
 
 
 #ifdef REFLECTIONS_ENABLED
-	void doReflections(inout vec3 color, vec3 normal, vec2 reflectionStrengths  ARGS_OUT) {
+	void doReflections(inout vec3 color, float depth, vec3 normal, float reflectionStrength  ARGS_OUT) {
 		
 		// skip sky and fog
-		float depth = texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r;
 		float linearDepth = toLinearDepth(depth  ARGS_IN);
 		if (depthIsHand(linearDepth)) return;
 		#ifdef DISTANT_HORIZONS
@@ -60,10 +59,10 @@
 			float fogDistance = getFogDistance(playerPos  ARGS_IN);
 			float fogAmount = getFogAmount(fogDistance, playerPos.y  ARGS_IN);
 			if (fogAmount > 0.99) return;
-			reflectionStrengths *= 1.0 - fogAmount;
+			reflectionStrength *= 1.0 - fogAmount;
 		#endif
 		
-		addReflection(color, viewPos, normal, MAIN_TEXTURE, reflectionStrengths.r, reflectionStrengths.g  ARGS_IN);
+		addReflection(color, viewPos, normal, MAIN_TEXTURE, reflectionStrength  ARGS_IN);
 		
 	}
 #endif
@@ -80,7 +79,15 @@ void main() {
 	#endif
 	
 	vec3 color = texelFetch(MAIN_TEXTURE, sampleCoord, 0).rgb;
-	vec4 data = texelFetch(OPAQUE_DATA_TEXTURE, texelcoord, 0);
+	
+	vec4 data;
+	float depth0 = texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r;
+	float depth1 = texelFetch(DEPTH_BUFFER_WO_TRANS, texelcoord, 0).r;
+	if (depth0 < depth1) { // if transparents depth is less than non-transparents depth then use transparents data tex
+		data = texelFetch(TRANSPARENT_DATA_TEXTURE, texelcoord, 0);
+	} else {
+		data = texelFetch(OPAQUE_DATA_TEXTURE, texelcoord, 0);
+	}
 	vec3 normal = decodeNormal(unpackVec2(data.y));
 	
 	
@@ -89,20 +96,12 @@ void main() {
 	
 	#ifdef REFLECTIONS_ENABLED
 		#if REFLECTIVE_EVERYTHING == 1
-			vec2 reflectionStrengths = vec2(1.0, 0.0);
+			float reflectionStrength = 1.0;
 		#else
-			vec4 opaqueData = texelFetch(OPAQUE_DATA_TEXTURE, texelcoord, 0);
-			int matId = int(opaqueData.w * 65535.0 + 0.5);
-			float reflectiveness = (matId % 1000 - matId % 100) * 0.15;
-			float fresnelPercent = unpackVec2(opaqueData.z).y;
-			vec4 transparentData = texelFetch(TRANSPARENT_DATA_TEXTURE, texelcoord, 0);
-			matId = int(transparentData.w * 65535.0 + 0.5);
-			reflectiveness = max(reflectiveness, (matId % 1000 - matId % 100) * 0.15);
-			fresnelPercent = max(fresnelPercent, unpackVec2(opaqueData.z).y);
-			vec2 reflectionStrengths = vec2(reflectiveness * (1.0 - fresnelPercent), reflectiveness * fresnelPercent);
+			float reflectionStrength = unpackVec2(data.z).y;
 		#endif
-		if (reflectiveness > 0.01) {
-			doReflections(color, normal, reflectionStrengths  ARGS_IN);
+		if (reflectionStrength > 0.01) {
+			doReflections(color, depth0, normal, reflectionStrength  ARGS_IN);
 		}
 	#endif
 	

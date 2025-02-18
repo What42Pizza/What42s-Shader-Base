@@ -138,7 +138,7 @@ void raytrace(out vec2 reflectionPos, out int error, vec3 viewPos, vec3 normal  
 
 
 
-void addReflection(inout vec3 color, vec3 viewPos, vec3 normal, sampler2D texture, float baseStrength, float fresnelStrength  ARGS_OUT) {
+void addReflection(inout vec3 color, vec3 viewPos, vec3 normal, sampler2D texture, float reflectionStrength  ARGS_OUT) {
 	vec2 reflectionPos;
 	int error;
 	raytrace(reflectionPos, error, viewPos, normal  ARGS_IN);
@@ -146,7 +146,7 @@ void addReflection(inout vec3 color, vec3 viewPos, vec3 normal, sampler2D textur
 	float fresnel = 1.0 - abs(dot(normalize(viewPos), normal));
 	fresnel *= fresnel;
 	fresnel *= fresnel;
-	float lerpAmount = baseStrength + fresnelStrength * fresnel;
+	reflectionStrength *= 1.0 - REFLECTION_FRESNEL * (1.0 - fresnel);
 	#include "/import/fogColor.glsl"
 	#include "/import/eyeBrightness.glsl"
 	vec3 alteredFogColor = fogColor * (0.25 + 0.75 * eyeBrightness.y / 240.0);
@@ -158,7 +158,7 @@ void addReflection(inout vec3 color, vec3 viewPos, vec3 normal, sampler2D textur
 		float fadeOutSlope = 1.0 / (max(normal.z, 0.0) + 0.0001);
 		reflectionColor = mix(alteredFogColor, reflectionColor, clamp(fadeOutSlope - fadeOutSlope * max(abs(reflectionPos.x * 2.0 - 1.0), abs(reflectionPos.y * 2.0 - 1.0)), 0.0, 1.0));
 		reflectionColor *= (1.0 - inputColorWeight) + color * inputColorWeight;
-		color = mix(color, reflectionColor, lerpAmount);
+		color = mix(color, reflectionColor, reflectionStrength);
 		
 	//} else if (error == 1) {
 	//	color *= vec3(1.0, 0.1, 0.1);
@@ -173,7 +173,7 @@ void addReflection(inout vec3 color, vec3 viewPos, vec3 normal, sampler2D textur
 	} else {
 		vec3 reflectionColor = alteredFogColor;
 		reflectionColor *= (1.0 - inputColorWeight) + color * inputColorWeight;
-		color = mix(color, reflectionColor, lerpAmount);
+		color = mix(color, reflectionColor, reflectionStrength);
 		
 	}
 	//color = vec3(reflectionPos, 0);

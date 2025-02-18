@@ -599,30 +599,17 @@ option.BLOCKS_REFLECTION_AMOUNT_MULT_UNDERGROUND=Blocks Ref Amount Underground
 option.BLOCKS_REFLECTION_AMOUNT_MULT_UNDERGROUND.comment=How reflective misc blocks are when not in sunlight
 value.BLOCKS_REFLECTION_AMOUNT_MULT_UNDERGROUND.-1=Use Style Value
 
-option.BLOCKS_REFLECTION_FRESNEL=Blocks Reflection Fresnel
-option.BLOCKS_REFLECTION_FRESNEL.comment=How much the surface steepness contributes to reflection strength\n\nFor example, a Strength of 0.5 with a Fresnel Factor of 0.6 means the strength goes from 0.2 (when the surface is facing the camera) to 0.5 (when the surface is parallel to the camera)
-value.BLOCKS_REFLECTION_FRESNEL.-1=Use Style Value
-
-
 
 
 option.WATER_REFLECTION_AMOUNT=Water Reflection Strength
 option.WATER_REFLECTION_AMOUNT.comment=Max water reflection strength (also affects reflections of transparent blocks like stained glass, ice, etc)
 value.WATER_REFLECTION_AMOUNT.-1=Use Style Value
 
-option.WATER_REFLECTION_FRESNEL=Water Reflection Fresnel Factor
-option.WATER_REFLECTION_FRESNEL.comment=How much the surface steepness contributes to reflection strength\n\nFor example, a Strength of 0.5 with a Fresnel Factor of 0.6 means the strength goes from 0.2 (when the surface is facing the camera) to 0.5 (when the surface is parallel to the camera)
-value.WATER_REFLECTION_FRESNEL.-1=Use Style Value
-
 
 
 option.RAIN_REFLECTION_AMOUNT=Rain Reflection Strength
 option.RAIN_REFLECTION_AMOUNT.comment=Max rain reflections strength
 value.RAIN_REFLECTION_AMOUNT.-1=Use Style Value
-
-option.RAIN_REFLECTION_FRESNEL=Rain Reflection Fresnel Factor
-option.RAIN_REFLECTION_FRESNEL.comment=How much the surface steepness contributes to reflection strength\n\nFor example, a Strength of 0.5 with a Fresnel Factor of 0.6 means the strength goes from 0.2 (when the surface is facing the camera) to 0.5 (when the surface is parallel to the camera)
-value.RAIN_REFLECTION_FRESNEL.-1=Use Style Value
 
 option.RAIN_REFLECTION_MIN=Rain Reflection Min
 option.RAIN_REFLECTION_MIN.comment=Minimum amount for reflection strength
@@ -645,6 +632,10 @@ value.REFLECTION_ITERATIONS.-1=Use Style Value
 option.REFLECTION_STEP_INCREASE=Reflection Step Increase
 option.REFLECTION_STEP_INCREASE.comment=How much the step amount is increased per step
 value.REFLECTION_STEP_INCREASE.-1=Use Style Value
+
+option.REFLECTION_FRESNEL=Reflection Fresnel Amount
+option.REFLECTION_FRESNEL.comment=How much the angle of the reflection affects the reflectiveness. A fresnel of 1.0 makes the reflection completely disappear when looking head-on and a value of 0 makes it always the same strength
+option.REFLECTION_FRESNEL.-1=Use Style Value
 
 
 

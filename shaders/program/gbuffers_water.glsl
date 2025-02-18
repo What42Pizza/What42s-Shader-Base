@@ -63,7 +63,7 @@ void main() {
 	#endif
 	
 	
-	if (materialId == 1007) {
+	if (materialId == 7) {
 		
 		color.rgb = mix(vec3(getColorLum(color.rgb)), color.rgb, 0.8);
 		
@@ -115,19 +115,17 @@ void main() {
 	#endif
 	
 	
-	// block reflection strengths
-	float blockReflectionAmount = (materialId % 1000 - materialId % 100) / 100 * 0.15 * mix(BLOCKS_REFLECTION_AMOUNT_MULT_UNDERGROUND, BLOCKS_REFLECTION_AMOUNT_MULT_SURFACE, lmcoord.y);
-	vec2 blockReflectionStrengths = vec2(blockReflectionAmount * (1.0 - BLOCKS_REFLECTION_FRESNEL), blockReflectionAmount * BLOCKS_REFLECTION_FRESNEL);
-	vec2 reflectionStrengths = materialId == 1007 ? WATER_REFLECTION_STRENGTHS : blockReflectionStrengths;
+	float reflectiveness = ((materialId - materialId % 100) / 100) * 0.15;
+	if (materialId == 7) reflectiveness = WATER_REFLECTION_AMOUNT;
 	
 	
 	/* DRAWBUFFERS:03 */
 	gl_FragData[0] = color;
 	gl_FragData[1] = vec4(
 		packVec2(lmcoord.x, lmcoord.y),
-		packVec2(normal.x, normal.y),
-		dot(glcolor, glcolor) * 0.25,
-		materialId / 65535.0
+		packVec2(encodeNormal(normal)),
+		packVec2(dot(glcolor, glcolor) * 0.25, reflectiveness),
+		1.0
 	);
 	
 }
@@ -159,10 +157,11 @@ void main() {
 	glcolor = gl_Color.rgb;
 	normal = gl_NormalMatrix * gl_Normal;
 	
-	
 	#include "/import/mc_Entity.glsl"
 	materialId = int(mc_Entity.x);
 	if (materialId < 1000) materialId = 0;
+	materialId %= 1000;
+	
 	
 	#if !(WAVING_WATER_NORMALS_ENABLED == 1 || defined DISTANT_HORIZONS)
 		vec3 worldPos;
@@ -171,7 +170,7 @@ void main() {
 	worldPos = endMat(gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex));
 	
 	#if PHYSICALLY_WAVING_WATER_ENABLED == 1
-		if (materialId == 1007) {
+		if (materialId == 7) {
 			float wavingAmount = mix(PHYSICALLY_WAVING_WATER_AMOUNT_UNDERGROUND, PHYSICALLY_WAVING_WATER_AMOUNT_SURFACE, lmcoord.y);
 			#ifdef DISTANT_HORIZONS
 				#include "/import/far.glsl"
