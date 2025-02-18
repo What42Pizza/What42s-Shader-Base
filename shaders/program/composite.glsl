@@ -12,9 +12,6 @@
 
 void main() {
 	vec3 color = texelFetch(MAIN_BUFFER, texelcoord, 0).rgb;
-	#ifdef DEBUG_OUTPUT_ENABLED
-		vec3 debugOutput = texelFetch(DEBUG_BUFFER, texelcoord, 0).rgb;
-	#endif
 	#if BLOOM_ENABLED == 1
 		vec3 bloomColor = color;
 	#endif
@@ -48,10 +45,6 @@ void main() {
 	#endif
 	
 	
-	
-	#ifdef DEBUG_OUTPUT_ENABLED
-		color = debugOutput;
-	#endif
 	
 	/* DRAWBUFFERS:0 */
 	gl_FragData[0] = vec4(color, 1.0);

@@ -4,10 +4,11 @@
 	
 	varying vec2 lmcoord;
 	varying vec4 glcolor;
-	varying vec3 worldPos;
+	varying vec3 normal;
 	flat_inout int dhBlock;
 	
-	varying vec3 normal;
+	varying vec3 worldPos;
+	flat_inout vec3 skyLight;
 	
 	#if WATER_FRESNEL_ADDITION == 1
 		varying vec3 viewPos;
@@ -17,8 +18,8 @@
 
 // includes
 
-#include "/lib/lighting/pre_lighting.glsl"
-#include "/lib/lighting/basic_lighting.glsl"
+#include "/lib/lighting/vsh_lighting.glsl"
+#include "/lib/lighting/fsh_lighting.glsl"
 
 
 
@@ -103,7 +104,7 @@ void main() {
 	
 	
 	// main lighting
-	color.rgb *= getBasicLighting(lmcoord.x, lmcoord.y  ARGS_IN);
+	doFshLighting(color.rgb, lmcoord.x, lmcoord.y, viewPos, normal  ARGS_IN);
 	
 	
 	// outputs
@@ -126,6 +127,8 @@ void main() {
 
 
 #ifdef VSH
+
+#include "/utils/getSkyLight.glsl"
 
 #if ISOMETRIC_RENDERING_ENABLED == 1
 	#include "/lib/isometric.glsl"
@@ -177,7 +180,8 @@ void main() {
 	#endif
 	
 	
-	doPreLighting(ARG_IN);
+	doVshLighting(ARG_IN);
+	skyLight = getSkyLight(ARG_IN);
 	
 }
 

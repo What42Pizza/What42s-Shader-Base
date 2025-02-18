@@ -41,14 +41,6 @@ uniform sampler2D shadowtex0;
 
 //#define HAND_DEPTH 0.19 // idk what should actually be here
 
-#ifdef DEBUG_OUTPUT_ENABLED
-	#define DEBUG_ARGS_IN , debugOutput
-	#define DEBUG_ARGS_OUT , inout vec3 debugOutput
-#else
-	#define DEBUG_ARGS_IN
-	#define DEBUG_ARGS_OUT
-#endif
-
 
 
 // buffer values:
@@ -61,7 +53,6 @@ uniform sampler2D shadowtex0;
 #define PREVENT_TAA_BUFFER          colortex5
 #define REFLECTION_STRENGTH_BUFFER  colortex6
 #define MAIN_BUFFER_COPY            gaux2
-#define DEBUG_BUFFER                colortex0
 
 #define DEPTH_BUFFER_ALL                   depthtex0
 #define DEPTH_BUFFER_WO_TRANS              depthtex1
@@ -204,6 +195,36 @@ float bayer16 (const vec2 a) {return bayer4 (0.25  * a) * 0.0625   + bayer4(a); 
 float bayer32 (const vec2 a) {return bayer8 (0.25  * a) * 0.0625   + bayer4(a); }
 float bayer64 (const vec2 a) {return bayer8 (0.125 * a) * 0.015625 + bayer8(a); }
 float bayer128(const vec2 a) {return bayer16(0.125 * a) * 0.015625 + bayer8(a); }
+
+float packVec2(vec2 v) {
+	v = floor(v * 2047.0 + 0.5);
+	return dot(v, vec2(1.0, 2048.0)) / 0x3FFFFF;
+}
+
+float packVec2(float x, float y) {return packVec2(vec2(x, y));}
+
+vec2 unpackVec2(float v) {
+	v *= 0x3FFFFF; // map to 0 - 2^22-1
+	float x = mod(v, 2048.0); // take lowest 11 bits
+	v = floor(v / 2048.0); // shift 11 bits
+	float y = v; // take last 11 bits
+	return vec2(x, y) / 2047.0; // map to 0-1
+}
+
+// octahedral encoding/decoding
+vec2 encodeNormal(vec3 v) {
+	v /= abs(v.x) + abs(v.y) + abs(v.z);
+	v.xy = (v.z >= 0.0) ? v.xy : (1.0 - abs(v.yx)) * (vec2(v.x >= 0.0, v.y >= 0.0) * 2.0 - 1.0);
+	return v.xy * 0.5 + 0.5;
+}
+
+vec3 decodeNormal(vec2 v) {
+	vec2 f = v * 2.0 - 1.0;
+	vec3 n = vec3(f, 1.0 - abs(f.x) - abs(f.y));
+	float t = max(-n.z, 0.0);
+	n.xy += vec2(n.x >= 0.0 ? -t : t, n.y >= 0.0 ? -t : t);
+	return normalize(n);
+}
 
 
 

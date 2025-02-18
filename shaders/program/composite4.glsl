@@ -173,7 +173,7 @@ void main() {
 	/* DRAWBUFFERS:0 */
 	gl_FragData[0] = vec4(color, 1.0);
 	#if (AA_STRATEGY == 2 || AA_STRATEGY == 3 || AA_STRATEGY == 4) || SSS_PHOSPHOR == 1
-		/* DRAWBUFFERS:01 */
+		/* DRAWBUFFERS:02 */
 		#if MOTION_BLUR_ENABLED == 1
 			gl_FragData[1] = vec4(prevColor, 1.0);
 		#else

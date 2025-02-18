@@ -1,19 +1,11 @@
-// transferres
-
 #ifdef FIRST_PASS
 	
 	varying vec2 texcoord;
 	varying vec2 lmcoord;
-	varying vec4 glcolor;
-	
-	varying vec3 normal;
+	varying vec3 glcolor;
+	varying vec2 normal;
 	
 #endif
-
-// includes
-
-#include "/lib/lighting/pre_lighting.glsl"
-#include "/lib/lighting/basic_lighting.glsl"
 
 
 
@@ -22,38 +14,33 @@
 #ifdef FSH
 
 void main() {
-	vec4 color = texture2D(MAIN_BUFFER, texcoord) * glcolor;
 	
+	vec4 albedo = texture2D(MAIN_BUFFER, texcoord) * vec4(normalize(glcolor), 1.0);
+	if (albedo.a < 0.1) discard;
 	
 	
 	// hurt flash, creeper flash, etc
 	#include "/import/entityColor.glsl"
-	color.rgb = mix(color.rgb, entityColor.rgb, entityColor.a);
+	albedo.rgb = mix(albedo.rgb, entityColor.rgb, entityColor.a);
 	
 	
-	
-	// main lighting
-	color.rgb *= getBasicLighting(lmcoord.x, lmcoord.y  ARGS_IN);
-	
-	
-	
-	// outputs
-	
-	/* DRAWBUFFERS:04 */
-	gl_FragData[0] = color;
-	gl_FragData[1] = vec4(normal, 1.0);
-	
-	#if REFLECTIONS_ENABLED == 1 && AA_STRATEGY == 4
-		/* DRAWBUFFERS:0465 */
-		gl_FragData[2] = vec4(0.0, 0.0, 0.0, 1.0);
-		gl_FragData[3] = vec4(1.0, 1.0, 1.0, 1.0);
-	#elif REFLECTIONS_ENABLED == 1 && AA_STRATEGY != 4
-		/* DRAWBUFFERS:046 */
-		gl_FragData[2] = vec4(0.0, 0.0, 0.0, 1.0);
-	#elif REFLECTIONS_ENABLED == 0 && AA_STRATEGY == 4
-		/* DRAWBUFFERS:045 */
-		gl_FragData[2] = vec4(1.0, 1.0, 1.0, 1.0);
-	#endif
+	/*
+		0.0: albedo.r
+		0.1: albedo.g
+		0.2: albedo.b
+		1.0: lmcoord.x & lmcoord.y
+		1.1: normal x & normal y
+		1.2: gl_Color brightness (squared 'length' of gl_Color) * 0.25
+		1.3: block id
+	*/
+	/* DRAWBUFFERS:01 */
+	gl_FragData[0] = vec4(albedo);
+	gl_FragData[1] = vec4(
+		packVec2(lmcoord.x, lmcoord.y),
+		packVec2(normal.x, normal.y),
+		dot(glcolor, glcolor) * 0.25,
+		0.0 // TODO: entity id?
+	);
 	
 }
 
@@ -76,6 +63,8 @@ void main() {
 	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
 	lmcoord  = (gl_TextureMatrix[1] * gl_MultiTexCoord1).xy;
 	adjustLmcoord(lmcoord);
+	glcolor = gl_Color.rgb;
+	normal = encodeNormal(gl_NormalMatrix * gl_Normal);
 	
 	
 	#if ISOMETRIC_RENDERING_ENABLED == 1
@@ -85,6 +74,7 @@ void main() {
 	#else
 		gl_Position = ftransform();
 	#endif
+	
 	
 	#if ISOMETRIC_RENDERING_ENABLED == 0
 		if (gl_Position.z < -5.0) return; // simple but effective optimization
@@ -99,13 +89,6 @@ void main() {
 		#endif
 	#endif
 	
-	
-	glcolor = gl_Color;
-	
-	normal = gl_NormalMatrix * gl_Normal;
-	
-	
-	doPreLighting(ARG_IN);
 	
 }
 

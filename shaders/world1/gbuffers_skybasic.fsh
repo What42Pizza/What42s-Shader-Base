@@ -15,7 +15,7 @@
 #define ARG_IN false
 #define ARG_OUT bool dummy
 #define main dummy_main
-#include "/main_files/gbuffers_skybasic.glsl"
+#include "/program/gbuffers_skybasic.glsl"
 #undef main
 #undef FIRST_PASS
 #undef ARGS_IN
@@ -30,4 +30,4 @@
 #define ARGS_OUT
 #define ARG_IN
 #define ARG_OUT
-#include "/main_files/gbuffers_skybasic.glsl"
+#include "/program/gbuffers_skybasic.glsl"

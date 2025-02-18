@@ -1,6 +1,6 @@
 #ifdef VSH
 
-void doPreLighting(ARG_OUT) {
+void doVshLighting(ARG_OUT) {
 	
 	#if HANDHELD_LIGHT_ENABLED == 1
 		float depth = estimateDepthVSH();

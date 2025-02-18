@@ -11,44 +11,7 @@
 
 
 
-#include "/lib/lighting/shadows.glsl"
-
-#if SHADOWS_ENABLED == 1
-float getSkyBrightness(vec3 viewPos  ARGS_OUT) {
-#else
-float getSkyBrightness(ARG_OUT) {
-#endif
-	
-	// get normal dot sun/moon pos
-	#ifdef OVERWORLD
-		vec3 normal = texelFetch(NORMALS_BUFFER, texelcoord, 0).rgb;
-		#include "/import/shadowLightPosition.glsl"
-		float lightDot = dot(normalize(shadowLightPosition), normal);
-	#else
-		float lightDot = 1.0;
-	#endif
-	
-	// sample shadow
-	#if SHADOWS_ENABLED == 1
-		float skyBrightness = sampleShadow(viewPos, lightDot  ARGS_IN);
-		#ifdef DISTANT_HORIZONS
-			#include "/import/far.glsl"
-			float len = max(length(viewPos) / far, 0.8);
-			skyBrightness = mix(skyBrightness, 0.95, smoothstep(len, 0.75, 0.8));
-		#endif
-	#else
-		float skyBrightness = 0.95;
-	#endif
-	
-	// misc processing
-	skyBrightness *= max(lightDot, 0.0);
-	#include "/import/rainStrength.glsl"
-	skyBrightness *= 1.0 - rainStrength * (1.0 - RAIN_LIGHT_MULT) * 0.5;
-	
-	return skyBrightness;
-}
-
-
+#include "/lib/lighting/fsh_lighting.glsl"
 
 #if SSAO_ENABLED == 1
 	#include "/lib/ssao.glsl"
@@ -69,9 +32,10 @@ float getSkyBrightness(ARG_OUT) {
 
 void main() {
 	vec3 color = texelFetch(MAIN_BUFFER, texelcoord, 0).rgb;
-	#ifdef DEBUG_OUTPUT_ENABLED
-		vec3 debugOutput = texelFetch(DEBUG_BUFFER, texelcoord, 0).rgb;
-	#endif
+	vec4 data = texelFetch(colortex1, texelcoord, 0);
+	vec2 lmcoord = unpackVec2(data.x);
+	vec2 normalCompact = unpackVec2(data.y);
+	vec3 normal = decodeNormal(normalCompact);
 	
 	
 	float depth = texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r;
@@ -98,9 +62,9 @@ void main() {
 	if (isNonSky) {
 		
 		
-		#if FOG_ENABLED == 1 || SHADOWS_ENABLED == 1
-			vec3 viewPos = screenToView(vec3(texcoord, depth)  ARGS_IN);
-		#endif
+		vec3 viewPos = screenToView(vec3(texcoord, depth)  ARGS_IN);
+		doFshLighting(color, lmcoord.x, lmcoord.y, viewPos, normal  ARGS_IN);
+		color *= sqrt(data.z * 4.0);
 		
 		
 		#if FOG_ENABLED == 1
@@ -111,24 +75,9 @@ void main() {
 		#endif
 		
 		
-		#if SHADOWS_ENABLED == 1
-			float skyBrightness = getSkyBrightness(viewPos  ARGS_IN);
-		#else
-			float skyBrightness = getSkyBrightness(ARG_IN);
-		#endif
-		color *= 1.0 + skyLight * skyBrightness * (1.0 - 0.6 * getColorLum(color));
-		
-		
 		#if SSAO_ENABLED == 1
 			float aoFactor = getAoFactor(ARG_IN);
-			//#if SSAO_APPLICATION_TYPE == 1
-				color *= 1.0 - aoFactor * AO_AMOUNT;
-			//#elif SSAO_APPLICATION_TYPE == 2
-			//	color = pow(color, vec3(1.0 + aoFactor * 1.5));
-			//#endif
-			#if SSAO_SHOW_AMOUNT == 1
-				debugOutput = vec3(1.0 - aoFactor);
-			#endif
+			color *= 1.0 - aoFactor * AO_AMOUNT;
 		#endif
 		
 		
@@ -140,10 +89,6 @@ void main() {
 	}
 	
 	
-	
-	#ifdef DEBUG_OUTPUT_ENABLED
-		color = debugOutput;
-	#endif
 	
 	/* DRAWBUFFERS:0 */
 	gl_FragData[0] = vec4(color, 1.0);

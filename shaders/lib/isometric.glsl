@@ -25,8 +25,8 @@ float getIsometricOffset(ARG_OUT) {
 
 vec4 projectIsometric(vec3 worldPos  ARGS_OUT) {
 	#include "/import/gbufferModelView.glsl"
-	vec3 output = mat3(gbufferModelView) * worldPos;
-	output.xyz *= getIsometricScale(ARG_IN);
-	output.z -= getIsometricOffset(ARG_IN);
-	return vec4(output, 1.0);
+	vec3 screenPos = mat3(gbufferModelView) * worldPos;
+	screenPos.xyz *= getIsometricScale(ARG_IN);
+	screenPos.z -= getIsometricOffset(ARG_IN);
+	return vec4(screenPos, 1.0);
 }

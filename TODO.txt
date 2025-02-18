@@ -3,10 +3,7 @@ Make more example images:
 	Rain
 	Night
 	Reflections
-Brighter day in fantasy style
-Make synrays cave increase ignore sunrays max
-Distant horizons support
-Rework waving calculations for performance?
+Make sanrays cave increase ignore sunrays max
 Add water caustics?
 Increase waviness of plant tops
 Move the moonLightBrightness calculation in basic_lighting to its own uniform

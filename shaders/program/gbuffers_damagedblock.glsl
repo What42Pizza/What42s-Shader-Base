@@ -7,11 +7,9 @@
 #ifdef FSH
 
 void main() {
-	vec4 color = texture2D(MAIN_BUFFER, texcoord);
-	
+	vec4 albedo = texture2D(MAIN_BUFFER, texcoord);
 	/* DRAWBUFFERS:0 */
-	gl_FragData[0] = color;
-	
+	gl_FragData[0] = vec4(albedo);
 }
 
 #endif
@@ -30,6 +28,7 @@ void main() {
 void main() {
 	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
 	
+	
 	#if ISOMETRIC_RENDERING_ENABLED == 1
 		#include "/import/gbufferModelViewInverse.glsl"
 		vec3 worldPos = endMat(gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex));
@@ -38,9 +37,11 @@ void main() {
 		gl_Position = ftransform();
 	#endif
 	
+	
 	#ifdef TAA_JITTER
 		doTaaJitter(gl_Position.xy  ARGS_IN);
 	#endif
+	
 	
 }
 

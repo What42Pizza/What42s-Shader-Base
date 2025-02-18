@@ -1,11 +1,7 @@
 // optifine settings (DON'T DELETE)
 /*
-const bool colortex1Clear = false;
-const bool colortex2Clear = false;
-const int colortex2Format = RGB16F;
-const int colortex4Format = RGB32F;
-const int colortex5Format = R16F;
-const int colortex6Format = RG16F;
+const int colortex1Format = RGBA32F;
+const vec4 colortex1ClearColor = vec4(0.0, 0.0, 0.0, 0.0);
 const float wetnessHalflife = 50.0f;
 const float drynessHalflife = 50.0f;
 const float centerDepthHalflife = 2.5f;
@@ -143,24 +139,6 @@ const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8
 
 
 #define HSV_POSTERIZE_QUALITY vec3(HSV_POSTERIZE_HUE_QUALITY, HSV_POSTERIZE_SATURATION_QUALITY, HSV_POSTERIZE_BRIGHTNESS_QUALITY)
-
-
-
-#if SSAO_SHOW_AMOUNT == 1
-	#define DEBUG_OUTPUT_ENABLED
-#endif
-#if BLOOM_SHOW_ADDITION == 1
-	#define DEBUG_OUTPUT_ENABLED
-#endif
-#if BLOOM_SHOW_FILTERED_TEXTURE == 1
-	#define DEBUG_OUTPUT_ENABLED
-#endif
-#if SUNRAYS_SHOW_ADDITION == 1
-	#define DEBUG_OUTPUT_ENABLED
-#endif
-#if DOF_SHOW_AMOUNTS == 1
-	#define DEBUG_OUTPUT_ENABLED
-#endif
 
 
 

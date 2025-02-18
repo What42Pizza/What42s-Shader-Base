@@ -5,9 +5,10 @@
 	varying vec2 texcoord;
 	varying vec2 lmcoord;
 	varying vec3 glcolor;
+	varying vec3 normal;
 	flat_inout int blockData;
 	
-	varying vec3 normal;
+	flat_inout vec3 skyLight;
 	
 	#if WATER_FRESNEL_ADDITION == 1
 		varying vec3 viewPos;
@@ -24,8 +25,8 @@
 
 // includes
 
-#include "/lib/lighting/pre_lighting.glsl"
-#include "/lib/lighting/basic_lighting.glsl"
+#include "/lib/lighting/vsh_lighting.glsl"
+#include "/lib/lighting/fsh_lighting.glsl"
 
 
 
@@ -104,7 +105,7 @@ void main() {
 	
 	// main lighting
 	color.rgb *= glcolor;
-	color.rgb *= getBasicLighting(lmcoord.x, lmcoord.y  ARGS_IN);
+	doFshLighting(color.rgb, lmcoord.x, lmcoord.y, viewPos, normal  ARGS_IN);
 	
 	
 	// fog
@@ -141,6 +142,8 @@ void main() {
 
 #ifdef VSH
 
+#include "/utils/getSkyLight.glsl"
+
 #if ISOMETRIC_RENDERING_ENABLED == 1
 	#include "/lib/isometric.glsl"
 #endif
@@ -155,8 +158,7 @@ void main() {
 	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
 	lmcoord  = (gl_TextureMatrix[1] * gl_MultiTexCoord1).xy;
 	adjustLmcoord(lmcoord);
-	
-	
+	glcolor = gl_Color.rgb;
 	normal = gl_NormalMatrix * gl_Normal;
 	
 	
@@ -215,7 +217,6 @@ void main() {
 	#endif
 	
 	
-	glcolor = gl_Color.rgb;
 	#if USE_SIMPLE_LIGHT == 1
 		if (glcolor.r == glcolor.g && glcolor.g == glcolor.b) {
 			glcolor = vec3(1.0);
@@ -223,7 +224,8 @@ void main() {
 	#endif
 	
 	
-	doPreLighting(ARG_IN);
+	doVshLighting(ARG_IN);
+	skyLight = getSkyLight(ARG_IN);
 	
 }
 

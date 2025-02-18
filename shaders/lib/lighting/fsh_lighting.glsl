@@ -1,3 +1,11 @@
+#ifdef FSH
+
+
+
+#include "/utils/getAmbientLight.glsl"
+
+
+
 vec3 getShadowPos(vec3 viewPos, float lightDot  ARGS_OUT) {
 	#include "/import/gbufferModelViewInverse.glsl"
 	vec4 playerPos = gbufferModelViewInverse * startMat(viewPos);
@@ -180,3 +188,80 @@ float sampleShadow(vec3 viewPos, float lightDot  ARGS_OUT) {
 		
 	#endif
 }
+
+
+
+float getSkyBrightness(vec3 viewPos, vec3 normal  ARGS_OUT) {
+	
+	// get normal dot sun/moon pos
+	#ifdef OVERWORLD
+		#include "/import/shadowLightPosition.glsl"
+		float lightDot = dot(normalize(shadowLightPosition), normal);
+	#else
+		float lightDot = 1.0;
+	#endif
+	
+	// sample shadow
+	#if SHADOWS_ENABLED == 1
+		float skyBrightness = sampleShadow(viewPos, lightDot  ARGS_IN);
+		#ifdef DISTANT_HORIZONS
+			#include "/import/far.glsl"
+			float len = max(length(viewPos) / far, 0.8);
+			skyBrightness = mix(skyBrightness, 0.95, smoothstep(len, 0.75, 0.8));
+		#endif
+	#else
+		float skyBrightness = 0.95;
+	#endif
+	
+	// misc processing
+	skyBrightness *= max(lightDot, 0.0);
+	#include "/import/rainStrength.glsl"
+	skyBrightness *= 1.0 - rainStrength * (1.0 - RAIN_LIGHT_MULT) * 0.5;
+	
+	return skyBrightness;
+}
+
+
+
+void doFshLighting(inout vec3 color, float blockBrightness, float ambientBrightness, vec3 viewPos, vec3 normal  ARGS_OUT) {
+	
+	#if CEL_SHADING_ENABLED == 1
+		blockBrightness =
+			sqrt(blockBrightness) * 0.8
+			+ step(0.2, blockBrightness) * 0.2;
+		ambientBrightness = smoothstep(0.0, 1.0, ambientBrightness);
+	#endif
+	
+	vec3 ambientLight = getAmbientLight(ambientBrightness  ARGS_IN);
+	
+	#if BLOCKLIGHT_FLICKERING_ENABLED == 1
+		#include "/import/blockFlickerAmount.glsl"
+		blockBrightness *= 1.0 + (blockFlickerAmount - 1.0) * BLOCKLIGHT_FLICKERING_AMOUNT;
+	#endif
+	#if BLOCK_BRIGHTNESS_CURVE == 2
+		blockBrightness = pow2(blockBrightness);
+	#elif BLOCK_BRIGHTNESS_CURVE == 3
+		blockBrightness = pow3(blockBrightness);
+	#elif BLOCK_BRIGHTNESS_CURVE == 4
+		blockBrightness = pow4(blockBrightness);
+	#elif BLOCK_BRIGHTNESS_CURVE == 5
+		blockBrightness = pow5(blockBrightness);
+	#endif
+	#include "/import/eyeBrightness.glsl"
+	#include "/import/moonLightBrightness.glsl"
+	#ifdef OVERWORLD
+		blockBrightness *= 1.0 + (eyeBrightness.y / 240.0) * moonLightBrightness * (BLOCK_BRIGHTNESS_NIGHT_MULT - 1.0);
+	#endif
+	vec3 blockLight = blockBrightness * BLOCK_COLOR;
+	
+	#ifdef NETHER
+		blockLight *= mix(vec3(1.0), NETHER_BLOCKLIGHT_MULT, blockBrightness);
+	#endif
+	
+	float skyBrightness = getSkyBrightness(viewPos, normal  ARGS_IN);
+	color *= smoothMax(blockLight, ambientLight, LIGHT_SMOOTHING) + skyLight * skyBrightness;
+}
+
+
+
+#endif

@@ -10,25 +10,41 @@
 #ifdef FSH
 
 void main() {
-	vec4 color = texture2D(MAIN_BUFFER, texcoord);
+	
+	vec4 albedo = texture2D(MAIN_BUFFER, texcoord);
 	
 	
 	#if !defined END
 		#include "/import/sunPosition.glsl"
 		if (sunPosition.z < 0.0) {
-			color.rgb *= SUN_BRIGHTNESS;
+			albedo.rgb *= SUN_BRIGHTNESS;
 		} else {
-			color.rgb *= MOON_BRIGHTNESS;
+			albedo.rgb *= MOON_BRIGHTNESS;
 		}
 	#endif
 	
 	#ifdef END
-		color.rgb *= glcolor;
+		albedo.rgb *= glcolor;
 	#endif
 	
 	
-	/* DRAWBUFFERS:0 */
-	gl_FragData[0] = color;
+	/*
+		0.0: albedo.r
+		0.1: albedo.g
+		0.2: albedo.b
+		1.0: lmcoord.x & lmcoord.y
+		1.1: normal x & normal y
+		1.2: gl_Color brightness (squared 'length' of gl_Color) * 0.25
+		1.3: block id
+	*/
+	/* DRAWBUFFERS:01 */
+	gl_FragData[0] = vec4(albedo);
+	gl_FragData[1] = vec4(
+		packVec2(0.0, 0.0),
+		packVec2(0.0, 0.0),
+		0.75,
+		0.0
+	);
 	
 }
 
@@ -51,6 +67,7 @@ void main() {
 		glcolor = gl_Color.rgb;
 	#endif
 	
+	
 	#if ISOMETRIC_RENDERING_ENABLED == 1
 		#include "/import/gbufferModelViewInverse.glsl"
 		vec3 worldPos = endMat(gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex));
@@ -59,9 +76,11 @@ void main() {
 		gl_Position = ftransform();
 	#endif
 	
+	
 	#if defined TAA_JITTER && !defined END
 		doTaaJitter(gl_Position.xy  ARGS_IN);
 	#endif
+	
 	
 }
 
