@@ -25,9 +25,9 @@ void main() {
 	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
 	
 	#include "/import/mc_Entity.glsl"
-	int blockData = int(mc_Entity.x);
-	if (blockData >= 1000) {
-		int shadowData = (blockData % 100 - blockData % 10) / 10;
+	int materialId = int(mc_Entity.x);
+	if (materialId >= 1000) {
+		int shadowData = (materialId % 100 - materialId % 10) / 10;
 		#if EXCLUDE_FOLIAGE == 1
 			#define SHADOW_DATA_THRESHOLD 0
 		#else

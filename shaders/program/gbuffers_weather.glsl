@@ -13,19 +13,12 @@
 
 void main() {
 	
-	vec4 color = texture2D(MAIN_BUFFER, texcoord) * glcolor;
-	
+	vec4 color = texture2D(MAIN_TEXTURE, texcoord) * glcolor;
 	color.a *= 1.0 - WEATHER_TRANSPARENCY;
 	
 	
-	/* DRAWBUFFERS:04 */
+	/* DRAWBUFFERS:0 */
 	gl_FragData[0] = color;
-	gl_FragData[1] = vec4(normal, 1.0);
-	
-	#if REFLECTIONS_ENABLED == 1
-		/* DRAWBUFFERS:046 */
-		gl_FragData[2] = vec4(0.0, 0.0, 0.0, 1.0);
-	#endif
 	
 }
 

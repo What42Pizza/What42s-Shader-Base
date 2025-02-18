@@ -1,10 +1,10 @@
 void sss_bumpy(inout vec3 color  ARGS_OUT) {
 	#include "/import/pixelSize.glsl"
 	
-	vec4 u = texture2D(MAIN_BUFFER, texcoord + vec2(         0.0, -pixelSize.y) * 1.25);
-	vec4 d = texture2D(MAIN_BUFFER, texcoord + vec2(         0.0,  pixelSize.y) * 1.25);
-	vec4 l = texture2D(MAIN_BUFFER, texcoord + vec2(-pixelSize.x,          0.0) * 1.25);
-	vec4 r = texture2D(MAIN_BUFFER, texcoord + vec2( pixelSize.x,          0.0) * 1.25);
+	vec4 u = texture2D(MAIN_TEXTURE_COPY, texcoord + vec2(         0.0, -pixelSize.y) * 1.25);
+	vec4 d = texture2D(MAIN_TEXTURE_COPY, texcoord + vec2(         0.0,  pixelSize.y) * 1.25);
+	vec4 l = texture2D(MAIN_TEXTURE_COPY, texcoord + vec2(-pixelSize.x,          0.0) * 1.25);
+	vec4 r = texture2D(MAIN_TEXTURE_COPY, texcoord + vec2( pixelSize.x,          0.0) * 1.25);
 	
 	vec4 nc = normalize(vec4(color, 1.0));
 	vec4 nu = normalize(u);

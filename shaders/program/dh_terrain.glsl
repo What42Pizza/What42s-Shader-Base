@@ -33,16 +33,7 @@ void main() {
 	albedo = clamp(albedo, vec3(0.0), vec3(1.0));
 	
 	
-	/*
-		0.0: albedo.r
-		0.1: albedo.g
-		0.2: albedo.b
-		1.0: lmcoord.x & lmcoord.y
-		1.1: normal x & normal y
-		1.2: gl_Color brightness (squared 'length' of gl_Color) * 0.25
-		1.3: block id
-	*/
-	/* DRAWBUFFERS:01 */
+	/* DRAWBUFFERS:02 */
 	gl_FragData[0] = vec4(albedo, 1.0);
 	gl_FragData[1] = vec4(
 		packVec2(lmcoord.x, lmcoord.y),

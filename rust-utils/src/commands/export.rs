@@ -48,9 +48,9 @@ pub fn function(args: &[String]) -> Result<()> {
 pub fn export_shader<T: FileOptionExtension + Clone>(project_path: &Path, export_path: &Path, version: &str, is_optifine: bool, style_name: &str, zip_options: FileOptions<T>) -> Result<()> {
 	
 	let output_file_name = if is_optifine {
-		format!("What42's Shader Base {version} (Optifine, {style_name} style).zip")
+		format!("I Like Vanilla {version} (Optifine, {style_name} style).zip")
 	} else {
-		format!("What42's Shader Base {version}.zip")
+		format!("I Like Vanilla {version}.zip")
 	};
 	let output_path = export_path.push_new(output_file_name);
 	

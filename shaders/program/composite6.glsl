@@ -12,7 +12,7 @@ void main() {
 	barrelTexCoord *= SSS_BARREL_AMOUNT * (length(barrelTexCoord) - 1) + 1.0;
 	barrelTexCoord = barrelTexCoord * 0.5 + 0.5;
 	
-	vec3 color = texture2D(MAIN_BUFFER, barrelTexCoord).rgb;
+	vec3 color = texture2D(MAIN_TEXTURE, barrelTexCoord).rgb;
 	if (barrelTexCoord != clamp(barrelTexCoord, 0.0, 1.0)) color = vec3(0.0);
 	
 	/* DRAWBUFFERS:0 */

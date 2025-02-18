@@ -14,10 +14,10 @@ void doFxaa(inout vec3 color, sampler2D tex  ARGS_OUT) {
 	int iterations = 12;
 	
 	float lumaCenter = getColorLum(color);
-	float lumaDown  = getColorLum(texelFetch(MAIN_BUFFER, texelcoord + ivec2( 0, -1), 0).rgb);
-	float lumaUp    = getColorLum(texelFetch(MAIN_BUFFER, texelcoord + ivec2( 0,  1), 0).rgb);
-	float lumaLeft  = getColorLum(texelFetch(MAIN_BUFFER, texelcoord + ivec2(-1,  0), 0).rgb);
-	float lumaRight = getColorLum(texelFetch(MAIN_BUFFER, texelcoord + ivec2( 1,  0), 0).rgb);
+	float lumaDown  = getColorLum(texelFetch(tex, texelcoord + ivec2( 0, -1), 0).rgb);
+	float lumaUp    = getColorLum(texelFetch(tex, texelcoord + ivec2( 0,  1), 0).rgb);
+	float lumaLeft  = getColorLum(texelFetch(tex, texelcoord + ivec2(-1,  0), 0).rgb);
+	float lumaRight = getColorLum(texelFetch(tex, texelcoord + ivec2( 1,  0), 0).rgb);
 	
 	float lumaMin = min(lumaCenter, min(min(lumaDown, lumaUp), min(lumaLeft, lumaRight)));
 	float lumaMax = max(lumaCenter, max(max(lumaDown, lumaUp), max(lumaLeft, lumaRight)));
@@ -25,10 +25,10 @@ void doFxaa(inout vec3 color, sampler2D tex  ARGS_OUT) {
 	float lumaRange = lumaMax - lumaMin;
 	
 	if (lumaRange > max(edgeThresholdMin, lumaMax * edgeThresholdMax)) {
-		float lumaDownLeft  = getColorLum(texelFetch(MAIN_BUFFER, texelcoord + ivec2(-1, -1), 0).rgb);
-		float lumaUpRight   = getColorLum(texelFetch(MAIN_BUFFER, texelcoord + ivec2( 1,  1), 0).rgb);
-		float lumaUpLeft    = getColorLum(texelFetch(MAIN_BUFFER, texelcoord + ivec2(-1,  1), 0).rgb);
-		float lumaDownRight = getColorLum(texelFetch(MAIN_BUFFER, texelcoord + ivec2( 1, -1), 0).rgb);
+		float lumaDownLeft  = getColorLum(texelFetch(tex, texelcoord + ivec2(-1, -1), 0).rgb);
+		float lumaUpRight   = getColorLum(texelFetch(tex, texelcoord + ivec2( 1,  1), 0).rgb);
+		float lumaUpLeft    = getColorLum(texelFetch(tex, texelcoord + ivec2(-1,  1), 0).rgb);
+		float lumaDownRight = getColorLum(texelFetch(tex, texelcoord + ivec2( 1, -1), 0).rgb);
 		
 		float lumaDownUp    = lumaDown + lumaUp;
 		float lumaLeftRight = lumaLeft + lumaRight;
@@ -81,8 +81,8 @@ void doFxaa(inout vec3 color, sampler2D tex  ARGS_OUT) {
 		vec2 uv1 = currentUv - offset;
 		vec2 uv2 = currentUv + offset;
 		
-		float lumaEnd1 = getColorLum(texture2D(MAIN_BUFFER, uv1).rgb);
-		float lumaEnd2 = getColorLum(texture2D(MAIN_BUFFER, uv2).rgb);
+		float lumaEnd1 = getColorLum(texture2D(tex, uv1).rgb);
+		float lumaEnd2 = getColorLum(texture2D(tex, uv2).rgb);
 		lumaEnd1 -= lumaLocalAverage;
 		lumaEnd2 -= lumaLocalAverage;
 		
@@ -100,11 +100,11 @@ void doFxaa(inout vec3 color, sampler2D tex  ARGS_OUT) {
 		if (!reachedBoth) {
 			for (int i = 2; i < iterations; i++) {
 				if (!reached1) {
-					lumaEnd1 = getColorLum(texture2D(MAIN_BUFFER, uv1).rgb);
+					lumaEnd1 = getColorLum(texture2D(tex, uv1).rgb);
 					lumaEnd1 = lumaEnd1 - lumaLocalAverage;
 				}
 				if (!reached2) {
-					lumaEnd2 = getColorLum(texture2D(MAIN_BUFFER, uv2).rgb);
+					lumaEnd2 = getColorLum(texture2D(tex, uv2).rgb);
 					lumaEnd2 = lumaEnd2 - lumaLocalAverage;
 				}
 				
@@ -154,6 +154,6 @@ void doFxaa(inout vec3 color, sampler2D tex  ARGS_OUT) {
 			finalUv.x += finalOffset * stepLength;
 		}
 		
-		color = texture2D(MAIN_BUFFER, finalUv).rgb;
+		color = texture2D(tex, finalUv).rgb;
 	}
 }

@@ -11,24 +11,17 @@
 #endif
 
 void main() {
-	vec3 color = texelFetch(MAIN_BUFFER, texelcoord, 0).rgb;
-	#ifdef DEBUG_OUTPUT_ENABLED
-		vec3 debugOutput = texelFetch(DEBUG_BUFFER, texelcoord, 0).rgb;
-	#endif
+	vec3 color = texelFetch(MAIN_TEXTURE_COPY, texelcoord, 0).rgb;
 	
 	
 	
 	// ======== DEPTH OF FIELD ========
 	
 	#if DOF_ENABLED == 1
-		doDOF(color  DEBUG_ARGS_IN  ARGS_IN);
+		doDOF(color  ARGS_IN);
 	#endif
 	
 	
-	
-	#ifdef DEBUG_OUTPUT_ENABLED
-		color = debugOutput;
-	#endif
 	
 	/* DRAWBUFFERS:0 */
 	gl_FragData[0] = vec4(color, 1.0);

@@ -17,7 +17,7 @@ void doMotionBlur(inout vec3 color, vec2 prevCoord, float centerDepth  ARGS_OUT)
 	for (int i = 0; i < SAMPLE_COUNT; i ++) {
 		pos += coordStep;
 		float sampleDepth = texture2DLod(DEPTH_BUFFER_WO_TRANS, pos, 0).x;
-		vec3 sample = texture2D(TAA_PREV_BUFFER, pos).rgb;
+		vec3 sample = texture2D(PREV_TEXTURE, pos).rgb;
 		color += sample * sample;
 	}
 	color /= SAMPLE_COUNT + 1;

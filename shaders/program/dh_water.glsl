@@ -107,16 +107,14 @@ void main() {
 	doFshLighting(color.rgb, lmcoord.x, lmcoord.y, viewPos, normal  ARGS_IN);
 	
 	
-	// outputs
-	
-	/* DRAWBUFFERS:04 */
+	/* DRAWBUFFERS:03 */
 	gl_FragData[0] = color;
-	gl_FragData[1] = vec4(normal, 1.0);
-	
-	#if REFLECTIONS_ENABLED == 1
-		/* DRAWBUFFERS:046 */
-		gl_FragData[2] = vec4(reflectionStrengths, 0.0, 1.0);
-	#endif
+	gl_FragData[1] = vec4(
+		packVec2(lmcoord.x, lmcoord.y),
+		packVec2(normal.x, normal.y),
+		dot(glcolor, glcolor) * 0.5, // glcolor is substantially different here so a multiplier (on top of *0.25) is needed to compensate
+		0.0
+	);
 	
 }
 

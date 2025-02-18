@@ -29,7 +29,7 @@ void neighborhoodClamping(vec3 color, inout vec3 prevColor  ARGS_OUT) {
 	
 	for (int i = 0; i < clampingOffsetCount; i++) {
 		ivec2 offsetCoord = texelcoord + clampingOffsets[i];
-		vec3 offsetColor = texelFetch(MAIN_BUFFER, offsetCoord, 0).rgb;
+		vec3 offsetColor = texelFetch(MAIN_TEXTURE, offsetCoord, 0).rgb;
 		minColor = min(minColor, offsetColor);
 		maxColor = max(maxColor, offsetColor);
 	}
@@ -48,7 +48,7 @@ void doTAA(inout vec3 color, float blockDepth, vec2 prevCoord  ARGS_OUT) {
 		return;
 	}
 	
-	vec3 prevColor = texture2D(TAA_PREV_BUFFER, prevCoord).rgb;
+	vec3 prevColor = texture2D(PREV_TEXTURE, prevCoord).rgb;
 	
 	neighborhoodClamping(color, prevColor  ARGS_IN);
 	

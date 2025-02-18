@@ -25,7 +25,7 @@
 #endif
 
 void main() {
-	vec4 color = texture2D(MAIN_BUFFER, texcoord) * glcolor;
+	vec4 color = texture2D(MAIN_TEXTURE, texcoord) * glcolor;
 	
 	
 	#if HIDE_NEARBY_CLOUDS == 0

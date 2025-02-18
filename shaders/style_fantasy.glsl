@@ -1210,26 +1210,6 @@
 #undef USE_SIMPLE_LIGHT
 										#define USE_SIMPLE_LIGHT 0
 #endif
-#if SSAO_SHOW_AMOUNT == -1
-#undef SSAO_SHOW_AMOUNT
-										#define SSAO_SHOW_AMOUNT 0
-#endif
-#if BLOOM_SHOW_ADDITION == -1
-#undef BLOOM_SHOW_ADDITION
-										#define BLOOM_SHOW_ADDITION 0
-#endif
-#if BLOOM_SHOW_FILTERED_TEXTURE == -1
-#undef BLOOM_SHOW_FILTERED_TEXTURE
-										#define BLOOM_SHOW_FILTERED_TEXTURE 0
-#endif
-#if SUNRAYS_SHOW_ADDITION == -1
-#undef SUNRAYS_SHOW_ADDITION
-										#define SUNRAYS_SHOW_ADDITION 0
-#endif
-#if DOF_SHOW_AMOUNTS == -1
-#undef DOF_SHOW_AMOUNTS
-										#define DOF_SHOW_AMOUNTS 0
-#endif
 #if REFLECTIVE_EVERYTHING == -1
 #undef REFLECTIVE_EVERYTHING
 										#define REFLECTIVE_EVERYTHING 0

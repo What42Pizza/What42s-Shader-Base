@@ -36,9 +36,9 @@ vec3 getWavingAddition(vec3 position  ARGS_OUT) {
 
 void applyWaving(inout vec3 position  ARGS_OUT) {
 	#include "/import/mc_Entity.glsl"
-	int blockData = int(mc_Entity.x);
-	if (blockData < 1000) return;
-	int wavingData = blockData % 10;
+	int materialId = int(mc_Entity.x);
+	if (materialId < 1000) return;
+	int wavingData = materialId % 10;
 	if (wavingData < 2 || wavingData > 7) return;
 	float wavingScale = wavingScales[wavingData / 2];
 	#include "/import/mc_midTexCoord.glsl"

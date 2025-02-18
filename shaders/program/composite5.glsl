@@ -30,14 +30,10 @@ void main() {
 	#else
 		#if SSS_FLIP == 1
 			#include "/import/viewSize.glsl"
-			vec3 color = texelFetch(MAIN_BUFFER, ivec2(viewSize) - texelcoord, 0).rgb;
+			vec3 color = texelFetch(MAIN_TEXTURE_COPY, ivec2(viewSize) - texelcoord, 0).rgb;
 		#else
-			vec3 color = texelFetch(MAIN_BUFFER, texelcoord, 0).rgb;
+			vec3 color = texelFetch(MAIN_TEXTURE_COPY, texelcoord, 0).rgb;
 		#endif
-	#endif
-	
-	#ifdef DEBUG_OUTPUT_ENABLED
-		vec3 debugOutput = texelFetch(DEBUG_BUFFER, texelcoord, 0).rgb;
 	#endif
 	
 	
@@ -95,10 +91,6 @@ void main() {
 	#endif
 	
 	
-	
-	#ifdef DEBUG_OUTPUT_ENABLED
-		color = debugOutput;
-	#endif
 	
 	/* DRAWBUFFERS:0 */
 	gl_FragData[0] = vec4(color, 1.0);

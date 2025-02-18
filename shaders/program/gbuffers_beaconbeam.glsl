@@ -8,7 +8,7 @@
 #ifdef FSH
 
 void main() {
-	vec4 color = vec4(texture2D(MAIN_BUFFER, texcoord).rgb, glcolor_alpha);
+	vec4 color = vec4(texture2D(MAIN_TEXTURE, texcoord).rgb, glcolor_alpha);
 	
 	color.rgb *= 1.3;
 	

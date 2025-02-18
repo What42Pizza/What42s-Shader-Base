@@ -2,10 +2,6 @@
 	
 	varying vec2 texcoord;
 	
-	#if AA_STRATEGY == 4
-		const bool colortex5MipmapEnabled = true;
-	#endif
-	
 #endif
 
 
@@ -39,7 +35,7 @@
 
 
 #ifdef REFLECTIONS_ENABLED
-	void doReflections(inout vec3 color  ARGS_OUT) {
+	void doReflections(inout vec3 color, vec3 normal, vec2 reflectionStrengths  ARGS_OUT) {
 		
 		// skip sky and fog
 		float depth = texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r;
@@ -53,13 +49,6 @@
 			if (depthIsSky(linearDepth)) return;
 		#endif
 		
-		// get strengths
-		vec2 reflectionStrengths = texelFetch(REFLECTION_STRENGTH_BUFFER, texelcoord, 0).rg;
-		#if REFLECTIVE_EVERYTHING == 1
-			reflectionStrengths = vec2(1.0, 0.0);
-		#endif
-		if (reflectionStrengths.r + reflectionStrengths.g < 0.01) {return;}
-		
 		// apply fog
 		vec3 viewPos = screenToView(vec3(texcoord, depth)  ARGS_IN);
 		#ifdef DISTANT_HORIZONS
@@ -70,12 +59,11 @@
 			vec3 playerPos = (gbufferModelViewInverse * startMat(viewPos)).xyz;
 			float fogDistance = getFogDistance(playerPos  ARGS_IN);
 			float fogAmount = getFogAmount(fogDistance, playerPos.y  ARGS_IN);
+			if (fogAmount > 0.99) return;
 			reflectionStrengths *= 1.0 - fogAmount;
 		#endif
-		if (reflectionStrengths.r + reflectionStrengths.g < 0.01) {return;}
 		
-		vec3 normal = texelFetch(NORMALS_BUFFER, texelcoord, 0).rgb;
-		addReflection(color, viewPos, normal, MAIN_BUFFER, reflectionStrengths.r, reflectionStrengths.g  ARGS_IN);
+		addReflection(color, viewPos, normal, MAIN_TEXTURE, reflectionStrengths.r, reflectionStrengths.g  ARGS_IN);
 		
 	}
 #endif
@@ -91,17 +79,31 @@ void main() {
 		sampleCoord *= texelSize;
 	#endif
 	
-	vec3 color = texelFetch(MAIN_BUFFER, sampleCoord, 0).rgb;
-	#ifdef DEBUG_OUTPUT_ENABLED
-		vec3 debugOutput = texelFetch(DEBUG_BUFFER, texelcoord, 0).rgb;
-	#endif
+	vec3 color = texelFetch(MAIN_TEXTURE, sampleCoord, 0).rgb;
+	vec4 data = texelFetch(OPAQUE_DATA_TEXTURE, texelcoord, 0);
+	vec3 normal = decodeNormal(unpackVec2(data.y));
 	
 	
 	
 	// ======== REFLECTIONS ========
 	
 	#ifdef REFLECTIONS_ENABLED
-		doReflections(color  ARGS_IN);
+		#if REFLECTIVE_EVERYTHING == 1
+			vec2 reflectionStrengths = vec2(1.0, 0.0);
+		#else
+			vec4 opaqueData = texelFetch(OPAQUE_DATA_TEXTURE, texelcoord, 0);
+			int matId = int(opaqueData.w * 65535.0 + 0.5);
+			float reflectiveness = (matId % 1000 - matId % 100) * 0.15;
+			float fresnelPercent = unpackVec2(opaqueData.z).y;
+			vec4 transparentData = texelFetch(TRANSPARENT_DATA_TEXTURE, texelcoord, 0);
+			matId = int(transparentData.w * 65535.0 + 0.5);
+			reflectiveness = max(reflectiveness, (matId % 1000 - matId % 100) * 0.15);
+			fresnelPercent = max(fresnelPercent, unpackVec2(opaqueData.z).y);
+			vec2 reflectionStrengths = vec2(reflectiveness * (1.0 - fresnelPercent), reflectiveness * fresnelPercent);
+		#endif
+		if (reflectiveness > 0.01) {
+			doReflections(color, normal, reflectionStrengths  ARGS_IN);
+		}
 	#endif
 	
 	
@@ -132,7 +134,7 @@ void main() {
 	
 	// ======== FXAA ========
 	#if AA_STRATEGY == 1 || AA_STRATEGY == 3
-		doFxaa(color, MAIN_BUFFER  ARGS_IN);
+		doFxaa(color, MAIN_TEXTURE  ARGS_IN);
 	#endif
 	
 	// ======== TAA ========
@@ -146,7 +148,7 @@ void main() {
 		float opaqueDepth = texelFetch(DEPTH_BUFFER_WO_TRANS, texelcoord, 0).r;
 		bool isTransparent = opaqueDepth - depth > 0.001;
 		if (preventTaa > 0.1) {
-			doFxaa(color, MAIN_BUFFER  ARGS_IN);
+			doFxaa(color, MAIN_TEXTURE  ARGS_IN);
 		}
 		if (preventTaa < 0.5 || isTransparent) {
 			doTAA(color, blockDepth, prevCoord  ARGS_IN);
@@ -166,14 +168,10 @@ void main() {
 	
 	
 	
-	#ifdef DEBUG_OUTPUT_ENABLED
-		color = debugOutput;
-	#endif
-	
-	/* DRAWBUFFERS:0 */
+	/* DRAWBUFFERS:1 */
 	gl_FragData[0] = vec4(color, 1.0);
 	#if (AA_STRATEGY == 2 || AA_STRATEGY == 3 || AA_STRATEGY == 4) || SSS_PHOSPHOR == 1
-		/* DRAWBUFFERS:02 */
+		/* DRAWBUFFERS:14 */
 		#if MOTION_BLUR_ENABLED == 1
 			gl_FragData[1] = vec4(prevColor, 1.0);
 		#else

@@ -6,7 +6,7 @@
 	varying vec2 lmcoord;
 	varying vec3 glcolor;
 	varying vec3 normal;
-	flat_inout int blockData;
+	flat_inout int materialId;
 	
 	flat_inout vec3 skyLight;
 	
@@ -56,14 +56,14 @@ void main() {
 	#endif
 	
 	
-	vec4 color = texture2D(MAIN_BUFFER, texcoord);
+	vec4 color = texture2D(MAIN_TEXTURE, texcoord);
 	
 	#if WAVING_WATER_NORMALS_ENABLED == 1
 		vec3 normal = normal;
 	#endif
 	
 	
-	if (blockData == 1007) {
+	if (materialId == 1007) {
 		
 		color.rgb = mix(vec3(getColorLum(color.rgb)), color.rgb, 0.8);
 		
@@ -116,21 +116,19 @@ void main() {
 	
 	
 	// block reflection strengths
-	float blockReflectionAmount = (blockData % 1000 - blockData % 100) / 100 * 0.15 * mix(BLOCKS_REFLECTION_AMOUNT_MULT_UNDERGROUND, BLOCKS_REFLECTION_AMOUNT_MULT_SURFACE, lmcoord.y);
+	float blockReflectionAmount = (materialId % 1000 - materialId % 100) / 100 * 0.15 * mix(BLOCKS_REFLECTION_AMOUNT_MULT_UNDERGROUND, BLOCKS_REFLECTION_AMOUNT_MULT_SURFACE, lmcoord.y);
 	vec2 blockReflectionStrengths = vec2(blockReflectionAmount * (1.0 - BLOCKS_REFLECTION_FRESNEL), blockReflectionAmount * BLOCKS_REFLECTION_FRESNEL);
-	vec2 reflectionStrengths = blockData == 1007 ? WATER_REFLECTION_STRENGTHS : blockReflectionStrengths;
+	vec2 reflectionStrengths = materialId == 1007 ? WATER_REFLECTION_STRENGTHS : blockReflectionStrengths;
 	
 	
-	// outputs
-	
-	/* DRAWBUFFERS:04 */
+	/* DRAWBUFFERS:03 */
 	gl_FragData[0] = color;
-	gl_FragData[1] = vec4(normal, 1.0);
-	
-	#if REFLECTIONS_ENABLED == 1
-		/* DRAWBUFFERS:046 */
-		gl_FragData[2] = vec4(reflectionStrengths, 0.0, 1.0);
-	#endif
+	gl_FragData[1] = vec4(
+		packVec2(lmcoord.x, lmcoord.y),
+		packVec2(normal.x, normal.y),
+		dot(glcolor, glcolor) * 0.25,
+		materialId / 65535.0
+	);
 	
 }
 
@@ -163,8 +161,8 @@ void main() {
 	
 	
 	#include "/import/mc_Entity.glsl"
-	blockData = int(mc_Entity.x);
-	if (blockData < 1000) blockData = 0;
+	materialId = int(mc_Entity.x);
+	if (materialId < 1000) materialId = 0;
 	
 	#if !(WAVING_WATER_NORMALS_ENABLED == 1 || defined DISTANT_HORIZONS)
 		vec3 worldPos;
@@ -173,7 +171,7 @@ void main() {
 	worldPos = endMat(gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex));
 	
 	#if PHYSICALLY_WAVING_WATER_ENABLED == 1
-		if (blockData == 1007) {
+		if (materialId == 1007) {
 			float wavingAmount = mix(PHYSICALLY_WAVING_WATER_AMOUNT_UNDERGROUND, PHYSICALLY_WAVING_WATER_AMOUNT_SURFACE, lmcoord.y);
 			#ifdef DISTANT_HORIZONS
 				#include "/import/far.glsl"

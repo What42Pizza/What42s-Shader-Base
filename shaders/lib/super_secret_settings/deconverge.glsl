@@ -22,9 +22,9 @@ vec3 sss_deconverge(ARG_OUT) {
 	for (int i = 0; i < SSS_DECONVERGE_QUALITY; i++) {
 		CoordX += convergeX;
 		CoordY += convergeY;
-		color.r += texture2D(MAIN_BUFFER, vec2(CoordX.x, CoordY.x)).r;
-		color.g += texture2D(MAIN_BUFFER, vec2(CoordX.y, CoordY.y)).g;
-		color.b += texture2D(MAIN_BUFFER, vec2(CoordX.z, CoordY.z)).b;
+		color.r += texture2D(MAIN_TEXTURE_COPY, vec2(CoordX.x, CoordY.x)).r;
+		color.g += texture2D(MAIN_TEXTURE_COPY, vec2(CoordX.y, CoordY.y)).g;
+		color.b += texture2D(MAIN_TEXTURE_COPY, vec2(CoordX.z, CoordY.z)).b;
 	}
 	
 	return color / SSS_DECONVERGE_QUALITY;

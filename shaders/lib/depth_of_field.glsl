@@ -5,27 +5,27 @@
 vec3 getBlurredColor(vec2 coord, float size  ARGS_OUT) {
 	#include "/import/pixelSize.glsl"
 	vec3 colorTotal = vec3(0.0);
-	colorTotal += texture2D(MAIN_BUFFER, coord + vec2(-1, -2) * pixelSize * size, 0).rgb * 0.574;
-	colorTotal += texture2D(MAIN_BUFFER, coord + vec2( 0, -2) * pixelSize * size, 0).rgb * 0.641;
-	colorTotal += texture2D(MAIN_BUFFER, coord + vec2( 1, -2) * pixelSize * size, 0).rgb * 0.574;
-	colorTotal += texture2D(MAIN_BUFFER, coord + vec2(-2, -1) * pixelSize * size, 0).rgb * 0.574;
-	colorTotal += texture2D(MAIN_BUFFER, coord + vec2(-1, -1) * pixelSize * size, 0).rgb * 0.801;
-	colorTotal += texture2D(MAIN_BUFFER, coord + vec2( 0, -1) * pixelSize * size, 0).rgb * 0.895;
-	colorTotal += texture2D(MAIN_BUFFER, coord + vec2( 1, -1) * pixelSize * size, 0).rgb * 0.801;
-	colorTotal += texture2D(MAIN_BUFFER, coord + vec2( 2, -1) * pixelSize * size, 0).rgb * 0.574;
-	colorTotal += texture2D(MAIN_BUFFER, coord + vec2(-2,  0) * pixelSize * size, 0).rgb * 0.641;
-	colorTotal += texture2D(MAIN_BUFFER, coord + vec2(-1,  0) * pixelSize * size, 0).rgb * 0.895;
-	colorTotal += texture2D(MAIN_BUFFER, coord + vec2( 0,  0) * pixelSize * size, 0).rgb * 1.0;
-	colorTotal += texture2D(MAIN_BUFFER, coord + vec2( 1,  0) * pixelSize * size, 0).rgb * 0.895;
-	colorTotal += texture2D(MAIN_BUFFER, coord + vec2( 2,  0) * pixelSize * size, 0).rgb * 0.641;
-	colorTotal += texture2D(MAIN_BUFFER, coord + vec2(-2,  1) * pixelSize * size, 0).rgb * 0.574;
-	colorTotal += texture2D(MAIN_BUFFER, coord + vec2(-1,  1) * pixelSize * size, 0).rgb * 0.801;
-	colorTotal += texture2D(MAIN_BUFFER, coord + vec2( 0,  1) * pixelSize * size, 0).rgb * 0.895;
-	colorTotal += texture2D(MAIN_BUFFER, coord + vec2( 1,  1) * pixelSize * size, 0).rgb * 0.801;
-	colorTotal += texture2D(MAIN_BUFFER, coord + vec2( 2,  1) * pixelSize * size, 0).rgb * 0.574;
-	colorTotal += texture2D(MAIN_BUFFER, coord + vec2(-1,  2) * pixelSize * size, 0).rgb * 0.574;
-	colorTotal += texture2D(MAIN_BUFFER, coord + vec2( 0,  2) * pixelSize * size, 0).rgb * 0.641;
-	colorTotal += texture2D(MAIN_BUFFER, coord + vec2( 1,  2) * pixelSize * size, 0).rgb * 0.574;
+	colorTotal += texture2D(MAIN_TEXTURE_COPY, coord + vec2(-1, -2) * pixelSize * size, 0).rgb * 0.574;
+	colorTotal += texture2D(MAIN_TEXTURE_COPY, coord + vec2( 0, -2) * pixelSize * size, 0).rgb * 0.641;
+	colorTotal += texture2D(MAIN_TEXTURE_COPY, coord + vec2( 1, -2) * pixelSize * size, 0).rgb * 0.574;
+	colorTotal += texture2D(MAIN_TEXTURE_COPY, coord + vec2(-2, -1) * pixelSize * size, 0).rgb * 0.574;
+	colorTotal += texture2D(MAIN_TEXTURE_COPY, coord + vec2(-1, -1) * pixelSize * size, 0).rgb * 0.801;
+	colorTotal += texture2D(MAIN_TEXTURE_COPY, coord + vec2( 0, -1) * pixelSize * size, 0).rgb * 0.895;
+	colorTotal += texture2D(MAIN_TEXTURE_COPY, coord + vec2( 1, -1) * pixelSize * size, 0).rgb * 0.801;
+	colorTotal += texture2D(MAIN_TEXTURE_COPY, coord + vec2( 2, -1) * pixelSize * size, 0).rgb * 0.574;
+	colorTotal += texture2D(MAIN_TEXTURE_COPY, coord + vec2(-2,  0) * pixelSize * size, 0).rgb * 0.641;
+	colorTotal += texture2D(MAIN_TEXTURE_COPY, coord + vec2(-1,  0) * pixelSize * size, 0).rgb * 0.895;
+	colorTotal += texture2D(MAIN_TEXTURE_COPY, coord + vec2( 0,  0) * pixelSize * size, 0).rgb * 1.0;
+	colorTotal += texture2D(MAIN_TEXTURE_COPY, coord + vec2( 1,  0) * pixelSize * size, 0).rgb * 0.895;
+	colorTotal += texture2D(MAIN_TEXTURE_COPY, coord + vec2( 2,  0) * pixelSize * size, 0).rgb * 0.641;
+	colorTotal += texture2D(MAIN_TEXTURE_COPY, coord + vec2(-2,  1) * pixelSize * size, 0).rgb * 0.574;
+	colorTotal += texture2D(MAIN_TEXTURE_COPY, coord + vec2(-1,  1) * pixelSize * size, 0).rgb * 0.801;
+	colorTotal += texture2D(MAIN_TEXTURE_COPY, coord + vec2( 0,  1) * pixelSize * size, 0).rgb * 0.895;
+	colorTotal += texture2D(MAIN_TEXTURE_COPY, coord + vec2( 1,  1) * pixelSize * size, 0).rgb * 0.801;
+	colorTotal += texture2D(MAIN_TEXTURE_COPY, coord + vec2( 2,  1) * pixelSize * size, 0).rgb * 0.574;
+	colorTotal += texture2D(MAIN_TEXTURE_COPY, coord + vec2(-1,  2) * pixelSize * size, 0).rgb * 0.574;
+	colorTotal += texture2D(MAIN_TEXTURE_COPY, coord + vec2( 0,  2) * pixelSize * size, 0).rgb * 0.641;
+	colorTotal += texture2D(MAIN_TEXTURE_COPY, coord + vec2( 1,  2) * pixelSize * size, 0).rgb * 0.574;
 	return colorTotal / 14.94; // value is pre-calculated total of weights (weights are gaussian of (offset length over 3))
 }
 

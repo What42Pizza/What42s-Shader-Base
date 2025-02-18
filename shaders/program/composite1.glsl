@@ -25,11 +25,8 @@
 #endif
 
 void main() {
-	vec3 color = texelFetch(MAIN_BUFFER, texelcoord, 0).rgb;
+	vec3 color = texelFetch(MAIN_TEXTURE_COPY, texelcoord, 0).rgb;
 	vec3 noisyAdditions = vec3(0.0);
-	#ifdef DEBUG_OUTPUT_ENABLED
-		vec3 debugOutput = texelFetch(DEBUG_BUFFER, texelcoord, 0).rgb;
-	#endif
 	
 	#include "/utils/var_rng.glsl"
 	
@@ -40,17 +37,8 @@ void main() {
 	// ======== BLOOM CALCULATIONS ========
 	
 	#if BLOOM_ENABLED == 1
-		
 		vec3 bloomAddition = getBloomAddition(rng, depth  ARGS_IN);
 		noisyAdditions += bloomAddition;
-		
-		#if BLOOM_SHOW_ADDITION == 1
-			debugOutput = bloomAddition;
-		#endif
-		#if BLOOM_SHOW_FILTERED_TEXTURE == 1
-			debugOutput += texelFetch(BLOOM_BUFFER, texelcoord, 0).rgb;
-		#endif
-		
 	#endif
 	
 	
@@ -64,9 +52,6 @@ void main() {
 			vec3 depthSunraysColor = isSun ? SUNRAYS_SUN_COLOR : SUNRAYS_MOON_COLOR;
 			vec3 depthSunraysAddition = getDepthSunraysAmount(rng  ARGS_IN) * depthSunraysAmountMult * depthSunraysColor;
 			noisyAdditions += depthSunraysAddition;
-			#if SUNRAYS_SHOW_ADDITION == 1
-				debugOutput.r += depthSunraysAddition;
-			#endif
 		#endif
 		#if VOL_SUNRAYS_ENABLED == 1
 			#include "/import/sunLightBrightness.glsl"
@@ -77,20 +62,13 @@ void main() {
 			color *= 1.0 + (1.0 - volSunraysAmount) * SUNRAYS_BRIGHTNESS_INCREASE * 2.0;
 			float volSunraysAmountMax = 1.0 - 0.4 * (sunAngle < 0.5 ? SUNRAYS_AMOUNT_MAX_DAY : SUNRAYS_AMOUNT_MAX_NIGHT);
 			color = mix(volSunraysColor * 1.25, color, max(volSunraysAmount, volSunraysAmountMax));
-			#if SUNRAYS_SHOW_ADDITION == 1
-				debugOutput.g += 1.0 / (volSunraysAmount + 1.0);
-			#endif
 		#endif
 		
 	#endif
 	
 	
 	
-	#ifdef DEBUG_OUTPUT_ENABLED
-		color = debugOutput;
-	#endif
-	
-	/* DRAWBUFFERS:03 */
+	/* DRAWBUFFERS:06 */
 	gl_FragData[0] = vec4(color, 1.0);
 	gl_FragData[1] = vec4(noisyAdditions, 1.0);
 	

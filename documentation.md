@@ -1,4 +1,4 @@
-# W42SB Documentation
+# I Like Vanilla Documentation
 
 ## Warning: Documentation might be out of date!
 
@@ -209,15 +209,23 @@ This describes which /main_files-s handle different effects
 
 ## Buffers:
 
-- **texture / colortex0:  Main Image OR Debug Output** 
-- **colortex1:  TAA Texture**
-- **colortex2:  Bloom Texture**
-- **colortex3:  Noisy Additions**
-- **colortex4:  Normals**
-- **colortex5:  TAA Exclusion**
-- **colortex6:  Reflection Strength**
+- **colortex0:  Main Image**
+- **colortex1:  Main Image Copy**
+- **colortex2:  Opaque Data**
+- - x: lmcoord.x & lmcoord.y
+- - y: normal x & normal y
+- - z: gl_Color brightness (squared 'length' of gl_Color) * 0.25 & reflection fresnel percent
+- - w: material id
+- **colortex3:  Transparent Data**
+- - x: lmcoord.x & lmcoord.y
+- - y: normal x & normal y
+- - z: gl_Color brightness (squared 'length' of gl_Color) * 0.25 & reflection fresnel percent
+- - w: material id
+- **colortex4:  Prev Texture**
+- **colortex5:  Bloom Texture**
+- **colortex6:  Noisy Texture**
 
-Note: 'noisy additions' buffer is where things like bloom, sunrays, etc (anything that gives noisy results) are rendered before being added to the main image using LOD-sampling as a high-perf(?) blur
+Note: the 'noisy texture' buffer is where things like bloom, sunrays, etc (anything that gives noisy results) are rendered before being added to the main image using LOD-sampling as a high-perf(?) blur
 
 <br>
 <br>

@@ -1411,36 +1411,6 @@ value.USE_SIMPLE_LIGHT.-1=Use Style Value
 value.USE_SIMPLE_LIGHT.0=Off
 value.USE_SIMPLE_LIGHT.1=On
 
-option.SSAO_SHOW_AMOUNT=SSAO Show Amount
-option.SSAO_SHOW_AMOUNT.comment=Show the amount of ssao that is applied
-value.SSAO_SHOW_AMOUNT.-1=Use Style Value
-value.SSAO_SHOW_AMOUNT.0=Off
-value.SSAO_SHOW_AMOUNT.1=On
-
-option.BLOOM_SHOW_ADDITION=Bloom Show Addition
-option.BLOOM_SHOW_ADDITION.comment=Show the colors that bloom is adding to the screen
-value.BLOOM_SHOW_ADDITION.-1=Use Style Value
-value.BLOOM_SHOW_ADDITION.0=Off
-value.BLOOM_SHOW_ADDITION.1=On
-
-option.BLOOM_SHOW_FILTERED_TEXTURE=Bloom Show Filtered Texture
-option.BLOOM_SHOW_FILTERED_TEXTURE.comment=Show the texture that bloom samples from
-value.BLOOM_SHOW_FILTERED_TEXTURE.-1=Use Style Value
-value.BLOOM_SHOW_FILTERED_TEXTURE.0=Off
-value.BLOOM_SHOW_FILTERED_TEXTURE.1=On
-
-option.SUNRAYS_SHOW_ADDITION=Sunrays Show Addition
-option.SUNRAYS_SHOW_ADDITION.comment=Show the sunrays that are being added
-value.SUNRAYS_SHOW_ADDITION.-1=Use Style Value
-value.SUNRAYS_SHOW_ADDITION.0=Off
-value.SUNRAYS_SHOW_ADDITION.1=On
-
-option.DOF_SHOW_AMOUNTS=DOF Show Blur Amounts
-option.DOF_SHOW_AMOUNTS.comment=Shows the near blur amount in red and the far blur amount in green
-value.DOF_SHOW_AMOUNTS.-1=Use Style Value
-value.DOF_SHOW_AMOUNTS.0=Off
-value.DOF_SHOW_AMOUNTS.1=On
-
 option.REFLECTIVE_EVERYTHING=Reflective Everything
 option.REFLECTIVE_EVERYTHING.comment=Make EVERYTHING reflective
 value.REFLECTIVE_EVERYTHING.-1=Use Style Value

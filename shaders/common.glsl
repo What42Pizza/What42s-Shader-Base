@@ -45,21 +45,20 @@ uniform sampler2D shadowtex0;
 
 // buffer values:
 
-#define MAIN_BUFFER                 colortex0
-#define TAA_PREV_BUFFER             colortex1
-#define BLOOM_BUFFER                colortex2
-#define NOISY_ADDITIONS_BUFFER      colortex3
-#define NORMALS_BUFFER              colortex4
-#define PREVENT_TAA_BUFFER          colortex5
-#define REFLECTION_STRENGTH_BUFFER  colortex6
-#define MAIN_BUFFER_COPY            gaux2
+#define MAIN_TEXTURE               colortex0
+#define MAIN_TEXTURE_COPY          colortex1
+#define OPAQUE_DATA_TEXTURE        colortex2
+#define TRANSPARENT_DATA_TEXTURE   colortex3
+#define PREV_TEXTURE                colortex4
+#define BLOOM_TEXTURE              colortex5
+#define NOISY_TEXTURE              colortex6
 
 #define DEPTH_BUFFER_ALL                   depthtex0
 #define DEPTH_BUFFER_WO_TRANS              depthtex1
 #define DEPTH_BUFFER_WO_TRANS_OR_HANDHELD  depthtex2
 #ifdef DISTANT_HORIZONS
-	#define DH_DEPTH_BUFFER_ALL                   dhDepthTex0
-	#define DH_DEPTH_BUFFER_WO_TRANS              dhDepthTex1
+	#define DH_DEPTH_BUFFER_ALL       dhDepthTex0
+	#define DH_DEPTH_BUFFER_WO_TRANS  dhDepthTex1
 #endif
 
 

@@ -31,11 +31,10 @@
 
 
 void main() {
-	vec3 color = texelFetch(MAIN_BUFFER, texelcoord, 0).rgb;
-	vec4 data = texelFetch(colortex1, texelcoord, 0);
+	vec3 color = texelFetch(MAIN_TEXTURE, texelcoord, 0).rgb;
+	vec4 data = texelFetch(OPAQUE_DATA_TEXTURE, texelcoord, 0);
 	vec2 lmcoord = unpackVec2(data.x);
-	vec2 normalCompact = unpackVec2(data.y);
-	vec3 normal = decodeNormal(normalCompact);
+	vec3 normal = decodeNormal(unpackVec2(data.y));
 	
 	
 	float depth = texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r;

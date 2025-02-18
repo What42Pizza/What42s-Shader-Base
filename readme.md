@@ -1,4 +1,4 @@
-# What42's Shaders Base
+# I Like Vanilla (MC Shader)
 
 ![Example Image (Village)](/images/village.png)
 

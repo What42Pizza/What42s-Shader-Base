@@ -1,7 +1,7 @@
 // optifine settings (DON'T DELETE)
 /*
-const int colortex1Format = RGBA32F;
-const vec4 colortex1ClearColor = vec4(0.0, 0.0, 0.0, 0.0);
+const int colortex2Format = RGBA32F;
+const int colortex3Format = RGBA32F;
 const float wetnessHalflife = 50.0f;
 const float drynessHalflife = 50.0f;
 const float centerDepthHalflife = 2.5f;

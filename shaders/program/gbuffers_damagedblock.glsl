@@ -7,7 +7,7 @@
 #ifdef FSH
 
 void main() {
-	vec4 albedo = texture2D(MAIN_BUFFER, texcoord);
+	vec4 albedo = texture2D(MAIN_TEXTURE, texcoord);
 	/* DRAWBUFFERS:0 */
 	gl_FragData[0] = vec4(albedo);
 }

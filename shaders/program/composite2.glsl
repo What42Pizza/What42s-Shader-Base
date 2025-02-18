@@ -34,26 +34,19 @@ void main() {
 		}
 	#endif
 	
-	vec3 color = texture2D(MAIN_BUFFER, texcoord).rgb;
-	#ifdef DEBUG_OUTPUT_ENABLED
-		vec3 debugOutput = texture2D(DEBUG_BUFFER, texcoord).rgb;
-	#endif
+	vec3 color = texture2D(MAIN_TEXTURE, texcoord).rgb;
 	
 	
 	
 	// ======== NOISY ADDITIONS ========
 	
 	const int noiseMipMap = 1;
-	vec3 noisyAdditions = texture2DLod(NOISY_ADDITIONS_BUFFER, texcoord, noiseMipMap).rgb;
+	vec3 noisyAdditions = texture2DLod(NOISY_TEXTURE, texcoord, noiseMipMap).rgb;
 	color += noisyAdditions;
 	
 	
 	
-	#ifdef DEBUG_OUTPUT_ENABLED
-		color = debugOutput;
-	#endif
-	
-	/* DRAWBUFFERS:0 */
+	/* DRAWBUFFERS:1 */
 	gl_FragData[0] = vec4(color, 1.0);
 	
 }

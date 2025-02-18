@@ -11,7 +11,7 @@
 
 
 void main() {
-	vec3 color = texelFetch(MAIN_BUFFER, texelcoord, 0).rgb;
+	vec3 color = texelFetch(MAIN_TEXTURE, texelcoord, 0).rgb;
 	#if BLOOM_ENABLED == 1
 		vec3 bloomColor = color;
 	#endif
@@ -46,11 +46,11 @@ void main() {
 	
 	
 	
-	/* DRAWBUFFERS:0 */
+	/* DRAWBUFFERS:1 */
 	gl_FragData[0] = vec4(color, 1.0);
 	
 	#if BLOOM_ENABLED == 1
-		/* DRAWBUFFERS:02 */
+		/* DRAWBUFFERS:15 */
 		gl_FragData[1] = vec4(bloomColor, 1.0);
 	#endif
 	
