@@ -15,7 +15,7 @@
 
 void main() {
 	
-	vec4 albedo = texture2D(MAIN_TEXTURE, texcoord) * vec4(normalize(glcolor), 1.0);
+	vec4 albedo = texture2D(MAIN_TEXTURE, texcoord) * vec4(glcolor, 1.0);
 	if (albedo.a < 0.1) discard;
 	
 	
@@ -28,7 +28,7 @@ void main() {
 	gl_FragData[1] = vec4(
 		packVec2(lmcoord.x, lmcoord.y),
 		packVec2(normal.x, normal.y),
-		packVec2(dot(glcolor, glcolor) * 0.25, 0.0),
+		0.0,
 		1.0
 	);
 	
@@ -41,6 +41,8 @@ void main() {
 
 
 #ifdef VSH
+
+#include "/lib/lighting/vsh_lighting.glsl"
 
 #if ISOMETRIC_RENDERING_ENABLED == 1
 	#include "/lib/isometric.glsl"
@@ -70,6 +72,8 @@ void main() {
 		doTaaJitter(gl_Position.xy  ARGS_IN);
 	#endif
 	
+	
+	doVshLighting(0.0  ARGS_IN);
 	
 }
 

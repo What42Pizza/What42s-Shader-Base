@@ -450,17 +450,17 @@
 #undef PIXELATED_SHADOWS
 										#define PIXELATED_SHADOWS 0
 #endif
-#if SIDE_SHADING == -1
-#undef SIDE_SHADING
-										#define SIDE_SHADING 0.4
+#if SIDE_SHADING_BRIGHT == -1
+#undef SIDE_SHADING_BRIGHT
+										#define SIDE_SHADING_BRIGHT 0.4
+#endif
+#if SIDE_SHADING_DARK == -1
+#undef SIDE_SHADING_DARK
+										#define SIDE_SHADING_DARK 0.4
 #endif
 #if RAIN_LIGHT_MULT == -1
 #undef RAIN_LIGHT_MULT
 										#define RAIN_LIGHT_MULT 0.5
-#endif
-#if USE_VANILLA_BRIGHTNESS == -1
-#undef USE_VANILLA_BRIGHTNESS
-										#define USE_VANILLA_BRIGHTNESS 1
 #endif
 #if BLOCKLIGHT_FLICKERING_ENABLED == -1
 #undef BLOCKLIGHT_FLICKERING_ENABLED

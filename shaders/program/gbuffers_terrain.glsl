@@ -32,8 +32,14 @@ void main() {
 	#endif
 	
 	
-	vec4 albedo = texture2D(MAIN_TEXTURE, texcoord) * vec4(normalize(glcolor), 1.0); // multiply in the color of glcolor but don't multiply in the brightness yet
+	// decrease vanilla ao in caves
+	vec3 newGlcolor = normalize(glcolor) * (1.0 - (0.1 + 0.9 * lmcoord.y) * (1.0 - length(glcolor)));
+	
+	
+	vec4 albedo = texture2D(MAIN_TEXTURE, texcoord);
 	if (albedo.a < 0.1) discard;
+	albedo.rgb = smoothMin(albedo.rgb, vec3(1.0), 0.15);
+	albedo.rgb *= glcolor.rgb;
 	
 	
 	float reflectiveness = ((materialId - materialId % 100) / 100) * 0.15;
@@ -44,7 +50,7 @@ void main() {
 	gl_FragData[1] = vec4(
 		packVec2(lmcoord.x, lmcoord.y),
 		packVec2(normal.x, normal.y),
-		packVec2(dot(glcolor, glcolor) * 0.25, reflectiveness),
+		reflectiveness,
 		1.0
 	);
 	
@@ -57,6 +63,8 @@ void main() {
 
 
 #ifdef VSH
+
+#include "/lib/lighting/vsh_lighting.glsl"
 
 #if WAVING_ENABLED == 1
 	#include "/lib/waving.glsl"
@@ -117,6 +125,8 @@ void main() {
 		}
 	#endif
 	
+	
+	doVshLighting(length(worldPos)  ARGS_IN);
 	
 }
 

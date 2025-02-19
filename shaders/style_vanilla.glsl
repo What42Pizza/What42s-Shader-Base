@@ -162,15 +162,15 @@
 #endif
 #if BLOCK_GREEN == -1
 #undef BLOCK_GREEN
-										#define BLOCK_GREEN 0.93
+										#define BLOCK_GREEN 0.85
 #endif
 #if BLOCK_BLUE == -1
 #undef BLOCK_BLUE
-										#define BLOCK_BLUE 0.85
+										#define BLOCK_BLUE 0.6
 #endif
 #if BLOCK_BRIGHTNESS == -1
 #undef BLOCK_BRIGHTNESS
-										#define BLOCK_BRIGHTNESS 1.0
+										#define BLOCK_BRIGHTNESS 1.25
 #endif
 #if BLOCK_BRIGHTNESS_CURVE == -1
 #undef BLOCK_BRIGHTNESS_CURVE
@@ -192,11 +192,11 @@
 #endif
 #if CAVE_AMBIENT_GREEN == -1
 #undef CAVE_AMBIENT_GREEN
-										#define CAVE_AMBIENT_GREEN 0.9
+										#define CAVE_AMBIENT_GREEN 0.8
 #endif
 #if CAVE_AMBIENT_BLUE == -1
 #undef CAVE_AMBIENT_BLUE
-										#define CAVE_AMBIENT_BLUE 0.8
+										#define CAVE_AMBIENT_BLUE 0.5
 #endif
 #if CAVE_AMBIENT_BRIGHTNESS == -1
 #undef CAVE_AMBIENT_BRIGHTNESS
@@ -254,11 +254,11 @@
 
 #if SKYLIGHT_DAY_RED == -1
 #undef SKYLIGHT_DAY_RED
-										#define SKYLIGHT_DAY_RED 0.8
+										#define SKYLIGHT_DAY_RED 1.0
 #endif
 #if SKYLIGHT_DAY_GREEN == -1
 #undef SKYLIGHT_DAY_GREEN
-										#define SKYLIGHT_DAY_GREEN 0.9
+										#define SKYLIGHT_DAY_GREEN 1.0
 #endif
 #if SKYLIGHT_DAY_BLUE == -1
 #undef SKYLIGHT_DAY_BLUE
@@ -266,7 +266,7 @@
 #endif
 #if SKYLIGHT_DAY_BRIGHTNESS == -1
 #undef SKYLIGHT_DAY_BRIGHTNESS
-										#define SKYLIGHT_DAY_BRIGHTNESS 0.9
+										#define SKYLIGHT_DAY_BRIGHTNESS 0.45
 #endif
 
 
@@ -285,7 +285,7 @@
 #endif
 #if AMBIENT_DAY_BRIGHTNESS == -1
 #undef AMBIENT_DAY_BRIGHTNESS
-										#define AMBIENT_DAY_BRIGHTNESS 0.85
+										#define AMBIENT_DAY_BRIGHTNESS 1.2
 #endif
 
 
@@ -450,17 +450,17 @@
 #undef PIXELATED_SHADOWS
 										#define PIXELATED_SHADOWS 0
 #endif
-#if SIDE_SHADING == -1
-#undef SIDE_SHADING
-										#define SIDE_SHADING 0.15
+#if SIDE_SHADING_BRIGHT == -1
+#undef SIDE_SHADING_BRIGHT
+										#define SIDE_SHADING_BRIGHT 0.15
+#endif
+#if SIDE_SHADING_DARK == -1
+#undef SIDE_SHADING_DARK
+										#define SIDE_SHADING_DARK 1.0
 #endif
 #if RAIN_LIGHT_MULT == -1
 #undef RAIN_LIGHT_MULT
 										#define RAIN_LIGHT_MULT 0.7
-#endif
-#if USE_VANILLA_BRIGHTNESS == -1
-#undef USE_VANILLA_BRIGHTNESS
-										#define USE_VANILLA_BRIGHTNESS 1
 #endif
 #if BLOCKLIGHT_FLICKERING_ENABLED == -1
 #undef BLOCKLIGHT_FLICKERING_ENABLED
@@ -482,11 +482,11 @@
 #endif
 #if HANDHELD_LIGHT_DISTANCE == -1
 #undef HANDHELD_LIGHT_DISTANCE
-										#define HANDHELD_LIGHT_DISTANCE 13
+										#define HANDHELD_LIGHT_DISTANCE 12
 #endif
 #if HANDHELD_LIGHT_BRIGHTNESS == -1
 #undef HANDHELD_LIGHT_BRIGHTNESS
-										#define HANDHELD_LIGHT_BRIGHTNESS 0.85
+										#define HANDHELD_LIGHT_BRIGHTNESS 1.1
 #endif
 
 

@@ -214,11 +214,11 @@ This describes which /main_files-s handle different effects
 - **colortex2:  Opaque Data**
 - - x: lmcoord.x & lmcoord.y
 - - y: normal x & normal y
-- - z: gl_Color brightness (squared 'length' of gl_Color) * 0.25 & material id / 1024.0
+- - z: reflectiveness
 - **colortex3:  Transparent Data**
 - - x: lmcoord.x & lmcoord.y
 - - y: normal x & normal y
-- - z: gl_Color brightness (squared 'length' of gl_Color) * 0.25 & material id / 1024.0
+- - z: reflectiveness
 - **colortex4:  Prev Texture**
 - **colortex5:  Bloom Texture**
 - **colortex6:  Noisy Texture**

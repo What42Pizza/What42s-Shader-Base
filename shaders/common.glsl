@@ -262,23 +262,23 @@ void adjustLmcoord(inout vec2 lmcoord) {
 	lmcoord = clamp(lmcoord, 0.0, 1.0);
 }
 
-vec3 getSkyLight(vec4 skylightPercents) {
-	vec3 skyLight = 
-		skylightPercents.x * SKYLIGHT_DAY_COLOR +
-		skylightPercents.y * SKYLIGHT_NIGHT_COLOR +
-		skylightPercents.z * SKYLIGHT_SUNRISE_COLOR +
-		skylightPercents.w * SKYLIGHT_SUNSET_COLOR;
-	return skyLight / 2.0;
-}
+//vec3 getSkyLight(vec4 skylightPercents) {
+//	vec3 skyLight = 
+//		skylightPercents.x * SKYLIGHT_DAY_COLOR +
+//		skylightPercents.y * SKYLIGHT_NIGHT_COLOR +
+//		skylightPercents.z * SKYLIGHT_SUNRISE_COLOR +
+//		skylightPercents.w * SKYLIGHT_SUNSET_COLOR;
+//	return skyLight / 2.0;
+//}
 
-vec3 getAmbientLight(vec4 skylightPercents, float ambientBrightness) {
-	vec3 ambient = 
-		skylightPercents.x * AMBIENT_DAY_COLOR +
-		skylightPercents.y * AMBIENT_NIGHT_COLOR +
-		skylightPercents.z * AMBIENT_SUNRISE_COLOR +
-		skylightPercents.w * AMBIENT_SUNSET_COLOR;
-	return mix(CAVE_AMBIENT_COLOR, ambient, ambientBrightness);
-}
+//vec3 getAmbientLight(vec4 skylightPercents, float ambientBrightness) {
+//	vec3 ambient = 
+//		skylightPercents.x * AMBIENT_DAY_COLOR +
+//		skylightPercents.y * AMBIENT_NIGHT_COLOR +
+//		skylightPercents.z * AMBIENT_SUNRISE_COLOR +
+//		skylightPercents.w * AMBIENT_SUNSET_COLOR;
+//	return mix(CAVE_AMBIENT_COLOR, ambient, ambientBrightness);
+//}
 
 
 

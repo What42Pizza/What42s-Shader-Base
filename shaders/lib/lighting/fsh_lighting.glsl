@@ -258,8 +258,20 @@ void doFshLighting(inout vec3 color, float blockBrightness, float ambientBrightn
 		blockLight *= mix(vec3(1.0), NETHER_BLOCKLIGHT_MULT, blockBrightness);
 	#endif
 	
-	float skyBrightness = getSkyBrightness(viewPos, normal  ARGS_IN);
-	color *= smoothMax(blockLight, ambientLight, LIGHT_SMOOTHING) + skyLight * skyBrightness;
+	vec3 light = smoothMax(blockLight, ambientLight, LIGHT_SMOOTHING);
+	#if SHADOWS_ENABLED == 1
+		light += skyLight * getSkyBrightness(viewPos, normal  ARGS_IN);
+	#else
+		light += skyLight * ambientBrightness;
+	#endif
+	
+	//float colorWhiteness = dot(color, vec3(1.0)) / 3.0;
+	//colorWhiteness *= colorWhiteness;
+	//colorWhiteness *= colorWhiteness;
+	//light *= 1.0 - 0.9 * colorWhiteness;
+	
+	color *= light;
+	
 }
 
 

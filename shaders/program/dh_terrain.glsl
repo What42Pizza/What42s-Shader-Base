@@ -38,8 +38,8 @@ void main() {
 	gl_FragData[1] = vec4(
 		packVec2(lmcoord.x, lmcoord.y),
 		packVec2(normal.x, normal.y),
-		packVec2(dot(glcolor, glcolor) * 0.5, 0.0), // glcolor is substantially different here so a multiplier (on top of *0.25) is needed to compensate
-		0.0
+		0.0,
+		1.0
 	);
 	
 }
@@ -64,13 +64,12 @@ void main() {
 	glcolor = gl_Color.rgb;
 	adjustLmcoord(lmcoord);
 	normal = encodeNormal(gl_NormalMatrix * gl_Normal);
-	dhBlock = dhMaterialId;
-	
-	if (dhMaterialId == DH_BLOCK_LEAVES) glcolor.rgb *= 1.3;
-	
-	
 	#include "/import/gbufferModelViewInverse.glsl"
 	worldPos = endMat(gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex));
+	dhBlock = dhMaterialId;
+	
+	
+	if (dhMaterialId == DH_BLOCK_LEAVES) glcolor.rgb *= 1.3;
 	
 	
 	#if ISOMETRIC_RENDERING_ENABLED == 1

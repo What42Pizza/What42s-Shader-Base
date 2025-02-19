@@ -1,9 +1,8 @@
 #ifdef VSH
 
-void doVshLighting(ARG_OUT) {
+void doVshLighting(float depth  ARGS_OUT) {
 	
 	#if HANDHELD_LIGHT_ENABLED == 1
-		float depth = estimateDepthVSH();
 		if (depth <= HANDHELD_LIGHT_DISTANCE) {
 			float handLightBrightness = max(1.0 - depth / HANDHELD_LIGHT_DISTANCE, 0.0);
 			#include "/import/heldBlockLightValue.glsl"
@@ -24,7 +23,7 @@ void doVshLighting(ARG_OUT) {
 	#else
 		float sideShading = dot(shadingNormals, vec3(-0.8, 0.3, -0.6));
 	#endif
-	sideShading *= SIDE_SHADING;
+	sideShading *= mix(SIDE_SHADING_DARK, SIDE_SHADING_BRIGHT, max(lmcoord.x, lmcoord.y));
 	lmcoord *= 1.0 + sideShading;
 	
 }

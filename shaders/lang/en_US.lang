@@ -518,12 +518,6 @@ value.SIDE_SHADING.-1=Use Style Value
 option.RAIN_LIGHT_MULT=Rain Light Multiplier
 value.RAIN_LIGHT_MULT.-1=Use Style Value
 
-option.USE_VANILLA_BRIGHTNESS=Use Vanilla Brightness
-option.USE_VANILLA_BRIGHTNESS.comment=Whether or not the vanilla brightness slider should be used
-value.USE_VANILLA_BRIGHTNESS.-1=Use Style Value
-value.USE_VANILLA_BRIGHTNESS.0=Off
-value.USE_VANILLA_BRIGHTNESS.1=On
-
 option.BLOCKLIGHT_FLICKERING_ENABLED=Blocklight Flickering Enabled
 option.BLOCKLIGHT_FLICKERING_ENABLED.comment=Makes block light flicker slightly
 value.BLOCKLIGHT_FLICKERING_ENABLED.-1=Use Style Value

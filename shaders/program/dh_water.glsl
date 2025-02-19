@@ -1,31 +1,26 @@
-// transfers
+#undef SHADOWS_ENABLED
+#define SHADOWS_ENABLED 0
 
 #ifdef FIRST_PASS
 	
-	varying vec2 lmcoord;
 	varying vec4 glcolor;
+	varying vec2 lmcoord;
 	varying vec3 normal;
 	flat_inout int dhBlock;
 	
 	varying vec3 worldPos;
+	varying vec3 viewPos;
 	flat_inout vec3 skyLight;
 	
-	#if WATER_FRESNEL_ADDITION == 1
-		varying vec3 viewPos;
-	#endif
-	
 #endif
-
-// includes
-
-#include "/lib/lighting/vsh_lighting.glsl"
-#include "/lib/lighting/fsh_lighting.glsl"
 
 
 
 
 
 #ifdef FSH
+
+#include "/lib/lighting/fsh_lighting.glsl"
 
 #include "/utils/screen_to_view.glsl"
 #if WAVING_WATER_NORMALS_ENABLED == 1
@@ -111,8 +106,8 @@ void main() {
 	gl_FragData[1] = vec4(
 		packVec2(lmcoord.x, lmcoord.y),
 		packVec2(encodeNormal(normal)),
-		packVec2(dot(glcolor, glcolor) * 0.5, 0.0), // glcolor is substantially different here so a multiplier (on top of *0.25) is needed to compensate
-		0.0
+		dhBlock == DH_BLOCK_WATER ? WATER_REFLECTION_AMOUNT : 0.0,
+		1.0
 	);
 	
 }
@@ -125,6 +120,7 @@ void main() {
 
 #ifdef VSH
 
+#include "/lib/lighting/vsh_lighting.glsl"
 #include "/utils/getSkyLight.glsl"
 
 #if ISOMETRIC_RENDERING_ENABLED == 1
@@ -135,20 +131,19 @@ void main() {
 #endif
 
 void main() {
-	
-	lmcoord  = (gl_TextureMatrix[1] * gl_MultiTexCoord1).xy;
+	glcolor = gl_Color;
+	lmcoord = (gl_TextureMatrix[1] * gl_MultiTexCoord1).xy;
 	adjustLmcoord(lmcoord);
 	normal = gl_NormalMatrix * gl_Normal;
 	dhBlock = dhMaterialId;
 	
-	
 	#include "/import/gbufferModelViewInverse.glsl"
 	worldPos = endMat(gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex));
-	
-	
 	if (dhBlock == DH_BLOCK_WATER) {
 		worldPos.y -= 0.11213;
 	}
+	viewPos = (gl_ModelViewMatrix * gl_Vertex).xyz;
+	skyLight = getSkyLight(ARG_IN);
 	
 	
 	#if ISOMETRIC_RENDERING_ENABLED == 1
@@ -164,12 +159,6 @@ void main() {
 	#endif
 	
 	
-	#if WATER_FRESNEL_ADDITION == 1
-		viewPos = (gl_ModelViewMatrix * gl_Vertex).xyz;
-	#endif
-	
-	
-	glcolor = gl_Color;
 	#if USE_SIMPLE_LIGHT == 1
 		if (glcolor.r == glcolor.g && glcolor.g == glcolor.b) {
 			glcolor = vec3(1.0);
@@ -177,8 +166,7 @@ void main() {
 	#endif
 	
 	
-	doVshLighting(ARG_IN);
-	skyLight = getSkyLight(ARG_IN);
+	doVshLighting(length(worldPos)  ARGS_IN);
 	
 }
 

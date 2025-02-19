@@ -17,16 +17,16 @@
 
 vec3 getSkyLight(ARG_OUT) {
 	
-	#include "/import/sunDayColorPercent.glsl"
+	#include "/import/sunNoonColorPercent.glsl"
 	#include "/import/sunriseColorPercent.glsl"
 	#include "/import/sunsetColorPercent.glsl"
 	#include "/import/sunLightBrightness.glsl"
 	#include "/import/moonLightBrightness.glsl"
 	
-	vec3 sundayLight = SKYLIGHT_DAY_COLOR * sunDayColorPercent;
-	vec3 sunriseLight = SKYLIGHT_SUNRISE_COLOR * sunriseColorPercent;
-	vec3 sunsetLight = SKYLIGHT_SUNSET_COLOR * sunsetColorPercent;
-	vec3 sunLight = (sundayLight + sunriseLight + sunsetLight) * sunLightBrightness;
+	vec3 sunNoonLight = SKYLIGHT_DAY_COLOR * sunNoonColorPercent;
+	vec3 sunSunriseLight = SKYLIGHT_SUNRISE_COLOR * sunriseColorPercent;
+	vec3 sunSunsetLight = SKYLIGHT_SUNSET_COLOR * sunsetColorPercent;
+	vec3 sunLight = (sunNoonLight + sunSunriseLight + sunSunsetLight) * sunLightBrightness;
 	vec3 moonLight = SKYLIGHT_NIGHT_COLOR * moonLightBrightness;
 	
 	#include "/import/rainStrength.glsl"

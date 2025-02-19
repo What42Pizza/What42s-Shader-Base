@@ -16,8 +16,8 @@ void main() {
 	gl_FragData[1] = vec4(
 		packVec2(0.0, 0.0),
 		packVec2(0.0, 0.0),
-		packVec2(0.75, 0.0),
-		0.0
+		0.0,
+		1.0
 	);
 }
 
@@ -35,6 +35,7 @@ void main() {
 #endif
 
 void main() {
+	glcolor = gl_Color;
 	
 	#if ISOMETRIC_RENDERING_ENABLED == 1
 		#include "/import/gbufferModelViewInverse.glsl"
@@ -47,8 +48,6 @@ void main() {
 	#ifdef TAA_JITTER
 		doTaaJitter(gl_Position.xy  ARGS_IN);
 	#endif
-	
-	glcolor = gl_Color;
 	
 }
 

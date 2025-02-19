@@ -1,5 +1,3 @@
-// transfers
-
 #ifdef FIRST_PASS
 	
 	varying vec2 texcoord;
@@ -23,16 +21,13 @@
 	
 #endif
 
-// includes
-
-#include "/lib/lighting/vsh_lighting.glsl"
-#include "/lib/lighting/fsh_lighting.glsl"
-
 
 
 
 
 #ifdef FSH
+
+#include "/lib/lighting/fsh_lighting.glsl"
 
 #if WAVING_WATER_NORMALS_ENABLED == 1
 	#include "/lib/simplex_noise.glsl"
@@ -124,7 +119,7 @@ void main() {
 	gl_FragData[1] = vec4(
 		packVec2(lmcoord.x, lmcoord.y),
 		packVec2(encodeNormal(normal)),
-		packVec2(dot(glcolor, glcolor) * 0.25, reflectiveness),
+		reflectiveness,
 		1.0
 	);
 	
@@ -138,6 +133,7 @@ void main() {
 
 #ifdef VSH
 
+#include "/lib/lighting/vsh_lighting.glsl"
 #include "/utils/getSkyLight.glsl"
 
 #if ISOMETRIC_RENDERING_ENABLED == 1
@@ -161,6 +157,8 @@ void main() {
 	materialId = int(mc_Entity.x);
 	if (materialId < 1000) materialId = 0;
 	materialId %= 1000;
+	
+	skyLight = getSkyLight(ARG_IN);
 	
 	
 	#if !(WAVING_WATER_NORMALS_ENABLED == 1 || defined DISTANT_HORIZONS)
@@ -221,8 +219,7 @@ void main() {
 	#endif
 	
 	
-	doVshLighting(ARG_IN);
-	skyLight = getSkyLight(ARG_IN);
+	doVshLighting(length(worldPos)  ARGS_IN);
 	
 }
 

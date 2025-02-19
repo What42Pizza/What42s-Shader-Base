@@ -275,8 +275,8 @@ uniform float sunriseColorPercent;
 uniform float sunsetColorPercent;
 #endif
 
-#ifdef import_sunDayColorPercent
-uniform float sunDayColorPercent;
+#ifdef import_sunNoonColorPercent
+uniform float sunNoonColorPercent;
 #endif
 
 #ifdef import_ambientSunPercent
