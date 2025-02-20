@@ -23,7 +23,7 @@ pub fn create_file_contents(world_name: &str, shader_name: &str, shader_type: &s
 		#define ARG_IN false
 		#define ARG_OUT bool dummy
 		#define main dummy_main
-		#include "/main_files/{shader_name}.glsl"
+		#include "/program/{shader_name}.glsl"
 		#undef main
 		#undef FIRST_PASS
 		#undef ARGS_IN
@@ -38,7 +38,7 @@ pub fn create_file_contents(world_name: &str, shader_name: &str, shader_type: &s
 		#define ARGS_OUT
 		#define ARG_IN
 		#define ARG_OUT
-		#include "/main_files/{shader_name}.glsl"
+		#include "/program/{shader_name}.glsl"
 	"##);
 	let mut output = String::with_capacity(raw_output.len());
 	for curr_char in raw_output.trim().chars() {

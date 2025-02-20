@@ -25,14 +25,15 @@ use std::env;
 
 
 pub const SHADERS_LIST: &[&str] = &[
-	"composite",
 	"composite1",
 	"composite2",
 	"composite3",
 	"composite4",
 	"composite5",
 	"composite6",
-	"deferred",
+	"composite7",
+	"deferred1",
+	"deferred2",
 	"gbuffers_basic",
 	"gbuffers_beaconbeam",
 	"gbuffers_clouds",
@@ -46,6 +47,8 @@ pub const SHADERS_LIST: &[&str] = &[
 	"gbuffers_water",
 	"gbuffers_weather",
 	"shadow",
+	"dh_terrain",
+	"dh_water",
 ];
 
 

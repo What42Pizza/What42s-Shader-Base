@@ -1,9 +1,25 @@
+Planned 1.0.0 pipeline:
+
+- render opaques
+- render deferred
+- - render shadows and ssao at half resolution
+- - apply lighting
+- render transparents
+- render composite
+- - combine opaques, transparents, and volumetrics, apply auto exposure, and filter bloom
+- - render reflections and bloom at half resolution
+- - add reflections and bloom and do aa
+- - process underwater waving and do depth of field and motion blur
+- - do sharpening, color correction, etc
+
+
+
 Current:
 Make more example images:
 	Rain
 	Night
 	Reflections
-Make sanrays cave increase ignore sunrays max
+Make sunrays cave increase ignore sunrays max
 Add water caustics?
 Increase waviness of plant tops
 Move the moonLightBrightness calculation in basic_lighting to its own uniform

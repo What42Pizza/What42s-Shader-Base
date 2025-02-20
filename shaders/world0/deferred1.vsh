@@ -1,8 +1,8 @@
 #version 330 compatibility
 
-#define SHADER_COMPOSITE
+#define SHADER_DEFERRED1
 #define OVERWORLD
-#define FSH
+#define VSH
 
 #include "/settings.glsl"
 #include "/common.glsl"
@@ -15,7 +15,7 @@
 #define ARG_IN false
 #define ARG_OUT bool dummy
 #define main dummy_main
-#include "/program/composite.glsl"
+#include "/program/deferred1.glsl"
 #undef main
 #undef FIRST_PASS
 #undef ARGS_IN
@@ -30,4 +30,4 @@
 #define ARGS_OUT
 #define ARG_IN
 #define ARG_OUT
-#include "/program/composite.glsl"
+#include "/program/deferred1.glsl"
