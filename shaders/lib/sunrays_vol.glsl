@@ -1,6 +1,5 @@
 #include "/utils/screen_to_view.glsl"
 #include "/utils/depth.glsl"
-#include "/lib/fog/getFogDistance.glsl"
 #include "/lib/fog/getFogAmount.glsl"
 
 
@@ -57,8 +56,7 @@ float getVolSunraysAmount(float depth, inout uint rng  ARGS_OUT) {
 	if (blockDepth == far) {
 		playerPos *= 10.0;
 	}
-	float fogDistance = getFogDistance(playerPos  ARGS_IN);
-	float fogAmount = getFogAmount(fogDistance, playerPos.y  ARGS_IN);
+	float fogAmount = getFogAmount(playerPos  ARGS_IN);
 	sunraysAmount *= 1.0 - 0.7 * fogAmount;
 	
 	return sunraysAmount;

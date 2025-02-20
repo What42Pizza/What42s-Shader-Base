@@ -32,7 +32,7 @@ void main() {
 	/* DRAWBUFFERS:02 */
 	gl_FragData[0] = vec4(albedo);
 	gl_FragData[1] = vec4(
-		packVec2(lmcoord.x, lmcoord.y),
+		packVec2(lmcoord.x * 0.25, lmcoord.y * 0.25),
 		packVec2(encodeNormal(normal)),
 		0.0,
 		1.0
@@ -68,8 +68,12 @@ void main() {
 	skyLight = getSkyLight(ARG_IN);
 	
 	
+	#include "/import/gbufferModelViewInverse.glsl"
+	vec3 playerPos = endMat(gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex));
+	
+	
 	#if ISOMETRIC_RENDERING_ENABLED == 1
-		gl_Position = projectIsometric(worldPos  ARGS_IN);
+		gl_Position = projectIsometric(playerPos  ARGS_IN);
 	#else
 		gl_Position = ftransform();
 	#endif
@@ -84,10 +88,7 @@ void main() {
 	#endif
 	
 	
-	#include "/import/gbufferModelViewInverse.glsl"
-	vec3 worldPos = endMat(gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex));
-	doVshLighting(length(worldPos)  ARGS_IN);
-	
+	doVshLighting(length(playerPos)  ARGS_IN);
 	
 }
 

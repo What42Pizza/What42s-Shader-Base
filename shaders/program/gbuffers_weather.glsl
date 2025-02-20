@@ -46,8 +46,8 @@ void main() {
 	
 	#if ISOMETRIC_RENDERING_ENABLED == 1
 		#include "/import/gbufferModelViewInverse.glsl"
-		vec3 worldPos = endMat(gbufferModelViewInverse * (gl_ModelViewMatrix * pos));
-		gl_Position = projectIsometric(worldPos  ARGS_IN);
+		vec3 playerPos = endMat(gbufferModelViewInverse * (gl_ModelViewMatrix * pos));
+		gl_Position = projectIsometric(playerPos  ARGS_IN);
 	#else
 		gl_Position = gl_ProjectionMatrix * gl_ModelViewMatrix * pos;
 	#endif

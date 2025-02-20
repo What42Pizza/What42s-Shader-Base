@@ -27,7 +27,7 @@ float getAoFactor(ARG_OUT) {
 	//	depth = max(depth, toBlockDepthDh(texelFetch(DH_DEPTH_BUFFER_ALL, texelcoord, 0).r  ARGS_IN));
 	//#endif
 	#include "/utils/var_rng.glsl"
-	float noise = normalizeNoiseAround1(randomFloat(rng), 0.3);
+	float noise = 1.0 + randomFloat(rng) * 0.3;
 	float scale = AO_SIZE * 0.17 / depth;
 	
 	float total = 0.0;

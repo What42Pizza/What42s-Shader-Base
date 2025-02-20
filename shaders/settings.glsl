@@ -79,8 +79,8 @@ const float ambientOcclusionLevel = 0.8; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8
 #endif
 
 #ifdef DISTANT_HORIZONS
-	#undef FOG_ENABLED
-	#define FOG_ENABLED 0
+	#undef BORDER_FOG_ENABLED
+	#define BORDER_FOG_ENABLED 0
 #endif
 
 

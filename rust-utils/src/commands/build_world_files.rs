@@ -6,7 +6,7 @@ use std::fs;
 pub fn create_file_contents(world_name: &str, shader_name: &str, shader_type: &str) -> String {
 	let shader_name_uppercase = shader_name.to_uppercase();
 	let raw_output = format!(r##"
-		#version 130
+		#version 330 compatibility
 		
 		#define SHADER_{shader_name_uppercase}
 		#define {world_name}

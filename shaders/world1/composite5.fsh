@@ -1,4 +1,4 @@
-#version 130
+#version 330 compatibility
 
 #define SHADER_COMPOSITE5
 #define END

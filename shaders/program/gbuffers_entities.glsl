@@ -25,13 +25,12 @@ void main() {
 	#include "/import/entityColor.glsl"
 	albedo.rgb = mix(albedo.rgb, entityColor.rgb, entityColor.a);
 	albedo.rgb *= 1.0 + (1.0 - max(lmcoord.x, lmcoord.y)) * entityColor.a;
-	albedo.rgb *= 0.9;
 	
 	
 	/* DRAWBUFFERS:02 */
 	gl_FragData[0] = vec4(albedo);
 	gl_FragData[1] = vec4(
-		packVec2(lmcoord.x, lmcoord.y),
+		packVec2(lmcoord.x * 0.25, lmcoord.y * 0.25),
 		packVec2(normal.x, normal.y),
 		0.0,
 		1.0
@@ -46,6 +45,8 @@ void main() {
 
 
 #ifdef VSH
+
+#include "/lib/lighting/vsh_lighting.glsl"
 
 #if ISOMETRIC_RENDERING_ENABLED == 1
 	#include "/lib/isometric.glsl"
@@ -62,10 +63,12 @@ void main() {
 	normal = encodeNormal(gl_NormalMatrix * gl_Normal);
 	
 	
+	#include "/import/gbufferModelViewInverse.glsl"
+	vec3 playerPos = endMat(gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex));
+	
+	
 	#if ISOMETRIC_RENDERING_ENABLED == 1
-		#include "/import/gbufferModelViewInverse.glsl"
-		vec3 worldPos = endMat(gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex));
-		gl_Position = projectIsometric(worldPos  ARGS_IN);
+		gl_Position = projectIsometric(playerPos  ARGS_IN);
 	#else
 		gl_Position = ftransform();
 	#endif
@@ -84,6 +87,8 @@ void main() {
 		#endif
 	#endif
 	
+	
+	doVshLighting(length(playerPos)  ARGS_IN);
 	
 }
 

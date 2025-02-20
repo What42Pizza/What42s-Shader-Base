@@ -30,8 +30,12 @@ float getFogMin(float airFogMin  ARGS_OUT) {
 
 
 
-float getFogAmount(float fogDistance, float pixelY  ARGS_OUT) {
+float getFogAmount(vec3 playerPos  ARGS_OUT) {
 	
+	float fogDistance = max(length(playerPos.xz), playerPos.y);
+	#ifdef SHADER_GBUFFERS_CLOUDS
+		fogDistance /= FOG_EXTRA_CLOUDS_DISTANCE;
+	#endif
 	float fogAmount = fogDistance * getFogDistanceMult(ARG_IN);
 	
 	#include "/import/betterRainStrength.glsl"
@@ -45,16 +49,6 @@ float getFogAmount(float fogDistance, float pixelY  ARGS_OUT) {
 	float airFogMin = mix(FOG_AIR_MIN, FOG_AIR_RAIN_MIN, betterRainStrength);
 	float fogMin = getFogMin(airFogMin  ARGS_IN);
 	fogAmount = max(fogAmount, fogMin);
-	
-	#if GROUND_FOG_ENABLED == 1
-		const float SLOPE = 1.0 / (GROUND_FOG_SLOPE * 25.0);
-		const float CONSTANT = sqrt(1.0 / SLOPE);
-		float groundFogAmount = min(pixelY + GROUND_FOG_OFFSET, -0.01) - CONSTANT;
-		groundFogAmount = 1.0 / (groundFogAmount * SLOPE);
-		groundFogAmount = (groundFogAmount + CONSTANT) / CONSTANT;
-		groundFogAmount *= GROUND_FOG_STRENGTH * 0.15;
-		fogAmount = 1.0 - (1.0 - fogAmount) * (1.0 - groundFogAmount);
-	#endif
 	
 	#include "/import/isEyeInWater.glsl"
 	if (isEyeInWater == 0) {

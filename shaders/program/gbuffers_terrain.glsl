@@ -7,7 +7,7 @@
 	flat_inout int materialId;
 	
 	#ifdef DISTANT_HORIZONS
-		varying vec3 worldPos;
+		varying vec3 playerPos;
 	#endif
 	
 #endif
@@ -26,20 +26,22 @@ void main() {
 			#include "/import/frameCounter.glsl"
 			dither = fract(dither + 1.61803398875 * mod(float(frameCounter), 3600.0));
 		#endif
-		float lengthCylinder = max(length(worldPos.xz), abs(worldPos.y));
+		float lengthCylinder = max(length(playerPos.xz), abs(playerPos.y));
 		#include "/import/far.glsl"
 		if (lengthCylinder >= far - 4 - 12 * dither) discard;
 	#endif
 	
 	
 	// decrease vanilla ao in caves
-	vec3 newGlcolor = normalize(glcolor) * (1.0 - (0.1 + 0.9 * lmcoord.y) * (1.0 - length(glcolor)));
+	float glcolorBrightness = length(glcolor);
+	glcolorBrightness = 1.0 - (1.0 - glcolorBrightness) * mix(VANILLA_AO_DARK, VANILLA_AO_BRIGHT, max(lmcoord.x, lmcoord.y));
+	vec3 newGlcolor = normalize(glcolor) * glcolorBrightness;
 	
 	
 	vec4 albedo = texture2D(MAIN_TEXTURE, texcoord);
 	if (albedo.a < 0.1) discard;
 	albedo.rgb = smoothMin(albedo.rgb, vec3(1.0), 0.15);
-	albedo.rgb *= glcolor.rgb;
+	albedo.rgb *= newGlcolor;
 	
 	
 	float reflectiveness = ((materialId - materialId % 100) / 100) * 0.15;
@@ -48,7 +50,7 @@ void main() {
 	/* DRAWBUFFERS:02 */
 	gl_FragData[0] = vec4(albedo);
 	gl_FragData[1] = vec4(
-		packVec2(lmcoord.x, lmcoord.y),
+		packVec2(lmcoord.x * 0.25, lmcoord.y * 0.25),
 		packVec2(normal.x, normal.y),
 		reflectiveness,
 		1.0
@@ -90,22 +92,22 @@ void main() {
 	
 	
 	#ifndef DISTANT_HORIZONS
-		vec3 worldPos;
+		vec3 playerPos;
 	#endif
 	#include "/import/gbufferModelViewInverse.glsl"
-	worldPos = endMat(gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex));
+	playerPos = endMat(gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex));
 	
 	
 	#if WAVING_ENABLED == 1
-		applyWaving(worldPos  ARGS_IN);
+		applyWaving(playerPos  ARGS_IN);
 	#endif
 	
 	
 	#if ISOMETRIC_RENDERING_ENABLED == 1
-		gl_Position = projectIsometric(worldPos  ARGS_IN);
+		gl_Position = projectIsometric(playerPos  ARGS_IN);
 	#else
 		#include "/import/gbufferModelView.glsl"
-		gl_Position = gl_ProjectionMatrix * gbufferModelView * startMat(worldPos);
+		gl_Position = gl_ProjectionMatrix * gbufferModelView * startMat(playerPos);
 	#endif
 	
 	
@@ -126,7 +128,7 @@ void main() {
 	#endif
 	
 	
-	doVshLighting(length(worldPos)  ARGS_IN);
+	doVshLighting(length(playerPos)  ARGS_IN);
 	
 }
 

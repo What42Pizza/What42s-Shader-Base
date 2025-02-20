@@ -265,11 +265,6 @@ void doFshLighting(inout vec3 color, float blockBrightness, float ambientBrightn
 		light += skyLight * ambientBrightness;
 	#endif
 	
-	//float colorWhiteness = dot(color, vec3(1.0)) / 3.0;
-	//colorWhiteness *= colorWhiteness;
-	//colorWhiteness *= colorWhiteness;
-	//light *= 1.0 - 0.9 * colorWhiteness;
-	
 	color *= light;
 	
 }

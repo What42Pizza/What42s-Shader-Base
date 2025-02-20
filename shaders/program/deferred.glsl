@@ -16,8 +16,7 @@
 #if SSAO_ENABLED == 1
 	#include "/lib/ssao.glsl"
 #endif
-#if FOG_ENABLED == 1
-	#include "/lib/fog/getFogDistance.glsl"
+#if BORDER_FOG_ENABLED == 1
 	#include "/lib/fog/getFogAmount.glsl"
 	#include "/lib/fog/applyFog.glsl"
 #endif
@@ -33,7 +32,7 @@
 void main() {
 	vec3 color = texelFetch(MAIN_TEXTURE, texelcoord, 0).rgb;
 	vec4 data = texelFetch(OPAQUE_DATA_TEXTURE, texelcoord, 0);
-	vec2 lmcoord = unpackVec2(data.x);
+	vec2 lmcoord = unpackVec2(data.x) * 4.0;
 	vec3 normal = decodeNormal(unpackVec2(data.y));
 	
 	
@@ -65,11 +64,10 @@ void main() {
 		doFshLighting(color, lmcoord.x, lmcoord.y, viewPos, normal  ARGS_IN);
 		
 		
-		#if FOG_ENABLED == 1
+		#if BORDER_FOG_ENABLED == 1
 			#include "/import/gbufferModelViewInverse.glsl"
 			vec3 playerPos = (gbufferModelViewInverse * startMat(viewPos)).xyz;
-			float fogDistance = getFogDistance(playerPos  ARGS_IN);
-			float fogAmount = getFogAmount(fogDistance, playerPos.y  ARGS_IN);
+			float fogAmount = getFogAmount(playerPos  ARGS_IN);
 		#endif
 		
 		
@@ -79,7 +77,7 @@ void main() {
 		#endif
 		
 		
-		#if FOG_ENABLED == 1
+		#if BORDER_FOG_ENABLED == 1
 			applyFog(color, fogAmount  ARGS_IN);
 		#endif
 		

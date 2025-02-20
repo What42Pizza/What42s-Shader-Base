@@ -1,4 +1,4 @@
-#version 130
+#version 330 compatibility
 
 #define SHADER_GBUFFERS_TERRAIN
 #define SHADER_DH_TERRAIN

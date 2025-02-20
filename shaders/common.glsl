@@ -33,10 +33,10 @@ uniform sampler2D shadowtex0;
 
 #ifdef FSH
 	#define flat_inout flat in
-	//#define varying in
+	#define varying in
 #else
 	#define flat_inout flat out
-	//#define varying out
+	#define varying out
 #endif
 
 //#define HAND_DEPTH 0.19 // idk what should actually be here
@@ -163,11 +163,6 @@ vec3 smoothClamp(vec3 v, vec3 minV, vec3 maxV, float a) {
 	return smoothMax(smoothMin(v, maxV, a), minV, a);
 }
 
-float cosineInterpolate(float edge1, float edge2, float value) {
-	float value2 = (1.0 - cos(value * PI)) / 2.0;
-	return edge1 * (1.0 - value2) + edge2 * value2;
-}
-
 float cubicInterpolate(float edge0, float edge1, float edge2, float edge3, float value) {
 	float value2 = value * value;
 	float a0 = edge3 - edge2 - edge0 + edge1;
@@ -196,18 +191,18 @@ float bayer64 (const vec2 a) {return bayer8 (0.125 * a) * 0.015625 + bayer8(a); 
 float bayer128(const vec2 a) {return bayer16(0.125 * a) * 0.015625 + bayer8(a); }
 
 float packVec2(vec2 v) {
-	v = floor(v * 2047.0 + 0.5);
-	return dot(v, vec2(1.0, 2048.0)) / 0x3FFFFF;
+	int bits = 0x3F000000; // 0b00111111000000000000000000000000, the perfect float
+	ivec2 vInt = ivec2(v * 2047.0 + 0.5);
+	bits += vInt.x + (vInt.y << 11);
+	return intBitsToFloat(bits);
 }
 
 float packVec2(float x, float y) {return packVec2(vec2(x, y));}
 
 vec2 unpackVec2(float v) {
-	v *= 0x3FFFFF; // map to 0 - 2^22-1
-	float x = mod(v, 2048.0); // take lowest 11 bits
-	v = floor(v / 2048.0); // shift 11 bits
-	float y = v; // take last 11 bits
-	return vec2(x, y) / 2047.0; // map to 0-1
+	int bits = floatBitsToInt(v);
+	ivec2 vInt = ivec2(bits & 0x7FF, (bits & 0x3ff800) >> 11);
+	return vInt / 2047.0;
 }
 
 // octahedral encoding/decoding
@@ -247,38 +242,15 @@ bool depthIsHand(float depth) {
 		float len = length(texcoord * 2.0 - 1.0);
 		return linearDepth + len * len / 8.0;
 	}
-#else
-	float estimateDepthVSH() {
-		float len = length(gl_Position.xy) / max(gl_Position.w, 1.0);
-		return gl_Position.z * (1.0 + len * len * 0.7);
-	}
 #endif
 
 void adjustLmcoord(inout vec2 lmcoord) {
-	const float low = 0.0333;
+	const float low = 0.03125;
 	const float high = 0.95;
 	lmcoord -= low;
 	lmcoord /= high - low;
 	lmcoord = clamp(lmcoord, 0.0, 1.0);
 }
-
-//vec3 getSkyLight(vec4 skylightPercents) {
-//	vec3 skyLight = 
-//		skylightPercents.x * SKYLIGHT_DAY_COLOR +
-//		skylightPercents.y * SKYLIGHT_NIGHT_COLOR +
-//		skylightPercents.z * SKYLIGHT_SUNRISE_COLOR +
-//		skylightPercents.w * SKYLIGHT_SUNSET_COLOR;
-//	return skyLight / 2.0;
-//}
-
-//vec3 getAmbientLight(vec4 skylightPercents, float ambientBrightness) {
-//	vec3 ambient = 
-//		skylightPercents.x * AMBIENT_DAY_COLOR +
-//		skylightPercents.y * AMBIENT_NIGHT_COLOR +
-//		skylightPercents.z * AMBIENT_SUNRISE_COLOR +
-//		skylightPercents.w * AMBIENT_SUNSET_COLOR;
-//	return mix(CAVE_AMBIENT_COLOR, ambient, ambientBrightness);
-//}
 
 
 
@@ -336,23 +308,6 @@ vec3 randomVec3(inout uint rng) {
 
 vec3 randomVec3FromRValue(uint rng) {
 	return randomVec3(rng);
-}
-
-float normalizeNoiseAround1(float noise, float range) {
-	return noise * range + 1.0;
-}
-
-vec2 normalizeNoiseAround1(vec2 noise, float range) {
-	float x = normalizeNoiseAround1(noise.x, range);
-	float y = normalizeNoiseAround1(noise.y, range);
-	return vec2(x, y);
-}
-
-vec3 normalizeNoiseAround1(vec3 noise, float range) {
-	float x = normalizeNoiseAround1(noise.x, range);
-	float y = normalizeNoiseAround1(noise.y, range);
-	float z = normalizeNoiseAround1(noise.z, range);
-	return vec3(x, y, z);
 }
 
 

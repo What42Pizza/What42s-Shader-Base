@@ -8,9 +8,8 @@
 	#if HIDE_NEARBY_CLOUDS == 1
 		varying float opacity;
 	#endif
-	#if FOG_ENABLED == 1
-		varying float fogDistance;
-		varying float pixelY;
+	#if BORDER_FOG_ENABLED == 1
+		varying float fogAmount;
 	#endif
 	
 #endif
@@ -19,8 +18,7 @@
 
 #ifdef FSH
 
-#if FOG_ENABLED == 1
-	#include "/lib/fog/getFogAmount.glsl"
+#if BORDER_FOG_ENABLED == 1
 	#include "/lib/fog/applyFog.glsl"
 #endif
 
@@ -38,8 +36,7 @@ void main() {
 	
 	
 	// fog
-	#if FOG_ENABLED == 1
-		float fogAmount = getFogAmount(fogDistance, pixelY  ARGS_IN);
+	#if BORDER_FOG_ENABLED == 1
 		applyFog(color.rgb, fogAmount  ARGS_IN);
 	#endif
 	
@@ -64,8 +61,8 @@ void main() {
 #ifdef TAA_JITTER
 	#include "/lib/taa_jitter.glsl"
 #endif
-#if FOG_ENABLED == 1
-	#include "/lib/fog/getFogDistance.glsl"
+#if BORDER_FOG_ENABLED == 1
+	#include "/lib/fog/getFogAmount.glsl"
 #endif
 
 void main() {
@@ -89,7 +86,7 @@ void main() {
 	#endif
 	
 	#if ISOMETRIC_RENDERING_ENABLED == 1
-		gl_Position = projectIsometric(worldPos  ARGS_IN);
+		gl_Position = projectIsometric(playerPos  ARGS_IN);
 	#else
 		gl_Position = ftransform();
 	#endif
@@ -98,14 +95,13 @@ void main() {
 		doTaaJitter(gl_Position.xy  ARGS_IN);
 	#endif
 	
-	#if FOG_ENABLED == 1
+	#if BORDER_FOG_ENABLED == 1
 		vec4 position = gl_Vertex;
-		fogDistance = getFogDistance(position.xyz  ARGS_IN);
-		pixelY = position.y;
+		fogAmount = getFogAmount(position.xyz  ARGS_IN);
 	#endif
 	
 	#if HIDE_NEARBY_CLOUDS == 1
-		opacity = (1.0 - CLOUD_TRANSPARENCY) * atan(length(worldPos) - 30.0) / PI + 0.5;
+		opacity = (1.0 - CLOUD_TRANSPARENCY) * atan(length(playerPos) - 30.0) / PI + 0.5;
 	#endif
 	
 	glcolor = gl_Color.r;

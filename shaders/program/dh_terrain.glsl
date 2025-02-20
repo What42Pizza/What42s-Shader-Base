@@ -3,7 +3,7 @@
 	varying vec2 lmcoord;
 	varying vec3 glcolor;
 	varying vec2 normal;
-	varying vec3 worldPos;
+	varying vec3 playerPos;
 	flat_inout int dhBlock;
 	
 #endif
@@ -18,7 +18,7 @@
 
 void main() {
 	
-	float lengthCylinder = max(length(worldPos.xz), abs(worldPos.y));
+	float lengthCylinder = max(length(playerPos.xz), abs(playerPos.y));
 	#include "/import/far.glsl"
 	if (lengthCylinder < far - 20) discard;
 	
@@ -27,7 +27,7 @@ void main() {
 	
 	// add noise for fake texture
 	#include "/import/cameraPosition.glsl"
-	uvec3 noisePos = uvec3(ivec3((worldPos + cameraPosition) * 6.0 + 0.5));
+	uvec3 noisePos = uvec3(ivec3((playerPos + cameraPosition) * 6.0 + 0.5));
 	uint noise = randomizeUint(noisePos.x) ^ randomizeUint(noisePos.y) ^ randomizeUint(noisePos.z);
 	albedo *= 1.0 + 0.1 * randomFloat(noise);
 	albedo = clamp(albedo, vec3(0.0), vec3(1.0));
@@ -36,7 +36,7 @@ void main() {
 	/* DRAWBUFFERS:02 */
 	gl_FragData[0] = vec4(albedo, 1.0);
 	gl_FragData[1] = vec4(
-		packVec2(lmcoord.x, lmcoord.y),
+		packVec2(lmcoord.x * 0.25, lmcoord.y * 0.25),
 		packVec2(normal.x, normal.y),
 		0.0,
 		1.0
@@ -52,6 +52,8 @@ void main() {
 
 #ifdef VSH
 
+#include "/lib/lighting/vsh_lighting.glsl"
+
 #if ISOMETRIC_RENDERING_ENABLED == 1
 	#include "/lib/isometric.glsl"
 #endif
@@ -65,7 +67,7 @@ void main() {
 	adjustLmcoord(lmcoord);
 	normal = encodeNormal(gl_NormalMatrix * gl_Normal);
 	#include "/import/gbufferModelViewInverse.glsl"
-	worldPos = endMat(gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex));
+	playerPos = endMat(gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex));
 	dhBlock = dhMaterialId;
 	
 	
@@ -73,10 +75,10 @@ void main() {
 	
 	
 	#if ISOMETRIC_RENDERING_ENABLED == 1
-		gl_Position = projectIsometric(worldPos  ARGS_IN);
+		gl_Position = projectIsometric(playerPos  ARGS_IN);
 	#else
 		#include "/import/gbufferModelView.glsl"
-		gl_Position = gl_ProjectionMatrix * gbufferModelView * startMat(worldPos);
+		gl_Position = gl_ProjectionMatrix * gbufferModelView * startMat(playerPos);
 	#endif
 	
 	
@@ -91,6 +93,8 @@ void main() {
 		}
 	#endif
 	
+	
+	doVshLighting(length(playerPos)  ARGS_IN);
 	
 }
 

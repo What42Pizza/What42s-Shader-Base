@@ -5,9 +5,9 @@
 
 
 
-vec3 getWavingAddition(vec3 position  ARGS_OUT) {
+vec3 getWavingAddition(vec3 playerPos  ARGS_OUT) {
 	#include "/import/cameraPosition.glsl"
-	vec3 worldPos = position + cameraPosition;
+	vec3 worldPos = playerPos + cameraPosition;
 	#include "/import/frameTimeCounter.glsl"
 	float timePos = frameTimeCounter + dot(worldPos, windDirection) * WAVING_WORLD_SCALE * 0.5;
 	timePos *= WAVING_SPEED * 1.75;

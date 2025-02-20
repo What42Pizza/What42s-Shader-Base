@@ -12,11 +12,10 @@
 		varying vec3 viewPos;
 	#endif
 	#if WAVING_WATER_NORMALS_ENABLED == 1 || defined DISTANT_HORIZONS
-		varying vec3 worldPos;
+		varying vec3 playerPos;
 	#endif
-	#if FOG_ENABLED == 1
-		varying float fogDistance;
-		varying float pixelY;
+	#if BORDER_FOG_ENABLED == 1
+		varying float fogAmount;
 	#endif
 	
 #endif
@@ -32,8 +31,7 @@
 #if WAVING_WATER_NORMALS_ENABLED == 1
 	#include "/lib/simplex_noise.glsl"
 #endif
-#if FOG_ENABLED == 1
-	#include "/lib/fog/getFogAmount.glsl"
+#if BORDER_FOG_ENABLED == 1
 	#include "/lib/fog/applyFog.glsl"
 #endif
 
@@ -45,7 +43,7 @@ void main() {
 			#include "/import/frameCounter.glsl"
 			dither = fract(dither + 1.61803398875 * mod(float(frameCounter), 3600.0));
 		#endif
-		float lengthCylinder = max(length(worldPos.xz), abs(worldPos.y)) * 0.95;
+		float lengthCylinder = max(length(playerPos.xz), abs(playerPos.y)) * 0.95;
 		#include "/import/far.glsl"
 		if (lengthCylinder >= far - 10 - 8 * dither) discard;
 	#endif
@@ -68,7 +66,7 @@ void main() {
 			const float worldPosScale = 2.0;
 			#include "/import/frameTimeCounter.glsl"
 			#include "/import/cameraPosition.glsl"
-			vec3 randomPoint = abs(simplexNoise3From4(vec4((worldPos + cameraPosition) / worldPosScale, frameTimeCounter * 0.7)));
+			vec3 randomPoint = abs(simplexNoise3From4(vec4((playerPos + cameraPosition) / worldPosScale, frameTimeCounter * 0.7)));
 			vec3 normalWavingAddition = normalize(randomPoint) * 0.15;
 			normalWavingAddition *= abs(dot(normal, normalize(viewPos)));
 			normalWavingAddition *= mix(WAVING_WATER_NORMALS_AMOUNT_UNDERGROUND, WAVING_WATER_NORMALS_AMOUNT_SURFACE, lmcoord.y);
@@ -104,8 +102,7 @@ void main() {
 	
 	
 	// fog
-	#if FOG_ENABLED == 1
-		float fogAmount = getFogAmount(fogDistance, pixelY  ARGS_IN);
+	#if BORDER_FOG_ENABLED == 1
 		applyFog(color.rgb, fogAmount  ARGS_IN);
 	#endif
 	
@@ -117,7 +114,7 @@ void main() {
 	/* DRAWBUFFERS:03 */
 	gl_FragData[0] = color;
 	gl_FragData[1] = vec4(
-		packVec2(lmcoord.x, lmcoord.y),
+		packVec2(lmcoord.x * 0.25, lmcoord.y * 0.25),
 		packVec2(encodeNormal(normal)),
 		reflectiveness,
 		1.0
@@ -142,8 +139,8 @@ void main() {
 #ifdef TAA_JITTER
 	#include "/lib/taa_jitter.glsl"
 #endif
-#if FOG_ENABLED == 1
-	#include "/lib/fog/getFogDistance.glsl"
+#if BORDER_FOG_ENABLED == 1
+	#include "/lib/fog/getFogAmount.glsl"
 #endif
 
 void main() {
@@ -162,33 +159,33 @@ void main() {
 	
 	
 	#if !(WAVING_WATER_NORMALS_ENABLED == 1 || defined DISTANT_HORIZONS)
-		vec3 worldPos;
+		vec3 playerPos;
 	#endif
 	#include "/import/gbufferModelViewInverse.glsl"
-	worldPos = endMat(gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex));
+	playerPos = endMat(gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex));
 	
 	#if PHYSICALLY_WAVING_WATER_ENABLED == 1
 		if (materialId == 7) {
 			float wavingAmount = mix(PHYSICALLY_WAVING_WATER_AMOUNT_UNDERGROUND, PHYSICALLY_WAVING_WATER_AMOUNT_SURFACE, lmcoord.y);
 			#ifdef DISTANT_HORIZONS
 				#include "/import/far.glsl"
-				float lengthCylinder = max(length(worldPos.xz), abs(worldPos.y));
+				float lengthCylinder = max(length(playerPos.xz), abs(playerPos.y));
 				wavingAmount *= smoothstep(far * 0.95 - 10, far * 0.9 - 10, lengthCylinder);
 			#endif
 			#include "/import/cameraPosition.glsl"
 			#include "/import/frameTimeCounter.glsl"
-			worldPos += cameraPosition;
-			worldPos.y += sin(worldPos.x * 0.6 + worldPos.z * 1.4 + frameTimeCounter * 3.0) * 0.03 * wavingAmount;
-			worldPos.y += sin(worldPos.x * 0.9 + worldPos.z * 0.6 + frameTimeCounter * 2.5) * 0.02 * wavingAmount;
-			worldPos -= cameraPosition;
+			playerPos += cameraPosition;
+			playerPos.y += sin(playerPos.x * 0.6 + playerPos.z * 1.4 + frameTimeCounter * 3.0) * 0.03 * wavingAmount;
+			playerPos.y += sin(playerPos.x * 0.9 + playerPos.z * 0.6 + frameTimeCounter * 2.5) * 0.02 * wavingAmount;
+			playerPos -= cameraPosition;
 		}
 	#endif
 	
 	#if ISOMETRIC_RENDERING_ENABLED == 1
-		gl_Position = projectIsometric(worldPos  ARGS_IN);
+		gl_Position = projectIsometric(playerPos  ARGS_IN);
 	#else
 		#include "/import/gbufferModelView.glsl"
-		gl_Position = gl_ProjectionMatrix * gbufferModelView * startMat(worldPos);
+		gl_Position = gl_ProjectionMatrix * gbufferModelView * startMat(playerPos);
 	#endif
 	
 	#if ISOMETRIC_RENDERING_ENABLED == 0
@@ -201,9 +198,8 @@ void main() {
 	#endif
 	
 	
-	#if FOG_ENABLED == 1
-		fogDistance = getFogDistance(worldPos  ARGS_IN);
-		pixelY = worldPos.y;
+	#if BORDER_FOG_ENABLED == 1
+		fogAmount = getFogAmount(playerPos  ARGS_IN);
 	#endif
 	
 	
@@ -219,7 +215,7 @@ void main() {
 	#endif
 	
 	
-	doVshLighting(length(worldPos)  ARGS_IN);
+	doVshLighting(length(playerPos)  ARGS_IN);
 	
 }
 

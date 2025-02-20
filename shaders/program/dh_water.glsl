@@ -8,7 +8,7 @@
 	varying vec3 normal;
 	flat_inout int dhBlock;
 	
-	varying vec3 worldPos;
+	varying vec3 playerPos;
 	varying vec3 viewPos;
 	flat_inout vec3 skyLight;
 	
@@ -26,10 +26,6 @@
 #if WAVING_WATER_NORMALS_ENABLED == 1
 	#include "/lib/simplex_noise.glsl"
 #endif
-#if FOG_ENABLED == 1
-	#include "/lib/fog/getFogAmount.glsl"
-	#include "/lib/fog/applyFog.glsl"
-#endif
 
 void main() {
 	
@@ -38,14 +34,14 @@ void main() {
 		#include "/import/frameCounter.glsl"
 		dither = fract(dither + 1.61803398875 * mod(float(frameCounter), 3600.0));
 	#endif
-	float lengthCylinder = max(length(worldPos.xz), abs(worldPos.y));
+	float lengthCylinder = max(length(playerPos.xz), abs(playerPos.y));
 	#include "/import/far.glsl"
 	if (lengthCylinder < far - 10 - 8 * dither) discard;
 	
 	float realDepth = texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r;
 	#include "/import/invViewSize.glsl"
 	vec3 realPos = screenToView(vec3(gl_FragCoord.xy * invViewSize, realDepth)  ARGS_IN);
-	if (realDepth < 1.0 && length(realPos) < length(worldPos)) discard;
+	if (realDepth < 1.0 && length(realPos) < length(playerPos)) discard;
 	
 	
 	vec4 color = glcolor;
@@ -66,7 +62,7 @@ void main() {
 			const float worldPosScale = 2.0;
 			#include "/import/frameTimeCounter.glsl"
 			#include "/import/cameraPosition.glsl"
-			vec3 randomPoint = abs(simplexNoise3From4(vec4((worldPos + cameraPosition) / worldPosScale, frameTimeCounter * 0.7)));
+			vec3 randomPoint = abs(simplexNoise3From4(vec4((playerPos + cameraPosition) / worldPosScale, frameTimeCounter * 0.7)));
 			randomPoint = normalize(randomPoint);
 			vec3 normalWavingAddition = randomPoint * 0.15;
 			normalWavingAddition *= abs(dot(normal, normalize(viewPos)));
@@ -104,7 +100,7 @@ void main() {
 	/* DRAWBUFFERS:03 */
 	gl_FragData[0] = color;
 	gl_FragData[1] = vec4(
-		packVec2(lmcoord.x, lmcoord.y),
+		packVec2(lmcoord.x * 0.25, lmcoord.y * 0.25),
 		packVec2(encodeNormal(normal)),
 		dhBlock == DH_BLOCK_WATER ? WATER_REFLECTION_AMOUNT : 0.0,
 		1.0
@@ -138,19 +134,19 @@ void main() {
 	dhBlock = dhMaterialId;
 	
 	#include "/import/gbufferModelViewInverse.glsl"
-	worldPos = endMat(gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex));
+	playerPos = endMat(gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex));
 	if (dhBlock == DH_BLOCK_WATER) {
-		worldPos.y -= 0.11213;
+		playerPos.y -= 0.11213;
 	}
 	viewPos = (gl_ModelViewMatrix * gl_Vertex).xyz;
 	skyLight = getSkyLight(ARG_IN);
 	
 	
 	#if ISOMETRIC_RENDERING_ENABLED == 1
-		gl_Position = projectIsometric(worldPos  ARGS_IN);
+		gl_Position = projectIsometric(playerPos  ARGS_IN);
 	#else
 		#include "/import/gbufferModelView.glsl"
-		gl_Position = gl_ProjectionMatrix * gbufferModelView * startMat(worldPos);
+		gl_Position = gl_ProjectionMatrix * gbufferModelView * startMat(playerPos);
 	#endif
 	
 	
@@ -166,7 +162,7 @@ void main() {
 	#endif
 	
 	
-	doVshLighting(length(worldPos)  ARGS_IN);
+	doVshLighting(length(playerPos)  ARGS_IN);
 	
 }
 

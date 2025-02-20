@@ -32,10 +32,10 @@
 		
 		vec4 viewPos = gbufferProjectionInverse * vec4(screenPos, 1.0);
 		viewPos /= viewPos.w;
-		vec4 worldPos = gbufferModelViewInverse * viewPos;
+		vec4 playerPos = gbufferModelViewInverse * viewPos;
 		
-		vec4 prevWorldPos = worldPos + vec4(cameraOffset, 0.0);
-		vec4 prevCoord = gbufferPreviousProjection * gbufferPreviousModelView * prevWorldPos;
+		vec4 prevPlayerPos = playerPos + vec4(cameraOffset, 0.0);
+		vec4 prevCoord = gbufferPreviousProjection * gbufferPreviousModelView * prevPlayerPos;
 		return prevCoord.xy / prevCoord.w * 0.5 + 0.5;
 	}
 	
@@ -47,16 +47,16 @@
 	
 	vec2 reprojection(vec3 screenPos, vec3 cameraOffset  ARGS_OUT) {
 		
-		vec3 worldPos = screenPos * 2.0 - 1.0;
-		worldPos.z += getIsometricOffset(ARG_IN);
-		worldPos /= getIsometricScale(ARG_IN);
+		vec3 playerPos = screenPos * 2.0 - 1.0;
+		playerPos.z += getIsometricOffset(ARG_IN);
+		playerPos /= getIsometricScale(ARG_IN);
 		#include "/import/gbufferModelViewInverse.glsl"
-		worldPos = mat3(gbufferModelViewInverse) * worldPos;
+		playerPos = mat3(gbufferModelViewInverse) * playerPos;
 		
-		vec3 prevWorldPos = worldPos + cameraOffset;
+		vec3 prevPlayerPos = playerPos + cameraOffset;
 		
 		#include "/import/gbufferPreviousModelView.glsl"
-		vec2 prevCoord = (mat3(gbufferPreviousModelView) * prevWorldPos).xy;
+		vec2 prevCoord = (mat3(gbufferPreviousModelView) * prevPlayerPos).xy;
 		prevCoord.xy *= getIsometricScale(ARG_IN).xy;
 		return prevCoord.xy * 0.5 + 0.5;
 	}

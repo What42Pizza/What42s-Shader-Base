@@ -18,8 +18,7 @@
 	#include "/utils/screen_to_view.glsl"
 	#include "/lib/reflections.glsl"
 #endif
-#if FOG_ENABLED == 1
-	#include "/lib/fog/getFogDistance.glsl"
+#if BORDER_FOG_ENABLED == 1
 	#include "/lib/fog/getFogAmount.glsl"
 #endif
 #if AA_STRATEGY == 1 || AA_STRATEGY == 3 || AA_STRATEGY == 4
@@ -53,11 +52,10 @@
 		#ifdef DISTANT_HORIZONS
 			if (depthIsSky(linearDepth)) viewPos = screenToViewDh(vec3(texcoord, dhDepth)  ARGS_IN);
 		#endif
-		#if FOG_ENABLED == 1
+		#if BORDER_FOG_ENABLED == 1
 			#include "/import/gbufferModelViewInverse.glsl"
 			vec3 playerPos = (gbufferModelViewInverse * startMat(viewPos)).xyz;
-			float fogDistance = getFogDistance(playerPos  ARGS_IN);
-			float fogAmount = getFogAmount(fogDistance, playerPos.y  ARGS_IN);
+			float fogAmount = getFogAmount(playerPos  ARGS_IN);
 			if (fogAmount > 0.99) return;
 			reflectionStrength *= 1.0 - fogAmount;
 		#endif
@@ -98,7 +96,7 @@ void main() {
 		#if REFLECTIVE_EVERYTHING == 1
 			float reflectionStrength = 1.0;
 		#else
-			float reflectionStrength = unpackVec2(data.z).y;
+			float reflectionStrength = data.z;
 		#endif
 		if (reflectionStrength > 0.01) {
 			doReflections(color, depth0, normal, reflectionStrength  ARGS_IN);

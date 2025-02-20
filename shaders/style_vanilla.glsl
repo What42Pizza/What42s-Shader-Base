@@ -52,9 +52,9 @@
 
 
 
-#if FOG_ENABLED == -1
-#undef FOG_ENABLED
-										#define FOG_ENABLED 1
+#if BORDER_FOG_ENABLED == -1
+#undef BORDER_FOG_ENABLED
+										#define BORDER_FOG_ENABLED 1
 #endif
 #if FOG_CURVE == -1
 #undef FOG_CURVE
@@ -67,25 +67,6 @@
 #if FOG_EXTRA_CLOUDS_DISTANCE == -1
 #undef FOG_EXTRA_CLOUDS_DISTANCE
 										#define FOG_EXTRA_CLOUDS_DISTANCE 10.0
-#endif
-
-
-
-#if GROUND_FOG_ENABLED == -1
-#undef GROUND_FOG_ENABLED
-										#define GROUND_FOG_ENABLED 0
-#endif
-#if GROUND_FOG_STRENGTH == -1
-#undef GROUND_FOG_STRENGTH
-										#define GROUND_FOG_STRENGTH 0.7
-#endif
-#if GROUND_FOG_OFFSET == -1
-#undef GROUND_FOG_OFFSET
-										#define GROUND_FOG_OFFSET 30
-#endif
-#if GROUND_FOG_SLOPE == -1
-#undef GROUND_FOG_SLOPE
-										#define GROUND_FOG_SLOPE 1.0
 #endif
 
 
@@ -281,11 +262,11 @@
 #endif
 #if AMBIENT_DAY_BLUE == -1
 #undef AMBIENT_DAY_BLUE
-										#define AMBIENT_DAY_BLUE 1.05
+										#define AMBIENT_DAY_BLUE 1.0
 #endif
 #if AMBIENT_DAY_BRIGHTNESS == -1
 #undef AMBIENT_DAY_BRIGHTNESS
-										#define AMBIENT_DAY_BRIGHTNESS 1.2
+										#define AMBIENT_DAY_BRIGHTNESS 1.1
 #endif
 
 
@@ -452,11 +433,19 @@
 #endif
 #if SIDE_SHADING_BRIGHT == -1
 #undef SIDE_SHADING_BRIGHT
-										#define SIDE_SHADING_BRIGHT 0.15
+										#define SIDE_SHADING_BRIGHT 0.2
 #endif
 #if SIDE_SHADING_DARK == -1
 #undef SIDE_SHADING_DARK
 										#define SIDE_SHADING_DARK 1.0
+#endif
+#if VANILLA_AO_BRIGHT == -1
+#undef VANILLA_AO_BRIGHT
+										#define VANILLA_AO_BRIGHT 1.0
+#endif
+#if VANILLA_AO_DARK == -1
+#undef VANILLA_AO_DARK
+										#define VANILLA_AO_DARK 1.0
 #endif
 #if RAIN_LIGHT_MULT == -1
 #undef RAIN_LIGHT_MULT
@@ -530,7 +519,7 @@
 
 #if WATER_REFLECTION_AMOUNT == -1
 #undef WATER_REFLECTION_AMOUNT
-										#define WATER_REFLECTION_AMOUNT 0.7
+										#define WATER_REFLECTION_AMOUNT 0.5
 #endif
 
 

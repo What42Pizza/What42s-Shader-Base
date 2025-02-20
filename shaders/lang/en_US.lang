@@ -93,44 +93,19 @@ screen.FOG_SETTINGS=Fog
 
 
 
-option.FOG_ENABLED=Fog Enabled
-option.FOG_ENABLED.comment=(Performance cost: Low)
-value.FOG_ENABLED.-1=Use Style Value
-value.FOG_ENABLED.0=Off
-value.FOG_ENABLED.1=On
+option.BORDER_FOG_ENABLED=Fog Enabled
+option.BORDER_FOG_ENABLED.comment=(Performance cost: Low)
+value.BORDER_FOG_ENABLED.-1=Use Style Value
+value.BORDER_FOG_ENABLED.0=Off
+value.BORDER_FOG_ENABLED.1=On
 
 option.FOG_CURVE=Fog Curve
 option.FOG_CURVE.comment= How quickly fog drops off from end to start (high values mean faster drop off)
 value.FOG_CURVE.-1=Use Style Value
 
-option.FOG_HEIGHT_SCALE=Fog Height Scale
-option.FOG_HEIGHT_SCALE.comment=How much further you can see upwards vs forwards
-value.FOG_HEIGHT_SCALE.-1=Use Style Value
-
 option.FOG_EXTRA_CLOUDS_DISTANCE=Extra Clouds Distance
 option.FOG_EXTRA_CLOUDS_DISTANCE.comment=How much further you can see clouds
 value.FOG_EXTRA_CLOUDS_DISTANCE.-1=Use Style Value
-
-
-
-screen.GROUND_FOG_SETTINGS=Ground Fog
-
-option.GROUND_FOG_ENABLED=Ground Fog Enabled
-option.GROUND_FOG_ENABLED.comment=Adds more fog below you
-value.GROUND_FOG_ENABLED.-1=Use Style Value
-value.GROUND_FOG_ENABLED.0=Off
-value.GROUND_FOG_ENABLED.1=On
-
-option.GROUND_FOG_STRENGTH=Ground Fog Strength
-value.GROUND_FOG_STRENGTH.-1=Use Style Value
-
-option.GROUND_FOG_OFFSET=Ground Fog Offset
-option.GROUND_FOG_OFFSET.comment=Where the ground fog start
-value.GROUND_FOG_OFFSET.-1=Use Style Value
-
-option.GROUND_FOG_SLOPE=Ground Fog Slope
-option.GROUND_FOG_SLOPE.comment=How quickly the ground fog appears below you, higher values spread out the slope
-value.GROUND_FOG_SLOPE.-1=Use Style Value
 
 
 
@@ -508,12 +483,24 @@ value.CEL_SHADING_ENABLED.1=On
 option.sunPathRotation=Sun Path Rotation
 option.sunPathRotation.comment=How tilted the sun's rotation is. 0 is vanilla
 
-option.ambientOcclusionLevel=Vanilla AO
-option.ambientOcclusionLevel.comment=How much vanilla Ambient Occlusion should be used
+option.ambientOcclusionLevel=Vanilla AO (Direct)
+option.ambientOcclusionLevel.comment=How much to directly change the vanilla Ambient Occlusion levels
 
-option.SIDE_SHADING=Side Shading
-option.SIDE_SHADING.comment=How much to increase / decrease the sides of blocks (lower is more accurate, higher is more vanilla-like)\n\n(Performance cost: None)
-value.SIDE_SHADING.-1=Use Style Value
+option.SIDE_SHADING_BRIGHT=Side Shading (Bright)
+option.SIDE_SHADING_BRIGHT.comment=How much to increase / decrease the sides of blocks at brightly lit areas (lower is more accurate, higher is more vanilla-like)\n\n(Performance cost: None)
+value.SIDE_SHADING_BRIGHT.-1=Use Style Value
+
+option.SIDE_SHADING_DARK=Side Shading (Dark)
+option.SIDE_SHADING_DARK.comment=How much to increase / decrease the sides of blocks at dimly lit areas (lower is more accurate, higher is more vanilla-like)\n\n(Performance cost: None)
+value.SIDE_SHADING_DARK.-1=Use Style Value
+
+option.VANILLA_AO_BRIGHT=Vanilla AO (Bright)
+option.VANILLA_AO_BRIGHT.comment=Not entirely the same as Vanilla AO, but effectively controls how effective Vanilla AO is in brightly lit areas (lower is more accurate, higher is more vanilla-like)\n\n(Performance cost: None)
+value.VANILLA_AO_BRIGHT.-1=Use Style Value
+
+option.VANILLA_AO_DARK=Vanilla AO (Dark)
+option.VANILLA_AO_DARK.comment=Not entirely the same as Vanilla AO, but effectively controls how effective Vanilla AO is in dimly lit areas (lower is more accurate, higher is more vanilla-like)\n\n(Performance cost: None)
+value.VANILLA_AO_DARK.-1=Use Style Value
 
 option.RAIN_LIGHT_MULT=Rain Light Multiplier
 value.RAIN_LIGHT_MULT.-1=Use Style Value

@@ -1,5 +1,6 @@
 - **1.0.0** (25/02/18)
-  - Removed many settings
+  - Relaunched as "I Like Vanilla" (previously "What42's Shader Base")
+  - Altered, added, and removed MANY settings
   - Major performance improvements from massive internal rewrites
 
 <br>
