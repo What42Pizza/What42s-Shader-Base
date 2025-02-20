@@ -32,7 +32,7 @@ vec3 getSkyLight(ARG_OUT) {
 	#include "/import/rainStrength.glsl"
 	sunLight *= 1.0 - rainStrength * (1.0 - RAIN_LIGHT_MULT);
 	
-	return (sunLight + moonLight) * 0.7;
+	return sunLight + moonLight;
 	
 }
 

@@ -23,8 +23,8 @@ void doVshLighting(float depth  ARGS_OUT) {
 	#else
 		float sideShading = dot(shadingNormals, vec3(-0.8, 0.3, -0.6));
 	#endif
-	sideShading *= mix(SIDE_SHADING_DARK, SIDE_SHADING_BRIGHT, max(lmcoord.x, lmcoord.y));
-	lmcoord *= 1.0 + sideShading;
+	sideShading *= mix(SIDE_SHADING_DARK, SIDE_SHADING_BRIGHT, max(lmcoord.x, lmcoord.y)) * 0.5;
+	glcolor *= 1.0 + sideShading;
 	
 }
 

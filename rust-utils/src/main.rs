@@ -33,7 +33,6 @@ pub const SHADERS_LIST: &[&str] = &[
 	"composite6",
 	"composite7",
 	"deferred1",
-	"deferred2",
 	"gbuffers_basic",
 	"gbuffers_beaconbeam",
 	"gbuffers_clouds",

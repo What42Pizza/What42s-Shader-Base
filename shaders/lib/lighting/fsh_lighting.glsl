@@ -191,7 +191,7 @@ float sampleShadow(vec3 viewPos, float lightDot  ARGS_OUT) {
 
 
 
-float getSkyBrightness(vec3 viewPos, vec3 normal  ARGS_OUT) {
+float getSkyBrightness(vec3 viewPos, vec3 normal, float ambientBrightness  ARGS_OUT) {
 	
 	// get normal dot sun/moon pos
 	#ifdef OVERWORLD
@@ -207,16 +207,13 @@ float getSkyBrightness(vec3 viewPos, vec3 normal  ARGS_OUT) {
 		#ifdef DISTANT_HORIZONS
 			#include "/import/far.glsl"
 			float len = max(length(viewPos) / far, 0.8);
-			skyBrightness = mix(skyBrightness, 0.95, smoothstep(len, 0.75, 0.8));
+			skyBrightness = mix(skyBrightness, ambientBrightness, smoothstep(len, 0.75, 0.8));
 		#endif
 	#else
-		float skyBrightness = 0.95;
+		float skyBrightness = ambientBrightness;
 	#endif
 	
-	// misc processing
 	skyBrightness *= max(lightDot, 0.0);
-	#include "/import/rainStrength.glsl"
-	skyBrightness *= 1.0 - rainStrength * (1.0 - RAIN_LIGHT_MULT) * 0.5;
 	
 	return skyBrightness;
 }
@@ -231,6 +228,11 @@ void doFshLighting(inout vec3 color, float blockBrightness, float ambientBrightn
 			+ step(0.2, blockBrightness) * 0.2;
 		ambientBrightness = smoothstep(0.0, 1.0, ambientBrightness);
 	#endif
+	
+	float skyBrightness = getSkyBrightness(viewPos, normal, ambientBrightness  ARGS_IN);
+	skyBrightness *= 0.25 + 0.75 * ambientBrightness;
+	ambientBrightness *= 1.0 - skyBrightness;
+	blockBrightness *= 1.0 - 0.8 * skyBrightness;
 	
 	vec3 ambientLight = getAmbientLight(ambientBrightness  ARGS_IN);
 	
@@ -258,14 +260,8 @@ void doFshLighting(inout vec3 color, float blockBrightness, float ambientBrightn
 		blockLight *= mix(vec3(1.0), NETHER_BLOCKLIGHT_MULT, blockBrightness);
 	#endif
 	
-	vec3 light = smoothMax(blockLight, ambientLight, LIGHT_SMOOTHING);
-	#if SHADOWS_ENABLED == 1
-		light += skyLight * getSkyBrightness(viewPos, normal  ARGS_IN);
-	#else
-		light += skyLight * ambientBrightness;
-	#endif
-	
-	color *= light;
+	color *= smoothMax(blockLight, ambientLight, LIGHT_SMOOTHING) + skyLight * skyBrightness;
+	color *= 1.2;
 	
 }
 

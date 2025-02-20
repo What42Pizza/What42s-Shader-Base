@@ -1,4 +1,4 @@
-Planned 1.0.0 pipeline:
+Planned 1.0.0 pipeline: (if rendering at half-res works out)
 
 - render opaques
 - render deferred
@@ -11,6 +11,8 @@ Planned 1.0.0 pipeline:
 - - add reflections and bloom and do aa
 - - process underwater waving and do depth of field and motion blur
 - - do sharpening, color correction, etc
+
+MAYBE, half-res textures can be rendered without rendering edge data, then an upscaling pass can for each 2x2 quad either upscale the half-ref texture or else render at full ref?
 
 
 

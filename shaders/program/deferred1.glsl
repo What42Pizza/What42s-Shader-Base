@@ -60,19 +60,6 @@ void main() {
 	if (isNonSky) {
 		
 		
-		// render shadows at half resolution
-		//#include "/import/viewSize.glsl"
-		//ivec2 shadowTexelcoord = texelcoord * 2;
-		//if (shadowTexelcoord.x <= viewSize.x && shadowTexelcoord.y <= shadowTexelcoord.y) {
-		//	float depth00 = texelFetch(DEPTH_BUFFER_ALL, shadowTexelcoord + ivec2(0, 0), 0).r;
-		//	float depth01 = texelFetch(DEPTH_BUFFER_ALL, shadowTexelcoord + ivec2(0, 1), 0).r;
-		//	float depth10 = texelFetch(DEPTH_BUFFER_ALL, shadowTexelcoord + ivec2(1, 0), 0).r;
-		//	float depth11 = texelFetch(DEPTH_BUFFER_ALL, shadowTexelcoord + ivec2(1, 1), 0).r;
-		//	float shadowDepth = max(max(depth00, depth01), max(depth10, depth11));
-		//	vec3 viewPos = screenToView(vec3(texcoord, depth)  ARGS_IN);
-		//}
-		
-		
 		vec3 viewPos = screenToView(vec3(texcoord, depth)  ARGS_IN);
 		doFshLighting(color, lmcoord.x, lmcoord.y, viewPos, normal  ARGS_IN);
 		
@@ -86,7 +73,7 @@ void main() {
 		
 		#if SSAO_ENABLED == 1
 			float aoFactor = getAoFactor(ARG_IN);
-			color *= 1.0 - aoFactor * AO_AMOUNT;
+			color *= 1.0 - aoFactor * AO_AMOUNT * 1.2;
 		#endif
 		
 		

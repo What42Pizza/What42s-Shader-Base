@@ -139,11 +139,11 @@
 
 #if BLOCK_RED == -1
 #undef BLOCK_RED
-										#define BLOCK_RED 1.0
+										#define BLOCK_RED 1.05
 #endif
 #if BLOCK_GREEN == -1
 #undef BLOCK_GREEN
-										#define BLOCK_GREEN 0.85
+										#define BLOCK_GREEN 0.9
 #endif
 #if BLOCK_BLUE == -1
 #undef BLOCK_BLUE
@@ -173,11 +173,11 @@
 #endif
 #if CAVE_AMBIENT_GREEN == -1
 #undef CAVE_AMBIENT_GREEN
-										#define CAVE_AMBIENT_GREEN 0.8
+										#define CAVE_AMBIENT_GREEN 0.85
 #endif
 #if CAVE_AMBIENT_BLUE == -1
 #undef CAVE_AMBIENT_BLUE
-										#define CAVE_AMBIENT_BLUE 0.5
+										#define CAVE_AMBIENT_BLUE 0.7
 #endif
 #if CAVE_AMBIENT_BRIGHTNESS == -1
 #undef CAVE_AMBIENT_BRIGHTNESS
@@ -235,11 +235,11 @@
 
 #if SKYLIGHT_DAY_RED == -1
 #undef SKYLIGHT_DAY_RED
-										#define SKYLIGHT_DAY_RED 1.0
+										#define SKYLIGHT_DAY_RED 0.75
 #endif
 #if SKYLIGHT_DAY_GREEN == -1
 #undef SKYLIGHT_DAY_GREEN
-										#define SKYLIGHT_DAY_GREEN 1.0
+										#define SKYLIGHT_DAY_GREEN 0.85
 #endif
 #if SKYLIGHT_DAY_BLUE == -1
 #undef SKYLIGHT_DAY_BLUE
@@ -247,18 +247,18 @@
 #endif
 #if SKYLIGHT_DAY_BRIGHTNESS == -1
 #undef SKYLIGHT_DAY_BRIGHTNESS
-										#define SKYLIGHT_DAY_BRIGHTNESS 0.45
+										#define SKYLIGHT_DAY_BRIGHTNESS 1.3
 #endif
 
 
 
 #if AMBIENT_DAY_RED == -1
 #undef AMBIENT_DAY_RED
-										#define AMBIENT_DAY_RED 0.98
+										#define AMBIENT_DAY_RED 0.9
 #endif
 #if AMBIENT_DAY_GREEN == -1
 #undef AMBIENT_DAY_GREEN
-										#define AMBIENT_DAY_GREEN 1.0
+										#define AMBIENT_DAY_GREEN 0.97
 #endif
 #if AMBIENT_DAY_BLUE == -1
 #undef AMBIENT_DAY_BLUE
@@ -266,7 +266,7 @@
 #endif
 #if AMBIENT_DAY_BRIGHTNESS == -1
 #undef AMBIENT_DAY_BRIGHTNESS
-										#define AMBIENT_DAY_BRIGHTNESS 1.1
+										#define AMBIENT_DAY_BRIGHTNESS 1.0
 #endif
 
 
@@ -433,11 +433,11 @@
 #endif
 #if SIDE_SHADING_BRIGHT == -1
 #undef SIDE_SHADING_BRIGHT
-										#define SIDE_SHADING_BRIGHT 0.2
+										#define SIDE_SHADING_BRIGHT 0.3
 #endif
 #if SIDE_SHADING_DARK == -1
 #undef SIDE_SHADING_DARK
-										#define SIDE_SHADING_DARK 1.0
+										#define SIDE_SHADING_DARK 0.8
 #endif
 #if VANILLA_AO_BRIGHT == -1
 #undef VANILLA_AO_BRIGHT
@@ -445,7 +445,7 @@
 #endif
 #if VANILLA_AO_DARK == -1
 #undef VANILLA_AO_DARK
-										#define VANILLA_AO_DARK 1.0
+										#define VANILLA_AO_DARK 0.8
 #endif
 #if RAIN_LIGHT_MULT == -1
 #undef RAIN_LIGHT_MULT
@@ -571,7 +571,7 @@
 #endif
 #if AO_SIZE == -1
 #undef AO_SIZE
-										#define AO_SIZE 1.0
+										#define AO_SIZE 0.5
 #endif
 #if AO_QUALITY == -1
 #undef AO_QUALITY
@@ -852,7 +852,7 @@
 
 #if SATURATION == -1
 #undef SATURATION
-										#define SATURATION -0.15
+										#define SATURATION -0.2
 #endif
 #if SATURATION_DARK == -1
 #undef SATURATION_DARK
@@ -860,14 +860,14 @@
 #endif
 #if SATURATION_LIGHT == -1
 #undef SATURATION_LIGHT
-										#define SATURATION_LIGHT 0.3
+										#define SATURATION_LIGHT 0.1
 #endif
 
 
 
 #if VIBRANCE == -1
 #undef VIBRANCE
-										#define VIBRANCE 0.25
+										#define VIBRANCE 0.4
 #endif
 
 
