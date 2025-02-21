@@ -28,7 +28,10 @@ pub fn get_file_sloc(path: &Path) -> Result<usize> {
 	if let Some(Some(name)) = path.file_name().map(OsStr::to_str) && name.starts_with("style_") {return Ok(0);}
 	let Some(extension) = path.extension() else {return Ok(0);};
 	let Some(extension) = extension.to_str() else {return Ok(0);};
-	if extension != "glsl" {return Ok(0);}
+	match extension {
+		"glsl" | "properties" => {}
+		_ => return Ok(0),
+	}
 	
 	
 	

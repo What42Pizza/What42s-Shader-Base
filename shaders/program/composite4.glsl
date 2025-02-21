@@ -11,7 +11,7 @@
 #if DOF_ENABLED == 1
 	#include "/lib/depth_of_field.glsl"
 #endif
-#ifdef REFLECTIONS_ENABLED
+#if REFLECTIONS_ENABLED == 1
 	#include "/utils/screen_to_view.glsl"
 	#include "/lib/reflections.glsl"
 	#if BORDER_FOG_ENABLED == 1
@@ -21,7 +21,7 @@
 
 
 
-#ifdef REFLECTIONS_ENABLED
+#if REFLECTIONS_ENABLED == 1
 	void doReflections(inout vec3 color, float depth, vec3 normal, float reflectionStrength  ARGS_OUT) {
 		
 		// skip sky and fog
@@ -84,7 +84,7 @@ void main() {
 	}
 	vec3 normal = decodeNormal(unpackVec2(data.y));
 	
-	#ifdef REFLECTIONS_ENABLED
+	#if REFLECTIONS_ENABLED == 1
 		#if REFLECTIVE_EVERYTHING == 1
 			float reflectionStrength = 1.0;
 		#else

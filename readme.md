@@ -2,13 +2,11 @@
 
 ![Example Image (Village)](/images/village.png)
 
-### This is a base shaderpack that can be easily used to create your own shaders.
-
-## Note: This is still somewhat early in development, so there are probably many features / fixes that I'm still working on
+### This is the culmination of basically everything I'd want in a shader. Amazing graphics, good performance, easy expandability, thorough settings, and unobtrusive in gameplay.
 
 <br>
 
-## Note: With the release of b1.9, OptiFine is now a second-class platform. It will still be supported, but my main focus will be Iris 1.19+
+## Note: OptiFine is considered a second-class platform and the majority of development and support is for Iris 1.19+
 
 <br>
 <br>
@@ -29,14 +27,14 @@
 - **SSAO**
 - **Sunrays** (depth-based and volumetric)
 - **Depth of Field**
-- **Pixelated Shadows**
+- **Optional World-Pixelated Shadows**
 - **Bloom**
 - **Motion Blur**
 - **Sharpening**
 - **Waving blocks**
 - **Fog**
 - **Handheld light**
-- **Post-Processing**
+- **Misc Post-Processing**
 - - Underwater Waviness
 - - Vignette
 - - Tonemapping and Color Correction
@@ -58,7 +56,6 @@
 
 ## Credits:
 
-- **[ShaderLabs](https://wiki.shaderlabs.org/wiki/Getting_Started):** Initial shaders base
 - **[EminGTR](https://modrinth.com/shader/complementary-reimagined):** FXAA, TAA, coordinate transformation code, and code structure inspiration
 - **[Acerola](https://github.com/GarrettGunnell/Minecraft-Shaders/blob/c1a6f5060dfd91ccac31e04fa529f2be4304a21a/shaders/final.fsh):** ACES tonemapping code
 - **[Patricio Vivo](https://gist.github.com/patriciogonzalezvivo/670c22f3966e662d2f83):** Simplex noise function

@@ -571,7 +571,7 @@
 #endif
 #if AO_QUALITY == -1
 #undef AO_QUALITY
-										#define AO_QUALITY 3
+										#define AO_QUALITY 4
 #endif
 #if SSAO_APPLICATION_TYPE == -1
 #undef SSAO_APPLICATION_TYPE
@@ -593,7 +593,7 @@
 #endif
 #if BLOOM_QUALITY == -1
 #undef BLOOM_QUALITY
-										#define BLOOM_QUALITY 3
+										#define BLOOM_QUALITY 4
 #endif
 #if BLOOM_COMPUTE_COUNT == -1
 #undef BLOOM_COMPUTE_COUNT
@@ -631,7 +631,7 @@
 #endif
 #if SUNRAYS_QUALITY == -1
 #undef SUNRAYS_QUALITY
-										#define SUNRAYS_QUALITY 3
+										#define SUNRAYS_QUALITY 5
 #endif
 #if SUNRAYS_STYLE == -1
 #undef SUNRAYS_STYLE

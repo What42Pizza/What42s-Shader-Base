@@ -235,26 +235,26 @@
 #endif
 #if SKYLIGHT_DAY_GREEN == -1
 #undef SKYLIGHT_DAY_GREEN
-										#define SKYLIGHT_DAY_GREEN 1.05
+										#define SKYLIGHT_DAY_GREEN 1.0
 #endif
 #if SKYLIGHT_DAY_BLUE == -1
 #undef SKYLIGHT_DAY_BLUE
-										#define SKYLIGHT_DAY_BLUE 1.0
+										#define SKYLIGHT_DAY_BLUE 0.9
 #endif
 #if SKYLIGHT_DAY_BRIGHTNESS == -1
 #undef SKYLIGHT_DAY_BRIGHTNESS
-										#define SKYLIGHT_DAY_BRIGHTNESS 5.0
+										#define SKYLIGHT_DAY_BRIGHTNESS 1.4
 #endif
 
 
 
 #if AMBIENT_DAY_RED == -1
 #undef AMBIENT_DAY_RED
-										#define AMBIENT_DAY_RED 1.0
+										#define AMBIENT_DAY_RED 0.8
 #endif
 #if AMBIENT_DAY_GREEN == -1
 #undef AMBIENT_DAY_GREEN
-										#define AMBIENT_DAY_GREEN 1.0
+										#define AMBIENT_DAY_GREEN 0.95
 #endif
 #if AMBIENT_DAY_BLUE == -1
 #undef AMBIENT_DAY_BLUE
@@ -429,19 +429,19 @@
 #endif
 #if SIDE_SHADING_BRIGHT == -1
 #undef SIDE_SHADING_BRIGHT
-										#define SIDE_SHADING_BRIGHT 0.0
+										#define SIDE_SHADING_BRIGHT 0.1
 #endif
 #if SIDE_SHADING_DARK == -1
 #undef SIDE_SHADING_DARK
-										#define SIDE_SHADING_DARK 0.0
+										#define SIDE_SHADING_DARK 0.2
 #endif
 #if VANILLA_AO_BRIGHT == -1
 #undef VANILLA_AO_BRIGHT
-										#define VANILLA_AO_BRIGHT 0.15
+										#define VANILLA_AO_BRIGHT 0.2
 #endif
 #if VANILLA_AO_DARK == -1
 #undef VANILLA_AO_DARK
-										#define VANILLA_AO_DARK 1.0
+										#define VANILLA_AO_DARK 0.5
 #endif
 #if RAIN_LIGHT_MULT == -1
 #undef RAIN_LIGHT_MULT
@@ -571,7 +571,7 @@
 #endif
 #if AO_QUALITY == -1
 #undef AO_QUALITY
-										#define AO_QUALITY 3
+										#define AO_QUALITY 4
 #endif
 #if SSAO_APPLICATION_TYPE == -1
 #undef SSAO_APPLICATION_TYPE
@@ -593,7 +593,7 @@
 #endif
 #if BLOOM_QUALITY == -1
 #undef BLOOM_QUALITY
-										#define BLOOM_QUALITY 3
+										#define BLOOM_QUALITY 4
 #endif
 #if BLOOM_COMPUTE_COUNT == -1
 #undef BLOOM_COMPUTE_COUNT
@@ -631,7 +631,7 @@
 #endif
 #if SUNRAYS_QUALITY == -1
 #undef SUNRAYS_QUALITY
-										#define SUNRAYS_QUALITY 3
+										#define SUNRAYS_QUALITY 5
 #endif
 #if SUNRAYS_STYLE == -1
 #undef SUNRAYS_STYLE
@@ -837,7 +837,7 @@
 #endif
 #if AUTO_EXPOSURE_BRIGHT_MULT == -1
 #undef AUTO_EXPOSURE_BRIGHT_MULT
-										#define AUTO_EXPOSURE_BRIGHT_MULT 0.9
+										#define AUTO_EXPOSURE_BRIGHT_MULT 0.8
 #endif
 #if AUTO_EXPOSURE_DARK_MULT == -1
 #undef AUTO_EXPOSURE_DARK_MULT

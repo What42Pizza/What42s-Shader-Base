@@ -1,3 +1,12 @@
+Before 1.0.0:
+Move all performance settings out of styles?
+Add 'dither or noise' options to everything that uses dithering or noise
+Make sure ALL settings work and are used
+Rework clouds
+Make nearby cloud transparency more smooth
+
+
+
 Planned 1.0.0 pipeline: (if rendering at half-res works out)
 
 - render opaques
