@@ -60,10 +60,6 @@
 #undef FOG_CURVE
 										#define FOG_CURVE 1
 #endif
-#if FOG_HEIGHT_SCALE == -1
-#undef FOG_HEIGHT_SCALE
-										#define FOG_HEIGHT_SCALE 2.0
-#endif
 #if FOG_EXTRA_CLOUDS_DISTANCE == -1
 #undef FOG_EXTRA_CLOUDS_DISTANCE
 										#define FOG_EXTRA_CLOUDS_DISTANCE 10.0
@@ -437,15 +433,15 @@
 #endif
 #if SIDE_SHADING_DARK == -1
 #undef SIDE_SHADING_DARK
-										#define SIDE_SHADING_DARK 0.4
+										#define SIDE_SHADING_DARK 0.8
 #endif
 #if VANILLA_AO_BRIGHT == -1
 #undef VANILLA_AO_BRIGHT
-										#define VANILLA_AO_BRIGHT 0.15
+										#define VANILLA_AO_BRIGHT 1.0
 #endif
 #if VANILLA_AO_DARK == -1
 #undef VANILLA_AO_DARK
-										#define VANILLA_AO_DARK 1.0
+										#define VANILLA_AO_DARK 0.2
 #endif
 #if RAIN_LIGHT_MULT == -1
 #undef RAIN_LIGHT_MULT

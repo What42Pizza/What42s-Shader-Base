@@ -60,10 +60,6 @@
 #undef FOG_CURVE
 										#define FOG_CURVE 3
 #endif
-#if FOG_HEIGHT_SCALE == -1
-#undef FOG_HEIGHT_SCALE
-										#define FOG_HEIGHT_SCALE 3.0
-#endif
 #if FOG_EXTRA_CLOUDS_DISTANCE == -1
 #undef FOG_EXTRA_CLOUDS_DISTANCE
 										#define FOG_EXTRA_CLOUDS_DISTANCE 10.0
@@ -235,11 +231,11 @@
 
 #if SKYLIGHT_DAY_RED == -1
 #undef SKYLIGHT_DAY_RED
-										#define SKYLIGHT_DAY_RED 0.75
+										#define SKYLIGHT_DAY_RED 1.0
 #endif
 #if SKYLIGHT_DAY_GREEN == -1
 #undef SKYLIGHT_DAY_GREEN
-										#define SKYLIGHT_DAY_GREEN 0.85
+										#define SKYLIGHT_DAY_GREEN 1.0
 #endif
 #if SKYLIGHT_DAY_BLUE == -1
 #undef SKYLIGHT_DAY_BLUE
@@ -519,7 +515,7 @@
 
 #if WATER_REFLECTION_AMOUNT == -1
 #undef WATER_REFLECTION_AMOUNT
-										#define WATER_REFLECTION_AMOUNT 0.5
+										#define WATER_REFLECTION_AMOUNT 0.6
 #endif
 
 
@@ -833,7 +829,7 @@
 #endif
 #if BRIGHTNESS == -1
 #undef BRIGHTNESS
-										#define BRIGHTNESS 1.05
+										#define BRIGHTNESS 1.0
 #endif
 #if AUTO_EXPOSURE_ENABLED == -1
 #undef AUTO_EXPOSURE_ENABLED
@@ -860,14 +856,14 @@
 #endif
 #if SATURATION_LIGHT == -1
 #undef SATURATION_LIGHT
-										#define SATURATION_LIGHT 0.1
+										#define SATURATION_LIGHT 0.0
 #endif
 
 
 
 #if VIBRANCE == -1
 #undef VIBRANCE
-										#define VIBRANCE 0.4
+										#define VIBRANCE 0.35
 #endif
 
 
@@ -1028,11 +1024,11 @@
 #endif
 #if WAVING_WATER_NORMALS_AMOUNT_SURFACE == -1
 #undef WAVING_WATER_NORMALS_AMOUNT_SURFACE
-										#define WAVING_WATER_NORMALS_AMOUNT_SURFACE 1.0
+										#define WAVING_WATER_NORMALS_AMOUNT_SURFACE 0.5
 #endif
 #if WAVING_WATER_NORMALS_AMOUNT_UNDERGROUND == -1
 #undef WAVING_WATER_NORMALS_AMOUNT_UNDERGROUND
-										#define WAVING_WATER_NORMALS_AMOUNT_UNDERGROUND 0.3
+										#define WAVING_WATER_NORMALS_AMOUNT_UNDERGROUND 0.0
 #endif
 
 
@@ -1065,7 +1061,7 @@
 #endif
 #if WATER_TRANSPARENCY == -1
 #undef WATER_TRANSPARENCY
-										#define WATER_TRANSPARENCY 0.35
+										#define WATER_TRANSPARENCY 0.4
 #endif
 
 

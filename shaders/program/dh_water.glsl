@@ -30,7 +30,7 @@
 void main() {
 	
 	float dither = bayer64(gl_FragCoord.xy);
-	#if AA_STRATEGY == 2 || AA_STRATEGY == 3 || AA_STRATEGY == 4
+	#if AA_STRATEGY == 2 || AA_STRATEGY == 3
 		#include "/import/frameCounter.glsl"
 		dither = fract(dither + 1.61803398875 * mod(float(frameCounter), 3600.0));
 	#endif

@@ -163,7 +163,7 @@ float sampleShadow(vec3 viewPos, float lightDot  ARGS_OUT) {
 			}
 		}
 		shadowBrightness /= SHADOW_OFFSET_WEIGHTS_TOTAL;
-		#if AA_STRATEGY == 2 || AA_STRATEGY == 3 || AA_STRATEGY == 4
+		#if AA_STRATEGY == 2 || AA_STRATEGY == 3
 			const float shadowMult1 = 1.4; // for when lightDot is 1.0 (sun is directly facing surface)
 			const float shadowMult2 = 2.2; // for when lightDot is 0.0 (sun is angled relative to surface)
 		#else
@@ -231,10 +231,9 @@ void doFshLighting(inout vec3 color, float blockBrightness, float ambientBrightn
 	
 	float skyBrightness = getSkyBrightness(viewPos, normal, ambientBrightness  ARGS_IN);
 	skyBrightness *= 0.25 + 0.75 * ambientBrightness;
-	ambientBrightness *= 1.0 - skyBrightness;
-	blockBrightness *= 1.0 - 0.8 * skyBrightness;
-	
 	vec3 ambientLight = getAmbientLight(ambientBrightness  ARGS_IN);
+	ambientLight *= 1.0 - skyBrightness;
+	blockBrightness *= 1.0 - 0.8 * skyBrightness;
 	
 	#if BLOCKLIGHT_FLICKERING_ENABLED == 1
 		#include "/import/blockFlickerAmount.glsl"

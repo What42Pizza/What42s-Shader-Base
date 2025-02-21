@@ -73,7 +73,7 @@ void main() {
 		
 		#if SSAO_ENABLED == 1
 			float aoFactor = getAoFactor(ARG_IN);
-			color *= 1.0 - aoFactor * AO_AMOUNT * 1.2;
+			color *= 1.0 - aoFactor * AO_AMOUNT;
 		#endif
 		
 		

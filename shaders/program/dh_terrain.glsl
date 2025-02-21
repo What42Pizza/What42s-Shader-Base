@@ -22,7 +22,7 @@ void main() {
 	#include "/import/far.glsl"
 	if (lengthCylinder < far - 20) discard;
 	
-	vec3 albedo = glcolor;
+	vec3 albedo = glcolor * 0.85;
 	
 	
 	// add noise for fake texture
@@ -71,7 +71,8 @@ void main() {
 	dhBlock = dhMaterialId;
 	
 	
-	if (dhMaterialId == DH_BLOCK_LEAVES) glcolor.rgb *= 1.3;
+	glcolor = mix(vec3(getColorLum(glcolor)), glcolor, 1.1);
+	if (dhMaterialId == DH_BLOCK_LEAVES) glcolor.rgb *= 1.15;
 	
 	
 	#if ISOMETRIC_RENDERING_ENABLED == 1

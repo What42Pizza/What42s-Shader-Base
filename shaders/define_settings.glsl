@@ -217,7 +217,7 @@
 
 
 
-#define AA_STRATEGY -1 // [-1 0 1 2 3 4]
+#define AA_STRATEGY -1 // [-1 0 1 2 3]
 
 
 

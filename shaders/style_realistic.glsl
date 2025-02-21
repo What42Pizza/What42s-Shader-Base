@@ -60,10 +60,6 @@
 #undef FOG_CURVE
 										#define FOG_CURVE 1
 #endif
-#if FOG_HEIGHT_SCALE == -1
-#undef FOG_HEIGHT_SCALE
-										#define FOG_HEIGHT_SCALE 3.0
-#endif
 #if FOG_EXTRA_CLOUDS_DISTANCE == -1
 #undef FOG_EXTRA_CLOUDS_DISTANCE
 										#define FOG_EXTRA_CLOUDS_DISTANCE 10.0
