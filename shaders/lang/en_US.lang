@@ -93,83 +93,23 @@ screen.FOG_SETTINGS=Fog
 
 
 
-option.BORDER_FOG_ENABLED=Fog Enabled
-option.BORDER_FOG_ENABLED.comment=(Performance cost: Low)
+option.BORDER_FOG_ENABLED=Border Fog Enabled
+option.BORDER_FOG_ENABLED.comment=Enables the fog that appears at the edge of loaded chunks (this is automatically disabled when Distant Horizons is enabled)\n\n(Performance cost: Low)
 value.BORDER_FOG_ENABLED.-1=Use Style Value
 value.BORDER_FOG_ENABLED.0=Off
 value.BORDER_FOG_ENABLED.1=On
 
-option.FOG_CURVE=Fog Curve
-option.FOG_CURVE.comment= How quickly fog drops off from end to start (high values mean faster drop off)
-value.FOG_CURVE.-1=Use Style Value
+option.BORDER_FOG_START=Fog Air Start
+option.BORDER_FOG_START.comment=Where fog starts during normal conditions (not raining or in liquids)
+value.BORDER_FOG_START.-1=Use Style Value
 
-option.FOG_EXTRA_CLOUDS_DISTANCE=Extra Clouds Distance
-option.FOG_EXTRA_CLOUDS_DISTANCE.comment=How much further you can see clouds
-value.FOG_EXTRA_CLOUDS_DISTANCE.-1=Use Style Value
+option.BORDER_FOG_END=Fog Air End
+option.BORDER_FOG_END.comment=Where fog ends during normal conditions (not raining or in liquids)
+value.BORDER_FOG_END.-1=Use Style Value
 
-
-
-screen.MISC_FOG_SETTINGS=Misc Fog Settings
-
-option.FOG_AIR_START=Fog Air Start
-option.FOG_AIR_START.comment=Where fog starts during normal conditions (not raining or in liquids)
-value.FOG_AIR_START.-1=Use Style Value
-
-option.FOG_AIR_END=Fog Air End
-option.FOG_AIR_END.comment=Where fog ends during normal conditions (not raining or in liquids)
-value.FOG_AIR_END.-1=Use Style Value
-
-option.FOG_AIR_MIN=Fog Air Minimum
-option.FOG_AIR_MIN.comment=Minimum fog amount during normal conditions (not raining or in liquids)
-value.FOG_AIR_MIN.-1=Use Style Value
-
-option.FOG_AIR_RAIN_START=Fog Rain Start
-option.FOG_AIR_RAIN_START.comment=Where fog starts during rain
-value.FOG_AIR_RAIN_START.-1=Use Style Value
-
-option.FOG_AIR_RAIN_END=Fog Rain End
-option.FOG_AIR_RAIN_END.comment=Where fog ends during rain
-value.FOG_AIR_RAIN_END.-1=Use Style Value
-
-option.FOG_AIR_RAIN_MIN=Fog Rain Minimum
-option.FOG_AIR_RAIN_MIN.comment=Minimum fog amount during rain
-value.FOG_AIR_RAIN_MIN.-1=Use Style Value
-
-option.FOG_WATER_START=Fog Water Start
-option.FOG_WATER_START.comment=Where fog starts when underwater
-value.FOG_WATER_START.-1=Use Style Value
-
-option.FOG_WATER_END=Fog Water End
-option.FOG_WATER_END.comment=Where fog ends when underwater
-value.FOG_WATER_END.-1=Use Style Value
-
-option.FOG_WATER_MIN=Fog Water Minimum
-option.FOG_WATER_MIN.comment=Minimum fog amount when underwater
-value.FOG_WATER_MIN.-1=Use Style Value
-
-option.FOG_LAVA_START=Fog Lava Start
-option.FOG_LAVA_START.comment=Where fog starts when in lava
-value.FOG_LAVA_START.-1=Use Style Value
-
-option.FOG_LAVA_END=Fog Lava End
-option.FOG_LAVA_END.comment=Where fog ends when in lava
-value.FOG_LAVA_END.-1=Use Style Value
-
-option.FOG_LAVA_MIN=Fog Lava Minimum
-option.FOG_LAVA_MIN.comment=Minimum fog amount when in lava
-value.FOG_LAVA_MIN.-1=Use Style Value
-
-option.FOG_POWDERED_SNOW_START=Fog Powdered Snow Start
-option.FOG_POWDERED_SNOW_START.comment=Where fog starts when in powdered snow
-value.FOG_POWDERED_SNOW_START.-1=Use Style Value
-
-option.FOG_POWDERED_SNOW_END=Fog Powdered Snow End
-option.FOG_POWDERED_SNOW_END.comment=Where fog ends when in powdered snow
-value.FOG_POWDERED_SNOW_END.-1=Use Style Value
-
-option.FOG_POWDERED_SNOW_MIN=Fog Powdered Snow Minimum
-option.FOG_POWDERED_SNOW_MIN.comment=Minimum fog amount when in powdered snow
-value.FOG_POWDERED_SNOW_MIN.-1=Use Style Value
+option.BORDER_FOG_CURVE=Fog Curve
+option.BORDER_FOG_CURVE.comment= How quickly fog drops off from end to start (high values mean faster drop off)
+value.BORDER_FOG_CURVE.-1=Use Style Value
 
 
 
@@ -432,9 +372,6 @@ screen.SHADING_SETTINGS=Shading
 
 
 option.SHADOWS_ENABLED=Shadows Enabled
-value.SHADOWS_ENABLED.-1=Use Style Value
-value.SHADOWS_ENABLED.0=Off
-value.SHADOWS_ENABLED.1=On
 
 option.shadowMapResolution=Shadow Map Resolution
 option.shadowMapResolution.comment=Resolution of the shadow map. Higher is more accurate, lower is more performance\n\n(Performance cost: HIGH)
@@ -448,7 +385,6 @@ value.SHADOW_DISTORT_ADDITION.-1=Use Style Value
 
 option.SHADOW_FILTERING=Shadow Filtering
 option.SHADOW_FILTERING.comment=Smoothens shadow edges (works best with TAA)\n\n(Performance cost: Low)
-value.SHADOW_FILTERING.-1=Use Style Value
 value.SHADOW_FILTERING.0=Off (pixelated)
 value.SHADOW_FILTERING.1=Off (smooth)
 value.SHADOW_FILTERING.2=On (default)
@@ -566,10 +502,7 @@ screen.REFLECTION_SETTINGS=Reflections
 
 
 option.REFLECTIONS_ENABLED=Reflections Enabled
-option.REFLECTIONS_ENABLED.comment=Enabled reflections. Currently, only rain puddles and translucent blocks (such as water) create reflections\n\n(Performance cost: HIGH)
-value.REFLECTIONS_ENABLED.-1=Use Style Value
-value.REFLECTIONS_ENABLED.0=Off
-value.REFLECTIONS_ENABLED.1=On
+option.REFLECTIONS_ENABLED.comment=Enabled reflections\n\n(Performance cost: HIGH)
 
 
 option.BLOCKS_REFLECTION_AMOUNT_MULT_SURFACE=Blocks Ref Amount Surface
@@ -633,21 +566,16 @@ value.SSAO_ENABLED.-1=Use Style Value
 value.SSAO_ENABLED.0=Off
 value.SSAO_ENABLED.1=On
 
-option.AO_AMOUNT=AO Amount
+option.AO_AMOUNT=SSAO Amount
 option.AO_AMOUNT.comment=How much to darken corners / crevasses
 value.AO_AMOUNT.-1=Use Style Value
 
-option.AO_SIZE=AO Size
-option.AO_SIZE.comment=How much the AO should spread
+option.AO_SIZE=SSAO Size
+option.AO_SIZE.comment=How much the SSAO should spread
 value.AO_SIZE.-1=Use Style Value
 
-option.AO_QUALITY=AO Quality
-option.AO_QUALITY.comment=Controls the number of samples
-value.AO_QUALITY.-1=Use Style Value
-
-option.SSAO_APPLICATION_TYPE=AO Application Type
-option.SSAO_APPLICATION_TYPE.comment=How the SSAO is applied\n\n1: Multiply (fast)\n2: Pow (better preserves color)
-value.SSAO_APPLICATION_TYPE.-1=Use Style Value
+option.AO_QUALITY=SSAO Quality
+option.AO_QUALITY.comment=Controls the number of samples for SSAO
 
 
 
@@ -686,6 +614,10 @@ option.BLOOM_NETHER_MULT=Bloom Nether Multiplier
 option.BLOOM_NETHER_MULT.comment=How much to increase Bloom Amount when in the nether
 value.BLOOM_NETHER_MULT.-1=Use Style Value
 
+option.BLOOM_END_MULT=Bloom End Multiplier
+option.BLOOM_END_MULT.comment=How much to increase Bloom Amount when in the end
+value.BLOOM_END_MULT.-1=Use Style Value
+
 
 
 
@@ -712,11 +644,10 @@ screen.DEPTH_SUNRAYS_SETTINGS.comment=Settings specific to depth-based sunrays
 
 option.SUNRAYS_QUALITY=Sunrays Quality
 option.SUNRAYS_QUALITY.comment=Controls the number of samples for each pixel
-value.SUNRAYS_QUALITY.-1=Use Style Value
 
-option.SUNRAYS_STYLE=Sunrays Style
-option.SUNRAYS_STYLE.comment=Alters how the sunrays are calculated. Option 1 is more natural, option 2 is more impressive looking
-value.SUNRAYS_STYLE.-1=Use Style Value
+option.DEPTH_SUNRAYS_STYLE=Sunrays Style
+option.DEPTH_SUNRAYS_STYLE.comment=Alters how the sunrays are calculated. Option 1 is more natural, option 2 is more impressive looking
+value.DEPTH_SUNRAYS_STYLE.-1=Use Style Value
 
 option.SUNRAYS_FLICKERING_FIX=Sunrays Flickering Fix
 option.SUNRAYS_FLICKERING_FIX.comment=Fixes a subtle bug where sunrays flicker when the sun is off-screen
@@ -846,13 +777,11 @@ value.DOF_FOCAL_PLANE_DISTANCE.-1=Use Style Value
 
 
 
-option.AA_STRATEGY=Anti-Aliasing Strategy
-option.AA_STRATEGY.comment=FXAA: Use only Fxaa\nTAA: Use only Taa\nFXAA + TAA: Use both\nTAA Or FXAA: Use TAA on static objects and Fxaa on moving objects
-value.AA_STRATEGY.-1=Use Style Value
-value.AA_STRATEGY.0=Disabled
-value.AA_STRATEGY.1=FXAA
-value.AA_STRATEGY.2=TAA
-value.AA_STRATEGY.3=FXAA + TAA
+option.TAA_ENABLED=TAA
+option.TAA_ENABLED.comment=Enabled Temporal Anti-Aliasing, which removes jagged lines and smooths out flickering
+
+option.FXAA_ENABLED=FXAA
+option.FXAA_ENABLED.comment=Another form of anti-aliasing, generally not as good as TAA but a whole lot simpler to deal with
 
 
 
@@ -872,7 +801,6 @@ option.MOTION_BLUR_AMOUNT=Motion Blur Amount
 value.MOTION_BLUR_AMOUNT.-1=Use Style Value
 
 option.MOTION_BLUR_QUALITY=Motion Blur Quality
-value.MOTION_BLUR_QUALITY.-1=Use Style Value
 
 
 
@@ -895,6 +823,10 @@ value.SHARPEN_AMOUNT.-1=Use Style Value
 option.SHARPEN_VEL_ADDITION=Velocity Addition
 option.SHARPEN_VEL_ADDITION.comment=How much more to sharpen when moving
 value.SHARPEN_VEL_ADDITION.-1=Use Style Value
+
+option.SHARPEN_DEPTH_ADDITION=Depth Addition
+option.SHARPEN_DEPTH_ADDITION.comment=How much more to sharpen based on depth
+value.SHARPEN_DEPTH_ADDITION.-1=Use Style Value
 
 option.SHARPENING_DETECT_SIZE=Sharpening Detect Size
 option.SHARPENING_DETECT_SIZE.comment=The number of samples used for determining how to sharpen

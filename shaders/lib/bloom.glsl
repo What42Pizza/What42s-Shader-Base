@@ -2,7 +2,10 @@
 
 
 
-vec3 sampleBloom(float sizeMult, inout uint rng  ARGS_OUT) {
+vec3 getBloomAddition(inout uint rng, float depth  ARGS_OUT) {
+	
+	float blockDepth = toBlockDepth(depth  ARGS_IN);
+	float sizeMult = inversesqrt(blockDepth) * BLOOM_SIZE * 0.15;
 	
 	#include "/import/invAspectRatio.glsl"
 	float random = randomFloat(rng) * 100000.0;
@@ -90,29 +93,12 @@ vec3 sampleBloom(float sizeMult, inout uint rng  ARGS_OUT) {
 		bloomAddition /= 30.769;
 	#endif
 	
-	#ifdef END
-		bloomAddition *= 0.3;
-	#endif
-	
-	return bloomAddition * 0.17;
-}
-
-
-
-vec3 getBloomAddition(inout uint rng, float depth  ARGS_OUT) {
-	
-	float blockDepth = toBlockDepth(depth  ARGS_IN);
-	float sizeMult = inversesqrt(blockDepth) * BLOOM_SIZE * 0.15;
-	
-	vec3 bloomAddition = vec3(0.0);
-	for (int i = 0; i < BLOOM_COMPUTE_COUNT; i++) {
-		bloomAddition += sampleBloom(sizeMult, rng  ARGS_IN);
-	}
-	bloomAddition *= (1.0 / BLOOM_COMPUTE_COUNT) * BLOOM_AMOUNT;
-	
 	#ifdef NETHER
 		bloomAddition *= BLOOM_NETHER_MULT;
 	#endif
+	#ifdef END
+		bloomAddition *= BLOOM_END_MULT;
+	#endif
 	
-	return bloomAddition;
+	return bloomAddition * BLOOM_AMOUNT * 0.17;
 }

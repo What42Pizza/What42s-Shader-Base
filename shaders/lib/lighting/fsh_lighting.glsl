@@ -163,7 +163,7 @@ float sampleShadow(vec3 viewPos, float lightDot  ARGS_OUT) {
 			}
 		}
 		shadowBrightness /= SHADOW_OFFSET_WEIGHTS_TOTAL;
-		#if AA_STRATEGY == 2 || AA_STRATEGY == 3
+		#ifdef TAA_ENABLED
 			const float shadowMult1 = 1.4; // for when lightDot is 1.0 (sun is directly facing surface)
 			const float shadowMult2 = 2.2; // for when lightDot is 0.0 (sun is angled relative to surface)
 		#else
@@ -202,7 +202,7 @@ float getSkyBrightness(vec3 viewPos, vec3 normal, float ambientBrightness  ARGS_
 	#endif
 	
 	// sample shadow
-	#if SHADOWS_ENABLED == 1
+	#ifdef SHADOWS_ENABLED
 		float skyBrightness = sampleShadow(viewPos, lightDot  ARGS_IN);
 		#ifdef DISTANT_HORIZONS
 			#include "/import/far.glsl"

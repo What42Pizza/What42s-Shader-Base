@@ -1,9 +1,20 @@
 Before 1.0.0:
-Move all performance settings out of styles?
 Add 'dither or noise' options to everything that uses dithering or noise
-Make sure ALL settings work and are used
+Make sure ALL settings work
+Make sure that ALL settings are listed in the same order in define_settings.glsl, shaders.properties, and the style files
 Rework clouds
+Rework sky
 Make nearby cloud transparency more smooth
+Make sure all vanilla effect work
+Update ALL gallery images
+Update performance and compatibility note (Note: This shader is only tested with a GTX 1070 on Windows and mainly on Iris 1.21.1 and (occasionally) Optifine 1.12.2. I can average up to 100 fps with Fabulously Optimized + Distant Horizons + 16 Chunks + 1080p + Medium preset.)
+Maybe add smaa from https://github.com/Luracasmus/smaa-mc
+Add a scary style?
+Add generalized volumetrics
+Re-add BLOCKS_REFLECTION_AMOUNT_MULT_SURFACE?
+Fix rain reflections
+Check if SUNRAYS_FLICKERING_FIX is still needed
+Re-add SHOW_DANGEROUS_LIGHT
 
 
 
@@ -43,30 +54,21 @@ Make only top of water wavy
 Add ripples to rain reflections
 Add void fog option?
 Add shader seasons?
-Move 'rainReflectionStrength' calculations to fsh?
 Add settings for manually disabling composite files?
 Add backwards depth check to reflections?
 Make reflections work with isometric rendering
 Move advanced options to 'advanced options' menus
-Do a round of replacing smoothsteps with flat line?
-Do a round of adding dynamic noise (change noise based on quality level)
 Add more TAA settings
-Fix spider and endermen eyes?
 Add setting to fade fog into sky buffer (to make the sun and moon appear in fog) (would also need sunray depth fix)
 Do a round of general optimizations
 Exclude sun, moon, and sunrays based on horizon multiplier
-Go through settings in shaders.properties and make sure all instances of settings are listed in the same order
 Do a round of adding debug settings
 Do a round of adding more ways to get to options (e.g. access to light brightnesses from the 'shading' menu)
-Custom sky color?
 Switch to Contrast Adaptive Sharpening?
 Fix ssao causing desaturation on sand?
 Test glsl optimizer (https://github.com/aras-p/glsl-optimizer)
-Add support for fogStart, fogEnd, and fogMode?
 Find a way to stop sugar cane base from waving?
 Determine performance costs
-Potion effects?
-Custom sun / moon?
 
 
 

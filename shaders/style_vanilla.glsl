@@ -56,76 +56,17 @@
 #undef BORDER_FOG_ENABLED
 										#define BORDER_FOG_ENABLED 1
 #endif
-#if FOG_CURVE == -1
-#undef FOG_CURVE
-										#define FOG_CURVE 3
+#if BORDER_FOG_START == -1
+#undef BORDER_FOG_START
+										#define BORDER_FOG_START 0.75
 #endif
-#if FOG_EXTRA_CLOUDS_DISTANCE == -1
-#undef FOG_EXTRA_CLOUDS_DISTANCE
-										#define FOG_EXTRA_CLOUDS_DISTANCE 10.0
+#if BORDER_FOG_END == -1
+#undef BORDER_FOG_END
+										#define BORDER_FOG_END 0.95
 #endif
-
-
-
-#if FOG_AIR_START == -1
-#undef FOG_AIR_START
-										#define FOG_AIR_START 0.8
-#endif
-#if FOG_AIR_END == -1
-#undef FOG_AIR_END
-										#define FOG_AIR_END 1.0
-#endif
-#if FOG_AIR_MIN == -1
-#undef FOG_AIR_MIN
-										#define FOG_AIR_MIN 0.0
-#endif
-#if FOG_AIR_RAIN_START == -1
-#undef FOG_AIR_RAIN_START
-										#define FOG_AIR_RAIN_START 0.5
-#endif
-#if FOG_AIR_RAIN_END == -1
-#undef FOG_AIR_RAIN_END
-										#define FOG_AIR_RAIN_END 1.0
-#endif
-#if FOG_AIR_RAIN_MIN == -1
-#undef FOG_AIR_RAIN_MIN
-										#define FOG_AIR_RAIN_MIN 0.3
-#endif
-#if FOG_WATER_START == -1
-#undef FOG_WATER_START
-										#define FOG_WATER_START 0.0
-#endif
-#if FOG_WATER_END == -1
-#undef FOG_WATER_END
-										#define FOG_WATER_END 60
-#endif
-#if FOG_WATER_MIN == -1
-#undef FOG_WATER_MIN
-										#define FOG_WATER_MIN 0.2
-#endif
-#if FOG_LAVA_START == -1
-#undef FOG_LAVA_START
-										#define FOG_LAVA_START 0.0
-#endif
-#if FOG_LAVA_END == -1
-#undef FOG_LAVA_END
-										#define FOG_LAVA_END 3
-#endif
-#if FOG_LAVA_MIN == -1
-#undef FOG_LAVA_MIN
-										#define FOG_LAVA_MIN 0.9
-#endif
-#if FOG_POWDERED_SNOW_START == -1
-#undef FOG_POWDERED_SNOW_START
-										#define FOG_POWDERED_SNOW_START 0.0
-#endif
-#if FOG_POWDERED_SNOW_END == -1
-#undef FOG_POWDERED_SNOW_END
-										#define FOG_POWDERED_SNOW_END 10
-#endif
-#if FOG_POWDERED_SNOW_MIN == -1
-#undef FOG_POWDERED_SNOW_MIN
-										#define FOG_POWDERED_SNOW_MIN 0.8
+#if BORDER_FOG_CURVE == -1
+#undef BORDER_FOG_CURVE
+										#define BORDER_FOG_CURVE 3
 #endif
 
 
@@ -399,10 +340,6 @@
 
 
 
-#if SHADOWS_ENABLED == -1
-#undef SHADOWS_ENABLED
-										#define SHADOWS_ENABLED 1
-#endif
 #if EXCLUDE_FOLIAGE == -1
 #undef EXCLUDE_FOLIAGE
 										#define EXCLUDE_FOLIAGE 1
@@ -410,10 +347,6 @@
 #if CEL_SHADING_ENABLED == -1
 #undef CEL_SHADING_ENABLED
 										#define CEL_SHADING_ENABLED 0
-#endif
-#if SHADOW_FILTERING == -1
-#undef SHADOW_FILTERING
-										#define SHADOW_FILTERING 2
 #endif
 #if SHADOWS_NOISE == -1
 #undef SHADOWS_NOISE
@@ -495,13 +428,6 @@
 
 
 
-#if REFLECTIONS_ENABLED == -1
-#undef REFLECTIONS_ENABLED
-										#define REFLECTIONS_ENABLED 1
-#endif
-
-
-
 #if BLOCKS_REFLECTION_AMOUNT_MULT_SURFACE == -1
 #undef BLOCKS_REFLECTION_AMOUNT_MULT_SURFACE
 										#define BLOCKS_REFLECTION_AMOUNT_MULT_SURFACE 0.2
@@ -569,14 +495,6 @@
 #undef AO_SIZE
 										#define AO_SIZE 0.5
 #endif
-#if AO_QUALITY == -1
-#undef AO_QUALITY
-										#define AO_QUALITY 4
-#endif
-#if SSAO_APPLICATION_TYPE == -1
-#undef SSAO_APPLICATION_TYPE
-										#define SSAO_APPLICATION_TYPE 1
-#endif
 
 
 
@@ -590,14 +508,6 @@
 #if BLOOM_AMOUNT == -1
 #undef BLOOM_AMOUNT
 										#define BLOOM_AMOUNT 0.9
-#endif
-#if BLOOM_QUALITY == -1
-#undef BLOOM_QUALITY
-										#define BLOOM_QUALITY 4
-#endif
-#if BLOOM_COMPUTE_COUNT == -1
-#undef BLOOM_COMPUTE_COUNT
-										#define BLOOM_COMPUTE_COUNT 1
 #endif
 #if BLOOM_LOW_CUTOFF == -1
 #undef BLOOM_LOW_CUTOFF
@@ -615,6 +525,10 @@
 #undef BLOOM_NETHER_MULT
 										#define BLOOM_NETHER_MULT 2.0
 #endif
+#if BLOOM_END_MULT == -1
+#undef BLOOM_END_MULT
+										#define BLOOM_END_MULT 0.3
+#endif
 
 
 
@@ -629,13 +543,9 @@
 #undef VOL_SUNRAYS_ENABLED
 										#define VOL_SUNRAYS_ENABLED 0
 #endif
-#if SUNRAYS_QUALITY == -1
-#undef SUNRAYS_QUALITY
-										#define SUNRAYS_QUALITY 5
-#endif
-#if SUNRAYS_STYLE == -1
-#undef SUNRAYS_STYLE
-										#define SUNRAYS_STYLE 1
+#if DEPTH_SUNRAYS_STYLE == -1
+#undef DEPTH_SUNRAYS_STYLE
+										#define DEPTH_SUNRAYS_STYLE 1
 #endif
 #if SUNRAYS_FLICKERING_FIX == -1
 #undef SUNRAYS_FLICKERING_FIX
@@ -773,16 +683,6 @@
 
 
 
-#if AA_STRATEGY == -1
-#undef AA_STRATEGY
-										#define AA_STRATEGY 2
-#endif
-
-
-
-
-
-
 #if MOTION_BLUR_ENABLED == -1
 #undef MOTION_BLUR_ENABLED
 										#define MOTION_BLUR_ENABLED 0
@@ -790,10 +690,6 @@
 #if MOTION_BLUR_AMOUNT == -1
 #undef MOTION_BLUR_AMOUNT
 										#define MOTION_BLUR_AMOUNT 0.5
-#endif
-#if MOTION_BLUR_QUALITY == -1
-#undef MOTION_BLUR_QUALITY
-										#define MOTION_BLUR_QUALITY 4
 #endif
 
 
@@ -812,6 +708,10 @@
 #if SHARPEN_VEL_ADDITION == -1
 #undef SHARPEN_VEL_ADDITION
 										#define SHARPEN_VEL_ADDITION 1.0
+#endif
+#if SHARPEN_DEPTH_ADDITION == -1
+#undef SHARPEN_DEPTH_ADDITION
+										#define SHARPEN_DEPTH_ADDITION 1.0
 #endif
 #if SHARPENING_DETECT_SIZE == -1
 #undef SHARPENING_DETECT_SIZE

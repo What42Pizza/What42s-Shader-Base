@@ -1,64 +1,20 @@
-float getFogDistanceMult(ARG_OUT) {
-	#include "/import/isEyeInWater.glsl"
-	#include "/import/invFar.glsl"
-	#if MC_VERSION >= 11300
-		float airMult = invFar;
-	#else
-		float airMult = invFar * 0.9;
-	#endif
-	float[4] allDistanceMults = float[4] (airMult, 1.0 / FOG_WATER_END, 1.0 / FOG_LAVA_END, 1.0 / FOG_POWDERED_SNOW_END);
-	return allDistanceMults[isEyeInWater];
-}
-
-float getFogStart(float airFogStart  ARGS_OUT) {
-	#include "/import/isEyeInWater.glsl"
-	float[4] allFogStarts = float[4] (airFogStart, FOG_WATER_START, FOG_LAVA_START, FOG_POWDERED_SNOW_START);
-	return allFogStarts[isEyeInWater];
-}
-
-float getFogEnd(float airFogEnd  ARGS_OUT) {
-	#include "/import/isEyeInWater.glsl"
-	float[4] allFogEnds = float[4] (airFogEnd, 1.0, 1.0, 1.0);
-	return allFogEnds[isEyeInWater];
-}
-
-float getFogMin(float airFogMin  ARGS_OUT) {
-	#include "/import/isEyeInWater.glsl"
-	float[4] allFogMins = float[4] (airFogMin, FOG_WATER_MIN, FOG_LAVA_MIN, FOG_POWDERED_SNOW_MIN);
-	return allFogMins[isEyeInWater];
-}
-
-
-
 float getFogAmount(vec3 playerPos  ARGS_OUT) {
 	
-	float fogDistance = max(length(playerPos.xz), playerPos.y);
-	#ifdef SHADER_GBUFFERS_CLOUDS
-		fogDistance /= FOG_EXTRA_CLOUDS_DISTANCE;
-	#endif
-	float fogAmount = fogDistance * getFogDistanceMult(ARG_IN);
-	
-	#include "/import/betterRainStrength.glsl"
+	float fogDistance = max(length(playerPos.xz), abs(playerPos.y));
 	#include "/import/invFar.glsl"
-	float airFogStart = mix(FOG_AIR_START, FOG_AIR_RAIN_START, betterRainStrength);
-	float fogStart = getFogStart(airFogStart  ARGS_IN);
-	float airFogEnd = mix(FOG_AIR_END, FOG_AIR_RAIN_END, betterRainStrength);
-	float fogEnd = getFogEnd(airFogEnd  ARGS_IN);
-	fogAmount = percentThroughClamped(fogAmount, fogStart, fogEnd);
-	
-	float airFogMin = mix(FOG_AIR_MIN, FOG_AIR_RAIN_MIN, betterRainStrength);
-	float fogMin = getFogMin(airFogMin  ARGS_IN);
-	fogAmount = max(fogAmount, fogMin);
+	float fogAmount = fogDistance * invFar;
+	fogAmount = (fogAmount - BORDER_FOG_START) / (BORDER_FOG_END - BORDER_FOG_START);
+	fogAmount = clamp(fogAmount, 0.0, 1.0);
 	
 	#include "/import/isEyeInWater.glsl"
 	if (isEyeInWater == 0) {
-		#if FOG_CURVE == 2
+		#if BORDER_FOG_CURVE == 2
 			fogAmount = pow2(fogAmount);
-		#elif FOG_CURVE == 3
+		#elif BORDER_FOG_CURVE == 3
 			fogAmount = pow3(fogAmount);
-		#elif FOG_CURVE == 4
+		#elif BORDER_FOG_CURVE == 4
 			fogAmount = pow4(fogAmount);
-		#elif FOG_CURVE == 5
+		#elif BORDER_FOG_CURVE == 5
 			fogAmount = pow5(fogAmount);
 		#endif
 	}

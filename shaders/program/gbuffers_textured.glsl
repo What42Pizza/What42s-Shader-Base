@@ -1,5 +1,4 @@
 #undef SHADOWS_ENABLED
-#define SHADOWS_ENABLED 0
 
 #ifdef FIRST_PASS
 	
@@ -54,7 +53,7 @@ void main() {
 #if ISOMETRIC_RENDERING_ENABLED == 1
 	#include "/lib/isometric.glsl"
 #endif
-#if defined TAA_JITTER
+#ifdef TAA_ENABLED
 	#include "/lib/taa_jitter.glsl"
 #endif
 
@@ -83,7 +82,7 @@ void main() {
 	#endif
 	
 	
-	#if defined TAA_JITTER
+	#ifdef TAA_ENABLED
 		doTaaJitter(gl_Position.xy  ARGS_IN);
 	#endif
 	

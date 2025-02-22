@@ -4,12 +4,12 @@ float getDepthSunraysAmount(inout uint rng  ARGS_OUT) {
 	const int SAMPLE_COUNT = int(SUNRAYS_QUALITY * SUNRAYS_QUALITY / 2);
 	
 	
-	#if SUNRAYS_STYLE == 1
+	#if DEPTH_SUNRAYS_STYLE == 1
 		vec2 pos = texcoord;
 		float noise = (randomFloat(rng) - 1.0) * 0.2 + 1.0;
 		vec2 coordStep = (lightCoord - pos) / SAMPLE_COUNT * noise;
 		
-	#elif SUNRAYS_STYLE == 2
+	#elif DEPTH_SUNRAYS_STYLE == 2
 		vec2 pos = texcoord;
 		vec2 coordStep = (lightCoord - pos) / SAMPLE_COUNT;
 		float noise = randomFloat(rng) * 0.7;

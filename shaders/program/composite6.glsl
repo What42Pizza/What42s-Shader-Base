@@ -7,7 +7,6 @@
 #ifdef FSH
 
 #include "/utils/depth.glsl"
-#include "/utils/screen_to_view.glsl"
 #if SSS_DECONVERGE == 1
 	#include "/lib/super_secret_settings/deconverge.glsl"
 #endif
@@ -41,7 +40,14 @@ void main() {
 	// ======== SHARPENING ========
 	
 	#if SHARPENING_ENABLED == 1
-		doSharpening(color  ARGS_IN);
+		float depth = texelFetch(DEPTH_BUFFER_ALL, texelcoord, 0).r;
+		float blockDepth = toBlockDepth(depth  ARGS_IN);
+		#ifdef DISTANT_HORIZONS
+			float dhDepth = texelFetch(DH_DEPTH_BUFFER_ALL, texelcoord, 0).r;
+			float dhBlockDepth = toBlockDepthDh(dhDepth  ARGS_IN);
+			blockDepth = min(blockDepth, dhBlockDepth);
+		#endif
+		doSharpening(color, blockDepth  ARGS_IN);
 	#endif
 	
 	

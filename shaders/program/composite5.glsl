@@ -14,10 +14,10 @@
 #if SSS_PHOSPHOR == 1
 	#include "/lib/super_secret_settings/phosphor.glsl"
 #endif
-#if AA_STRATEGY == 1 || AA_STRATEGY == 3
+#ifdef FXAA_ENABLED
 	#include "/lib/fxaa.glsl"
 #endif
-#if AA_STRATEGY == 2 || AA_STRATEGY == 3
+#ifdef TAA_ENABLED
 	#include "/lib/taa.glsl"
 #endif
 #if MOTION_BLUR_ENABLED == 1
@@ -64,12 +64,12 @@ void main() {
 	
 	
 	// ======== FXAA ========
-	#if AA_STRATEGY == 1 || AA_STRATEGY == 3
+	#ifdef FXAA_ENABLED
 		doFxaa(color, MAIN_TEXTURE  ARGS_IN);
 	#endif
 	
 	// ======== TAA ========
-	#if AA_STRATEGY == 2 || AA_STRATEGY == 3
+	#ifdef TAA_ENABLED
 		doTAA(color, blockDepth, prevCoord  ARGS_IN);
 	#endif
 	
@@ -88,7 +88,7 @@ void main() {
 	
 	/* DRAWBUFFERS:1 */
 	gl_FragData[0] = vec4(color, 1.0);
-	#if (AA_STRATEGY == 2 || AA_STRATEGY == 3) || SSS_PHOSPHOR == 1
+	#if defined TAA_ENABLED || SSS_PHOSPHOR == 1
 		/* DRAWBUFFERS:14 */
 		#if MOTION_BLUR_ENABLED == 1
 			gl_FragData[1] = vec4(prevColor, 1.0);

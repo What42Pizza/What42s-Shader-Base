@@ -22,7 +22,7 @@ void main() {
 	
 	#ifdef DISTANT_HORIZONS
 		float dither = bayer64(gl_FragCoord.xy);
-		#if AA_STRATEGY == 2 || AA_STRATEGY == 3
+		#ifdef TAA_ENABLED
 			#include "/import/frameCounter.glsl"
 			dither = fract(dither + 1.61803398875 * mod(float(frameCounter), 3600.0));
 		#endif
@@ -74,7 +74,7 @@ void main() {
 #if ISOMETRIC_RENDERING_ENABLED == 1
 	#include "/lib/isometric.glsl"
 #endif
-#ifdef TAA_JITTER
+#ifdef TAA_ENABLED
 	#include "/lib/taa_jitter.glsl"
 #endif
 
@@ -116,7 +116,7 @@ void main() {
 	#endif
 	
 	
-	#ifdef TAA_JITTER
+	#ifdef TAA_ENABLED
 		doTaaJitter(gl_Position.xy  ARGS_IN);
 	#endif
 	

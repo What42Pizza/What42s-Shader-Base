@@ -57,7 +57,6 @@ const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8
 
 #ifdef NETHER
 	#undef SHADOWS_ENABLED
-	#define SHADOWS_ENABLED 0
 	#undef DEPTH_SUNRAYS_ENABLED
 	#define DEPTH_SUNRAYS_ENABLED 0
 	#undef VOL_SUNRAYS_ENABLED
@@ -66,14 +65,13 @@ const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8
 
 #ifdef END
 	#undef SHADOWS_ENABLED
-	#define SHADOWS_ENABLED 0
 	#undef DEPTH_SUNRAYS_ENABLED
 	#define DEPTH_SUNRAYS_ENABLED 0
 	#undef VOL_SUNRAYS_ENABLED
 	#define VOL_SUNRAYS_ENABLED 0
 #endif
 
-#if SHADOWS_ENABLED == 0
+#ifndef SHADOWS_ENABLED
 	#undef VOL_SUNRAYS_ENABLED
 	#define VOL_SUNRAYS_ENABLED 0
 #endif
@@ -86,14 +84,10 @@ const float ambientOcclusionLevel = 1.0; // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8
 
 
 #if SSS_PIXELS != 0
-	#undef AA_STRATEGY
-	#define AA_STRATEGY 0
+	#undef TAA_ENABLED
+	#undef FXAA_ENABLED
 	#undef SHARPENING_ENABLED
 	#define SHARPENING_ENABLED 0
-#endif
-
-#if AA_STRATEGY == 2 || AA_STRATEGY == 3
-	#define TAA_JITTER
 #endif
 
 
